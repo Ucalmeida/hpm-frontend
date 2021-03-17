@@ -2,10 +2,10 @@ import './App.css';
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 import Login from './modules/Login';
-import Principal from './modules/principal';
+import Principal from './modules/Principal';
+//CSS
 //JS
-import 'jquery/dist/jquery.min';
-import 'admin-lte/dist/js/adminlte.min.js';
+import 'admin-lte/dist/js/adminlte.min';
 import 'overlayscrollbars-react/dist/overlayscrollbars-react';
 
 class App extends Component {
