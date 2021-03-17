@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700');
 
-@import '~admin-lte/plugins/fontawesome-free/css/all.min.css';
-@import '~admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css';
+@import '~admin-lte/docs_html/assets/plugins/fontawesome-free/css/all.min.css';
+//@import '~admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css';
 @import '~admin-lte/dist/css/adminlte.min.css';
+@import './css/adminlte.portal.css';
 
 #root {
   width: 100vw;
