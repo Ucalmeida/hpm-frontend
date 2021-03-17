@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
+import 'admin-lte/dist/js/adminlte.min';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

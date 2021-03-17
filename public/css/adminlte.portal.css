@@ -103,7 +103,7 @@ tr.selected > td > a.btn {
 
 .navbar-nav>.user-menu>.dropdown-menu>li.user-header {
     height: auto;
-    background-image: url(../images/background_user_header.jpg);
+    background-image: url(../img/background_user_header.jpg);
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -541,7 +541,7 @@ a.btn, a.nav-link, span.btn {
     position: relative;
     height: 294px;
     width: 294px;
-    background: url(../images/aguarde/brasao_nti_loader.png) no-repeat center;
+    background: url(../img/aguarde/brasao_nti_loader.png) no-repeat center;
     background-size: contain;
     z-index: 1001;
 }
@@ -553,7 +553,7 @@ a.btn, a.nav-link, span.btn {
 /*    top: 7%;*/
 /*    height: 252px;*/
 /*    width: 252px;*/
-/*    background: url(../images/brasao_nti_loader_placa.png) no-repeat center;*/
+/*    background: url(../img/brasao_nti_loader_placa.png) no-repeat center;*/
 /*    background-size: contain;*/
 /*    animation: placa-loader 5s linear infinite;*/
 /*    !* Chrome, Firefox 16+, IE 10+, Opera *!*/
@@ -567,7 +567,7 @@ a.btn, a.nav-link, span.btn {
 /*    top: 8%;*/
 /*    height: 130px;*/
 /*    width: 130px;*/
-/*    background: url(../images/brasao_nti_loader_sigla.png) no-repeat center;*/
+/*    background: url(../img/brasao_nti_loader_sigla.png) no-repeat center;*/
 /*    background-size: contain;*/
 /*    z-index: 1003;*/
 /*}*/
@@ -579,7 +579,7 @@ a.btn, a.nav-link, span.btn {
 /*    top: 49%;*/
 /*    height: 85px;*/
 /*    width: 85px;*/
-/*    background: url(../images/brasao_nti_loader_engrenagem_fundo.png) no-repeat center;*/
+/*    background: url(../img/brasao_nti_loader_engrenagem_fundo.png) no-repeat center;*/
 /*    background-size: contain;*/
 /*    -webkit-animation: spin 2s linear infinite;*/
 /*    !* Chrome, Opera 15+, Safari 5+ *!*/
@@ -595,7 +595,7 @@ a.btn, a.nav-link, span.btn {
 /*    top: 53%;*/
 /*    height: 64px;*/
 /*    width: 225px;*/
-/*    background: url(../images/brasao_nti_loader_devredes.png) no-repeat center;*/
+/*    background: url(../img/brasao_nti_loader_devredes.png) no-repeat center;*/
 /*    background-size: contain;*/
 /*    animation: devredes-loader 3s linear infinite;*/
 /*    z-index: 1005;*/
@@ -608,7 +608,7 @@ a.btn, a.nav-link, span.btn {
     top: 44%;
     height: 113px;
     width: 113px;
-    background: url(../images/aguarde/brasao_nti_loader_engrenagem.png) no-repeat center;
+    background: url(../img/aguarde/brasao_nti_loader_engrenagem.png) no-repeat center;
     background-size: contain;
     -webkit-animation: spin 2s ease-in-out infinite;
     /* Chrome, Opera 15+, Safari 5+ */
@@ -624,7 +624,7 @@ a.btn, a.nav-link, span.btn {
     top: 53%;
     height: 60px;
     width: 60px;
-    background: url(../images/aguarde/brasao_nti_loader_garrucha.png) no-repeat center;
+    background: url(../img/aguarde/brasao_nti_loader_garrucha.png) no-repeat center;
     background-size: contain;
     z-index: 1007;
 }
