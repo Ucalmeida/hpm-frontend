@@ -10,8 +10,8 @@ export default class Login extends React.Component {
     constructor() {
         super();
         this.state = {
-            login: '04856149520',
-            senha: 'didijudoca',
+            login: '',
+            senha: '',
             logado: false,
             carregando: false
         }
