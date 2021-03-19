@@ -1,5 +1,5 @@
 import React from "react";
-import Pagina from "./main/Pagina";
+import Pagina from "../componentes/pagina/Pagina";
 
 const Principal = () => {
     return (

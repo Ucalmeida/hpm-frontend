@@ -103,7 +103,7 @@ tr.selected > td > a.btn {
 
 .navbar-nav>.user-menu>.dropdown-menu>li.user-header {
     height: auto;
-    /*background-image: url(src/img/background_user_header.jpg);*/
+    background-image: url(../img/background_user_header.jpg);
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -304,7 +304,7 @@ a.btn, a.nav-link, span.btn {
 }
 
 .btn-secondary-pm:focus, .btn-secondary-pm.focus {
-    box-shadow: none, 0 0 0 0 rgba(38, 143, 255, 0.5);
+    box-shadow: 0 0 0 0 rgba(38, 143, 255, 0.5);
 }
 
 .btn-secondary-pm.disabled, .btn-secondary-pm:disabled {
@@ -337,7 +337,7 @@ a.btn, a.nav-link, span.btn {
 }
 
 .btn-primary-pm:focus, .btn-primary-pm.focus {
-    box-shadow: none, 0 0 0 0 rgba(38, 143, 255, 0.5);
+    box-shadow: 0 0 0 0 rgba(38, 143, 255, 0.5);
 }
 
 .btn-primary-pm.disabled, .btn-primary-pm:disabled {
@@ -541,7 +541,7 @@ a.btn, a.nav-link, span.btn {
     position: relative;
     height: 294px;
     width: 294px;
-    /*background: url(src/img/aguarde/brasao_nti_loader.png) no-repeat center;*/
+    background: url(../img/aguarde/brasao_nti_loader.png) no-repeat center;
     background-size: contain;
     z-index: 1001;
 }
@@ -608,7 +608,7 @@ a.btn, a.nav-link, span.btn {
     top: 44%;
     height: 113px;
     width: 113px;
-    /*background: url(src/img/aguarde/brasao_nti_loader_engrenagem.png) no-repeat center;*/
+    background: url(../img/aguarde/brasao_nti_loader_engrenagem.png) no-repeat center;
     background-size: contain;
     -webkit-animation: spin 2s ease-in-out infinite;
     /* Chrome, Opera 15+, Safari 5+ */
@@ -624,7 +624,7 @@ a.btn, a.nav-link, span.btn {
     top: 53%;
     height: 60px;
     width: 60px;
-    /*background: url(src/img/aguarde/brasao_nti_loader_garrucha.png) no-repeat center;*/
+    background: url(../img/aguarde/brasao_nti_loader_garrucha.png) no-repeat center;
     background-size: contain;
     z-index: 1007;
 }
@@ -816,8 +816,8 @@ a.btn, a.nav-link, span.btn {
     animation-name: growIn;
     -webkit-animation-duration: 200ms;
     animation-duration: 200ms;
-    -webkit-animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);
-    animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);
+    /*-webkit-animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);*/
+    /*animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1), opacity cubic-bezier(0, 1, 0.4, 1);*/
 }
 
 @-webkit-keyframes fadeIn {
@@ -843,8 +843,8 @@ a.btn, a.nav-link, span.btn {
     animation-name: fadeIn;
     -webkit-animation-duration: 200ms;
     animation-duration: 200ms;
-    -webkit-animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
-    animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
+    /*-webkit-animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);*/
+    /*animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);*/
 }
 
 /* ------------------------------------- PÁGINAS ESPECÍFICAS -----------------------------------------------*/
