@@ -1,8 +1,29 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
-const Topo = ({toggleMenuSidebar}) => {
-    return (
+export default class Topo extends React.Component {
+    constructor(toggleMenuSidebar) {
+        super();
+        this.toggleMenuSidebar = toggleMenuSidebar
+        let usuario = localStorage.getItem('usuario');
+
+        this.state = {
+            usuario: usuario
+        }
+    }
+
+    sair = (e) => {
+        e.preventDefault();
+        localStorage.clear();
+        this.setState({usuario: ''});
+    }
+
+    render() {
+        const {usuario} = this.state
+        if (!usuario) {
+            return <Redirect to='/'/>
+        }
+        return (
 
 // <nav class='main-header navbar navbar-expand navbar-white navbar-light'>
 //         iconeMenu +
@@ -62,52 +83,58 @@ const Topo = ({toggleMenuSidebar}) => {
 //         </li>
 //        </ul>
 //         </nav>
-        <nav className="main-header navbar navbar-expand navbar-white navbar-light">
-        {/* Left navbar links */}
-    <ul className="navbar-nav">
-        <li className="nav-item">
-            <button
-                onClick={() => toggleMenuSidebar()}
-                type="button"
-                className="nav-link"
-                data-widget="pushmenu"
-                href="#"
-            >
-                <i className="fas fa-bars" />
-            </button>
-        </li>
-        <li className="nav-item d-none d-sm-inline-block">
-            <Link to="/" className="nav-link">
-                Header
-            </Link>
-        </li>
-        <li className="nav-item d-none d-sm-inline-block">
-            <Link to="/" className="nav-link">
-                Contato
-            </Link>
-        </li>
-    </ul>
-    <form className="form-inline ml-3">
-        <div className="input-group input-group-sm">
-            <input
-                className="form-control form-control-navbar"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-            />
-            <div className="input-group-append">
-                <button className="btn btn-navbar" type="submit">
-                    <i className="fas fa-search" />
-                </button>
-            </div>
-        </div>
-    </form>
-    <ul className="navbar-nav ml-auto">
-        {/*<Messages />*/}
-        {/*<Notifications />*/}
-        {/*<Languages />*/}
-        {/*<User />*/}
-        {/* <li className="nav-item">
+            <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+                {/* Left navbar links */}
+                <ul className="navbar-nav">
+                    <li className="nav-item">
+                        <button
+                            onClick={this.toggleMenuSidebar}
+                            type="button"
+                            className="nav-link"
+                            data-widget="pushmenu"
+                            href="#"
+                        >
+                            <i className="fas fa-bars"/>
+                        </button>
+                    </li>
+                    <li className="nav-item d-none d-sm-inline-block">
+                        <Link to="/" className="nav-link">
+                            Header
+                        </Link>
+                    </li>
+                    <li className="nav-item d-none d-sm-inline-block">
+                        <Link to="/" className="nav-link">
+                            Contato
+                        </Link>
+                    </li>
+                </ul>
+                <form className="form-inline ml-3">
+                    <div className="input-group input-group-sm">
+                        <input
+                            className="form-control form-control-navbar"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                        />
+                        <div className="input-group-append">
+                            <button className="btn btn-navbar" type="submit">
+                                <i className="fas fa-search"/>
+                            </button>
+                        </div>
+                        <div className="ml-4 input-group-append">
+                            <label> {usuario}</label>
+                        </div>
+                        <div className="ml-4 input-group-append">
+                            <a href="#" onClick={this.sair}> sair </a>
+                        </div>
+                    </div>
+                </form>
+                <ul className="navbar-nav ml-auto">
+                    {/*<Messages />*/}
+                    {/*<Notifications />*/}
+                    {/*<Languages />*/}
+                    {/*<User />*/}
+                    {/* <li className="nav-item">
           <button
             className="nav-link"
             data-widget="control-sidebar"
@@ -117,11 +144,11 @@ const Topo = ({toggleMenuSidebar}) => {
             <i className="fas fa-th-large" />
           </button>
         </li> */}
-    </ul>
-</nav>
-    );
-};
+                </ul>
+            </nav>
+        );
+    };
+}
 
-export default Topo;
 
 //

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
-import Login from './modules/Login';
+import Login from './modules/Login'
 import Principal from './modules/principal';
 
 //JS
@@ -8,8 +8,9 @@ import 'jquery/dist/jquery.min';
 import 'overlayscrollbars-react/dist/overlayscrollbars-react';
 
 class App extends Component {
-  
+
   render() {
+      console.log(process.env)
       return (
           <Router>
               <Route path="/" exact component={Login} />
