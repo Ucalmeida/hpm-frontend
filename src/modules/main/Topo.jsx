@@ -125,6 +125,9 @@ export default class Topo extends React.Component {
                             <label> {usuario}</label>
                         </div>
                         <div className="ml-4 input-group-append">
+                            <Link to="/alterarSenha"> Alterar Senha </Link>
+                        </div>
+                        <div className="ml-4 input-group-append">
                             <a href="#" onClick={this.sair}> sair </a>
                         </div>
                     </div>

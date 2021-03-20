@@ -5,18 +5,18 @@ import Rodape from "./Rodape";
 
 document.getElementById('root').classList = 'hold-transition';
 
-const Pagina = ({conteudo}) => {
-    return (
-        <section>
-            <Topo />
-            <MenuLateral />
-            <section>
-                {conteudo}
+export default class Pagina extends React.Component {
+    render() {
+        return (
+            <section className="anim-fade-in">
+                <Topo />
+                <MenuLateral />
+                <section>
+                    {this.props.children}
+                </section>
+                <Rodape />
             </section>
-            <Rodape />
-        </section>
-    );
-};
+        )
+    }
 
-export default Pagina;
-
+}
