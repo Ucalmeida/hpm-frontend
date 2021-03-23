@@ -2,6 +2,8 @@ import React from "react";
 import {Redirect} from "react-router-dom";
 import {HttpVerbo, xfetch} from "../util/Util";
 
+import logoHPM from "../img/brasoes/brasao_hpm.png";
+
 document.getElementById('root').classList = 'hold-transition login-page';
 
 const log = console.log;
@@ -63,6 +65,11 @@ export default class Login extends React.Component {
         return (
             <div className="login-page animated--fade-in">
                 <div className="login-box">
+                    <div className={"login-logo"}>
+                        <a href={login}>
+                            <img src={logoHPM} />
+                        </a>
+                    </div>
                     <div className="card card-outline card-primary">
                         <div className="card-header text-center">
                             <b>PORTAL</b>

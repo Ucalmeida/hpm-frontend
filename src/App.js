@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+
 import Login from './paginas/Login';
 import Principal from './paginas/Principal';
+import AlterarSenha from "./paginas/AlterarSenha";
 
-import 'overlayscrollbars-react/dist/overlayscrollbars-react';
-import AlterarSenha from "./modules/AlterarSenha";
 
 class App extends Component {
   

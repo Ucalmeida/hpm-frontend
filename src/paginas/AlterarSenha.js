@@ -1,6 +1,7 @@
 import React from 'react'
-import Pagina from './main/Pagina'
-import Input from "../components/Input";
+import Pagina from '../componentes/pagina/Pagina'
+import Input from "../componentes/Input";
+import Card from "../componentes/Card";
 
 
 export default class AlterarSenha extends React.Component {
@@ -42,36 +43,42 @@ export default class AlterarSenha extends React.Component {
     render() {
         const {senha, nova, renova} = this.state
         return (
-            <Pagina>
-                <div className="col-4 offset-5">
-                    <Input
-                        type="password"
-                        onChange={this.handleChange}
-                        value={senha}
-                        name="senha"
-                        label="Senha atual"
-                        placeholder="Senha antual"/>
+            <Pagina titulo={"Alterar Senha"}>
+                   <div className="row">
+                       <div className="col-lg-4"></div>
+                       <div className="col-lg-4">
+                        <Card>
+                           <Input
+                             type="password"
+                             onChange={this.handleChange}
+                             value={senha}
+                             name="senha"
+                             label="Senha atual"
+                             placeholder="Senha antual"/>
 
-                    <Input
-                        type="password"
-                        onChange={this.handleChange}
-                        value={nova}
-                        name="nova"
-                        label="Nova senha"
-                        placeholder="Nova senha"
-                        legenda="Ex. Dsfoma123"/>
+                           <Input
+                             type="password"
+                             onChange={this.handleChange}
+                             value={nova}
+                             name="nova"
+                             label="Nova senha"
+                             placeholder="Nova senha"
+                             legenda="Ex. Dsfoma123"/>
 
-                    <Input
-                        type="password"
-                        onChange={this.handleChange}
-                        value={renova}
-                        name="renova"
-                        label="Repita nova senha"
-                        placeholder="Repita a nova"/>
-                    <div className="align-items-end col-12">
-                        <button className="btn btn-success pull-right" onClick={this.enviar}> Alterar </button>
-                    </div>
-                </div>
+                           <Input
+                             type="password"
+                             onChange={this.handleChange}
+                             value={renova}
+                             name="renova"
+                             label="Repita nova senha"
+                             placeholder="Repita a nova"/>
+                           <div className="align-items-end col-12">
+                               <button className="btn btn-success pull-right" onClick={this.enviar}> Alterar </button>
+                           </div>
+                       </Card>
+                       </div>
+                       <div className="col-lg-4"></div>
+                   </div>
             </Pagina>
         );
     }
