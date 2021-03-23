@@ -1,5 +1,9 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
+import Botao from "../Botao";
+
+import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
+import Button from "react-bootstrap/Button";
 
 export default class Topo extends React.Component {
     constructor(toggleMenuSidebar) {
@@ -49,12 +53,6 @@ export default class Topo extends React.Component {
                 <form className="form-inline ml-3">
                     <div className="input-group input-group-sm">
                         <div className="ml-4 input-group-append">
-                            <label> {usuario}</label>
-                        </div>
-                        <div className="ml-4 input-group-append">
-                            <Link to="/alterarSenha"> Alterar Senha </Link>
-                        </div>
-                        <div className="ml-4 input-group-append">
                             <a href="#" onClick={this.sair}> sair </a>
                         </div>
                     </div>
@@ -65,15 +63,47 @@ export default class Topo extends React.Component {
                     {/*<Languages />*/}
                     {/*<User />*/}
                     {/* <li className="nav-item">
-          <button
-            className="nav-link"
-            data-widget="control-sidebar"
-            data-slide="true"
-            type="button"
-          >
-            <i className="fas fa-th-large" />
-          </button>
-        </li> */}
+                      <button
+                        className="nav-link"
+                        data-widget="control-sidebar"
+                        data-slide="true"
+                        type="button"
+                      >
+                        <i className="fas fa-th-large" />
+                      </button>
+                    </li> */}
+                </ul>
+                {/*//MenuSuperior Direito*/}
+                <ul className='navbar-nav ml-auto'>
+                    <li className='nav-item dropdown user-menu'>
+                        <a className='nav-link d-flex cursor-pointer mt-n1 p-0' data-toggle='dropdown'>
+                            <p className="mt-2">{usuario}</p>
+                            <img className='rounded-circle img-pm-perfil ml-2 elevation-2' src={fotoUsuario} />
+                        </a>
+                        <ul className='dropdown-menu dropdown-menu-lg dropdown-menu-right animated--grow-in mt-2'>
+
+                            {/*//Foto do usuário*/}
+                            <li className='user-header bg-primary'>
+                                <img className='img-circle elevation-2' alt='PM Foto' src={fotoUsuario} />
+                                <p>
+                                    {usuario} <br /> usuario
+                                    <small>Cadastrado desde:   data </small>
+                                </p>
+                            </li>
+
+                            {/*//-- Menu Body --*/}
+                            <li className='user-footer'>
+                                <a className='btn btn-danger float-right' href='#' onclick={this.sair}>
+                                    <i class='fas fa-power-off fa-sm fa-fw mr-2'></i>
+                                    Sair
+                                </a>
+                                <Button onClick={this.sair}>Saaair</Button>
+                                <Botao onClick={this.sair}>
+                                    Sair
+                                </Botao>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         );

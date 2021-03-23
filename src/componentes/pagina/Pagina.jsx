@@ -11,12 +11,11 @@ export default class Pagina extends React.Component {
         if (this.props.titulo != null) {
             titulo = titulo + " | " + this.props.titulo
         }
-    document.getElementById('root').classList = 'hold-transition';
+    document.getElementById('root').classList.remove('login-page');
+    document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
+    window.document.title = titulo;
         return (
-            <div>
-                <Helmet>
-                    <title>{titulo}</title>
-                </Helmet>
+            <div className="wrapper">
                 <Topo titulo={this.props.titulo}/>
                 <MenuLateral />
                 <div className="content-wrapper">
