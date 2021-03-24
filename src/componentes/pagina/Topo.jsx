@@ -27,15 +27,13 @@ export default class Topo extends React.Component {
         if (!usuario) {
             return <Redirect to='/'/>
         }
-        let titulo = this.props.titulo;
-        if (!titulo){ titulo = "HPM"};
         return (
             <nav className="main-header navbar navbar-expand navbar-white navbar-light">
                 {/* Left navbar links */}
                 <ul className="navbar-nav">
                     <li className="nav-item">
                         <button
-                            // onClick={this.toggleMenuSidebar}
+                            onClick={this.toggleMenuSidebar}
                             type="button"
                             className="nav-link"
                             data-widget="pushmenu"
@@ -46,17 +44,10 @@ export default class Topo extends React.Component {
                     </li>
                     <li className="nav-item d-none d-sm-inline-block">
                         <Link to="/" className="nav-link">
-                            {titulo}
+                            <strong>Convênio : </strong>Polícia Militar
                         </Link>
                     </li>
                 </ul>
-                <form className="form-inline ml-3">
-                    <div className="input-group input-group-sm">
-                        <div className="ml-4 input-group-append">
-                            <a href="#" onClick={this.sair}> sair </a>
-                        </div>
-                    </div>
-                </form>
                 <ul className="navbar-nav ml-auto">
                     {/*<Messages />*/}
                     {/*<Notifications />*/}
@@ -73,8 +64,25 @@ export default class Topo extends React.Component {
                       </button>
                     </li> */}
                 </ul>
-                {/*//MenuSuperior Direito*/}
+
+                                                    {/*//MenuSuperior Direito*/}
                 <ul className='navbar-nav ml-auto'>
+                    <li className='nav-item dropdown mr-2'>
+                        <a className='nav-link' data-toggle='dropdown' href='#'>
+                            <i className='far fa-bell'></i>
+                            <span className='badge badge-warning navbar-badge'> 10 </span>
+                        </a>
+                        <div className='dropdown-menu dropdown-menu-lg dropdown-menu-center animated--grow-in'>
+                            <span className='dropdown-item dropdown-header text-bold'>Notificações</span>
+                        <div className='dropdown-divider'></div>
+                        <a href='#' class='dropdown-item'>
+                            <i className='fas fa-file mr-2'></i> Consulta remarcada
+                                <span class='float-right text-muted text-sm'>1 dia</span>
+                        </a>
+                        <div className='dropdown-divider'></div>
+                        <a className='dropdown-item dropdown-footer cursor-pointer'>Ver mais notificações</a>
+                    </div> 
+                    </li>
                     <li className='nav-item dropdown user-menu'>
                         <a className='nav-link d-flex cursor-pointer mt-n1 p-0' data-toggle='dropdown'>
                             <p className="mt-2">{usuario}</p>
@@ -86,21 +94,18 @@ export default class Topo extends React.Component {
                             <li className='user-header bg-primary'>
                                 <img className='img-circle elevation-2' alt='PM Foto' src={fotoUsuario} />
                                 <p>
-                                    {usuario} <br /> usuario
+                                    {usuario} <br /> Paciente
                                     <small>Cadastrado desde:   data </small>
                                 </p>
                             </li>
 
                             {/*//-- Menu Body --*/}
                             <li className='user-footer'>
-                                <a className='btn btn-danger float-right' href='#' onclick={this.sair}>
-                                    <i class='fas fa-power-off fa-sm fa-fw mr-2'></i>
-                                    Sair
-                                </a>
-                                <Button onClick={this.sair}>Saaair</Button>
-                                <Botao onClick={this.sair}>
-                                    Sair
-                                </Botao>
+                                {/*<a className='btn btn-danger float-right' href={this.sair} onclick={this.sair}>*/}
+                                {/*    <i class='fas fa-power-off fa-sm fa-fw mr-2'></i>*/}
+                                {/*    Sair1*/}
+                                {/*</a>*/}
+                                <Botao className='float-right' variant='danger' onClick={this.sair}>Sair</Botao>
                             </li>
                         </ul>
                     </li>
@@ -113,29 +118,6 @@ export default class Topo extends React.Component {
 
 // <nav class='main-header navbar navbar-expand navbar-white navbar-light'>
 //         iconeMenu +
-//         <ul class='navbar-nav'>
-//         <li class='nav-item d-none d-md-inline-block mr-n4'>
-//         <a href='#' class='nav-link'>" +
-//         (!pessoaLogada.isMilitar() ? "QCG" : ltb == null ? "PM1" : getUnidade(ltb))
-//         </a>
-//         </li>
-//         <li class='nav-item d-none d-md-inline-block mr-n4'>
-//        <a href='#' class='nav-link'><i class='fas fa-angle-right'></i></a>
-//         </li>
-//         <li class='nav-item d-none d-md-inline-block mr-n4'>
-//         <a href='#' class='nav-link'>" +
-//         (!pessoaLogada.isMilitar() ? "CIVIS" : ltb == null ? "INATIVOS" : getUnidadeSetor(ltb))
-//         </a>
-//        </li>
-//         <li class='nav-item d-none d-md-inline-block mr-n4'>
-//        <a href='#' class='nav-link'><i class='fas fa-angle-right'></i></a>
-//        </li>
-//         <li class='nav-item d-none d-md-inline-block mr-n4'>
-//        <a href='#' class='nav-link'>
-//         (!pessoaLogada.isMilitar() ? "CIVIL" : ltb == null ? "INATIVO" : getUnidadeSetorFuncao(ltb))
-//         </a>
-//         </li>
-//         </ul>
 //         {/*//MenuSuperior Direito*/}
 //         <ul class='navbar-nav ml-auto'>
 //         menuLtb

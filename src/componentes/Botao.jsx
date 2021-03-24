@@ -11,12 +11,15 @@ const icons = {
 export default class Botao extends React.Component {
     render() {
         return(
-          <button onClick={this.onClick}>
+          <Button onClick={this.props.onClick} variant={this.props.variant}>
               {this.props.children}
-          </button>
+          </Button>
         );
     };
 };
+
+
+
 const AppButton = ({
     children,
     isLoading,
