@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 
 export default class Topo extends React.Component {
     constructor(toggleMenuSidebar) {
-        super();
+        super(toggleMenuSidebar);
         this.toggleMenuSidebar = toggleMenuSidebar
         let usuario = localStorage.getItem('usuario');
 
@@ -100,6 +100,25 @@ export default class Topo extends React.Component {
                             </li>
 
                             {/*//-- Menu Body --*/}
+                            <li class='user-body border-bottom-verdepetroleo'> 
+                            <div class='row'> 
+                                <div class='col-4 text-center'> 
+                                    <button class='btn btn-default btn-sm'>
+								Meu Prontuário
+							</button>  
+						</div>  
+						<div class='col-4 text-center'>  
+							<button class='btn btn-default' href='#'>
+                                    Manual  
+							</button>
+                                </div>  
+                            <div class='col-4 text-center'>  
+                                <Botao  onclick='alterarSenha'>
+                                    Alterar Senha  
+                                </Botao>
+                                </div>  
+                            </div>  
+                            </li> 
                             <li className='user-footer'>
                                 {/*<a className='btn btn-danger float-right' href={this.sair} onclick={this.sair}>*/}
                                 {/*    <i class='fas fa-power-off fa-sm fa-fw mr-2'></i>*/}
@@ -115,39 +134,3 @@ export default class Topo extends React.Component {
     };
 }
 
-
-// <nav class='main-header navbar navbar-expand navbar-white navbar-light'>
-//         iconeMenu +
-//         {/*//MenuSuperior Direito*/}
-//         <ul class='navbar-nav ml-auto'>
-//         menuLtb
-//         notificacoes
-//         contadorSessao
-//         <li class='nav-item dropdown user-menu'>
-//        <a class='nav-link d-flex cursor-pointer mt-n1 p-0' data-toggle='dropdown' >
-//         this.infoUsuario
-//         <img class='rounded-circle img-pm-perfil ml-2 elevation-2' src='/portal/dwFoto?fileName=" + pessoaLogada.getId() + "' />
-//        </a>
-//         "<ul class='dropdown-menu dropdown-menu-lg dropdown-menu-right animated--grow-in mt-2'>
-//         //Foto do usuário
-//        <li class='user-header bg-primary'>
-//         <img class='img-circle elevation-2' alt='PM Foto' src='/portal/dwFoto?fileName=" + pessoaLogada.getId() + "' />
-//         <p>
-//         pessoaLogada.getNome()  <br /> getPatente()
-//         <small>Na corporação desde:   CassUtil.getDataFormatada(pessoaLogada.getDataAdmissao()) </small>
-//         </p>
-//         </li>
-//         //-- Menu Body --
-//         funcoes +
-//         //-- Menu Footer--
-//        <li class='user-footer'>
-//         fecharModulo
-//         <button class='btn btn-danger float-right' onclick='sair()'>
-//         <i class='fas fa-power-off fa-sm fa-fw mr-2'></i>
-//         "Sair"
-//         </button>
-//         </li>
-//         </ul>
-//         </li>
-//        </ul>
-//         </nav>

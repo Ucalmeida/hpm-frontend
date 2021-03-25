@@ -9,6 +9,11 @@ const icons = {
 };
 
 export default class Botao extends React.Component {
+
+    constructor() {
+        super();
+    }
+
     render() {
         return(
           <Button onClick={this.props.onClick} variant={this.props.variant}>
@@ -17,6 +22,7 @@ export default class Botao extends React.Component {
         );
     };
 };
+
 
 
 
