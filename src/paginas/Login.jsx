@@ -1,10 +1,11 @@
 import React from "react";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {HttpVerbo, xfetch} from "../util/Util";
 
 import logoHPM from "../img/brasoes/brasao_hpm.png";
+import PaginaSemLogin from "../componentes/pagina/PaginaSemLogin";
 
-document.getElementById('root').classList = 'hold-transition login-page';
+document.getElementById('root').classList = 'login-page';
 
 const log = console.log;
 
@@ -12,8 +13,8 @@ export default class Login extends React.Component {
     constructor() {
         super();
         this.state = {
-            login: '',
-            senha: '',
+            login: '04856149520',
+            senha: 'didijudoca',
             logado: false,
             carregando: false
         }
@@ -47,6 +48,7 @@ export default class Login extends React.Component {
                     this.setState({logado: true})
                 }
             })
+            .catch(e => this.setState({carregando: false}) & window.alert(e))
     }
 
     render() {
@@ -63,73 +65,54 @@ export default class Login extends React.Component {
         }
 
         return (
-            <div className="login-page animated--fade-in">
-                <div className="login-box">
-                    <div className={"login-logo"}>
-                        <a href={login}>
-                            <img src={logoHPM} />
-                        </a>
-                    </div>
-                    <div className="card card-outline card-primary">
-                        <div className="card-header text-center">
-                            <b>PORTAL</b>
-                            <span> HPM</span>
-                        </div>
-                        <div className="text-center">
-                            {spiner}
-                        </div>
-                        <div className="card-body login-card-body">
-                            <p className="login-box-msg">Insira abaixo suas credenciais para entrar no módulo HPM</p>
-                            <div className="mb-3">
-                                <div className="input-group">
-                                    <input
-                                        type="email"
-                                        className="form-control"
-                                        name="login"
-                                        value={login}
-                                        onChange={this.handle}
-                                        placeholder="Usuário"
-                                    />
-                                    <div className="input-group-append">
-                                        <div className="input-group-text">
-                                            <span className="fas fa-envelope"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mb-3">
-                                <div className="input-group">
-                                    <input
-                                        type="password"
-                                        name="senha"
-                                        className="form-control"
-                                        placeholder="Senha"
-                                        onChange={this.handle}
-                                        value={senha}
-                                    />
-                                    <div className="input-group-append">
-                                        <div className="input-group-text">
-                                            <span className="fas fa-lock"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-12 text-center">
-                                <input type="button" onClick={this.enviar} className="btn btn-success" value="Entrar"/>
-                            </div>
+          <PaginaSemLogin titulo="Insira abaixo suas credenciais para entrar no módulo HPM">
+              <div className="mb-3">
+                  <div className="input-group">
+                      <input
+                        type="email"
+                        className="form-control"
+                        name="login"
+                        value={login}
+                        onChange={this.handle}
+                        placeholder="Usuário"
+                      />
+                      <div className="input-group-append">
+                          <div className="input-group-text">
+                              <span className="fas fa-envelope"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div className="mb-3">
+                  <div className="input-group">
+                      <input
+                        type="password"
+                        name="senha"
+                        className="form-control"
+                        placeholder="Senha"
+                        onChange={this.handle}
+                        value={senha}
+                      />
+                      <div className="input-group-append">
+                          <div className="input-group-text">
+                              <span className="fas fa-lock"/>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div className="col-12 text-center">
+                  <input type="button" onClick={this.enviar} className="btn btn-success" value="Entrar"/>
+              </div>
 
-                            <div className="social-auth-links text-center mt-2 mb-3">
-                            </div>
-                            <p className="mb-1">
-                                esqueci a senha
-                            </p>
-                            <p className="mb-0">
-                                novo usuario
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+              <div className="social-auth-links text-center mt-2 mb-3">
+              </div>
+              <p className="mb-1">
+                  <Link to ="/esqueciSenha">Esqueci minha senha</Link>
+              </p>
+              <p className="mb-0">
+                  Não tenho usuário
+              </p>
+          </PaginaSemLogin>
         );
     }
 }
