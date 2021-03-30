@@ -1,9 +1,4 @@
 import React, {Component} from "react";
-import MenuLateral from "./MenuLateral";
-import Topo from "./Topo";
-import Rodape from "./Rodape";
-import BotaoScrollTop from "./BotaoScrollTop";
-import { Helmet } from 'react-helmet';
 
 export default class Pagina extends Component {
 
