@@ -13,10 +13,10 @@ export default class Principal extends Component {
     }
 
     render() {
-        let token = localStorage.getItem('token')
-        if(!token) {
-            return <Redirect to={'/login'} />
-        };
+        // let token = localStorage.getItem('token')
+        // if(!token) {
+        //     return <Redirect to={'/login'} />
+        // };
         let titulo = "Portal HPM"
         if (this.props.titulo != null) {
             titulo = titulo + " | " + this.props.titulo
@@ -25,7 +25,9 @@ export default class Principal extends Component {
         document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
         window.document.title = titulo;
         return (
-            1111
+            <Pagina>
+                teste principal
+            </Pagina>
         )
     };
 };

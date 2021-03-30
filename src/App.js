@@ -16,17 +16,17 @@ class App extends Component {
   render() {
       console.log(process.env)
       return (
-          <div className="wrapper">
-          <Topo />
-          <MenuLateral />
               <Router>
-                  <Route exact path="/" component={Principal} />
-                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/" component={Login} />
+                  <Route exact path="/Principal" component={Principal} />
                   <Route exact path="/alterarSenha" component={AlterarSenha} />
               </Router>
-          <Rodape />
-          <BotaoScrollTop />
-          </div>
+          // <div className="wrapper">
+          // <Topo />
+          // <MenuLateral />
+          // <Rodape />
+          // <BotaoScrollTop />
+          // </div>
       );
     }
   }
