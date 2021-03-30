@@ -1,5 +1,5 @@
 import React from 'react';
-import Botao from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
 const icons = {
@@ -8,10 +8,29 @@ const icons = {
     googlePlus: 'fab fa-google-plus'
 };
 
-const AppBotao = ({
+export default class Botao extends React.Component {
+
+    constructor() {
+        super();
+    }
+
+    render() {
+        return(
+          <Button onClick={this.props.onClick} variant={this.props.variant}>
+              {this.props.children}
+          </Button>
+        );
+    };
+};
+
+
+
+
+const AppButton = ({
     children,
     isLoading,
     icon,
+    funcao,
     theme = 'primary',
     disabled,
     ...otherProps
@@ -38,7 +57,7 @@ const AppBotao = ({
 
     return (
         // eslint-disable-next-line react/button-has-type
-        <Botao
+        <Button
             {...otherProps}
             variant={theme}
             disabled={isLoading || disabled}
@@ -46,8 +65,6 @@ const AppBotao = ({
             {iconTemplate}
             {children}
             {spinnerTemplate}
-        </Botao>
+        </Button>
     );
 };
-
-export default AppBotao;

@@ -7,7 +7,7 @@ const HttpVerbo = {
 }
 
 const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
-    const servidor = process.env.NODE_ENV == 'development'? 'http://localhost:8080' : 'http://172.23.7.48:8080'
+    const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.48:8080'
 
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
