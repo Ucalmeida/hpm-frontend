@@ -7,7 +7,7 @@ const HttpVerbo = {
 }
 
 const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
-    const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.47/api/hpm-api'
+    const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://gateway:8080/hpm-api'
 
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
