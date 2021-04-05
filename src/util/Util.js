@@ -38,5 +38,23 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 
     return resposta;
 }
-
 export {xfetch, HttpVerbo};
+
+
+const isLogado = () => {
+        let token = localStorage.getItem('token')
+        if(!token) {
+            return true
+        } else
+    return false
+}
+export {isLogado};
+
+const removerCaracteresEspecciais = (texto) => {
+    texto = texto.replace((/[ÀÁÂÃÄÅ]/g,"A"))
+    return texto;
+}
+export {removerCaracteresEspecciais};
+
+
+

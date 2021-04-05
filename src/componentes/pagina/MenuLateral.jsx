@@ -6,7 +6,7 @@ import logoHPM from "../../img/brasoes/brasao_hpm.png";
 export default class MenuLateral extends React.Component {
     render() {
         return (
-            <aside className="main-sidebar sidebar-dark-primary elevation-4">
+            <aside className="main-sidebar sidebar-dark-primary elevation-4" >
                 <Link to="/" className="brand-link border-bottom-verdepetroleo">
                     <img
                         src={logoHPM}

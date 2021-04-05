@@ -3,7 +3,6 @@ import {Link, Redirect} from "react-router-dom";
 import Botao from "../Botao";
 
 import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
-import Button from "react-bootstrap/Button";
 
 export default class Topo extends React.Component {
     constructor(toggleMenuSidebar) {
@@ -20,6 +19,7 @@ export default class Topo extends React.Component {
         e.preventDefault();
         localStorage.clear();
         this.setState({usuario: ''});
+        // this.setState({logado: false});
     }
 
     render() {
@@ -28,12 +28,12 @@ export default class Topo extends React.Component {
             return <Redirect to='/'/>
         }
         return (
-            <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+            <nav className="main-header navbar navbar-expand navbar-white navbar-light" >
                 {/* Left navbar links */}
                 <ul className="navbar-nav">
                     <li className="nav-item">
                         <button
-                            onClick={this.toggleMenuSidebar}
+                            // onClick={this.toggleMenuSidebar}
                             type="button"
                             className="nav-link"
                             data-widget="pushmenu"
@@ -75,9 +75,9 @@ export default class Topo extends React.Component {
                         <div className='dropdown-menu dropdown-menu-lg dropdown-menu-center animated--grow-in'>
                             <span className='dropdown-item dropdown-header text-bold'>Notificações</span>
                         <div className='dropdown-divider'></div>
-                        <a href='#' class='dropdown-item'>
+                        <a href='#' className='dropdown-item'>
                             <i className='fas fa-file mr-2'></i> Consulta remarcada
-                                <span class='float-right text-muted text-sm'>1 dia</span>
+                                <span className='float-right text-muted text-sm'>1 dia</span>
                         </a>
                         <div className='dropdown-divider'></div>
                         <a className='dropdown-item dropdown-footer cursor-pointer'>Ver mais notificações</a>
@@ -100,21 +100,21 @@ export default class Topo extends React.Component {
                             </li>
 
                             {/*//-- Menu Body --*/}
-                            <li class='user-body border-bottom-verdepetroleo'> 
-                            <div class='row'> 
-                                <div class='col-4 text-center'> 
-                                    <button class='btn btn-default btn-sm'>
+                            <li className='user-body border-bottom-verdepetroleo'>
+                            <div className='row'>
+                                <div className='col-4 text-center'>
+                                    <button className='btn btn-default btn-sm'>
 								Meu Prontuário
 							</button>  
 						</div>  
-						<div class='col-4 text-center'>  
-							<button class='btn btn-default' href='#'>
+						<div className='col-4 text-center'>
+							<button className='btn btn-default' href='#'>
                                     Manual  
 							</button>
                                 </div>  
-                            <div class='col-4 text-center'>  
+                            <div className='col-4 text-center'>
                                 <Botao  onclick='alterarSenha'>
-                                    Alterar Senha  
+                                    Alterar Senha
                                 </Botao>
                                 </div>  
                             </div>  

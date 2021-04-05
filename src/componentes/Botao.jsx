@@ -16,7 +16,7 @@ export default class Botao extends React.Component {
 
     render() {
         return(
-          <Button onClick={this.props.onClick} variant={this.props.variant}>
+          <Button onClick={this.props.onClick} variant={this.props.cor}>
               {this.props.children}
           </Button>
         );

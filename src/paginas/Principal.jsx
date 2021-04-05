@@ -1,33 +1,30 @@
-import React, {Component} from "react";
+import React from "react";
 import Pagina from "../componentes/pagina/Pagina";
-import Topo from "../componentes/pagina/Topo";
-import MenuLateral from "../componentes/pagina/MenuLateral";
-import Rodape from "../componentes/pagina/Rodape";
-import BotaoScrollTop from "../componentes/pagina/BotaoScrollTop";
-import {Redirect} from "react-router-dom";
+import Accordion from "../componentes/Accordion";
+import Card from "../componentes/Card";
+import Botao from "../componentes/Botao";
 
-export default class Principal extends Component {
-
-    constructor() {
-        super();
-    }
+export default class Principal extends React.Component {
 
     render() {
-        // let token = localStorage.getItem('token')
-        // if(!token) {
-        //     return <Redirect to={'/login'} />
-        // };
-        let titulo = "Portal HPM"
-        if (this.props.titulo != null) {
-            titulo = titulo + " | " + this.props.titulo
+        let titulo = "Portal HPM";
+        if (titulo != null) {
+            titulo = titulo + " | " + titulo
         }
         document.getElementById('root').classList.remove('login-page');
         document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
         window.document.title = titulo;
         return (
-            <Pagina>
-                teste principal
+            <Pagina titulo="Bem Vindo">
+                Página Prinipal
+                <Accordion titulo="Teste" >
+                    teste accordion
+                </Accordion>
+                <Card titulo="teste Card">
+                    Tesde de Card
+                </Card>
+                <Botao cor="primary"> Teste de Botão</Botao>
             </Pagina>
-        )
-    };
+        );
+    }
 };

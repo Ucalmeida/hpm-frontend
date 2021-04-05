@@ -65,7 +65,7 @@ export default class Login extends React.Component {
         }
 
         return (
-          <PaginaSemLogin titulo="Insira abaixo suas credenciais para entrar no módulo HPM">
+          <PaginaSemLogin titulo="Insira abaixo suas credenciais para entrar no módulo HPM" img={logoHPM}>
               <div className="mb-3">
                   <div className="input-group">
                       <input

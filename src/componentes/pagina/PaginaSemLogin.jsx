@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
-import logoHPM from "../../img/brasoes/brasao_hpm.png";
 import {Link} from "react-router-dom";
+
+import logoHPM from "../../img/brasoes/brasao_hpm.png";
+
 
 class PaginaSemLogin extends Component {
   render() {
     document.getElementById('root').classList.add('login-page');
 
+    const img = !this.props.img ? logoHPM : this.props.img;
     return (
       <div className="login-box animated--fade-in">
         <div className="login-box">
-          <div className={"login-logo"}>
+          <div className="login-logo">
             <Link to="/">
-              <img src={logoHPM} />
+              <img src={img} />
             </Link>
           </div>
           <div className="card card-outline card-primary">
