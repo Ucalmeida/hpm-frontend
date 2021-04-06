@@ -24,10 +24,6 @@ class App extends Component {
                           {/*</Route>*/}
                       </Switch>
               </Router>
-          // <Topo />
-          // <MenuLateral />
-          // <Rodape />
-          // <BotaoScrollTop />
       );
     }
   }

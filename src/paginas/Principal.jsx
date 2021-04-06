@@ -3,6 +3,7 @@ import Pagina from "../componentes/pagina/Pagina";
 import Accordion from "../componentes/Accordion";
 import Card from "../componentes/Card";
 import Botao from "../componentes/Botao";
+import Button from "react-bootstrap/Button";
 
 export default class Principal extends React.Component {
 
@@ -20,10 +21,15 @@ export default class Principal extends React.Component {
                 <Accordion titulo="Teste" >
                     teste accordion
                 </Accordion>
-                <Card titulo="teste Card">
-                    Tesde de Card
+                <Card>teste
+                    Tesde de Card <i className="fas fa-plus"> </i>
                 </Card>
-                <Botao cor="primary"> Teste de Botão</Botao>
+                <Botao cor="primary" > Teste de Botão</Botao>
+                <Botao cor="primary" > Teste de Botão</Botao>
+                <Botao cor="primary" > Teste de Botão</Botao>
+                <Botao cor="primary" > Teste de Botão</Botao>
+                <Botao  cor="primary" > Teste de Botão</Botao>
+                <Button >TesteButon</Button>
             </Pagina>
         );
     }

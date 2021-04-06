@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 class Accordion extends Component {
   render() {
+      const botaoFechar = "";
+      const botaoMax = "";
     return (
       <div className="card card-primary collapsed-card" id={"#"+this.props.id}>
         <div className="card-header">
