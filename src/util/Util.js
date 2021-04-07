@@ -23,7 +23,7 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
         mode: 'cors',
         cache: 'default' };
 
-    let resposta;
+
     if (verbo === HttpVerbo.POST) {
          return fetch(servidor+endpoint, {
             headers: myHeaders,
@@ -31,12 +31,12 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
             body: JSON.stringify(dados)
         })
              .then(res => res.json())
+             .catch(e => window.alert("Um erro ocorreu - " + e.message));
     } else {
-        resposta = fetch(servidor+endpoint, myInit)
-            .then(e => e.json());
+        return fetch(servidor+endpoint, myInit)
+            .catch(e => window.alert("Um erro ocorreu - " + e.message));
     }
 
-    return resposta;
 }
 export {xfetch, HttpVerbo};
 
