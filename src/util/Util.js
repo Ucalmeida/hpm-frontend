@@ -1,3 +1,5 @@
+import Bootbox from "bootbox-react/src";
+
 const HttpVerbo = {
     GET: 'GET',
     POST: 'POST',
@@ -56,5 +58,8 @@ const removerCaracteresEspecciais = (texto) => {
 }
 export {removerCaracteresEspecciais};
 
-
+const exibirMensagem = (titulo,mensagem) => {
+    return <Bootbox message={mensagem} />
+}
+export {exibirMensagem};
 
