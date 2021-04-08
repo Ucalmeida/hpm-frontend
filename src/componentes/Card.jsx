@@ -11,7 +11,7 @@ export default class Card extends React.Component {
     render() {
         const cabecalho = this.props.titulo ?
             <div className='card-header'>
-            <h4 className='card-title w-100'>{this.props.titulo}</h4>
+                <h4 className='card-title w-100'>{this.props.titulo}</h4>
             </div> : "";
 
         return (
