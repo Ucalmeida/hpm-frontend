@@ -1,32 +1,50 @@
 import React from 'react'
 import Pagina from "../../componentes/pagina/Pagina";
 import Card from "../../componentes/Card";
-import {HttpVerbo, xfetch} from "../../util/Util";
-import ListarSangue from "../../componentes/ListarSangue";
+import {exibirMensagem, HttpVerbo, xfetch} from "../../util/Util";
 import Input from "../../componentes/form/Input";
 
 
-export default class CadastrarSangue extends React.Component {
+export default class CadastrarEspecialidade extends React.Component {
     constructor() {
         super();
         this.state = {
             nome: '',
-            atualizar: false
+            carregando: false,
+            especialidades: []
         }
+    }
+
+    componentDidMount() {
+        this.carregarEspecialidades();
+    }
+
+    carregarEspecialidades = () => {
+        this.setState({carregando: true})
+        xfetch('/hpm/especialidade/opcoes', {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(json => {
+                    this.setState({especialidades: json.resultado, carregando: false})
+                }
+            )
     }
 
     enviar = (e) => {
         e.preventDefault()
         let objeto = {nome: this.state.nome}
-
-        xfetch('/hpm/sangue', objeto, HttpVerbo.POST)
+        let lista = this.state.especialidades
+        xfetch('/hpm/especialidade/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
+                console.log(json)
                 if (json.status === "OK") {
-                    window.alert('Sangue cadastrado')
+                    exibirMensagem('Sucesso', 'Especialidade cadastrada')
+                    this.setState({nome: ''})
+                    this.carregarEspecialidades()
                 } else {
-                    window.alert("Algo errado aconteceu - " + json.message)
+                    exibirMensagem('Erro', "Algo errado aconteceu - " + json.message)
                 }
-            })
+            }
+        )
     }
 
     handleChange = (e) => {
@@ -35,7 +53,14 @@ export default class CadastrarSangue extends React.Component {
     }
 
     render() {
-        const {nome} = this.state
+        const {nome, especialidades, carregando} = this.state
+        let spinner = '';
+        if (carregando) {
+            spinner =
+                <div className="fa-2x">
+                    <i className="fas fa-spinner fa-spin"></i>
+                </div>;
+        }
         return (
             <Pagina>
                 <div className="row animated--fade-in">
@@ -47,8 +72,8 @@ export default class CadastrarSangue extends React.Component {
                                 onChange={this.handleChange}
                                 value={nome}
                                 name="nome"
-                                label="Tipo Sangue"
-                                placeholder="Tipo Sangue"/>
+                                label="Especialidade"
+                                placeholder="Especialidade"/>
 
                             <div className="align-items-end col-12">
                                 <button className="btn btn-success pull-right" onClick={this.enviar}> Cadastrar </button>
@@ -63,8 +88,14 @@ export default class CadastrarSangue extends React.Component {
                     <div className="col-lg-4">
                     </div>
                     <div className="col-lg-4">
-                        <Card titulo="Sangue cadastrados">
-                            <ListarSangue />
+                        <Card titulo="Especialidades cadastradas">
+                            {spinner}
+                            <ul>
+                                {especialidades.map((v, k) => {
+                                    return <li key={k}> {v.texto}</li>
+                                })}
+                            </ul>
+
                         </Card>
                     </div>
                     <div className="col-lg-4">
