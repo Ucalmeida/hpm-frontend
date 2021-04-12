@@ -2,7 +2,6 @@ import React from 'react'
 import Pagina from "../../componentes/pagina/Pagina";
 import Card from "../../componentes/Card";
 import Input from "../../componentes/form/Input";
-import ListarObjetos from "../../componentes/ListarObjetos";
 import {HttpVerbo, xfetch} from "../../util/Util";
 
 
@@ -11,7 +10,8 @@ export default class CadastrarObjeto extends React.Component {
         super();
         this.state = {
             nome: '',
-            atualizar: false
+            atualizar: false,
+            objetos: []
         }
     }
 
@@ -23,10 +23,19 @@ export default class CadastrarObjeto extends React.Component {
             .then(json => {
                 if (json.status === "OK") {
                     window.alert('Objeto cadastrado')
+                    this.listarObjetos()
                 } else {
                     window.alert("Algo errado aconteceu - " + json.message)
                 }
             })
+    }
+
+    listarObjetos = () => {
+        this.setState({carregando: true})
+        xfetch('/hpm/objeto', {}, HttpVerbo.GET)
+            .then(resultado => resultado.json())
+            .then(json => this.setState({objetos: json.resultado, carregando:false}))
+            .catch(e => this.setState({carregando: false}))
     }
 
     handleChange = (e) => {
@@ -34,8 +43,19 @@ export default class CadastrarObjeto extends React.Component {
         this.setState({[e.target.name]: e.target.value})
     }
 
+    componentDidMount() {
+        this.listarObjetos()
+    }
+
     render() {
-        const {nome} = this.state
+        const {nome, carregando, objetos} = this.state
+        let spinner = '';
+        if (carregando) {
+            spinner =
+                <div className="fa-2x">
+                    <i className="fas fa-spinner fa-spin"></i>
+                </div>;
+        }
         return (
             <Pagina>
                 <div className="row animated--fade-in">
@@ -64,7 +84,12 @@ export default class CadastrarObjeto extends React.Component {
                     </div>
                     <div className="col-lg-4">
                         <Card titulo="Objetos cadastrados">
-                            <ListarObjetos />
+                            {spinner}
+                            <ul>
+                                {objetos.map((v, k) => {
+                                    return <li key={k}>{v.nome}</li>
+                                })}
+                            </ul>
                         </Card>
                     </div>
                     <div className="col-lg-4">

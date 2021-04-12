@@ -2,7 +2,6 @@ import React from 'react'
 import Pagina from "../../componentes/pagina/Pagina";
 import Card from "../../componentes/Card";
 import {HttpVerbo, xfetch} from "../../util/Util";
-import ListarSangue from "../../componentes/ListarSangue";
 import Input from "../../componentes/form/Input";
 
 
@@ -11,8 +10,17 @@ export default class CadastrarSangue extends React.Component {
         super();
         this.state = {
             nome: '',
-            atualizar: false
+            carregando: false,
+            objetos: []
         }
+    }
+
+    carregarLista = () => {
+        this.setState({carregando: true})
+        xfetch('/hpm/sangue/opcoes', {}, HttpVerbo.GET)
+            .then(resultado => resultado.json())
+            .then(json => this.setState({objetos: json.resultado, carregando: false}))
+            .catch(e => this.setState({carregando: false}))
     }
 
     enviar = (e) => {
@@ -23,6 +31,7 @@ export default class CadastrarSangue extends React.Component {
             .then(json => {
                 if (json.status === "OK") {
                     window.alert('Sangue cadastrado')
+                    this.carregarLista()
                 } else {
                     window.alert("Algo errado aconteceu - " + json.message)
                 }
@@ -34,8 +43,19 @@ export default class CadastrarSangue extends React.Component {
         this.setState({[e.target.name]: e.target.value})
     }
 
+    componentDidMount() {
+        this.carregarLista()
+    }
+
     render() {
-        const {nome} = this.state
+        const {nome, carregando, objetos} = this.state
+        let spinner = '';
+        if (carregando) {
+            spinner =
+                <div className="fa-2x">
+                    <i className="fas fa-spinner fa-spin"></i>
+                </div>;
+        }
         return (
             <Pagina>
                 <div className="row animated--fade-in">
@@ -64,7 +84,12 @@ export default class CadastrarSangue extends React.Component {
                     </div>
                     <div className="col-lg-4">
                         <Card titulo="Sangue cadastrados">
-                            <ListarSangue />
+                            {spinner}
+                            <ul>
+                                {objetos.map((v, k) => {
+                                    return <li key={k}> {v.texto}</li>
+                                })}
+                            </ul>
                         </Card>
                     </div>
                     <div className="col-lg-4">
