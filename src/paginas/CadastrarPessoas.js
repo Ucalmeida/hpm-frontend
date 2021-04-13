@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import Pagina from "../componentes/pagina/Pagina";
+import Select from "../componentes/Select";
 
 function CadastrarPessoa() {
     return(
@@ -14,36 +15,46 @@ function CadastrarPessoa() {
                     <input className="form-group col-lg-4" name="pessoa.telefone"/>
                     <input className="form-group col-lg-4" name="pessoa.email"/>
                     <input className="form-group col-lg-4" name="pessoa.dtNascimento"/>
-                    <select className="form-group col-lg-4" name="pessoa.policialMilitar">
-                        <option></option>
-                    </select>
-                    <select className="form-group col-lg-4" name="pessoa.bombeiroMilitar">
-                        <option></option>
-                    </select>
-                    <select className="form-group col-lg-4" name="pessoa.policialCivil">
-                        <option></option>
-                    </select>
-                    <select className="form-group col-lg-4" name="pessoa.funcionario">
-                        <option></option>
-                    </select>
-                    <select className="form-group col-lg-4" name="pessoa.acessoSistema">
-                        <option></option>
-                    </select>
-                    <select className="form-group col-lg-4" name="pessoa.ativo">
-                        <option></option>
-                    </select>
-                    <select className="form-group col-lg-4" name="pessoa.vivo">
-                        <option></option>
-                    </select>
-                    <select className="form-group col-lg-4" name="instituicao.id">
-                        <option></option>
-                    </select>
-                    <select className="form-group col-lg-4" name="sangue.id">
-                        <option></option>
-                    </select>
-                    <select className="form-group col-lg-4" name="sexo.id">
-                        <option></option>
-                    </select>
+                    <div className="form-group col-lg-2">
+                        <label>Policial Militar</label>
+                        <Select name={"pessoa.policialMilitar"} />
+                    </div>
+                    <div className="form-group col-lg-2">
+                        <label>Bombeiro Militar</label>
+                        <Select className={"form-group col-lg-4"} name={"pessoa.bombeiroMilitar"} />
+                    </div>
+                    <div className="form-group col-lg-2">
+                        <label>Policial Civil</label>
+                        <Select className={"form-group col-lg-4"} name={"pessoa.policialCivil"} />
+                    </div>
+                    <div className="form-group col-lg-2">
+                        <label>Funcionário</label>
+                        <Select className={"form-group col-lg-4"} name={"pessoa.funcionario"} />
+                    </div>
+                    <div className="form-group col-lg-2">
+                        <label>Acessa Sistema</label>
+                        <Select className={"form-group col-lg-4"} name={"pessoa.acessoSistema"} />
+                    </div>
+                    <div className="form-group col-lg-2">
+                        <label>Ativo</label>
+                        <Select className={"form-group col-lg-4"} name={"pessoa.ativo"} />
+                    </div>
+                    <div className="form-group col-lg-2">
+                        <label>Vivo</label>
+                        <Select className={"form-group col-lg-4"} name={"pessoa.vivo"} />
+                    </div>
+                    <div className="form-group col-lg-2">
+                        <label>Instituição</label>
+                        <Select className={"form-group col-lg-4"} name={"instituicao.id"} />
+                    </div>
+                    <div className="form-group col-lg-2">
+                        <label>Tipo Sanguíneo</label>
+                        <Select className={"form-group col-lg-4"} name={"sangue.id"} />
+                    </div>
+                    <div className="form-group col-lg-2">
+                        <label>Sexo</label>
+                        <Select className={"form-group col-lg-4"} name={"sexo.id"} />
+                    </div>
                 </div>
             </div>
         </Pagina>
