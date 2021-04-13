@@ -10,7 +10,7 @@ export default class Card extends React.Component {
 
     render() {
         const cabecalho = this.props.titulo ?
-            <div className='card-header p-1 pt-2 px-3'>
+            <div className='card-header p-0 pt-2 px-3'>
                 <h3 className='card-title'>{this.props.titulo}</h3>
             </div> : "";
 

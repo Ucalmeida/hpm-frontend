@@ -19,38 +19,41 @@ function Principal () {
         document.getElementById('root').classList.remove('login-page');
         document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
         window.document.title = titulo;
-
-
-
-        const [showConfirm, setShowConfirm] =  useState(false);
-        const [showAlert, setShowAlert] = useState(false);
-        const [showPrompt, setShowPrompt] = useState(false);
-        const {pessoa} = useState(false)
-
-        const handleConfirm = () => {
-            console.log("You clicked Yes!");
-            return setShowConfirm(false);
-        }
-
         const retorno = (valor) => {
             console.log(valor)
         }
 
-        const handleCancel = () => {
-            console.log("You clicked No!");
-            return setShowConfirm(false);
-        }
 
-        const handleClose = () => {
-            console.log("You closed Alert!");
-            return setShowAlert(false);
-        }
 
-        const handlePrompt = (result) => {
-            console.log(`User input: ${result}`);
-            return setShowPrompt(false);
-        }
+        // const [showConfirm, setShowConfirm] =  useState(false);
+        // const [showAlert, setShowAlert] = useState(false);
+        // const [showPrompt, setShowPrompt] = useState(false);
+        // const {pessoa} = useState(false)
+        //
+        // const handleConfirm = () => {
+        //     console.log("You clicked Yes!");
+        //     return setShowConfirm(false);
+        // }
+        //
+        //
+        // const handleCancel = () => {
+        //     console.log("You clicked No!");
+        //     return setShowConfirm(false);
+        // }
+        //
+        // const handleClose = () => {
+        //     console.log("You closed Alert!");
+        //     return setShowAlert(false);
+        // }
+        //
+        // const handlePrompt = (result) => {
+        //     console.log(`User input: ${result}`);
+        //     return setShowPrompt(false);
+        // }
 
+    let dispararMsg = () => {
+          return exibirMensagem("teste");
+    }
         return (
 
             <Pagina titulo="Bem Vindo" subTitulo="Sub Titulo">
@@ -78,27 +81,27 @@ function Principal () {
                         opgk podfgjiofdgf´g jdf´pgj ipdfg iosp´fj ´sps
                     </Tab>
                 </Tabs>
-                    <button onClick={exibirMensagem('teste','teste')}>bootstrap</button>
-                    <Botao onClick={exibirMensagem('titulo','corpo da mensagem')}>Bootbox</Botao>
-                    <Button onClick={() => exibirMensagem('titulo','corpo da mensagem')}>Bootbox</Button>
+                    <button onClick={dispararMsg}>bootstrap</button>
+                    {/*<Botao onClick={exibirMensagem('corpo da mensagem')} >Bootbox</Botao>*/}
+                    {/*<Button onClick={() => exibirMensagem('titulo','corpo da mensagem')}>Bootbox</Button>*/}
                 </Card>
 
 
 
 
-        <Botao onClick={ () => setShowAlert(true) }> Alert </Botao>
-    <Bootbox show={showAlert}
-    type={"alert"}
-    message={"This is a simple alert"}
-    onClose={handleClose}
-    />
+    {/*    <Botao onClick={ () => setShowAlert(true) }> Alert </Botao>*/}
+    {/*<Bootbox show={showAlert}*/}
+    {/*type={"alert"}*/}
+    {/*message={"This is a simple alert"}*/}
+    {/*onClose={handleClose}*/}
+    {/*/>*/}
 
-    <button onClick={ () => setShowPrompt(true) }> Prompt </button>
-    <Bootbox show={showPrompt}
-    type={"prompt"}
-    message={"What's your name"}
-    onPrompt={handlePrompt}
-    />
+    {/*<button onClick={ () => setShowPrompt(true) }> Prompt </button>*/}
+    {/*<Bootbox show={showPrompt}*/}
+    {/*type={"prompt"}*/}
+    {/*message={"What's your name"}*/}
+    {/*onPrompt={handlePrompt}*/}
+    {/*/>*/}
 
 
 

@@ -4,6 +4,7 @@ import Card from "../../componentes/Card";
 import {exibirMensagem, HttpVerbo, xfetch} from "../../util/Util";
 import Input from "../../componentes/form/Input";
 import Spinner from "../../componentes/Spinner";
+import Botao from "../../componentes/Botao";
 
 
 export default class CadastrarEspecialidade extends React.Component {
@@ -60,9 +61,8 @@ export default class CadastrarEspecialidade extends React.Component {
             spinner = <Spinner></Spinner>
         };
         return (
-            <Pagina>
+            <Pagina titulo="Especialidades">
                 <div className="row animated--fade-in">
-                    <div className="col-lg-4"></div>
                     <div className="col-lg-4">
                         <Card>
                             <Input
@@ -74,29 +74,20 @@ export default class CadastrarEspecialidade extends React.Component {
                                 placeholder="Especialidade"/>
 
                             <div className="align-items-end col-12">
-                                <button className="btn btn-success pull-right" onClick={this.enviar}> Cadastrar </button>
+                                <Botao cor="success" icone="salvar" onClick={this.enviar}> Cadastrar </Botao>
                             </div>
                         </Card>
                     </div>
-                    <div className="col-12">
-                        <hr className="col-12"/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg-4">
-                    </div>
-                    <div className="col-lg-4">
+                    <div className="col-lg-8">
                         <Card titulo="Especialidades cadastradas">
                             {spinner}
-                            <ul>
+                            <ul style={{columns: 3}}>
                                 {especialidades.map((v, k) => {
-                                    return <li key={k}> {v.texto}</li>
+                                    return <li className="list-group-item flex-fill border" key={k}> {v.texto}</li>
                                 })}
                             </ul>
 
                         </Card>
-                    </div>
-                    <div className="col-lg-4">
                     </div>
                 </div>
             </Pagina>

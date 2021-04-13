@@ -1,4 +1,5 @@
-import "bootbox/dist/bootbox.all.min";
+import bootbox from "bootbox/dist/bootbox.all.min";
+import Icone from "../componentes/Icone";
 
 const HttpVerbo = {
     GET: 'GET',
@@ -55,10 +56,16 @@ const removerCaracteresEspecciais = (texto) => {
     return texto;
 }
 
-const exibirMensagem = (mensagem) => {
+const exibirMensagem = (mensagem, titulo, icone) => {
+    if (!icone) icone = "erro";
+    if (titulo) {
+        return bootbox.dialog({
+            titulo: titulo,
+            message: mensagem
+        })
 
-
-    return "<Bootbox message={mensagem} />"
+    }
+    return bootbox.alert(mensagem)
 }
 
 
