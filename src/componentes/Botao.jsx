@@ -10,13 +10,28 @@ const icons = {
 
 export default class Botao extends React.Component {
 
-    constructor() {
-        super();
-    }
-
     render() {
+        const getTamanho = () => {
+            switch (this.props.tamanho) {
+                case 1:
+                    return " btn-xs";
+                case 2:
+                    return " btn-sm";
+                case 4:
+                    return " btn-lg";
+                case 5:
+                    return " btn-xl";
+                default: return "";
+            }
+        }
+
+
         return(
-          <Button onClick={this.props.onClick} variant={this.props.variant}>
+          <Button
+              {...this.props}
+              variant={this.props.cor}
+              className={this.props.className+getTamanho()+" m-1"}
+          >
               {this.props.children}
           </Button>
         );
@@ -61,6 +76,7 @@ const AppButton = ({
             {...otherProps}
             variant={theme}
             disabled={isLoading || disabled}
+
         >
             {iconTemplate}
             {children}

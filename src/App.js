@@ -1,32 +1,35 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Login from './paginas/Login';
 import Principal from './paginas/Principal';
 import AlterarSenha from "./paginas/AlterarSenha";
-import Topo from "./componentes/pagina/Topo";
-import MenuLateral from "./componentes/pagina/MenuLateral";
-import Pagina from "./componentes/pagina/Pagina";
-import Rodape from "./componentes/pagina/Rodape";
-import BotaoScrollTop from "./componentes/pagina/BotaoScrollTop";
-
+import CadastrarObjeto from "./paginas/cadastrar/CadastrarObjeto";
+import CadastrarSangue from "./paginas/cadastrar/CadastrarSangue";
+import CadastrarEspecialidade from "./paginas/cadastrar/CadastrarEspecialidade";
 
 class App extends Component {
   
   render() {
-      console.log(process.env)
       return (
-              <Router>
-                  <Route exact path="/" component={Login} />
-                  <Route exact path="/Principal" component={Principal} />
-                  <Route exact path="/alterarSenha" component={AlterarSenha} />
+              <Router >
+                      <Switch>
+                          <Route exact path="/login" component={Login} />
+                          <Route exact path="/" component={Login} />
+                          <Route exact path="/principal" component={Principal} />
+                          <Route exact path="/alterarSenha" component={AlterarSenha} />
+                          <Route exact path="/cadastrar/objeto" component={CadastrarObjeto} />
+                          <Route exact path="/cadastrar/sangue" component={CadastrarSangue} />
+                          <Route exact path="/cadastrar/especialidade" component={CadastrarEspecialidade} />
+                          {/*<Route exact path="/">*/}
+                          {/*    {*/}
+                          {/*        isLogado() ?*/}
+                          {/*        <Login />*/}
+                          {/*        : <Principal />*/}
+                          {/*    }*/}
+                          {/*</Route>*/}
+                      </Switch>
               </Router>
-          // <div className="wrapper">
-          // <Topo />
-          // <MenuLateral />
-          // <Rodape />
-          // <BotaoScrollTop />
-          // </div>
       );
     }
   }

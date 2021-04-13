@@ -1,6 +1,6 @@
 import React from 'react'
 import Pagina from '../componentes/pagina/Pagina'
-import Input from "../componentes/Input";
+import Input from "../componentes/form/Input";
 import Card from "../componentes/Card";
 
 

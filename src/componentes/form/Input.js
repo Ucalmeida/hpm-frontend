@@ -11,7 +11,7 @@ export default class Input extends React.Component {
         return (
             <div className={'form-group ' + this.props.className}>
                 <label>{this.props.label}</label>
-                <input className="form-control" {...this.props}/>
+                <input autoComplete="off" className="form-control" {...this.props}/>
                 {small}
             </div>
         );

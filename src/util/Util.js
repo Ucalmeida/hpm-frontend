@@ -1,3 +1,5 @@
+import "bootbox/dist/bootbox.all.min";
+
 const HttpVerbo = {
     GET: 'GET',
     POST: 'POST',
@@ -7,7 +9,7 @@ const HttpVerbo = {
 }
 
 const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
-    const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.48:8080'
+    const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.47:8081'
 
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -23,7 +25,7 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
         mode: 'cors',
         cache: 'default' };
 
-    let resposta;
+
     if (verbo === HttpVerbo.POST) {
          return fetch(servidor+endpoint, {
             headers: myHeaders,
@@ -31,12 +33,41 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
             body: JSON.stringify(dados)
         })
              .then(res => res.json())
+             .catch(e => window.alert("Um erro ocorreu - " + e.message));
     } else {
-        resposta = fetch(servidor+endpoint, myInit)
-            .then(e => e.json());
+        return fetch(servidor+endpoint, myInit)
+            .catch(e => window.alert("Um erro ocorreu - " + e.message));
     }
 
-    return resposta;
 }
 
-export {xfetch, HttpVerbo};
+
+const isLogado = () => {
+    let token = localStorage.getItem('token')
+    if(!token) {
+        return true
+    } else
+        return false
+}
+
+const removerCaracteresEspecciais = (texto) => {
+    texto = texto.replace((/[ÀÁÂÃÄÅ]/g,"A"))
+    return texto;
+}
+
+const exibirMensagem = (mensagem) => {
+
+
+    return "<Bootbox message={mensagem} />"
+}
+
+
+export {
+    xfetch,
+    HttpVerbo,
+    isLogado,
+    removerCaracteresEspecciais,
+    exibirMensagem
+};
+
+
