@@ -20,7 +20,7 @@ export default class MenuLateral extends React.Component {
                 <div className="sidebar">
                     <nav className="mt-2">
                         <ul
-                            className="nav nav-pills nav-sidebar flex-column"
+                            className="nav nav-pills nav-sidebar flex-column nav-child-indent"
                             data-widget="treeview"
                             role="menu"
                             data-accordion="false"
@@ -32,16 +32,27 @@ export default class MenuLateral extends React.Component {
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to="/cadastrar/objeto" exact className="nav-link">
-                                    <i className="nav-icon fas fa-plus" />
-                                    <p>Cadatrar Objeto</p>
-                                </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/cadastrar/sangue" exact className="nav-link">
-                                    <i className="nav-icon fas fa-plus" />
-                                    <p>Cadatrar Sangue</p>
-                                </NavLink>
+                                <a href="#" className="nav-link">
+                                    <i className="nav-icon fas fa-plus"></i>
+                                    <p>
+                                        Cadastrar
+                                        <i className="fas fa-angle-down right"></i>
+                                    </p>
+                                </a>
+                                <ul className="nav nav-treeview">
+                                    <li className="nav-item">
+                                        <NavLink to="/cadastrar/objeto" exact className="nav-link">
+                                            <i className="nav-icon fas fa-plus" />
+                                            <p>Cadatrar Objeto</p>
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to="/cadastrar/sangue" exact className="nav-link">
+                                            <i className="nav-icon fas fa-plus" />
+                                            <p>Cadatrar Sangue</p>
+                                        </NavLink>
+                                    </li>
+                                </ul>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="/cadastrar/especialidade" exact className="nav-link">

@@ -113,7 +113,7 @@ export default class Topo extends React.Component {
 							</button>
                                 </div>  
                             <div className='col-4 text-center'>
-                                <Botao  onclick='alterarSenha'>
+                                <Botao  onClick='alterarSenha'>
                                     Alterar Senha
                                 </Botao>
                                 </div>  

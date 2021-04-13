@@ -2,7 +2,8 @@ import React from 'react'
 import Pagina from "../../componentes/pagina/Pagina";
 import Card from "../../componentes/Card";
 import Input from "../../componentes/form/Input";
-import {HttpVerbo, xfetch} from "../../util/Util";
+import {exibirMensagem, HttpVerbo, xfetch} from "../../util/Util";
+import Spinner from "../../componentes/Spinner";
 
 
 export default class CadastrarObjeto extends React.Component {
@@ -22,6 +23,7 @@ export default class CadastrarObjeto extends React.Component {
         xfetch('/hpm/objeto', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
+                    exibirMensagem('mensagem')
                     window.alert('Objeto cadastrado')
                     this.listarObjetos()
                 } else {
@@ -52,9 +54,9 @@ export default class CadastrarObjeto extends React.Component {
         let spinner = '';
         if (carregando) {
             spinner =
-                <div className="fa-2x">
-                    <i className="fas fa-spinner fa-spin"></i>
-                </div>;
+                <Spinner>
+
+                </Spinner>
         }
         return (
             <Pagina>
@@ -80,8 +82,7 @@ export default class CadastrarObjeto extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-lg-4">
-                    </div>
+                    <div className="col-lg-4"></div>
                     <div className="col-lg-4">
                         <Card titulo="Objetos cadastrados">
                             {spinner}
@@ -92,8 +93,7 @@ export default class CadastrarObjeto extends React.Component {
                             </ul>
                         </Card>
                     </div>
-                    <div className="col-lg-4">
-                    </div>
+                    <div className="col-lg-4"></div>
                 </div>
             </Pagina>
         );

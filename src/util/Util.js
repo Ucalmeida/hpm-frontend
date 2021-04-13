@@ -1,4 +1,4 @@
-import Bootbox from "bootbox-react/src";
+import "bootbox/dist/bootbox.all.min";
 
 const HttpVerbo = {
     GET: 'GET',
@@ -55,11 +55,19 @@ const removerCaracteresEspecciais = (texto) => {
     return texto;
 }
 
-const exibirMensagem = (titulo,mensagem) => {
-    return <Bootbox message={mensagem} />
+const exibirMensagem = (mensagem) => {
+
+
+    return "<Bootbox message={mensagem} />"
 }
 
 
-export {xfetch, HttpVerbo, isLogado, removerCaracteresEspecciais, exibirMensagem};
+export {
+    xfetch,
+    HttpVerbo,
+    isLogado,
+    removerCaracteresEspecciais,
+    exibirMensagem
+};
 
 

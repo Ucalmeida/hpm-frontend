@@ -5,6 +5,7 @@ import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.bundle.min'
 import 'overlayscrollbars-react/dist/overlayscrollbars-react';
 import 'admin-lte/dist/js/adminlte.min';
+import './menu'
 import App from './App';
 
 

@@ -223,6 +223,7 @@ ul > li > a > img.active {
 .menu-open {
     background: #001315;
     transition: background-color 0.5s ease;
+    border-radius: 5px;
 }
 .nav-sidebar .nav-item > .nav-link .right {
     transition: -webkit-transform ease-in-out 0.5s;

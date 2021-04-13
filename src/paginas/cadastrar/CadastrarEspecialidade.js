@@ -3,6 +3,7 @@ import Pagina from "../../componentes/pagina/Pagina";
 import Card from "../../componentes/Card";
 import {exibirMensagem, HttpVerbo, xfetch} from "../../util/Util";
 import Input from "../../componentes/form/Input";
+import Spinner from "../../componentes/Spinner";
 
 
 export default class CadastrarEspecialidade extends React.Component {
@@ -56,11 +57,8 @@ export default class CadastrarEspecialidade extends React.Component {
         const {nome, especialidades, carregando} = this.state
         let spinner = '';
         if (carregando) {
-            spinner =
-                <div className="fa-2x">
-                    <i className="fas fa-spinner fa-spin"></i>
-                </div>;
-        }
+            spinner = <Spinner></Spinner>
+        };
         return (
             <Pagina>
                 <div className="row animated--fade-in">
