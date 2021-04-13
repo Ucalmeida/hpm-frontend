@@ -7,7 +7,7 @@ import {Button, Tab, Tabs} from "react-bootstrap";
 import {exibirMensagem} from "../util/Util";
 import Bootbox from "bootbox-react";
 
-// export default class Principal extends React.Component {
+import Autocompletar from "../componentes/Autocompletar";
 
 function Principal () {
 
@@ -25,11 +25,15 @@ function Principal () {
         const [showConfirm, setShowConfirm] =  useState(false);
         const [showAlert, setShowAlert] = useState(false);
         const [showPrompt, setShowPrompt] = useState(false);
-
+        const {pessoa} = useState(false)
 
         const handleConfirm = () => {
             console.log("You clicked Yes!");
             return setShowConfirm(false);
+        }
+
+        const retorno = (valor) => {
+            console.log(valor)
         }
 
         const handleCancel = () => {
@@ -47,11 +51,14 @@ function Principal () {
             return setShowPrompt(false);
         }
 
-
-
-
         return (
+
             <Pagina titulo="Bem Vindo" subTitulo="Sub Titulo">
+                <div className="col-12">
+                    <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={retorno}/>
+
+                </div>
+
                 <Accordion titulo="Teste" >
                     teste accordion
                 </Accordion>
