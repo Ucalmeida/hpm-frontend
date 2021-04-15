@@ -10,7 +10,7 @@ function Select() {
         xfetch(url, {}, HttpVerbo.GET)
             .then((r) => r.json())
             .then((r) => setList(r));
-    }, []);
+    }, [url]);
 
     return (
         <div className="Lista">

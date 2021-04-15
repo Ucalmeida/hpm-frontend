@@ -14,7 +14,8 @@ List.propTypes = {
     list: P.shape({
         id: P.number,
         nome: P.string,
-    })
+    }),
+    url: P.string,
 }
 
 export default List;
