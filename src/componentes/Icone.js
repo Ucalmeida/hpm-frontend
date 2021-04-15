@@ -1,5 +1,5 @@
 import React from 'react';
-import {corTexto} from "../util/Util";
+import {CorTexto} from "../util/Util";
 
 const Icone = ({icone, cor, margem}) => {
     const icones = {
@@ -12,7 +12,7 @@ const Icone = ({icone, cor, margem}) => {
         voltar: 'fas fa-reply'
     };
 
-    cor = corTexto(cor)
+    cor = CorTexto(cor)
     if (!cor) cor = "";
     if (!margem) margem = " mr-2"; else margem = "";
     if (icone && icones[icone]) {

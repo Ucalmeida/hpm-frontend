@@ -1,9 +1,10 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import {HttpVerbo, xfetch} from "../util/Util";
+import {xfetch} from "../util/Util";
 
 import logoHPM from "../img/brasoes/brasao_hpm.png";
 import PaginaSemLogin from "../componentes/pagina/PaginaSemLogin";
+import {HttpVerbo} from "../util/Constantes";
 
 document.getElementById('root').classList = 'login-page';
 

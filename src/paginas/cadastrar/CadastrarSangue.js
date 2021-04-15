@@ -1,9 +1,10 @@
 import React from 'react'
 import Pagina from "../../componentes/pagina/Pagina";
 import Card from "../../componentes/Card";
-import {HttpVerbo, xfetch} from "../../util/Util";
+import {xfetch} from "../../util/Util";
 import Input from "../../componentes/form/Input";
 import Spinner from "../../componentes/Spinner";
+import {HttpVerbo} from "../../util/Constantes";
 
 
 export default class CadastrarSangue extends React.Component {

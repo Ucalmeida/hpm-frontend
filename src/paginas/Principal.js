@@ -3,9 +3,8 @@ import Pagina from "../componentes/pagina/Pagina";
 import Accordion from "../componentes/Accordion";
 import Card from "../componentes/Card";
 import Botao from "../componentes/Botao";
-import {Button, Tab, Tabs} from "react-bootstrap";
-import {exibirMensagem} from "../util/Util";
-import Bootbox from "bootbox-react";
+import {Tab, Tabs} from "react-bootstrap";
+import {ExibirMensagem} from "../util/Util";
 
 import Autocompletar from "../componentes/Autocompletar";
 import Icone from "../componentes/Icone";
@@ -26,7 +25,7 @@ function Principal () {
 
 
     let dispararMsg = () => {
-          return exibirMensagem("info","teste");
+          return ExibirMensagem("info","teste");
     }
         return (
 

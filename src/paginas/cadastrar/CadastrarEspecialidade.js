@@ -1,10 +1,11 @@
 import React from 'react'
 import Pagina from "../../componentes/pagina/Pagina";
 import Card from "../../componentes/Card";
-import {exibirMensagem, HttpVerbo, xfetch} from "../../util/Util";
+import {ExibirMensagem, xfetch} from "../../util/Util";
 import Input from "../../componentes/form/Input";
 import Spinner from "../../componentes/Spinner";
 import Botao from "../../componentes/Botao";
+import {HttpVerbo, Tipo} from "../../util/Constantes";
 
 
 export default class CadastrarEspecialidade extends React.Component {
@@ -39,11 +40,11 @@ export default class CadastrarEspecialidade extends React.Component {
             .then(json => {
                 console.log(json)
                 if (json.status === "OK") {
-                    exibirMensagem('Especialidade cadastrada', 'Sucesso', 'ok')
+                    ExibirMensagem('Especialidade cadastrada', 'Sucesso', 'ok')
                     this.setState({nome: ''})
                     this.carregarEspecialidades()
                 } else {
-                    exibirMensagem( 'erro', json.message)
+                    ExibirMensagem(json.message, Tipo.MSG.ERRO)
                 }
             }
         )
