@@ -1,5 +1,7 @@
+import React from "react";
 import bootbox from "bootbox/dist/bootbox.all.min";
 import Icone from "../componentes/Icone";
+import {msgErro} from "./Msg";
 
 const HttpVerbo = {
     GET: 'GET',
@@ -45,10 +47,7 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 
 const isLogado = () => {
     let token = localStorage.getItem('token')
-    if(!token) {
-        return true
-    } else
-        return false
+    return !token;
 }
 
 const removerCaracteresEspecciais = (texto) => {
@@ -56,25 +55,57 @@ const removerCaracteresEspecciais = (texto) => {
     return texto;
 }
 
-const exibirMensagem = (mensagem, titulo, icone) => {
-    if (!icone) icone = "erro";
-    if (titulo) {
+
+const exibirMensagemIcone = (icone) => {
+    return <Icone icone={icone}/>
+}
+const exibirMensagem = (tipo, mensagem, titulo, icone) => {
+    if (tipo === 'info') {
+    return bootbox.alert(mensagem)
+    }
+    switch (tipo) {
+        case 'erro':
+        if (!titulo) titulo = 'Erro '
+        // if (!icone) icone = "<i class='fas fa-plus'></i>"
+        if (!icone) {
+
+            // render:  {
+            //     return React.createElement("div", null, "Hello ", this.props.name);
+            // }
+            icone =
+            console.log(icone)
+            icone = "<i class='fas fa-times-circle'> </i>"
+            console.log(icone)
+        }
+        mensagem = msgErro()+mensagem
+    }
+
         return bootbox.dialog({
-            titulo: titulo,
+            title: icone+titulo,
             message: mensagem
         })
-
-    }
-    return bootbox.alert(mensagem)
 }
 
+const corTexto = (cor) => {
+    const cores = {
+        primary: ' text-primary',
+        secondary: ' text-secondary',
+        info: ' text-info',
+        danger: ' text-danger',
+        warning: ' text-warning'
+    }
+    return (
+        cores[cor]
+    );
+}
 
 export {
     xfetch,
     HttpVerbo,
     isLogado,
     removerCaracteresEspecciais,
-    exibirMensagem
+    exibirMensagem,
+    corTexto,
 };
 
 

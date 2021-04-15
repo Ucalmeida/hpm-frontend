@@ -1,19 +1,24 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {corTexto} from "../util/Util";
 
-function Icone (icone) {
+const Icone = ({icone, cor, margem}) => {
     const icones = {
-        facebook: 'fab fa-facebook',
-        google: 'fab fa-google',
-        googlePlus: 'fab fa-google-plus',
-        salvar: 'far fa-save',
-        imprimir: 'fas fa-print',
-        pesquisar: 'fas fa-search',
         erro: 'far fa-times-circle',
-        ok: 'far fa-check-circle'
+        excluir: 'far fa-trash-alt',
+        imprimir: 'fas fa-print',
+        ok: 'far fa-check-circle',
+        pesquisar: 'fas fa-search',
+        salvar: 'far fa-save',
+        voltar: 'fas fa-reply'
     };
 
-    return (
-        <i className={`${icones[icone]} mr-2`}></i>
-    );
+    cor = corTexto(cor)
+    if (!cor) cor = "";
+    if (!margem) margem = " mr-2"; else margem = "";
+    if (icone && icones[icone]) {
+        return(<i className={icones[icone]+margem+cor}></i>);
+    } else {
+        return (<i className={icone+margem+cor}></i>);
+    };
 }
 export default Icone;

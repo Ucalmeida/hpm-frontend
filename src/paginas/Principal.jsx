@@ -8,6 +8,7 @@ import {exibirMensagem} from "../util/Util";
 import Bootbox from "bootbox-react";
 
 import Autocompletar from "../componentes/Autocompletar";
+import Icone from "../componentes/Icone";
 
 function Principal () {
 
@@ -24,35 +25,8 @@ function Principal () {
         }
 
 
-
-        // const [showConfirm, setShowConfirm] =  useState(false);
-        // const [showAlert, setShowAlert] = useState(false);
-        // const [showPrompt, setShowPrompt] = useState(false);
-        // const {pessoa} = useState(false)
-        //
-        // const handleConfirm = () => {
-        //     console.log("You clicked Yes!");
-        //     return setShowConfirm(false);
-        // }
-        //
-        //
-        // const handleCancel = () => {
-        //     console.log("You clicked No!");
-        //     return setShowConfirm(false);
-        // }
-        //
-        // const handleClose = () => {
-        //     console.log("You closed Alert!");
-        //     return setShowAlert(false);
-        // }
-        //
-        // const handlePrompt = (result) => {
-        //     console.log(`User input: ${result}`);
-        //     return setShowPrompt(false);
-        // }
-
     let dispararMsg = () => {
-          return exibirMensagem("teste");
+          return exibirMensagem("info","teste");
     }
         return (
 
@@ -81,31 +55,10 @@ function Principal () {
                         opgk podfgjiofdgf´g jdf´pgj ipdfg iosp´fj ´sps
                     </Tab>
                 </Tabs>
-                    <button onClick={dispararMsg}>bootstrap</button>
-                    {/*<Botao onClick={exibirMensagem('corpo da mensagem')} >Bootbox</Botao>*/}
-                    {/*<Button onClick={() => exibirMensagem('titulo','corpo da mensagem')}>Bootbox</Button>*/}
+                    <Botao icone={"imprimir"} onClick={dispararMsg}>teste</Botao>
+                    <Botao>nada</Botao>
+                    <Icone icone={"erro"} cor={"danger"}/>
                 </Card>
-
-
-
-
-    {/*    <Botao onClick={ () => setShowAlert(true) }> Alert </Botao>*/}
-    {/*<Bootbox show={showAlert}*/}
-    {/*type={"alert"}*/}
-    {/*message={"This is a simple alert"}*/}
-    {/*onClose={handleClose}*/}
-    {/*/>*/}
-
-    {/*<button onClick={ () => setShowPrompt(true) }> Prompt </button>*/}
-    {/*<Bootbox show={showPrompt}*/}
-    {/*type={"prompt"}*/}
-    {/*message={"What's your name"}*/}
-    {/*onPrompt={handlePrompt}*/}
-    {/*/>*/}
-
-
-
-
 
 
 
