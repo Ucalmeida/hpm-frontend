@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
+import Icone from "./Icone";
 
 const icones = {
     facebook: 'fab fa-facebook',
@@ -13,15 +14,14 @@ const icones = {
     ok: 'far fa-check-circle'
 };
 
-export default class Botao extends React.Component {
 
-    render() {
+const Botao = ({cor, tamanho, icone, carregando, disabled, className, onClick, children, ...props}) => {
         let iconeTemplate;
         let spinnerTemplate;
-
+        let classe;
 
         const getTamanho = () => {
-            switch (this.props.tamanho) {
+            switch (tamanho) {
                 case 1:
                     return " btn-xs";
                 case 2:
@@ -33,12 +33,12 @@ export default class Botao extends React.Component {
                 default: return "";
             }
         }
-
-        if (this.props.icone && icones[this.props.icone]) {
-            iconeTemplate = <i className={`${icones[this.props.icone]} mr-2`} />;
+        if (icone && icones[icone]) {
+            iconeTemplate = <Icone icone={icone}/>
+                // <i className={`${icones[icone]} mr-2`} />;
         }
 
-        if (this.props.isLoading) {
+        if (carregando) {
             spinnerTemplate = (
                 <Spinner
                     className="ml-2"
@@ -50,19 +50,20 @@ export default class Botao extends React.Component {
                 />
             );
         }
-        return(
-          <Button
-              {...this.props}
-              variant={this.props.cor}
-              className={this.props.className+getTamanho()+" m-1"}
-              disabled={this.props.isLoading || this.props.disabled}
-          >
-              {iconeTemplate}
-              {this.props.children}
-              {spinnerTemplate}
-          </Button>
-        );
+        if (className) classe = className; else classe = "";
+    return(
+        <Button
+            {...props}
+            variant={cor}
+            className={classe+getTamanho()+" m-1"}
+            disabled={carregando || disabled}
+            onClick={onClick}
+        >
+            {iconeTemplate}
+            {children}
+            {spinnerTemplate}
+        </Button>
+    )
     };
-};
-
+export default Botao;
 

@@ -39,11 +39,11 @@ export default class CadastrarEspecialidade extends React.Component {
             .then(json => {
                 console.log(json)
                 if (json.status === "OK") {
-                    exibirMensagem('Sucesso', 'Especialidade cadastrada')
+                    exibirMensagem('Especialidade cadastrada', 'Sucesso', 'ok')
                     this.setState({nome: ''})
                     this.carregarEspecialidades()
                 } else {
-                    exibirMensagem('Erro', "Algo errado aconteceu - " + json.message)
+                    exibirMensagem( 'erro', json.message)
                 }
             }
         )
@@ -58,7 +58,7 @@ export default class CadastrarEspecialidade extends React.Component {
         const {nome, especialidades, carregando} = this.state
         let spinner = '';
         if (carregando) {
-            spinner = <Spinner></Spinner>
+            spinner = <Spinner />
         };
         return (
             <Pagina titulo="Especialidades">
