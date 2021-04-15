@@ -1,14 +1,28 @@
-import P from 'prop-types';
+import React, {useEffect, useMemo, useState} from 'react';
+import {HttpVerbo, xfetch} from "../util/Util";
+import List from "./List";
 
-const Select = ({um, dois}) => {
-    return <select className={"form-group col-lg-4"} onChange={um}>
-        <option value={dois}></option>
-    </select>
-};
+function Select() {
+    const [list, setList] = useState([]);
+    const [url, setUrl] = useState('');
 
-Select.propTypes = {
-    um: P.func,
-    dois: P.number,
+    useEffect(() => {
+        xfetch(url, {}, HttpVerbo.GET)
+            .then((r) => r.json())
+            .then((r) => setList(r));
+    }, []);
+
+    return (
+        <div className="Lista">
+            {useMemo(() => {
+                return (
+                    list.map((list) => {
+                        return <List key={list.id} list={list} url={setUrl} />;
+                    })
+                );
+            }, [list])}
+        </div>
+    );
 }
 
 export default Select;

@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
-import Pagina from "../componentes/pagina/Pagina";
-import Select from "../componentes/Select";
+import Pagina from "../../componentes/pagina/Pagina";
+import Select from "../../componentes/Select";
 
 function CadastrarPessoa() {
     return(
@@ -17,7 +17,7 @@ function CadastrarPessoa() {
                     <input className="form-group col-lg-4" name="pessoa.dtNascimento"/>
                     <div className="form-group col-lg-2">
                         <label>Policial Militar</label>
-                        <Select name={"pessoa.policialMilitar"} />
+                        <Select className={"form-group col-lg-4"} name={"pessoa.policialMilitar"}/>
                     </div>
                     <div className="form-group col-lg-2">
                         <label>Bombeiro Militar</label>
@@ -49,7 +49,7 @@ function CadastrarPessoa() {
                     </div>
                     <div className="form-group col-lg-2">
                         <label>Tipo Sanguíneo</label>
-                        <Select className={"form-group col-lg-4"} name={"sangue.id"} />
+                        <Select className={"form-group col-lg-4"} name={"sangue.id"} url={"/opcoes"} />
                     </div>
                     <div className="form-group col-lg-2">
                         <label>Sexo</label>
