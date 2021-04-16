@@ -4,7 +4,7 @@ const msgErro = () => {
 };
 
 const msgSucesso = () => {
-    return "Sucesso! "
+    return "Operação realizada com sucesso! "
 };
 
 export {

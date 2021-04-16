@@ -2,7 +2,6 @@ import React from 'react'
 import Pagina from '../componentes/pagina/Pagina'
 import Input from "../componentes/form/Input";
 import Card from "../componentes/Card";
-import Input from "../componentes/Input";
 
 export default class AlterarSenha extends React.Component {
     constructor() {

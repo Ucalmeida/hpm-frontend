@@ -3,19 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Icone from "./Icone";
 
-const icones = {
-    facebook: 'fab fa-facebook',
-    google: 'fab fa-google',
-    googlePlus: 'fab fa-google-plus',
-    salvar: 'far fa-save',
-    imprimir: 'fas fa-print',
-    pesquisar: 'fas fa-search',
-    erro: 'far fa-times-circle',
-    ok: 'far fa-check-circle'
-};
-
-
-const Botao = ({cor, tamanho, icone, carregando, disabled, className, onClick, children, ...props}) => {
+const Botao = ({cor, tamanho, icone, carregando, disabled, className, onClick, children, ...otherProps}) => {
         let iconeTemplate;
         let spinnerTemplate;
         let classe;
@@ -33,10 +21,6 @@ const Botao = ({cor, tamanho, icone, carregando, disabled, className, onClick, c
                 default: return "";
             }
         }
-        if (icone && icones[icone]) {
-            iconeTemplate = <Icone icone={icone}/>
-                // <i className={`${icones[icone]} mr-2`} />;
-        }
 
         if (carregando) {
             spinnerTemplate = (
@@ -53,13 +37,13 @@ const Botao = ({cor, tamanho, icone, carregando, disabled, className, onClick, c
         if (className) classe = className; else classe = "";
     return(
         <Button
-            {...props}
+            {...otherProps}
             variant={cor}
             className={classe+getTamanho()+" m-1"}
             disabled={carregando || disabled}
             onClick={onClick}
         >
-            {iconeTemplate}
+            {icone ? <Icone icone={icone} /> : ''}
             {children}
             {spinnerTemplate}
         </Button>

@@ -75,7 +75,7 @@ export default class CadastrarEspecialidade extends React.Component {
                                 placeholder="Especialidade"/>
 
                             <div className="align-items-end col-12">
-                                <Botao cor="success" icone="salvar" onClick={this.enviar}> Cadastrar </Botao>
+                                <Botao cor="success" icone={Tipo.ICONE.SALVAR} onClick={this.enviar}> Cadastrar </Botao>
                             </div>
                         </Card>
                     </div>

@@ -8,6 +8,7 @@ import {ExibirMensagem} from "../util/Util";
 
 import Autocompletar from "../componentes/Autocompletar";
 import Icone from "../componentes/Icone";
+import {Tipo} from "../util/Constantes";
 
 function Principal () {
 
@@ -54,17 +55,10 @@ function Principal () {
                         opgk podfgjiofdgf´g jdf´pgj ipdfg iosp´fj ´sps
                     </Tab>
                 </Tabs>
-                    <Botao icone={"imprimir"} onClick={dispararMsg}>teste</Botao>
-                    <Botao>nada</Botao>
-                    <Icone icone={"erro"} cor={"danger"}/>
+                    <Botao icone={Tipo.ICONE.IMPRIMIR} onClick={dispararMsg}>teste</Botao>
+                    <Botao icone={'fas fa-file-pdf'}>nada</Botao>
+                    <Icone icone={Tipo.ICONE.ERRO} cor={Tipo.COR_TEXTO.PERIGO} id={"teste"}/>
                 </Card>
-
-
-
-
-
-
-
             </Pagina>
         );
     // }
