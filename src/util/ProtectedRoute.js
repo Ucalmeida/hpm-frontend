@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import {isLogado} from "./Util";
+import {IsLogado} from "./Util";
 
 
 const ProtectedRoute = ({ children, ...rest }) => {
@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children, ...rest }) => {
         <Route
             {...rest}
             render={({ location }) =>
-               isLogado() ? (
+               IsLogado() ? (
                     children
                 ) : (
                     <Redirect

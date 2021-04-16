@@ -2,8 +2,9 @@ import React from 'react'
 import Pagina from "../../componentes/pagina/Pagina";
 import Card from "../../componentes/Card";
 import Input from "../../componentes/form/Input";
-import {exibirMensagem, HttpVerbo, xfetch} from "../../util/Util";
+import {ExibirMensagem, xfetch} from "../../util/Util";
 import Spinner from "../../componentes/Spinner";
+import {HttpVerbo} from "../../util/Constantes";
 
 
 export default class CadastrarObjeto extends React.Component {
@@ -23,7 +24,7 @@ export default class CadastrarObjeto extends React.Component {
         xfetch('/hpm/objeto', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    exibirMensagem('mensagem')
+                    ExibirMensagem('mensagem')
                     window.alert('Objeto cadastrado')
                     this.listarObjetos()
                 } else {

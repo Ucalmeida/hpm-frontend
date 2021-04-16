@@ -2,7 +2,7 @@ import React from 'react'
 import Pagina from '../componentes/pagina/Pagina'
 import Input from "../componentes/form/Input";
 import Card from "../componentes/Card";
-
+import Input from "../componentes/Input";
 
 export default class AlterarSenha extends React.Component {
     constructor() {
@@ -18,7 +18,6 @@ export default class AlterarSenha extends React.Component {
         e.preventDefault();
         let valor = e.target.value
         this.setState({[e.target.name]: valor})
-
     }
 
     validaSenha(valor) {
@@ -35,8 +34,6 @@ export default class AlterarSenha extends React.Component {
 
         //TODO fazer chamada para o backend
         // xfetch('/alterarSenha', {}, HttpVerbo.POST)
-
-
 
     }
 

@@ -1,15 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import bootbox from "bootbox/dist/bootbox.all.min";
 import Icone from "../componentes/Icone";
 import {msgErro} from "./Msg";
-
-const HttpVerbo = {
-    GET: 'GET',
-    POST: 'POST',
-    PUT: 'PUT',
-    DELETE: 'DELETE',
-    PATCH: 'PATCH'
-}
+import {HttpVerbo, Tipo} from "./Constantes";
 
 const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.47:8081'
@@ -45,40 +38,50 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 }
 
 
-const isLogado = () => {
+const IsLogado = () => {
     let token = localStorage.getItem('token')
     return !token;
 }
 
-const removerCaracteresEspecciais = (texto) => {
+const RemoverCaracteresEspeciais = (texto) => {
     texto = texto.replace((/[ÀÁÂÃÄÅ]/g,"A"))
     return texto;
 }
 
 
-const exibirMensagemIcone = (icone) => {
+const ExibirMensagemIcone = (icone) => {
+    useEffect(() => {
+        // iconess = <Icone icone={icone}/>
+        console.log('icones')
+    });
     return <Icone icone={icone}/>
 }
-const exibirMensagem = (tipo, mensagem, titulo, icone) => {
-    if (tipo === 'info') {
-    return bootbox.alert(mensagem)
-    }
+
+function ExibirMensagem (mensagem, tipo, titulo, icone)  {
+    let teste = <Icone icone={icone}/>
+    console.log(JSON.stringify(teste))
     switch (tipo) {
-        case 'erro':
+        case Tipo.MSG.ERRO:
         if (!titulo) titulo = 'Erro '
         // if (!icone) icone = "<i class='fas fa-plus'></i>"
         if (!icone) {
-
+            icone = <Icone icone={Tipo.ICONE.ERRO} />
             // render:  {
             //     return React.createElement("div", null, "Hello ", this.props.name);
             // }
-            icone =
             console.log(icone)
-            icone = "<i class='fas fa-times-circle'> </i>"
+            // icone = "<i class='fas fa-times-circle'> </i>"
             console.log(icone)
         }
         mensagem = msgErro()+mensagem
+        break;
+
+        case Tipo.MSG.INFO:
+            return bootbox.alert(mensagem);
+
+        default: return bootbox.alert(tipo);
     }
+
 
         return bootbox.dialog({
             title: icone+titulo,
@@ -86,7 +89,7 @@ const exibirMensagem = (tipo, mensagem, titulo, icone) => {
         })
 }
 
-const corTexto = (cor) => {
+const CorTexto = (cor) => {
     const cores = {
         primary: ' text-primary',
         secondary: ' text-secondary',
@@ -101,11 +104,10 @@ const corTexto = (cor) => {
 
 export {
     xfetch,
-    HttpVerbo,
-    isLogado,
-    removerCaracteresEspecciais,
-    exibirMensagem,
-    corTexto,
+    IsLogado,
+    RemoverCaracteresEspeciais,
+    ExibirMensagem,
+    CorTexto,
 };
 
 

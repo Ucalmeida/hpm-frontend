@@ -8,7 +8,7 @@ class Accordion extends Component {
       const botaoMax = "";
     return (
       <div className="card card-primary collapsed-card" id={"#"+this.props.id}>
-        <div className="card-header p-0 pt-2 px-3">
+        <div className="card-header p-1 pt-2 px-3">
             <h3 className="card-title">
                 <a className="d-block cursor-pointer" data-card-widget="collapse"> {this.props.titulo} {getBotaoFechar()}</a>
             </h3>
