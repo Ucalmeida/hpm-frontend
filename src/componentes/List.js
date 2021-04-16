@@ -1,9 +1,9 @@
 import P from "prop-types";
 import React from "react";
 
-const List = ({ list, url }) => {
+function List ({ list, url }) {
     return (
-        <select key={list.id} name={url}>
+        <select key={list.id} url={url}>
             <option></option>
             <option>{list.nome}</option>
         </select>

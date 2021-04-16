@@ -7,6 +7,7 @@ import AlterarSenha from "./paginas/AlterarSenha";
 import CadastrarObjeto from "./paginas/cadastrar/CadastrarObjeto";
 import CadastrarSangue from "./paginas/cadastrar/CadastrarSangue";
 import CadastrarEspecialidade from "./paginas/cadastrar/CadastrarEspecialidade";
+import CadastrarPessoa from "./paginas/cadastrar/CadastrarPessoa";
 
 class App extends Component {
   
@@ -21,6 +22,7 @@ class App extends Component {
                           <Route exact path="/cadastrar/objeto" component={CadastrarObjeto} />
                           <Route exact path="/cadastrar/sangue" component={CadastrarSangue} />
                           <Route exact path="/cadastrar/especialidade" component={CadastrarEspecialidade} />
+                          <Route exact path="/cadastrar/pessoa" component={CadastrarPessoa} />
                           {/*<Route exact path="/">*/}
                           {/*    {*/}
                           {/*        isLogado() ?*/}
