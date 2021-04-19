@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
+import ReactDOM from "react-dom";
 import bootbox from "bootbox/dist/bootbox.all.min";
 import Icone from "../componentes/Icone";
-import {msgErro} from "./Msg";
+import {msgErro, msgSucesso} from "./Msg";
 import {HttpVerbo, Tipo} from "./Constantes";
 
 const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
@@ -37,7 +38,6 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 
 }
 
-
 const IsLogado = () => {
     let token = localStorage.getItem('token')
     return !token;
@@ -48,45 +48,45 @@ const RemoverCaracteresEspeciais = (texto) => {
     return texto;
 }
 
+function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho)  {
+    //TODO implementar o tamanho e objeto
 
-const ExibirMensagemIcone = (icone) => {
-    useEffect(() => {
-        // iconess = <Icone icone={icone}/>
-        console.log('icones')
-    });
-    return <Icone icone={icone}/>
-}
+    let corBotao = Tipo.COR_BOTAO.PRIMARIO;
+    if (icone) icone = <Icone icone={icone} cor={Tipo.COR_TEXTO.PRIMARIO}/>
 
-function ExibirMensagem (mensagem, tipo, titulo, icone)  {
-    let teste = <Icone icone={icone}/>
-    console.log(JSON.stringify(teste))
     switch (tipo) {
         case Tipo.MSG.ERRO:
-        if (!titulo) titulo = 'Erro '
-        // if (!icone) icone = "<i class='fas fa-plus'></i>"
-        if (!icone) {
-            icone = <Icone icone={Tipo.ICONE.ERRO} />
-            // render:  {
-            //     return React.createElement("div", null, "Hello ", this.props.name);
-            // }
-            console.log(icone)
-            // icone = "<i class='fas fa-times-circle'> </i>"
-            console.log(icone)
-        }
-        mensagem = msgErro()+mensagem
-        break;
+            corBotao = Tipo.COR_BOTAO.PERIGO;
+            icone = <Icone icone={!icone ? Tipo.ICONE.ERRO : icone} />
+            mensagem = msgErro()+mensagem
+            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.PERIGO+"></span>" + (!titulo ? 'Erro!' : titulo);
+            break;
+
+        case Tipo.MSG.SUCESSO:
+            corBotao = Tipo.COR_BOTAO.SUCESSO;
+            icone = <Icone icone={!icone ? Tipo.ICONE.OK : icone} />
+            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.SUCESSO+"></span>" + (!titulo ? 'Sucesso!' : titulo);
+            mensagem = msgSucesso()+mensagem
+            break;
 
         case Tipo.MSG.INFO:
-            return bootbox.alert(mensagem);
-
-        default: return bootbox.alert(tipo);
+        default:
+            icone = <Icone icone={!icone ? Tipo.ICONE.OK : icone} />
     }
+        bootbox.dialog({
+            title: titulo,
+            message: mensagem,
+            buttons: {
+                ok: {
+                    label: "<span id='icone2'></span>OK",
+                    className: corBotao
+                }
+            }
 
-
-        return bootbox.dialog({
-            title: icone+titulo,
-            message: mensagem
         })
+        if (icone && titulo) ReactDOM.render(icone,document.getElementById('icone'))
+        if (icone) ReactDOM.render(icone,document.getElementById('icone2'))
+    return;
 }
 
 const CorTexto = (cor) => {

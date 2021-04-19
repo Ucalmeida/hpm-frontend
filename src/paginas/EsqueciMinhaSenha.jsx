@@ -1,6 +1,7 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import {HttpVerbo, xfetch} from "../util/Util";
+import {xfetch} from "../util/Util";
+import {HttpVerbo} from "../util/Constantes";
 
 export default class EsqueciMinhaSenha extends React.Component {
 
