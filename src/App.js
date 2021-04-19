@@ -12,6 +12,7 @@ import CadastrarPessoa from "./paginas/cadastrar/CadastrarPessoa";
 import 'overlayscrollbars-react/dist/overlayscrollbars-react';
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
+import CadastrarPredio from "./paginas/cadastrar/CadastrarPredio";
 
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
                           <Route exact path="/cadastrar/sangue" component={CadastrarSangue} />
                           <Route exact path="/cadastrar/especialidade" component={CadastrarEspecialidade} />
                           <Route exact path="/cadastrar/pessoa" component={CadastrarPessoa} />
+                          <Route exact path="/cadastrar/predio" component={CadastrarPredio} />
                           <Route path="/esqueciMinhaSenha" exact component={EsqueciMinhaSenha}/>
                           {/*<Route exact path="/">*/}
                           {/*    {*/}
