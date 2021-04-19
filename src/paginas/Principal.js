@@ -24,9 +24,15 @@ function Principal () {
             console.log(valor)
         }
 
+        const objetoTeste = {
+            id: '69',
+            nome: 'Adalgiza',
+            dados: 'Sexagenária de 64 anos',
+            texto: 'Muitas comobirdades e sarnagatcha',
+    }
 
     let dispararMsg = () => {
-          return ExibirMensagem("info","teste");
+          return ExibirMensagem("Mensagem do popup", Tipo.MSG.SUCESSO, objetoTeste);
     }
         return (
 

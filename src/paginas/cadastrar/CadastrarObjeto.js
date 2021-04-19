@@ -4,7 +4,7 @@ import Card from "../../componentes/Card";
 import Input from "../../componentes/form/Input";
 import {ExibirMensagem, xfetch} from "../../util/Util";
 import Spinner from "../../componentes/Spinner";
-import {HttpVerbo} from "../../util/Constantes";
+import {HttpVerbo, Tipo} from "../../util/Constantes";
 
 
 export default class CadastrarObjeto extends React.Component {
@@ -24,11 +24,10 @@ export default class CadastrarObjeto extends React.Component {
         xfetch('/hpm/objeto', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    ExibirMensagem('mensagem')
-                    window.alert('Objeto cadastrado')
+                    ExibirMensagem('Objeto Cadastrado com Sucesso',Tipo.MSG.SUCESSO)
                     this.listarObjetos()
                 } else {
-                    window.alert("Algo errado aconteceu - " + json.message)
+                    ExibirMensagem(json.message, Tipo.MSG.ERRO)
                 }
             })
     }
@@ -55,9 +54,7 @@ export default class CadastrarObjeto extends React.Component {
         let spinner = '';
         if (carregando) {
             spinner =
-                <Spinner>
-
-                </Spinner>
+                <Spinner />
         }
         return (
             <Pagina>

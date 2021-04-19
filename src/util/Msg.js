@@ -1,6 +1,6 @@
 
 const msgErro = () => {
-    return "Algo de errado aconteceu. "
+    return "Erro! Algo de errado aconteceu. "
 };
 
 const msgSucesso = () => {

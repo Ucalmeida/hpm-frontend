@@ -58,15 +58,23 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho)  {
         case Tipo.MSG.ERRO:
             corBotao = Tipo.COR_BOTAO.PERIGO;
             icone = <Icone icone={!icone ? Tipo.ICONE.ERRO : icone} />
-            mensagem = msgErro()+mensagem
-            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.PERIGO+"></span>" + (!titulo ? 'Erro!' : titulo);
+            mensagem = mensagem
+            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.PERIGO+"></span>" + (!titulo ? Tipo.MSG.ERRO : titulo);
             break;
 
         case Tipo.MSG.SUCESSO:
+            let msgObjeto = '';
+            if (objeto) {
+                msgObjeto += '<br><br><ul className={"mt-5"}>'
+                for (const key in objeto) {
+                    msgObjeto += (`<li id="${key}">${key}: ${objeto[key]}</li>`);
+                }
+                msgObjeto += '</ul>'
+            };
             corBotao = Tipo.COR_BOTAO.SUCESSO;
             icone = <Icone icone={!icone ? Tipo.ICONE.OK : icone} />
-            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.SUCESSO+"></span>" + (!titulo ? 'Sucesso!' : titulo);
-            mensagem = msgSucesso()+mensagem
+            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.SUCESSO+"></span>" + (!titulo ? Tipo.MSG.SUCESSO : titulo);
+            mensagem = mensagem + msgObjeto;
             break;
 
         case Tipo.MSG.INFO:

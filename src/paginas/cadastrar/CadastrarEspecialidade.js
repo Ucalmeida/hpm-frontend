@@ -40,7 +40,7 @@ export default class CadastrarEspecialidade extends React.Component {
             .then(json => {
                 console.log(json)
                 if (json.status === "OK") {
-                    ExibirMensagem('Especialidade cadastrada', 'Sucesso', 'ok')
+                    ExibirMensagem('Especialidade cadastrada', Tipo.MSG.SUCESSO, 'ok')
                     this.setState({nome: ''})
                     this.carregarEspecialidades()
                 } else {

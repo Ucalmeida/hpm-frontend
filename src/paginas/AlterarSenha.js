@@ -2,6 +2,9 @@ import React from 'react'
 import Pagina from '../componentes/pagina/Pagina'
 import Input from "../componentes/form/Input";
 import Card from "../componentes/Card";
+import Botao from "../componentes/Botao";
+import {Tipo} from "../util/Constantes";
+import {ExibirMensagem} from "../util/Util";
 
 export default class AlterarSenha extends React.Component {
     constructor() {
@@ -27,7 +30,7 @@ export default class AlterarSenha extends React.Component {
         e.preventDefault()
         const {senha, nova, renova} = this.state
         if (nova !== renova) {
-            window.alert("Novas senhas inválidas")
+            ExibirMensagem("Novas senhas inválidas", )
             return
         }
 
@@ -69,7 +72,7 @@ export default class AlterarSenha extends React.Component {
                              label="Repita nova senha"
                              placeholder="Repita a nova"/>
                            <div className="align-items-end col-12">
-                               <button className="btn btn-success pull-right" onClick={this.enviar}> Alterar </button>
+                               <Botao onClick={this.enviar} icone={Tipo.ICONE.ALTERAR}> Alterar </Botao>
                            </div>
                        </Card>
                        </div>

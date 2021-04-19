@@ -1,10 +1,10 @@
 import React from 'react'
 import Pagina from "../../componentes/pagina/Pagina";
 import Card from "../../componentes/Card";
-import {xfetch} from "../../util/Util";
+import {ExibirMensagem, xfetch} from "../../util/Util";
 import Input from "../../componentes/form/Input";
 import Spinner from "../../componentes/Spinner";
-import {HttpVerbo} from "../../util/Constantes";
+import {HttpVerbo, Tipo} from "../../util/Constantes";
 
 
 export default class CadastrarSangue extends React.Component {
@@ -32,10 +32,10 @@ export default class CadastrarSangue extends React.Component {
         xfetch('/hpm/sangue', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    window.alert('Sangue cadastrado')
+                    ExibirMensagem('Sangue cadastrado',Tipo.MSG.SUCESSO)
                     this.carregarLista()
                 } else {
-                    window.alert("Algo errado aconteceu - " + json.message)
+                    ExibirMensagem(json.message, Tipo.MSG.ERRO)
                 }
             })
     }
