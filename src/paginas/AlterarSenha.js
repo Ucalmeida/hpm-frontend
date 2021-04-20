@@ -2,7 +2,7 @@ import React from 'react'
 import Pagina from '../componentes/pagina/Pagina'
 import Input from "../componentes/form/Input";
 import Card from "../componentes/Card";
-import Botao from "../componentes/Botao";
+import {Botao} from "../componentes/Botao";
 import {Tipo} from "../util/Constantes";
 import {ExibirMensagem} from "../util/Util";
 
@@ -30,7 +30,7 @@ export default class AlterarSenha extends React.Component {
         e.preventDefault()
         const {senha, nova, renova} = this.state
         if (nova !== renova) {
-            ExibirMensagem("Novas senhas inválidas", )
+            ExibirMensagem("Novas senhas inválidas", Tipo.MSG.ERRO)
             return
         }
 

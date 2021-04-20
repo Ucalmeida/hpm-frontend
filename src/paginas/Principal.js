@@ -2,13 +2,12 @@ import React, {useState} from "react";
 import Pagina from "../componentes/pagina/Pagina";
 import Accordion from "../componentes/Accordion";
 import Card from "../componentes/Card";
-import Botao from "../componentes/Botao";
 import {Tab, Tabs} from "react-bootstrap";
 import {ExibirMensagem} from "../util/Util";
 
 import Autocompletar from "../componentes/Autocompletar";
-import Icone from "../componentes/Icone";
 import {Tipo} from "../util/Constantes";
+import {Botao} from "../componentes";
 
 function Principal () {
 
@@ -17,8 +16,6 @@ function Principal () {
         if (titulo != null) {
             titulo = titulo + " | " + titulo
         }
-        document.getElementById('root').classList.remove('login-page');
-        document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
         window.document.title = titulo;
         const retorno = (valor) => {
             console.log(valor)
@@ -32,20 +29,20 @@ function Principal () {
     }
 
     let dispararMsg = () => {
-          return ExibirMensagem("Mensagem do popup", Tipo.MSG.SUCESSO, objetoTeste);
+          return ExibirMensagem("Mensagem do popup", Tipo.MSG.SUCESSO, objetoTeste,'TItulo bootbox',Tipo.ICONE.PESQUISAR);
     }
         return (
 
             <Pagina titulo="Bem Vindo" subTitulo="Sub Titulo">
                 <div className="col-12">
-                    <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={retorno}/>
+                    <Autocompletar />
 
                 </div>
 
                 <Accordion titulo="Teste" >
                     teste accordion
                 </Accordion>
-                <Card className="gradient-primary">teste
+                <Card className="gradient-primary">
                     Tesde de Card <a href="#"><i className="fas fa-plus"> </i>Novo</a>
                 </Card>
                 <Card>
@@ -61,9 +58,8 @@ function Principal () {
                         opgk podfgjiofdgf´g jdf´pgj ipdfg iosp´fj ´sps
                     </Tab>
                 </Tabs>
-                    <Botao icone={Tipo.ICONE.IMPRIMIR} onClick={dispararMsg}>teste</Botao>
+                    <Botao  icone={'fas fa-arrow-left'} onClick={dispararMsg} cor={Tipo.COR_BOTAO.PERIGO}>teste</Botao>
                     <Botao icone={'fas fa-file-pdf'}>nada</Botao>
-                    <Icone icone={Tipo.ICONE.ERRO} cor={Tipo.COR_TEXTO.PERIGO} id={"teste"}/>
                 </Card>
             </Pagina>
         );

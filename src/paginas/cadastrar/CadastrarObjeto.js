@@ -5,6 +5,7 @@ import Input from "../../componentes/form/Input";
 import {ExibirMensagem, xfetch} from "../../util/Util";
 import Spinner from "../../componentes/Spinner";
 import {HttpVerbo, Tipo} from "../../util/Constantes";
+import {BotaoEnviar, BotaoSalvar} from "../../componentes/Botao";
 
 
 export default class CadastrarObjeto extends React.Component {
@@ -59,7 +60,6 @@ export default class CadastrarObjeto extends React.Component {
         return (
             <Pagina>
                 <div className="row animated--fade-in">
-                    <div className="col-lg-4"></div>
                     <div className="col-lg-4">
                         <Card>
                             <Input
@@ -71,27 +71,20 @@ export default class CadastrarObjeto extends React.Component {
                                 placeholder="Nome Objeto"/>
 
                             <div className="align-items-end col-12">
-                                <button className="btn btn-success pull-right" onClick={this.enviar}> Cadastrar </button>
+                                <BotaoSalvar onClick={this.enviar}/>
                             </div>
                         </Card>
                     </div>
-                    <div className="col-12">
-                        <hr className="col-12"/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg-4"></div>
                     <div className="col-lg-4">
                         <Card titulo="Objetos cadastrados">
                             {spinner}
-                            <ul>
+                            <ul className={"list-unstyled"}>
                                 {objetos.map((v, k) => {
                                     return <li key={k}>{v.nome}</li>
                                 })}
                             </ul>
                         </Card>
                     </div>
-                    <div className="col-lg-4"></div>
                 </div>
             </Pagina>
         );

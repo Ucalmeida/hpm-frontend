@@ -52,13 +52,18 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho)  {
     //TODO implementar o tamanho e objeto
 
     let corBotao = Tipo.COR_BOTAO.PRIMARIO;
-    if (icone) icone = <Icone icone={icone} cor={Tipo.COR_TEXTO.PRIMARIO}/>
 
     switch (tipo) {
+
+        case Tipo.MSG.ALERTA:
+            corBotao = Tipo.COR_BOTAO.ALERTA;
+            icone = <Icone icone={!icone ? Tipo.ICONE.ERRO : icone} />
+            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.ALERTA+"></span>" + (!titulo ? Tipo.MSG.ALERTA : titulo);
+            break;
+
         case Tipo.MSG.ERRO:
             corBotao = Tipo.COR_BOTAO.PERIGO;
             icone = <Icone icone={!icone ? Tipo.ICONE.ERRO : icone} />
-            mensagem = mensagem
             titulo = "<span id='icone' class="+Tipo.COR_TEXTO.PERIGO+"></span>" + (!titulo ? Tipo.MSG.ERRO : titulo);
             break;
 
@@ -79,7 +84,8 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho)  {
 
         case Tipo.MSG.INFO:
         default:
-            icone = <Icone icone={!icone ? Tipo.ICONE.OK : icone} />
+            if (icone) icone = <Icone icone={icone} cor={Tipo.COR_TEXTO.PRIMARIO}/>;
+            else icone = <Icone icone={Tipo.ICONE.OK} />
     }
         bootbox.dialog({
             title: titulo,

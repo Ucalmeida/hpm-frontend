@@ -5,6 +5,7 @@ import {ExibirMensagem, xfetch} from "../../util/Util";
 import Input from "../../componentes/form/Input";
 import Spinner from "../../componentes/Spinner";
 import {HttpVerbo, Tipo} from "../../util/Constantes";
+import {BotaoSalvar} from "../../componentes/Botao";
 
 
 export default class CadastrarSangue extends React.Component {
@@ -58,7 +59,6 @@ export default class CadastrarSangue extends React.Component {
         return (
             <Pagina>
                 <div className="row animated--fade-in">
-                    <div className="col-lg-4"></div>
                     <div className="col-lg-4">
                         <Card>
                             <Input
@@ -70,28 +70,19 @@ export default class CadastrarSangue extends React.Component {
                                 placeholder="Tipo Sangue"/>
 
                             <div className="align-items-end col-12">
-                                <button className="btn btn-success pull-right" onClick={this.enviar}> Cadastrar </button>
+                                <BotaoSalvar onClick={this.enviar}/>
                             </div>
                         </Card>
-                    </div>
-                    <div className="col-12">
-                        <hr className="col-12"/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-lg-4">
                     </div>
                     <div className="col-lg-4">
                         <Card titulo="Sangue cadastrados">
                             {spinner}
-                            <ul>
+                            <ul className={"list-unstyled"}>
                                 {objetos.map((v, k) => {
                                     return <li key={k}> {v.texto}</li>
                                 })}
                             </ul>
                         </Card>
-                    </div>
-                    <div className="col-lg-4">
                     </div>
                 </div>
             </Pagina>

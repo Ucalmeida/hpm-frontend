@@ -12,6 +12,8 @@ export default class Pagina extends Component {
         if (this.props.titulo != null) {
             titulo = titulo + " | " + this.props.titulo
         }
+    document.getElementById('root').classList.remove('login-page');
+    document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
     window.document.title = titulo;
         return (
             <div className="wrapper">

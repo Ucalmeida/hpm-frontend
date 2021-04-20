@@ -4,8 +4,8 @@ import Card from "../../componentes/Card";
 import {ExibirMensagem, xfetch} from "../../util/Util";
 import Input from "../../componentes/form/Input";
 import Spinner from "../../componentes/Spinner";
-import Botao from "../../componentes/Botao";
 import {HttpVerbo, Tipo} from "../../util/Constantes";
+import {Botao, BotaoSalvar} from "../../componentes/Botao";
 
 
 export default class CadastrarEspecialidade extends React.Component {
@@ -40,7 +40,7 @@ export default class CadastrarEspecialidade extends React.Component {
             .then(json => {
                 console.log(json)
                 if (json.status === "OK") {
-                    ExibirMensagem('Especialidade cadastrada', Tipo.MSG.SUCESSO, 'ok')
+                    ExibirMensagem('Especialidade cadastrada', Tipo.MSG.SUCESSO )
                     this.setState({nome: ''})
                     this.carregarEspecialidades()
                 } else {
@@ -75,19 +75,23 @@ export default class CadastrarEspecialidade extends React.Component {
                                 placeholder="Especialidade"/>
 
                             <div className="align-items-end col-12">
-                                <Botao cor="success" icone={Tipo.ICONE.SALVAR} onClick={this.enviar}> Cadastrar </Botao>
+                                <BotaoSalvar onClick={this.enviar}/>
                             </div>
                         </Card>
                     </div>
                     <div className="col-lg-8">
                         <Card titulo="Especialidades cadastradas">
                             {spinner}
-                            <ul style={{columns: 3}}>
+                            <ul className={"list-unstyled"} style={{columns: 3}}>
                                 {especialidades.map((v, k) => {
-                                    return <li className="list-group-item flex-fill border" key={k}> {v.texto}</li>
+                                    return <li className="flex-fill" key={k}> {v.texto}</li>
                                 })}
                             </ul>
-
+                            <ul className={"list-unstyled"} style={{columns: 3}}>
+                                {especialidades.map((v, k) => {
+                                    return <li ><Botao className="flex-fill" key={k}> {v.texto}</Botao></li>
+                                })}
+                            </ul>
                         </Card>
                     </div>
                 </div>

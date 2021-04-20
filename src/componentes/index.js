@@ -1,3 +1,3 @@
-import Botao from 'Botao'
+import {Botao} from './Botao'
 
 export {Botao}

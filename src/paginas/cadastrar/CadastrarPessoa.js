@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import Pagina from "../../componentes/pagina/Pagina";
 import Select from "../../componentes/form/Select";
-import {xfetch} from "../../util/Util";
-import {HttpVerbo} from "../../util/Constantes";
+import {ExibirMensagem, xfetch} from "../../util/Util";
+import {HttpVerbo, Tipo} from "../../util/Constantes";
 import Card from "../../componentes/Card";
 import Input from "../../componentes/form/Input";
+import {BotaoSalvar} from "../../componentes/Botao";
 
 function CadastrarPessoa() {
     const [nome, setNome] = useState('');
@@ -17,9 +18,9 @@ function CadastrarPessoa() {
         xfetch('/hpm/pessoa/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    window.alert('Sangue cadastrado')
+                    ExibirMensagem('Sangue cadastrado', Tipo.MSG.SUCESSO)
                 } else {
-                    window.alert("Algo errado aconteceu - " + json.message)
+                    ExibirMensagem('Algo errado aconteceu - '+ json.message, Tipo.MSG.ERRO)
                 }
             });
     }
@@ -96,7 +97,7 @@ function CadastrarPessoa() {
                         {/*    <Select className={"form-group col-lg-4"} name={"sexo.id"} />*/}
                         {/*</div>*/}
                         <div className="align-items-end col-4">
-                            <button className="btn btn-success" onClick={enviar}> Cadastrar </button>
+                            <BotaoSalvar onClick={enviar} />
                         </div>
                     </Card>
                 </div>

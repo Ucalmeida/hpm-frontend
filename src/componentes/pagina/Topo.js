@@ -1,8 +1,8 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import Botao from "../Botao";
 
 import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
+import {Botao} from "../Botao";
 
 export default class Topo extends React.Component {
     constructor(toggleMenuSidebar) {
@@ -103,19 +103,13 @@ export default class Topo extends React.Component {
                             <li className='user-body border-bottom-verdepetroleo'>
                             <div className='row'>
                                 <div className='col-4 text-center'>
-                                    <button className='btn btn-default btn-sm'>
-								Meu Prontuário
-							</button>  
-						</div>  
-						<div className='col-4 text-center'>
-							<button className='btn btn-default' href='#'>
-                                    Manual  
-							</button>
-                                </div>  
-                            <div className='col-4 text-center'>
-                                <Botao  href='alterarSenha'>
-                                    Alterar Senha
-                                </Botao>
+                                    <Botao>Meu Prontuário</Botao>
+						        </div>
+                                <div className='col-4 text-center'>
+                                    <Botao>Manual</Botao>
+                                </div>
+                                <div className='col-4 text-center'>
+                                    <Botao href='alterarSenha'> Alterar Senha </Botao>
                                 </div>  
                             </div>  
                             </li> 
