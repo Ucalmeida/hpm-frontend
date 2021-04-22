@@ -47,6 +47,7 @@ export default class Login extends React.Component {
                     localStorage.setItem('usuario', dados.usuario)
                     localStorage.setItem('token', dados.token);
                     this.setState({logado: true})
+                    window.location.reload();
                 }
             })
             .catch(e => this.setState({carregando: false}) & window.alert(e))

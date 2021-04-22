@@ -3,6 +3,8 @@ import {Link, Redirect} from "react-router-dom";
 
 import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
 import {Botao} from "../Botao";
+import {IsLogado} from "../../util/Util";
+import {Tipo} from "../../util/Constantes";
 
 export default class Topo extends React.Component {
     constructor(toggleMenuSidebar) {
@@ -19,10 +21,13 @@ export default class Topo extends React.Component {
         e.preventDefault();
         localStorage.clear();
         this.setState({usuario: ''});
+        window.location.reload();
         // this.setState({logado: false});
     }
 
     render() {
+        if (!IsLogado) return "";
+
         const {usuario} = this.state
         if (!usuario) {
             return <Redirect to='/'/>
@@ -103,10 +108,10 @@ export default class Topo extends React.Component {
                             <li className='user-body border-bottom-verdepetroleo'>
                             <div className='row'>
                                 <div className='col-4 text-center'>
-                                    <Botao>Meu Prontuário</Botao>
+                                    <Botao tamanho={2}> Meu Prontuário </Botao>
 						        </div>
                                 <div className='col-4 text-center'>
-                                    <Botao>Manual</Botao>
+                                    <Botao> Manual </Botao>
                                 </div>
                                 <div className='col-4 text-center'>
                                     <Botao href='alterarSenha'> Alterar Senha </Botao>
@@ -118,7 +123,7 @@ export default class Topo extends React.Component {
                                 {/*    <i class='fas fa-power-off fa-sm fa-fw mr-2'></i>*/}
                                 {/*    Sair1*/}
                                 {/*</a>*/}
-                                <Botao className='float-right' variant='danger' onClick={this.sair}>Sair</Botao>
+                                <Botao className='float-right' cor={Tipo.COR_BOTAO.PERIGO} icone={'fas fa-power-off'} onClick={this.sair}>Sair</Botao>
                             </li>
                         </ul>
                     </li>

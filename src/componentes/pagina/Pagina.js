@@ -3,6 +3,7 @@ import Topo from "./Topo";
 import MenuLateral from "./MenuLateral";
 import Rodape from "./Rodape";
 import BotaoScrollTop from "./BotaoScrollTop";
+import {IsLogado} from "../../util/Util";
 
 export default class Pagina extends Component {
 
@@ -12,8 +13,12 @@ export default class Pagina extends Component {
         if (this.props.titulo != null) {
             titulo = titulo + " | " + this.props.titulo
         }
-    document.getElementById('root').classList.remove('login-page');
-    document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
+    if (IsLogado) {
+        document.getElementById('root').classList.remove('login-page');
+        document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
+    } else {
+        document.getElementById('root').classList.add('login-page');
+    }
     window.document.title = titulo;
         return (
             <div className="wrapper">

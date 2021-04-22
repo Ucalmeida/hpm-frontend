@@ -87,11 +87,11 @@ export default class CadastrarEspecialidade extends React.Component {
                                     return <li className="flex-fill" key={k}> {v.texto}</li>
                                 })}
                             </ul>
-                            <ul className={"list-unstyled"} style={{columns: 3}}>
-                                {especialidades.map((v, k) => {
-                                    return <li ><Botao className="flex-fill" key={k}> {v.texto}</Botao></li>
-                                })}
-                            </ul>
+                            {/*<ul className={"list-unstyled"} style={{columns: 3}}>*/}
+                            {/*    {especialidades.map((v, k) => {*/}
+                            {/*        return <li ><Botao className="flex-fill" key={k}> {v.texto}</Botao></li>*/}
+                            {/*    })}*/}
+                            {/*</ul>*/}
                         </Card>
                     </div>
                 </div>

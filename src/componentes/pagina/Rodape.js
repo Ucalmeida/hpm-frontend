@@ -1,9 +1,11 @@
 import React, {Fragment} from "react";
 import {version} from "../../../package.json";
+import {IsLogado} from "../../util/Util";
 
 export default class Rodape extends React.Component {
 
     render() {
+        if (!IsLogado) return "";
         return (
             <Fragment>
                 <footer className="main-footer text-center">

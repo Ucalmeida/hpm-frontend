@@ -52,17 +52,23 @@ const Botao = ({cor, tamanho, icone, tipo, carregando, disabled, className, onCl
         </Button>
     )
     };
-const BotaoEnviar = ({...otherProps}) => {
-    return(<Botao icone={Tipo.ICONE.ENVIAR} cor={Tipo.COR_BOTAO.PRIMARIO} {...otherProps}>Enviar</Botao>);
+const BotaoAlterar = ({tamanho, onClick, ...otherProps}) => {
+    return(<Botao icone={Tipo.ICONE.ALTERAR} cor={Tipo.COR_BOTAO.ALERTA} tamanho={tamanho} onClick={onClick} {...otherProps}>Alterar</Botao>);
 }
-const BotaoSalvar = ({...otherProps}) => {
-    return(<Botao icone={Tipo.ICONE.SALVAR} cor={Tipo.COR_BOTAO.SUCESSO} {...otherProps}>Salvar</Botao>);
+const BotaoEnviar = ({tamanho, onClick, ...otherProps}) => {
+    return(<Botao icone={Tipo.ICONE.ENVIAR} cor={Tipo.COR_BOTAO.PRIMARIO} tamanho={tamanho} onClick={onClick} {...otherProps}>Enviar</Botao>);
 }
-const BotaoExcluir = ({...otherProps}) => {
-    return(<Botao icone={Tipo.ICONE.EXCLUIR} cor={Tipo.COR_BOTAO.PERIGO} {...otherProps}>Salvar</Botao>);
+const BotaoImprimir = ({tamanho, onClick, ...otherProps}) => {
+    return(<Botao icone={Tipo.ICONE.IMPRIMIR} cor={Tipo.COR_BOTAO.PRIMARIO} tamanho={tamanho} onClick={onClick} {...otherProps}>Imprimir</Botao>);
 }
-const BotaoPesquisar = ({...otherProps}) => {
-    return(<Botao icone={Tipo.ICONE.PESQUISAR} cor={Tipo.COR_BOTAO.PRIMARIO} {...otherProps}>Salvar</Botao>);
+const BotaoSalvar = ({tamanho, onClick, ...otherProps}) => {
+    return(<Botao icone={Tipo.ICONE.SALVAR} cor={Tipo.COR_BOTAO.SUCESSO} tamanho={tamanho} onClick={onClick} {...otherProps}>Salvar</Botao>);
+}
+const BotaoExcluir = ({tamanho, onClick, ...otherProps}) => {
+    return(<Botao icone={Tipo.ICONE.EXCLUIR} cor={Tipo.COR_BOTAO.PERIGO} tamanho={tamanho} onClick={onClick} {...otherProps}>Excluir</Botao>);
+}
+const BotaoPesquisar = ({tamanho, onClick, ...otherProps}) => {
+    return(<Botao icone={Tipo.ICONE.PESQUISAR} cor={Tipo.COR_BOTAO.PRIMARIO} tamanho={tamanho} onClick={onClick} {...otherProps}>Salvar</Botao>);
 }
 Botao.prototype = {
     /** Isso sera a tampa*/

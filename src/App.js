@@ -13,6 +13,9 @@ import 'overlayscrollbars-react/dist/overlayscrollbars-react';
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 import CadastrarPredio from "./paginas/cadastrar/CadastrarPredio";
+import Topo from "./componentes/pagina/Topo";
+import MenuLateral from "./componentes/pagina/MenuLateral";
+import Rodape from "./componentes/pagina/Rodape";
 
 
 class App extends Component {
@@ -20,6 +23,8 @@ class App extends Component {
   render() {
       return (
               <Router >
+                  {/*<Topo />*/}
+                  {/*<MenuLateral />*/}
                       <Switch>
                           <Route exact path="/login" component={Login} />
                           <Route exact path="/" component={Login} />
@@ -30,15 +35,9 @@ class App extends Component {
                           <Route exact path="/cadastrar/especialidade" component={CadastrarEspecialidade} />
                           <Route exact path="/cadastrar/pessoa" component={CadastrarPessoa} />
                           <Route exact path="/cadastrar/predio" component={CadastrarPredio} />
-                          <Route path="/esqueciMinhaSenha" exact component={EsqueciMinhaSenha}/>
-                          {/*<Route exact path="/">*/}
-                          {/*    {*/}
-                          {/*        isLogado() ?*/}
-                          {/*        <Login />*/}
-                          {/*        : <Principal />*/}
-                          {/*    }*/}
-                          {/*</Route>*/}
+                          <Route exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
                       </Switch>
+                {/*<Rodape />*/}
               </Router>
       );
     }
