@@ -411,50 +411,50 @@ function sair() {
 
 }
 
-function enviar(form, limpar, exibirMensagem, reload, msgAguarde) {
-	if (limpar !== false) limpar = true;
-	if (exibirMensagem !== false) exibirMensagem = true;
-	if (reload !== true) reload = false;
-	var result = [false, "", ""];
-	var dados = new FormData($(form)[0]);
-	var url = $(form).attr("action");
-	aguarde(msgAguarde);
-	$.ajax({async: false, cache: false, type: 'post', contentType: false, processData: false,
-		url: url,
-		data: dados,
-		success: function (data, textStatus, XMLHttpRequest) {
-		fecharAguarde();
-			var interceptador = XMLHttpRequest.getResponseHeader('interceptador');
-			if (interceptador === "ok") {
-				if (exibirMensagem == true) {
-					exibaMensagem("", '<i class="text-success far fa-check-circle"></i> '+XMLHttpRequest.getResponseHeader('msg'), limpar, reload);
-				}
-				if (limpar) {
-					$(form)[0].reset();
-					$(':input:visible:enabled:first').focus();
-				}
-				result[0] = true;
-				result[1] = XMLHttpRequest.getResponseHeader('id');
-				result[2] = data.resposta;
-			} else {
-				exibaMensagem("", '<i class="text-warning fas fa-exclamation-circle"></i> '+XMLHttpRequest.getResponseHeader('erro'));
-			}
-		},
-		error: function (data) {
-			fecharAguarde();
-			switch (data.status) {
-			case 409:
-				exibaMensagem("", '<i class="text-danger far fa-times-circle"></i> '+data.getResponseHeader('erro'));
-				break;
-			default:
-				exibaMensagem("", '<i class="text-danger far fa-times-circle"></i> Ocorreu o seguinte erro: '+data.getResponseHeader('erro'));
-				break;
-			}
-		},
-		timeout: 15000
-	});
-	return result;
-}
+// function enviar(form, limpar, exibirMensagem, reload, msgAguarde) {
+// 	if (limpar !== false) limpar = true;
+// 	if (exibirMensagem !== false) exibirMensagem = true;
+// 	if (reload !== true) reload = false;
+// 	var result = [false, "", ""];
+// 	var dados = new FormData($(form)[0]);
+// 	var url = $(form).attr("action");
+// 	aguarde(msgAguarde);
+// 	$.ajax({async: false, cache: false, type: 'post', contentType: false, processData: false,
+// 		url: url,
+// 		data: dados,
+// 		success: function (data, textStatus, XMLHttpRequest) {
+// 		fecharAguarde();
+// 			var interceptador = XMLHttpRequest.getResponseHeader('interceptador');
+// 			if (interceptador === "ok") {
+// 				if (exibirMensagem == true) {
+// 					exibaMensagem("", '<i class="text-success far fa-check-circle"></i> '+XMLHttpRequest.getResponseHeader('msg'), limpar, reload);
+// 				}
+// 				if (limpar) {
+// 					$(form)[0].reset();
+// 					$(':input:visible:enabled:first').focus();
+// 				}
+// 				result[0] = true;
+// 				result[1] = XMLHttpRequest.getResponseHeader('id');
+// 				result[2] = data.resposta;
+// 			} else {
+// 				exibaMensagem("", '<i class="text-warning fas fa-exclamation-circle"></i> '+XMLHttpRequest.getResponseHeader('erro'));
+// 			}
+// 		},
+// 		error: function (data) {
+// 			fecharAguarde();
+// 			switch (data.status) {
+// 			case 409:
+// 				exibaMensagem("", '<i class="text-danger far fa-times-circle"></i> '+data.getResponseHeader('erro'));
+// 				break;
+// 			default:
+// 				exibaMensagem("", '<i class="text-danger far fa-times-circle"></i> Ocorreu o seguinte erro: '+data.getResponseHeader('erro'));
+// 				break;
+// 			}
+// 		},
+// 		timeout: 15000
+// 	});
+// 	return result;
+// }
 
 function educacaoEnviar(form, limpar, exibirMensagem, reload) {
 	if (limpar !== false) limpar = true;
