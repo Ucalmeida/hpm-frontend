@@ -3,17 +3,20 @@ import {Link, Redirect} from "react-router-dom";
 
 import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
 import {Botao} from "../Botao";
-import {IsLogado} from "../../util/Util";
-import {Tipo} from "../../util/Constantes";
+import {IsLogado, xfetch} from "../../util/Util";
+import {HttpVerbo, Tipo} from "../../util/Constantes";
 
 export default class Topo extends React.Component {
     constructor(toggleMenuSidebar) {
         super(toggleMenuSidebar);
         this.toggleMenuSidebar = toggleMenuSidebar
-        let usuario = localStorage.getItem('usuario');
 
+        let token = localStorage.getItem('token');
+        let usuario = localStorage.getItem('usuario');
+        this.tokenValido = false
         this.state = {
-            usuario: usuario
+            usuario: usuario,
+            token: token
         }
     }
 
@@ -22,14 +25,12 @@ export default class Topo extends React.Component {
         localStorage.clear();
         this.setState({usuario: ''});
         window.location.reload();
-        // this.setState({logado: false});
     }
 
     render() {
         if (!IsLogado) return "";
-
-        const {usuario} = this.state
-        if (!usuario) {
+        const {usuario, token} = this.state
+        if (!token) {
             return <Redirect to='/'/>
         }
         return (

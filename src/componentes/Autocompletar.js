@@ -24,7 +24,7 @@ export default class Autocompletar extends React.Component {
 
     componentDidMount() {
         const id = 'id'+this.props.name;
-        const url = this.props.url;
+        const url = this.props.url + '/';
         let that = this
         $('#idAuto').autocomplete({
             source: function( request, response ) {

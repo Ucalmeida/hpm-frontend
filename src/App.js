@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Login from './paginas/Login';
@@ -13,10 +13,24 @@ import 'overlayscrollbars-react/dist/overlayscrollbars-react';
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 import CadastrarPredio from "./paginas/cadastrar/CadastrarPredio";
-import Topo from "./componentes/pagina/Topo";
-import MenuLateral from "./componentes/pagina/MenuLateral";
-import Rodape from "./componentes/pagina/Rodape";
+import {xfetch} from "./util/Util";
+import {HttpVerbo} from "./util/Constantes";
 
+
+function verificaToken() {
+    xfetch('/validaToken', {token: localStorage.getItem('token')}, HttpVerbo.POST)
+        .then(json => {
+                let valido = json.resultado
+                if (!valido) {
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('usuario')
+                }
+            }
+        )
+}
+
+clearInterval(window.checaSeguranca)
+window.checaSeguranca = setInterval(function() {verificaToken();}, 1_000 * 60 * 3);
 
 class App extends Component {
   
@@ -28,7 +42,7 @@ class App extends Component {
                       <Switch>
                           <Route exact path="/login" component={Login} />
                           <Route exact path="/" component={Login} />
-                          <Route exact path="/principal" component={Principal} />
+                          <Route exact path="/principal" component={Principal}/>
                           <Route exact path="/alterarSenha" component={AlterarSenha} />
                           <Route exact path="/cadastrar/objeto" component={CadastrarObjeto} />
                           <Route exact path="/cadastrar/sangue" component={CadastrarSangue} />

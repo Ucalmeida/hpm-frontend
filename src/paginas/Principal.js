@@ -35,7 +35,7 @@ function Principal () {
 
             <Pagina titulo="Bem Vindo" subTitulo="Sub Titulo">
                 <div className="col-12">
-                    <Autocompletar />
+                    <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={() => {}}/>
 
                 </div>
 

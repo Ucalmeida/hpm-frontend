@@ -11,8 +11,8 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "application/json");
-    // myHeaders.append("Content-Length", content.length.toString());
     if (localStorage.getItem('token')) {
+        console.log(localStorage.getItem('token'))
         myHeaders.append("token", localStorage.getItem('token'));
     }
 
