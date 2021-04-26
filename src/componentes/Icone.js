@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Icone = ({icone, cor, margem, ...otherProps}) => {
+const Icone = ({icone, cor, margem, className, ...otherProps}) => {
     //TODO falta implementar se o icone for SVG
     if (!cor) cor = "";
-    if (!margem) margem = " mr-2"; else margem = " ";
-    return (<i className={icone+margem+cor} {...otherProps}></i>);
+    if (margem === false) margem = ""; else margem = "  mr-2";
+    return (<i className={className+" "+icone+margem+cor} {...otherProps}></i>);
 }
 export default Icone;

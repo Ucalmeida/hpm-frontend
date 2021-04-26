@@ -8,6 +8,7 @@ import {ExibirMensagem} from "../util/Util";
 import Autocompletar from "../componentes/Autocompletar";
 import {Tipo} from "../util/Constantes";
 import {Botao} from "../componentes";
+import Tabela from "../componentes/Tabela";
 
 function Principal () {
 

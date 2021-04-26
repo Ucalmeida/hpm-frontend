@@ -3,6 +3,11 @@ import {NavLink, Link} from "react-router-dom";
 
 import logoHPM from "../../img/brasoes/brasao_hpm.png";
 import {IsLogado} from "../../util/Util";
+import Icone from "../Icone";
+import {Nav, Navbar} from "react-bootstrap";
+import NavbarCollapse from "react-bootstrap/NavbarCollapse";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import NavItem from "react-bootstrap/NavItem";
 
 export default class MenuLateral extends React.Component {
     render() {
@@ -35,42 +40,42 @@ export default class MenuLateral extends React.Component {
                             </li>
                             <li className="nav-item">
                                 <a href="#" className="nav-link">
-                                    <i className="nav-icon fas fa-plus"></i>
+                                    <Icone icone={"fas fa-plus-circle"} className={"nav-icon"} margem={false}/>
                                     <p>
                                         Cadastrar
-                                        <i className="fas fa-angle-down right"></i>
+                                        <Icone icone={"fas fa-angle-down"} className={"right"} margem={true}/>
                                     </p>
                                 </a>
                                 <ul className="nav nav-treeview">
                                     <li className="nav-item">
                                         <NavLink to="/cadastrar/objeto" exact className="nav-link">
-                                            <i className="nav-icon fas fa-plus" />
-                                            <p>Cadatrar Objeto</p>
+                                            <Icone icone={"fas fa-cubes"} className={"nav-icon"} margem={false}/>
+                                            <p>Objeto</p>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink to="/cadastrar/sangue" exact className="nav-link">
-                                            <i className="nav-icon fas fa-plus" />
-                                            <p>Cadatrar Sangue</p>
+                                            <Icone icone={"fas fa-burn"} className={"nav-icon"} margem={false}/>
+                                            <p>Sangue</p>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink to="/cadastrar/pessoa" exact className="nav-link">
-                                            <i className="nav-icon fas fa-plus" />
-                                            <p>Cadastrar Pessoa</p>
+                                            <Icone icone={"fas fa-user-plus"} className={"nav-icon"} margem={false}/>
+                                            <p>Pessoa</p>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink to="/cadastrar/predio" exact className="nav-link">
-                                            <i className="nav-icon fas fa-plus" />
-                                            <p>Cadastrar Prédio</p>
+                                            <Icone icone={"fas fa-clinic-medical"} className={"nav-icon"} margem={false}/>
+                                            <p>Prédio</p>
                                         </NavLink>
                                     </li>
                                 </ul>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="/cadastrar/especialidade" exact className="nav-link">
-                                    <i className="nav-icon fas fa-plus" />
+                                    <Icone icone={"fas fa-user-nurse"} className={"nav-icon"} margem={false}/>
                                     <p>Cadatrar Especialidade</p>
                                 </NavLink>
                             </li>
