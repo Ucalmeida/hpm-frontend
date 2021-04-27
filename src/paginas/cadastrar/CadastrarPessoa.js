@@ -3,7 +3,7 @@ import {HttpVerbo, Tipo} from "../../util/Constantes";
 import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 
-export default function CadastrarPessoa() {
+export function CadastrarPessoa() {
     const [objeto, setObjeto] = useState(
         {
             blPolicialMilitar: false,
