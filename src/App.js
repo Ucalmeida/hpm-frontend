@@ -1,20 +1,21 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import Login from './paginas/Login';
-import Principal from './paginas/Principal';
-
-
-import CadastrarObjeto from "./paginas/cadastrar/CadastrarObjeto";
-import CadastrarSangue from "./paginas/cadastrar/CadastrarSangue";
-import CadastrarEspecialidade from "./paginas/cadastrar/CadastrarEspecialidade";
-import CadastrarPessoa from "./paginas/cadastrar/CadastrarPessoa";
 import 'overlayscrollbars-react/dist/overlayscrollbars-react';
-import AlterarSenha from "./paginas/AlterarSenha";
-import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
-import CadastrarPredio from "./paginas/cadastrar/CadastrarPredio";
 import {xfetch} from "./util/Util";
 import {HttpVerbo} from "./util/Constantes";
+
+import Login from './paginas/Login';
+import Principal from './paginas/Principal';
+import {
+    CadastrarEspecialidade,
+    CadastrarObjeto,
+    CadastrarPessoa,
+    CadastrarPredio,
+    CadastrarSangue
+} from "./paginas/cadastrar";
+import AlterarSenha from "./paginas/AlterarSenha";
+import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 
 
 function verificaToken() {

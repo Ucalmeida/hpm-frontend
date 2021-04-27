@@ -1,14 +1,10 @@
 import React from 'react'
-import Pagina from "../../componentes/pagina/Pagina";
-import Card from "../../componentes/Card";
-import {ExibirMensagem, xfetch} from "../../util/Util";
-import Input from "../../componentes/form/Input";
-import Spinner from "../../componentes/Spinner";
 import {HttpVerbo, Tipo} from "../../util/Constantes";
-import {Botao, BotaoSalvar} from "../../componentes/Botao";
+import {ExibirMensagem, xfetch} from "../../util";
+import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
 
 
-export default class CadastrarEspecialidade extends React.Component {
+export class CadastrarEspecialidade extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -72,7 +68,7 @@ export default class CadastrarEspecialidade extends React.Component {
                                 value={nome}
                                 name="nome"
                                 label="Especialidade"
-                                placeholder="Especialidade"/>
+                                placeholder="Especialidade" required/>
 
                             <div className="align-items-end col-12">
                                 <BotaoSalvar onClick={this.enviar}/>

@@ -1,14 +1,12 @@
 import React from 'react'
-import Pagina from "../../componentes/pagina/Pagina";
-import Card from "../../componentes/Card";
-import Input from "../../componentes/form/Input";
-import {ExibirMensagem, xfetch} from "../../util/Util";
-import Spinner from "../../componentes/Spinner";
+import {xfetch} from "../../util/Util";
 import {HttpVerbo, Tipo} from "../../util/Constantes";
-import {BotaoEnviar, BotaoSalvar} from "../../componentes/Botao";
+import {BotaoSalvar} from "../../componentes/Botao";
+import {ExibirMensagem} from "../../util";
+import {Card, Input, Pagina, Spinner} from "../../componentes";
 
 
-export default class CadastrarObjeto extends React.Component {
+export class CadastrarObjeto extends React.Component {
     constructor() {
         super();
         this.state = {

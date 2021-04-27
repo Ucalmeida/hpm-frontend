@@ -1,11 +1,10 @@
 import React from "react";
-import {xfetch} from "../util/Util";
 import * as $ from "jquery"
 import 'jquery-ui/themes/base/all.css'
 import 'jquery-ui/ui/widgets/autocomplete'
-import {HttpVerbo} from "../util/Constantes";
+import {HttpVerbo, xfetch} from "../../util";
 
-export default class Autocompletar extends React.Component {
+export class Autocompletar extends React.Component {
     constructor(props) {
         super(props);
 

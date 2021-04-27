@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react";
-import ReactDOM from "react-dom";
-import bootbox from "bootbox/dist/bootbox.all.min";
-import Icone from "../componentes/Icone";
-import {msgErro, msgSucesso} from "./Msg";
 import {HttpVerbo, Tipo} from "./Constantes";
+import {ExibirMensagem} from "./ExibirMensagem";
 
 const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.47:8081'
@@ -15,7 +12,6 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
         console.log(localStorage.getItem('token'))
         myHeaders.append("token", localStorage.getItem('token'));
     }
-
 
     const myInit = { method: verbo,
         headers: myHeaders,
@@ -47,80 +43,10 @@ const RemoverCaracteresEspeciais = (texto) => {
     return texto;
 }
 
-function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho)  {
-    //TODO implementar o tamanho e objeto
-
-    let corBotao = Tipo.COR_BOTAO.PRIMARIO;
-
-    switch (tipo) {
-
-        case Tipo.MSG.ALERTA:
-            corBotao = Tipo.COR_BOTAO.ALERTA;
-            icone = <Icone icone={!icone ? Tipo.ICONE.ERRO : icone} />
-            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.ALERTA+"></span>" + (!titulo ? Tipo.MSG.ALERTA : titulo);
-            break;
-
-        case Tipo.MSG.ERRO:
-            corBotao = Tipo.COR_BOTAO.PERIGO;
-            icone = <Icone icone={!icone ? Tipo.ICONE.ERRO : icone} />
-            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.PERIGO+"></span>" + (!titulo ? Tipo.MSG.ERRO : titulo);
-            break;
-
-        case Tipo.MSG.SUCESSO:
-            let msgObjeto = '';
-            if (objeto) {
-                msgObjeto += '<br><br><ul className={"mt-5"}>'
-                for (const key in objeto) {
-                    msgObjeto += (`<li id="${key}">${key}: ${objeto[key]}</li>`);
-                }
-                msgObjeto += '</ul>'
-            };
-            corBotao = Tipo.COR_BOTAO.SUCESSO;
-            icone = <Icone icone={!icone ? Tipo.ICONE.OK : icone} />
-            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.SUCESSO+"></span>" + (!titulo ? Tipo.MSG.SUCESSO : titulo);
-            mensagem = mensagem + msgObjeto;
-            break;
-
-        case Tipo.MSG.INFO:
-        default:
-            if (icone) icone = <Icone icone={icone} cor={Tipo.COR_TEXTO.PRIMARIO}/>;
-            else icone = <Icone icone={Tipo.ICONE.OK} />
-    }
-        bootbox.dialog({
-            title: titulo,
-            message: mensagem,
-            buttons: {
-                ok: {
-                    label: "<span id='icone2'></span>OK",
-                    className: corBotao
-                }
-            }
-
-        })
-        if (icone && titulo) ReactDOM.render(icone,document.getElementById('icone'))
-        if (icone) ReactDOM.render(icone,document.getElementById('icone2'))
-    return;
-}
-
-const CorTexto = (cor) => {
-    const cores = {
-        primary: ' text-primary',
-        secondary: ' text-secondary',
-        info: ' text-info',
-        danger: ' text-danger',
-        warning: ' text-warning'
-    }
-    return (
-        cores[cor]
-    );
-}
-
 export {
     xfetch,
     IsLogado,
     RemoverCaracteresEspeciais,
-    ExibirMensagem,
-    CorTexto,
 };
 
 

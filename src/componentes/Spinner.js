@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Spinner as SpinnerReact} from "react-bootstrap";
 
 
-class Spinner extends Component {
+export class Spinner extends Component {
     render() {
         return (
             <div className="row">
@@ -18,5 +18,3 @@ class Spinner extends Component {
         );
     }
 }
-
-export default Spinner;

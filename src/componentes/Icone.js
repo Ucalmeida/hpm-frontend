@@ -6,4 +6,4 @@ const Icone = ({icone, cor, margem, className, ...otherProps}) => {
     if (margem === false) margem = ""; else margem = "  mr-2";
     return (<i className={className+" "+icone+margem+cor} {...otherProps}></i>);
 }
-export default Icone;
+export {Icone};

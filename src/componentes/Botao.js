@@ -1,9 +1,9 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
-import Icone from "./Icone";
 import proptype from 'prop-types'
 import {Tipo} from "../util/Constantes";
+import {Icone} from "./Icone";
 
 const Botao = ({cor, tamanho, icone, tipo, carregando, disabled, className, onClick, children, ...otherProps}) => {
         let iconeTemplate;

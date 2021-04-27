@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Card extends React.Component {
+export class Card extends React.Component {
 
     getCor() {
         const cor = this.props.cor;

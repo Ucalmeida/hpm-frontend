@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Accordion extends Component {
+export class Accordion extends Component {
   render() {
       const getBotaoFechar = () => {
           return "teste"
@@ -24,5 +24,3 @@ class Accordion extends Component {
     );
   }
 }
-
-export default Accordion;

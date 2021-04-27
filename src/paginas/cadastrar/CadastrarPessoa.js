@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from "react";
-import Pagina from "../../componentes/pagina/Pagina";
-import Select from "../../componentes/form/Select";
-import {ExibirMensagem, xfetch} from "../../util/Util";
 import {HttpVerbo, Tipo} from "../../util/Constantes";
-import Card from "../../componentes/Card";
-import Input from "../../componentes/form/Input";
-import {BotaoSalvar} from "../../componentes/Botao";
+import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
+import {ExibirMensagem, xfetch} from "../../util";
 
-export default function CadastrarPessoa() {
+export function CadastrarPessoa() {
     const [objeto, setObjeto] = useState([]);
 
     const pessoa = {

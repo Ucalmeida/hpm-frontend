@@ -3,11 +3,7 @@ import {NavLink, Link} from "react-router-dom";
 
 import logoHPM from "../../img/brasoes/brasao_hpm.png";
 import {IsLogado} from "../../util/Util";
-import Icone from "../Icone";
-import {Nav, Navbar} from "react-bootstrap";
-import NavbarCollapse from "react-bootstrap/NavbarCollapse";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import NavItem from "react-bootstrap/NavItem";
+import {Icone} from "../Icone";
 
 export default class MenuLateral extends React.Component {
     render() {

@@ -27,4 +27,4 @@ function Select({ url, valorAttr, nome, funcao }) {
     );
 }
 
-export default Select;
+export {Select};

@@ -3,9 +3,9 @@ import Topo from "./Topo";
 import MenuLateral from "./MenuLateral";
 import Rodape from "./Rodape";
 import BotaoScrollTop from "./BotaoScrollTop";
-import {IsLogado} from "../../util/Util";
+import {IsLogado} from "../../util";
 
-export default class Pagina extends Component {
+export class Pagina extends Component {
 
     render() {
 
