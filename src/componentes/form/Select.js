@@ -18,10 +18,10 @@ function Select({ url, valorAttr, nome, funcao }) {
     }, [])
 
     return (
-        <div className="row">
-            <select onChange={funcao}>
+        <div className="col-lg-12">
+            <select className="form-control" value={valorAttr} name={nome} onChange={funcao}>
                 <option></option>
-                { lists.map((item) => <option key={item.valor} value={valorAttr} name={nome}>{item.texto}</option>) }
+                { lists.map((item) => <option key={item.valor} value={item.valor}>{item.texto}</option>) }
             </select>
         </div>
     );

@@ -3,8 +3,16 @@ import {HttpVerbo, Tipo} from "../../util/Constantes";
 import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 
-export function CadastrarPessoa() {
-    const [objeto, setObjeto] = useState([]);
+export default function CadastrarPessoa() {
+    const [objeto, setObjeto] = useState(
+        {
+            blPolicialMilitar: false,
+            blPolicialCivil: false,
+            blBombeiroMilitar: false,
+            blFuncionario: false,
+            blAtivo: true
+        }
+    );
 
     const pessoa = {
         nome: null,
@@ -15,25 +23,22 @@ export function CadastrarPessoa() {
         telefone: null,
         email: null,
         dataNascimento: null,
-        blPolicialMilitar: false,
-        blPolicialCivil: false,
-        blBombeiroMilitar: false,
-        blFuncionario: false,
-        blAcessaSistema: true,
-        blAtivo: true,
+        blAcessaSistema: null,
         blVivo: null,
         idInstituicaoConvenio: null,
         idSangue: null,
-        sexo: null,
-        profissionalSaudeCmd: null
+        sexo: null
     }
 
     const enviar = async () => {
+
         console.log(objeto);
+
         await xfetch('/hpm/pessoa/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
                     ExibirMensagem('Pessoa cadastrada',Tipo.MSG.SUCESSO)
+                    window.location.reload();
                     // this.carregarLista()
                 } else {
                     ExibirMensagem(json.message, Tipo.MSG.ERRO)
@@ -41,12 +46,9 @@ export function CadastrarPessoa() {
             })
     }
 
-    // useEffect(() => {
-    //     enviar();
-    // }, [])
-
     const handleChange = (e) => {
         e.preventDefault();
+
         if(e.target.value === 'Sim') {
             setObjeto({...objeto, [e.target.name]: true});
         } else if(e.target.value === 'Não') {
@@ -118,82 +120,42 @@ export function CadastrarPessoa() {
                             name="dataNascimento"
                             label="Data de Nascimento"
                             placeholder="Nascimento"/>
-                        {/*<div className="form-group col-lg-6">*/}
-                        {/*    <label>Policial Militar</label>*/}
-                        {/*    <select className={"form-group col-lg-6"} onChange={handleChange}>*/}
-                        {/*        <option></option>*/}
-                        {/*        <option value={pessoa.blPolicialMilitar} name="blPolicialMilitar" >Sim</option>*/}
-                        {/*        <option value={pessoa.blPolicialMilitar} name="blPolicialMilitar">Não</option>*/}
-                        {/*    </select>*/}
-                        {/*</div>*/}
-                        {/*<div className="form-group col-lg-6">*/}
-                        {/*    <label>Bombeiro Militar</label>*/}
-                        {/*    <select className={"form-group col-lg-6"} onChange={handleChange}>*/}
-                        {/*        <option></option>*/}
-                        {/*        <option value={pessoa.blBombeiroMilitar} name="sim">Sim</option>*/}
-                        {/*        <option value={pessoa.blBombeiroMilitar} name="nao">Não</option>*/}
-                        {/*    </select>*/}
-                        {/*</div>*/}
-                        {/*<div className="form-group col-lg-2">*/}
-                        {/*    <label>Policial Civil</label>*/}
-                        {/*    <select className={"form-group col-lg-6"} onChange={handleChange}>*/}
-                        {/*        <option></option>*/}
-                        {/*        <option value={pessoa.blPolicialCivil} name="sim">Sim</option>*/}
-                        {/*        <option value={pessoa.blPolicialCivil} name="nao">Não</option>*/}
-                        {/*    </select>*/}
-                        {/*</div>*/}
-                        {/*<div className="form-group col-lg-2">*/}
-                        {/*    <label>Funcionário</label>*/}
-                        {/*    <select className={"form-group col-lg-6"} onChange={handleChange}>*/}
-                        {/*        <option></option>*/}
-                        {/*        <option value={pessoa.blFuncionario} name="sim">Sim</option>*/}
-                        {/*        <option value={pessoa.blFuncionario} name="nao">Não</option>*/}
-                        {/*    </select>*/}
-                        {/*</div>*/}
-                        <div className="form-group col-lg-2">
+                        <div className="form-group">
                             <label>Acessa Sistema</label>
-                            <select className={"form-group col-lg-6"} onChange={handleChange}>
+                            <select className={"form-control col-lg-12"} name="blAcessaSistema" onChange={handleChange}>
                                 <option></option>
-                                <option value={pessoa.blAcessaSistema} name="blAcessaSistema">Sim</option>
-                                <option value={pessoa.blAcessaSistema} name="blAcessaSistema">Não</option>
+                                <option value={pessoa.blAcessaSistema}>Sim</option>
+                                <option value={pessoa.blAcessaSistema}>Não</option>
                             </select>
                         </div>
-                        {/*<div className="form-group col-lg-2">*/}
-                        {/*    <label>Ativo</label>*/}
-                        {/*    <select className={"form-group col-lg-6"} onChange={handleChange}>*/}
-                        {/*        <option></option>*/}
-                        {/*        <option value={pessoa.blAtivo} name="sim">Sim</option>*/}
-                        {/*        <option value={pessoa.blAtivo} name="nao">Não</option>*/}
-                        {/*    </select>*/}
-                        {/*</div>*/}
-                        <div className="form-group col-lg-2">
+                        <div className="form-group">
                             <label>Vivo</label>
-                            <select className={"form-group col-lg-6"} onChange={handleChange}>
+                            <select className={"form-control col-lg-12"} name="blVivo" onChange={handleChange}>
                                 <option></option>
-                                <option value={pessoa.blVivo} name="blVivo">Sim</option>
-                                <option value={pessoa.blVivo} name="blVivo">Não</option>
+                                <option value={pessoa.blVivo}>Sim</option>
+                                <option value={pessoa.blVivo}>Não</option>
                             </select>
                         </div>
-                        <div className="form-group col-lg-6">
+                        <div className="form-group">
                             <label>Instituição</label>
                             <Select
-                                className={"form-group col-lg-6"} funcao={handleChange}
+                                funcao={handleChange}
                                 valorAttr={pessoa.idInstituicaoConvenio}
                                 nome={"idInstituicaoConvenio"}
                                 url={"/hpm/instituicao/opcoes"}/>
                         </div>
-                        <div className="form-group col-lg-6">
+                        <div className="form-group">
                             <label>Tipo Sanguíneo</label>
                             <Select
-                                className={"form-group col-lg-6"} funcao={handleChange}
+                                funcao={handleChange}
                                 valorAttr={pessoa.idSangue}
                                 nome={"idSangue"}
                                 url={"/hpm/sangue/opcoes"} />
                         </div>
-                        <div className="form-group col-lg-6">
+                        <div className="form-group">
                             <label>Sexo</label>
                             <Select
-                                className={"form-group col-lg-6"} funcao={handleChange}
+                                funcao={handleChange}
                                 valorAttr={pessoa.sexo}
                                 nome={"sexo"}
                                 url={"/hpm/sexo/opcoes"}/>
