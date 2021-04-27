@@ -45,9 +45,9 @@ export default function CadastrarPessoa() {
             })
     }
 
-    useEffect(() => {
-        enviar();
-    }, [])
+    // useEffect(() => {
+    //     enviar();
+    // }, [])
 
     const handleChange = (e) => {
         e.preventDefault();
