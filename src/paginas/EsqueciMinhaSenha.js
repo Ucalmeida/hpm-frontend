@@ -1,14 +1,16 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
-import {xfetch} from "../util/Util";
+import {ExibirMensagem, xfetch} from "../util/Util";
 import {HttpVerbo} from "../util/Constantes";
+import Spinner from "../componentes/Spinner";
 
 export default class EsqueciMinhaSenha extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            cpf: ""
+            cpf: "",
+            carregando: false
         }
 
         this.onChange = (evento) => {
@@ -21,10 +23,22 @@ export default class EsqueciMinhaSenha extends React.Component {
 
     enviar = (evento) => {
         evento.preventDefault()
-        xfetch('/hpm/redefinir/esqueciMinhaSenha', this.state.cpf, HttpVerbo.POST) // fazer o endpoint
+        this.setState({carregando: true})
+        xfetch('/hpm/redefinir/esqueciMinhaSenha', this.state, HttpVerbo.POST)
+            .then(json => {
+                if (json.status === 'OK') {
+                    ExibirMensagem(`Um email com um link para a redefinição da senha, foi enviado para: ${json.resultado.join(',')}`)
+                    this.setState({cpf: ''})
+                }
+                this.setState({carregando: false})
+            })
     }
 
     render() {
+        const {carregando} = this.state;
+        let spinner = ''
+        if (carregando)
+            spinner = <Spinner/>
         return (
             <div className="login-page animated--fade-in">
                 <div className="login-box">
@@ -40,6 +54,7 @@ export default class EsqueciMinhaSenha extends React.Component {
                             <p className="login-box-msg">
                                 Esqueceu sua senha? <br/> Por favor informe abaixo o seu cpf para enviarmos um link com as instruções de redefinição de senha para seu email.
                             </p>
+                            {spinner}
                             <div className="mb-3">
                                 <input
                                     type="text"

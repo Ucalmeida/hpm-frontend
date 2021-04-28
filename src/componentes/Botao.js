@@ -52,6 +52,7 @@ const Botao = ({cor, tamanho, icone, tipo, carregando, disabled, className, onCl
         </Button>
     )
     };
+export default Botao;
 const BotaoAlterar = ({tamanho, onClick, ...otherProps}) => {
     return(<Botao icone={Tipo.ICONE.ALTERAR} cor={Tipo.COR_BOTAO.ALERTA} tamanho={tamanho} onClick={onClick} {...otherProps}>Alterar</Botao>);
 }
