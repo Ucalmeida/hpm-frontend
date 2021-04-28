@@ -1,7 +1,7 @@
 import React from 'react'
 import {xfetch} from "../../util/Util";
 import {HttpVerbo, Tipo} from "../../util/Constantes";
-import {BotaoSalvar} from "../../componentes/Botao";
+import {BotaoSalvar} from "../../componentes/botao/Botao";
 import {ExibirMensagem} from "../../util";
 import {Card, Input, Pagina, Spinner} from "../../componentes";
 

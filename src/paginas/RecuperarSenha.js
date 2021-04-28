@@ -1,6 +1,6 @@
 import React from 'react'
 import Input from "../componentes/form/Input";
-import Botao from "../componentes/Botao";
+import Botao from "../componentes/botao/Botao";
 import {HttpVerbo, Tipo} from "../util/Constantes";
 import {ExibirMensagem, xfetch} from "../util/Util";
 import PaginaSemLogin from "../componentes/pagina/PaginaSemLogin";

@@ -1,19 +1,11 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import 'overlayscrollbars-react/dist/overlayscrollbars-react';
-import {xfetch} from "./util/Util";
-import {HttpVerbo} from "./util/Constantes";
+import {HttpVerbo, xfetch} from "./util";
 
 import Login from './paginas/Login';
 import Principal from './paginas/Principal';
-import {
-    CadastrarEspecialidade,
-    CadastrarObjeto,
-    CadastrarPessoa,
-    CadastrarPredio,
-    CadastrarSangue
-} from "./paginas/cadastrar";
+import {CadastrarEspecialidade, CadastrarObjeto, CadastrarPessoa, CadastrarPredio, CadastrarSangue} from "./paginas/cadastrar";
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 

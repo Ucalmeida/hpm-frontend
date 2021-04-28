@@ -1,5 +1,5 @@
 import React from 'react'
-import {Botao} from "../componentes/Botao";
+import {Botao} from "../componentes/botao/Botao";
 import {Tipo} from "../util/Constantes";
 import {ExibirMensagem} from "../util";
 import {Card, Input, Pagina} from "../componentes";

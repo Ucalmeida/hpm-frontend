@@ -2,7 +2,7 @@ import React from "react";
 import {Link, Redirect} from "react-router-dom";
 
 import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
-import {Botao} from "../Botao";
+import {Botao} from "../botao/Botao";
 import {IsLogado, xfetch} from "../../util/Util";
 import {HttpVerbo, Tipo} from "../../util/Constantes";
 
