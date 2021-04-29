@@ -31,10 +31,8 @@ export class CadastrarEspecialidade extends React.Component {
     enviar = (e) => {
         e.preventDefault()
         let objeto = {nome: this.state.nome}
-        let lista = this.state.especialidades
         xfetch('/hpm/especialidade/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
-                console.log(json)
                 if (json.status === "OK") {
                     ExibirMensagem('Especialidade cadastrada', Tipo.MSG.SUCESSO )
                     this.setState({nome: ''})

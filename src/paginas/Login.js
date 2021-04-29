@@ -2,9 +2,9 @@ import React from "react";
 import {Link, Redirect} from "react-router-dom";
 
 import logoHPM from "../img/brasoes/brasao_hpm.png";
+import {ExibirMensagem, HttpVerbo, xfetch} from "../util";
+import {Botao, Icone} from "../componentes";
 import PaginaSemLogin from "../componentes/pagina/PaginaSemLogin";
-import {ExibirMensagem, HttpVerbo, Tipo, xfetch} from "../util";
-import {Botao, BotaoEnviar, Icone} from "../componentes";
 
 document.getElementById('root').classList = 'login-page';
 

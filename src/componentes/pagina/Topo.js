@@ -3,8 +3,7 @@ import {Link, Redirect} from "react-router-dom";
 
 import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
 import {Botao} from "../botao/Botao";
-import {IsLogado, xfetch} from "../../util/Util";
-import {HttpVerbo, Tipo} from "../../util/Constantes";
+import {IsLogado, Tipo} from "../../util";
 
 export default class Topo extends React.Component {
     constructor(toggleMenuSidebar) {

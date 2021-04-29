@@ -1,18 +1,16 @@
 import React, {Component} from 'react';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
-import proptype, {bool, func, number, string} from 'prop-types'
-import {Tipo} from "../../util/Constantes";
-import {Icone} from "../Icone";
 import PropTypes from "prop-types";
+import {Tipo} from "../../util";
+import {Icone} from "../Icone";
 
 export class Botao extends Component {
     cor;
-    classe
+    classe;
+    spinner;
 
     render() {
-        let iconeTemplate;
-        let spinnerTemplate;
 
         const getTamanho = () => {
             switch (this.props.tamanho) {
@@ -29,7 +27,7 @@ export class Botao extends Component {
         }
 
         if (this.props.carregando) {
-            spinnerTemplate = (
+            this.spinner = (
                 <Spinner
                     className="ml-2"
                     as="span"
@@ -41,36 +39,31 @@ export class Botao extends Component {
             );
         }
         !this.props.cor ? this.cor = 'primary' : this.cor = this.props.cor;
-        if (this.props.className) this.classe = this.props.className; else this.classe = "";
         return(
             <Button
                 variant={this.props.cor}
-                className={this.classe+getTamanho()+" m-1"}
+                className={this.props.className+getTamanho()+" m-1"}
                 disabled={this.props.carregando || this.props.disabled}
                 onClick={this.props.onClick}
             >
                 {this.props.icone ? <Icone icone={this.props.icone} /> : ''}
                 {this.props.children}
-                {spinnerTemplate}
+                {this.spinner}
             </Button>
         )
     }
 
 }
-const testeEnum = 'teste'
 Botao.propTypes =
     {
-        cor: PropTypes.oneOf(['Tipo.COR_BOTAO']),
+        cor: PropTypes.string,
         tamanho: PropTypes.number,
-        icone: string,
-        carregando: bool,
-        disabled: bool,
-        className: string,
-        onClick: func
+        icone: PropTypes.string,
+        carregando: PropTypes.bool,
+        disabled: PropTypes.bool,
+        className: PropTypes.string,
+        onClick: PropTypes.func
     }
-Botao.defaultProps = {
-    cor: Tipo.COR_BOTAO.PRIMARIO
-}
 
 const BotaoAlterar = ({tamanho, onClick, ...otherProps}) => {
     return(<Botao icone={Tipo.ICONE.ALTERAR} cor={Tipo.COR_BOTAO.ALERTA} tamanho={tamanho} onClick={onClick} {...otherProps}>Alterar</Botao>);

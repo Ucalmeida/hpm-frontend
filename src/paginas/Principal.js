@@ -7,14 +7,6 @@ import {ExibirMensagem} from "../util";
 function Principal () {
 
     // render() {
-        let titulo = "Portal HPM";
-        if (titulo != null) {
-            titulo = titulo + " | " + titulo
-        }
-        window.document.title = titulo;
-        const retorno = (valor) => {
-            console.log(valor)
-        }
 
         const objetoTeste = {
             id: '69',
