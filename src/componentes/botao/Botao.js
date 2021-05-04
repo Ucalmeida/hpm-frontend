@@ -89,5 +89,5 @@ export {
     BotaoExcluir,
     BotaoPesquisar,
     BotaoSalvar,
-    };
+};
 
