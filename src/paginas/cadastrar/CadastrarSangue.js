@@ -1,6 +1,6 @@
 import React from 'react'
 import {xfetch} from "../../util/Util";
-import {HttpVerbo, Tipo} from "../../util/Constantes";
+import {HttpVerbo, MSG} from "../../util/Constantes";
 import {ExibirMensagem} from "../../util";
 import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
 
@@ -30,10 +30,10 @@ export class CadastrarSangue extends React.Component {
         xfetch('/hpm/sangue', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    ExibirMensagem('Sangue cadastrado',Tipo.MSG.SUCESSO)
+                    ExibirMensagem('Sangue cadastrado',MSG.SUCESSO)
                     this.carregarLista()
                 } else {
-                    ExibirMensagem(json.message, Tipo.MSG.ERRO)
+                    ExibirMensagem(json.message, MSG.ERRO)
                 }
             })
     }

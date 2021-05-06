@@ -1,29 +1,29 @@
 import ReactDOM from "react-dom";
 import React from "react";
 import bootbox from "bootbox";
-import {Tipo} from "./Constantes";
 import {Icone} from "../componentes/Icone";
+import {BOTAO, ICONE, MSG, TEXTO} from "./Constantes";
 
-const ExibirMensagem = (mensagem, tipo, objeto, titulo, icone, tamanho) => {
+function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
     //TODO implementar o tamanho e objeto
 
-    let corBotao = Tipo.COR_BOTAO.PRIMARIO;
+    let corBotao = BOTAO.COR.PRIMARIO;
 
     switch (tipo) {
 
-        case Tipo.MSG.ALERTA:
-            corBotao = Tipo.COR_BOTAO.ALERTA;
-            icone = <Icone icone={!icone ? Tipo.ICONE.ERRO : icone} />
-            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.ALERTA+"></span>" + (!titulo ? Tipo.MSG.ALERTA : titulo);
+        case MSG.ALERTA:
+            corBotao = BOTAO.COR.ALERTA;
+            icone = <Icone icone={!icone ? ICONE.ERRO : icone} />
+            titulo = "<span id='icone' class="+TEXTO.ALERTA+"></span>" + (!titulo ? MSG.ALERTA : titulo);
             break;
 
-        case Tipo.MSG.ERRO:
-            corBotao = Tipo.COR_BOTAO.PERIGO;
-            icone = <Icone icone={!icone ? Tipo.ICONE.ERRO : icone} />
-            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.PERIGO+"></span>" + (!titulo ? Tipo.MSG.ERRO : titulo);
+        case MSG.ERRO:
+            corBotao = BOTAO.COR.PERIGO;
+            icone = <Icone icone={!icone ? ICONE.ERRO : icone} />
+            titulo = "<span id='icone' class="+TEXTO.PERIGO+"></span>" + (!titulo ? MSG.ERRO : titulo);
             break;
 
-        case Tipo.MSG.SUCESSO:
+        case MSG.SUCESSO:
             let msgObjeto = '';
             if (objeto) {
                 msgObjeto += '<br><br><ul className={"mt-5"}>'
@@ -32,16 +32,16 @@ const ExibirMensagem = (mensagem, tipo, objeto, titulo, icone, tamanho) => {
                 }
                 msgObjeto += '</ul>'
             };
-            corBotao = Tipo.COR_BOTAO.SUCESSO;
-            icone = <Icone icone={!icone ? Tipo.ICONE.OK : icone} />
-            titulo = "<span id='icone' class="+Tipo.COR_TEXTO.SUCESSO+"></span>" + (!titulo ? Tipo.MSG.SUCESSO : titulo);
+            corBotao = BOTAO.COR.SUCESSO;
+            icone = <Icone icone={!icone ? ICONE.OK : icone} />
+            titulo = "<span id='icone' class="+TEXTO.SUCESSO+"></span>" + (!titulo ? MSG.SUCESSO : titulo);
             mensagem = mensagem + msgObjeto;
             break;
 
-        case Tipo.MSG.INFO:
+        case MSG.INFO:
         default:
-            if (icone) icone = <Icone icone={icone} cor={Tipo.COR_TEXTO.PRIMARIO}/>;
-            else icone = <Icone icone={Tipo.ICONE.OK} />
+            if (icone) icone = <Icone icone={icone} cor={TEXTO.PRIMARIO}/>;
+            else icone = <Icone icone={ICONE.OK} />
     }
     bootbox.dialog({
         title: titulo,

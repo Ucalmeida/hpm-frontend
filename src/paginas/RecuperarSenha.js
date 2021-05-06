@@ -1,10 +1,8 @@
 import React from 'react'
-import Input from "../componentes/form/Input";
-import Botao from "../componentes/botao/Botao";
-import {HttpVerbo, Tipo} from "../util/Constantes";
-import {ExibirMensagem, xfetch} from "../util/Util";
+import {ExibirMensagem, xfetch} from "../util";
 import PaginaSemLogin from "../componentes/pagina/PaginaSemLogin";
-import {useParams} from "react-router-dom";
+import {Botao, Input} from "../componentes";
+import {HttpVerbo, ICONE, MSG} from "../util/Constantes";
 
 export default class RecuperarSenha extends React.Component {
     constructor(props) {
@@ -27,20 +25,20 @@ export default class RecuperarSenha extends React.Component {
         e.preventDefault();
         const {novaSenha,repeteNovaSenha, cpf} = this.state;
         if(cpf === ""){
-            ExibirMensagem("Insira um CPF",Tipo.MSG.ERRO )
+            ExibirMensagem("Insira um CPF",MSG.ERRO )
             return
         }
         if(novaSenha !== repeteNovaSenha){
-            ExibirMensagem("Novas senhas inválidas" ,Tipo.MSG.ERRO)
+            ExibirMensagem("Novas senhas inválidas" ,MSG.ERRO)
             return
         }
 
         if(novaSenha === ""){
-            ExibirMensagem("Insira uma Senha",Tipo.MSG.ERRO)
+            ExibirMensagem("Insira uma Senha",MSG.ERRO)
             return;
         }
         if(repeteNovaSenha === ""){
-            ExibirMensagem("Repita a nova senha",Tipo.MSG.ERRO)
+            ExibirMensagem("Repita a nova senha",MSG.ERRO)
             return;
         }
 
@@ -60,7 +58,7 @@ export default class RecuperarSenha extends React.Component {
                     this.setState({repeteNovaSenha: ''})
                 }
                 if(json.status === 500){
-                    ExibirMensagem(json.message,Tipo.MSG.ERRO)
+                    ExibirMensagem(json.message,MSG.ERRO)
                 }
             })
             .catch( e => ExibirMensagem('Um erro foi identificado - ') + e)
@@ -109,7 +107,7 @@ export default class RecuperarSenha extends React.Component {
                         />
 
                         <div className="text-center col-12">
-                            <Botao onClick={this.enviar} icone={Tipo.ICONE.ENVIAR}> Salvar Senha </Botao>
+                            <Botao onClick={this.enviar} icone={ICONE.ENVIAR}> Salvar Senha </Botao>
                         </div>
 
                      </div>

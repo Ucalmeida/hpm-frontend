@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {HttpVerbo, Tipo} from "../../util/Constantes";
+import {HttpVerbo, MSG} from "../../util/Constantes";
 import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 
@@ -37,11 +37,11 @@ export function CadastrarPessoa() {
         await xfetch('/hpm/pessoa/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    ExibirMensagem('Pessoa cadastrada',Tipo.MSG.SUCESSO)
+                    ExibirMensagem('Pessoa cadastrada',MSG.SUCESSO)
                     window.location.reload();
                     // this.carregarLista()
                 } else {
-                    ExibirMensagem(json.message, Tipo.MSG.ERRO)
+                    ExibirMensagem(json.message, MSG.ERRO)
                 }
             })
     }

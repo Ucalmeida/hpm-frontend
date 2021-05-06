@@ -1,8 +1,18 @@
 import React, {useState} from "react";
 import {Tab, Tabs} from "react-bootstrap";
-import {Tipo} from "../util/Constantes";
-import {Accordion, Autocompletar, Botao, Card, Icone, Pagina} from "../componentes";
+import {
+    Accordion,
+    Autocompletar,
+    Botao,
+    BotaoAlterar,
+    BotaoEnviar,
+    BotaoExcluir, BotaoImprimir, BotaoPesquisar, BotaoSalvar,
+    Card,
+    Icone,
+    Pagina
+} from "../componentes";
 import {ExibirMensagem} from "../util";
+import {BOTAO, ICONE, MSG} from "../util/Constantes";
 
 function Principal () {
 
@@ -16,22 +26,34 @@ function Principal () {
     }
 
     let dispararMsg = () => {
-          return ExibirMensagem("Mensagem do popup", Tipo.MSG.SUCESSO, objetoTeste,'TItulo bootbox',Tipo.ICONE.PESQUISAR);
+          return ExibirMensagem("Mensagem do popup", MSG.SUCESSO, objetoTeste,'TItulo bootbox',ICONE.PESQUISAR);
     }
         return (
 
             <Pagina titulo="Bem Vindo" subTitulo="Sub Titulo">
-                <div className="col-12">
-                    <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={() => {}}/>
+                <div className={"row"}>
 
+                    <div className="col-12">
+                        <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={() => {}}/>
+
+                    </div>
+                    <div className={"col-6"}>
+                        <Card titulo={"Botões"}>
+                            <BotaoAlterar onClick={dispararMsg} />
+                            <BotaoEnviar onClick={dispararMsg} />
+                            <BotaoExcluir onClick={dispararMsg} />
+                            <BotaoImprimir onClick={dispararMsg} />
+                            <BotaoPesquisar onClick={dispararMsg} />
+                            <BotaoSalvar onClick={dispararMsg} />
+                        </Card>
+                    </div>
+                    <div className={"col-6"}>
+                        <Accordion titulo="Accordion" botaoFechar botaoMax>
+                            teste accordion
+                        </Accordion>
+                    </div>
                 </div>
 
-                <Accordion titulo="Teste" >
-                    teste accordion
-                </Accordion>
-                <Card className="gradient-primary">
-                    Tesde de Card <a href="#"><i className="fas fa-plus"> </i>Novo</a>
-                </Card>
                 <Card>
 
                 <Tabs>
@@ -45,8 +67,6 @@ function Principal () {
                         opgk podfgjiofdgf´g jdf´pgj ipdfg iosp´fj ´sps
                     </Tab>
                 </Tabs>
-                    <Botao  icone={'fas fa-arrow-left'} onClick={dispararMsg} cor={Tipo.COR_BOTAO.PERIGO}>teste</Botao>
-                    <Botao icone={'fas fa-file-pdf'}>nada</Botao> <Icone icone={Tipo.ICONE.OK}/>
                 </Card>
             </Pagina>
         );

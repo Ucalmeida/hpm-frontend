@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {HttpVerbo, Tipo} from "./Constantes";
+import {HttpVerbo, MSG} from "./Constantes";
 import {ExibirMensagem} from "./ExibirMensagem";
 
 const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
@@ -24,10 +24,10 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
             body: JSON.stringify(dados)
         })
              .then(res => res.json())
-             .catch(e => ExibirMensagem(e.message,Tipo.MSG.ERRO));
+             .catch(e => ExibirMensagem(e.message,MSG.ERRO));
     } else {
         return fetch(servidor+endpoint, myInit)
-            .catch(e => ExibirMensagem(e.message,Tipo.MSG.ERRO));
+            .catch(e => ExibirMensagem(e.message,MSG.ERRO));
     }
 }
 const IsLogado = () => {

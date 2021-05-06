@@ -1,5 +1,5 @@
 import React from 'react'
-import {HttpVerbo, Tipo} from "../../util/Constantes";
+import {HttpVerbo, MSG} from "../../util/Constantes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
 
@@ -34,11 +34,11 @@ export class CadastrarEspecialidade extends React.Component {
         xfetch('/hpm/especialidade/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    ExibirMensagem('Especialidade cadastrada', Tipo.MSG.SUCESSO )
+                    ExibirMensagem('Especialidade cadastrada', MSG.SUCESSO )
                     this.setState({nome: ''})
                     this.carregarEspecialidades()
                 } else {
-                    ExibirMensagem(json.message, Tipo.MSG.ERRO)
+                    ExibirMensagem(json.message, MSG.ERRO)
                 }
             }
         )

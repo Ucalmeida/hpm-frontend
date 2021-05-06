@@ -1,7 +1,7 @@
 import React from 'react'
 import {xfetch} from "../../util/Util";
-import {HttpVerbo, Tipo} from "../../util/Constantes";
-import {BotaoSalvar} from "../../componentes/botao/Botao";
+import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BotaoSalvar} from "../../componentes/Botao";
 import {ExibirMensagem} from "../../util";
 import {Card, Input, Pagina, Spinner} from "../../componentes";
 
@@ -23,10 +23,10 @@ export class CadastrarObjeto extends React.Component {
         xfetch('/hpm/objeto', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    ExibirMensagem('Objeto Cadastrado com Sucesso',Tipo.MSG.SUCESSO)
+                    ExibirMensagem('Objeto Cadastrado com Sucesso',MSG.SUCESSO)
                     this.listarObjetos()
                 } else {
-                    ExibirMensagem(json.message, Tipo.MSG.ERRO)
+                    ExibirMensagem(json.message, MSG.ERRO)
                 }
             })
     }

@@ -1,26 +1,32 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-export class Card extends React.Component {
+function Card (props) {
 
-    getCor() {
-        const cor = this.props.cor;
+    const getCor = () => {
+        const cor = props.cor;
         if (!cor) return " card-primary";
         return cor;
     }
 
-    render() {
-        const cabecalho = this.props.titulo ?
-            <div className='card-header p-1 pt-2 px-3'>
-                <h3 className='card-title'>{this.props.titulo}</h3>
-            </div> : "";
+    const cabecalho = props.titulo ?
+        <div className='card-header p-1 pt-2 px-3'>
+            <h3 className='card-title'>{props.titulo}</h3>
+        </div> : "";
 
-        return (
-          <div className={"card"+this.getCor()}>
-              {cabecalho}
-              <div className="card-body">
-                {this.props.children}
-              </div>
+    return (
+      <div className={"card "+props.className+getCor()}>
+          {cabecalho}
+          <div className="card-body">
+            {props.children}
           </div>
-        );
-    }
+      </div>
+    );
 }
+Card.propTypes = {
+    titulo: PropTypes.string,
+    cor: PropTypes.string,
+    className: PropTypes.string,
+
+}
+export {Card}

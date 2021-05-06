@@ -6,8 +6,8 @@ const HttpVerbo = {
     PATCH: 'PATCH'
 }
 
-const Tipo = {
-    COR_TEXTO: {
+const TEXTO = {
+    COR: {
         PRIMARIO: ' text-primary',
         SECUNDARIO: ' text-secondary',
         SUCESSO: ' text-success',
@@ -15,15 +15,14 @@ const Tipo = {
         PERIGO: ' text-danger',
         ALERTA: ' text-warning'
     },
-    COR_BOTAO: {
-        PRIMARIO: ' btn-primary',
-        SECUNDARIO: ' btn-secondary',
-        SUCESSO: ' btn-success',
-        INFO: ' btn-info',
-        PERIGO: ' btn-danger',
-        ALERTA: ' btn-warning'
-    },
-    ICONE: {
+    TAMANHO: {
+        PEQUENO: ' text-sm',
+        MEDIO: '',
+        GRANDE: ' text-lg'
+    }
+}
+
+const ICONE = {
         ALTERAR: 'fas fa-retweet',
         ENVIAR: 'far fa-paper-plane',
         ERRO: 'far fa-times-circle',
@@ -35,20 +34,37 @@ const Tipo = {
         PESQUISAR: 'fas fa-search',
         SALVAR: 'far fa-save',
         VOLTAR: 'fas fa-reply',
+}
+
+const BOTAO = {
+    COR: {
+        PRIMARIO: ' btn-primary',
+        SECUNDARIO: ' btn-secondary',
+        SUCESSO: ' btn-success',
+        INFO: ' btn-info',
+        PERIGO: ' btn-danger',
+        ALERTA: ' btn-warning'
     },
-    MSG: {
-        ALERTA: 'Atenção. ',
-        ERRO: 'Erro! Algo de errado aconteceu. ',
-        INFO: 'INFO',
-        SUCESSO: 'Operação realizada com sucesso! ',
+    TAMANHO: {
+        EXTRA_PEQUENO: ' btn-xs',
+        PEQUENO: ' btn-sm',
+        MEDIO: '',
+        GRANDE: ' btn-lg',
+        EXTRA_GRANDE: ' btn-xl'
     }
+}
+
+const MSG = {
+    ALERTA: 'Atenção. ',
+    ERRO: 'Erro! Algo de errado aconteceu. ',
+    INFO: 'INFO',
+    SUCESSO: 'Operação realizada com sucesso! ',
 }
 
 export {
     HttpVerbo,
-    Tipo
+    BOTAO,
+    ICONE,
+    MSG,
+    TEXTO,
 }
-
-// export type Variant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'light' | string;
-// export declare type ButtonVariant = Variant | 'link' | 'outline-primary' | 'outline-secondary' | 'outline-success' | 'outline-danger' | 'outline-warning' | 'outline-info' | 'outline-dark' | 'outline-light';
-// export declare type Color = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'light' | 'white' | 'muted';

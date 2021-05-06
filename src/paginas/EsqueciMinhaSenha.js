@@ -1,8 +1,8 @@
 import React from "react";
-import {Link, Redirect} from "react-router-dom";
-import {ExibirMensagem, xfetch} from "../util/Util";
+import {Link} from "react-router-dom";
+import {ExibirMensagem, xfetch} from "../util";
+import {Spinner} from "../componentes";
 import {HttpVerbo} from "../util/Constantes";
-import Spinner from "../componentes/Spinner";
 
 export default class EsqueciMinhaSenha extends React.Component {
 
@@ -38,7 +38,7 @@ export default class EsqueciMinhaSenha extends React.Component {
         const {carregando} = this.state;
         let spinner = ''
         if (carregando)
-            spinner = <Spinner/>
+            spinner = <Spinner />
         return (
             <div className="login-page animated--fade-in">
                 <div className="login-box">
