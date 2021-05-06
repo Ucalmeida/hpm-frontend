@@ -29,9 +29,7 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
         return fetch(servidor+endpoint, myInit)
             .catch(e => ExibirMensagem(e.message,Tipo.MSG.ERRO));
     }
-
 }
-
 const IsLogado = () => {
     let token = localStorage.getItem('token')
     return !token;

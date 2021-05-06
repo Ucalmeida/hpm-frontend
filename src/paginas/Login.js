@@ -1,12 +1,17 @@
 import React from "react";
 import {Link, Redirect} from "react-router-dom";
+<<<<<<< Updated upstream
 
 import logoHPM from "../img/brasoes/brasao_hpm.png";
 import {ExibirMensagem, HttpVerbo, xfetch} from "../util";
 import {Botao, Icone} from "../componentes";
 import PaginaSemLogin from "../componentes/pagina/PaginaSemLogin";
+=======
+import {xfetch} from "../util/Util";
+import {HttpVerbo} from "../util/Constantes";
+>>>>>>> Stashed changes
 
-document.getElementById('root').classList = 'login-page';
+document.getElementById('root').classList = 'hold-transition login-page';
 
 const log = console.log;
 
@@ -14,8 +19,8 @@ export default class Login extends React.Component {
     constructor() {
         super();
         this.state = {
-            login: '04856149520',
-            senha: 'didijudoca',
+            login: '',
+            senha: '',
             logado: false,
             carregando: false
         }
@@ -50,11 +55,14 @@ export default class Login extends React.Component {
                     window.location.reload();
                 }
             })
+<<<<<<< Updated upstream
             .catch(e => this.setState({carregando: false}) & ExibirMensagem(e))
     }
 
     naoTenhoUsuario = () => {
         ExibirMensagem("Procure a administração da sua instituição de origem para realizar o seu cadastro.")
+=======
+>>>>>>> Stashed changes
     }
 
     render() {
@@ -71,6 +79,7 @@ export default class Login extends React.Component {
         }
 
         return (
+<<<<<<< Updated upstream
           <PaginaSemLogin titulo="Insira abaixo suas credenciais para entrar no módulo HPM" img={logoHPM}>
               <div className="mb-3">
                   <div className="input-group">
@@ -119,6 +128,70 @@ export default class Login extends React.Component {
                   <Link onClick={this.naoTenhoUsuario}> <Icone icone={"far fa-question-circle"}/> Não tenho usuário </Link>
               </p>
           </PaginaSemLogin>
+=======
+            <div className="login-page animated--fade-in">
+                <div className="login-box">
+                    <div className="card card-outline card-primary">
+                        <div className="card-header text-center">
+                            <b>PORTAL</b>
+                            <span> HPM</span>
+                        </div>
+                        <div className="text-center">
+                            {spiner}
+                        </div>
+                        <div className="card-body login-card-body">
+                            <p className="login-box-msg">Insira abaixo suas credenciais para entrar no módulo HPM</p>
+                            <div className="mb-3">
+                                <div className="input-group">
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        name="login"
+                                        value={login}
+                                        onChange={this.handle}
+                                        placeholder="Usuário"
+                                    />
+                                    <div className="input-group-append">
+                                        <div className="input-group-text">
+                                            <span className="fas fa-envelope"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mb-3">
+                                <div className="input-group">
+                                    <input
+                                        type="password"
+                                        name="senha"
+                                        className="form-control"
+                                        placeholder="Senha"
+                                        onChange={this.handle}
+                                        value={senha}
+                                    />
+                                    <div className="input-group-append">
+                                        <div className="input-group-text">
+                                            <span className="fas fa-lock"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-12 text-center">
+                                <input type="button" onClick={this.enviar} className="btn btn-success" value="Entrar"/>
+                            </div>
+
+                            <div className="social-auth-links text-center mt-2 mb-3">
+                            </div>
+                            <p className="mb-1">
+                               <Link to="/esqueciMinhaSenha">esqueci a senha</Link>
+                            </p>
+                            <p className="mb-0">
+                                novo usuario
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+>>>>>>> Stashed changes
         );
     }
 }

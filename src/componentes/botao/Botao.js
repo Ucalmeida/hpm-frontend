@@ -38,6 +38,7 @@ export class Botao extends Component {
                 />
             );
         }
+<<<<<<< Updated upstream:src/componentes/botao/Botao.js
         !this.props.cor ? this.cor = 'primary' : this.cor = this.props.cor;
         return(
             <Button
@@ -65,6 +66,25 @@ Botao.propTypes =
         onClick: PropTypes.func
     }
 
+=======
+        if (!cor) cor = 'primary';
+        if (className) classe = className; else classe = "";
+    return(
+        <Button
+            {...otherProps}
+            variant={cor}
+            className={classe+getTamanho()+" m-1"}
+            disabled={carregando || disabled}
+            onClick={onClick}
+        >
+            {icone ? <Icone icone={icone} /> : ''}
+            {children}
+            {spinnerTemplate}
+        </Button>
+    )
+    };
+export default Botao;
+>>>>>>> Stashed changes:src/componentes/Botao.js
 const BotaoAlterar = ({tamanho, onClick, ...otherProps}) => {
     return(<Botao icone={Tipo.ICONE.ALTERAR} cor={Tipo.COR_BOTAO.ALERTA} tamanho={tamanho} onClick={onClick} {...otherProps}>Alterar</Botao>);
 }
