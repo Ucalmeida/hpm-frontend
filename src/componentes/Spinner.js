@@ -7,7 +7,6 @@ function Spinner () {
         <div className="row">
             <div className="col-12 text-center">
                 <SpinnerReact
-                    {...this.props}
                     animation="border"
                     variant="primary"
                 >
