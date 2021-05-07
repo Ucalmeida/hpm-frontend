@@ -18,6 +18,10 @@ const uuid = () => {
     });
 }
 
+const erro = (e, idTransacao) => {
+    ExibirMensagem(e.message + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO);
+}
+
 const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.47:8081'
 
@@ -42,10 +46,10 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
             body: JSON.stringify(dados)
         })
              .then(res => res.json())
-             .catch(e => ExibirMensagem(e.message + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO));
+             .catch(e => erro(e, idTransacao));
     } else {
         return fetch(servidor+endpoint, myInit)
-            .catch(e => ExibirMensagem(e.message + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO));
+            .catch(e => erro(e, idTransacao));
     }
 }
 const Logado = () => {
