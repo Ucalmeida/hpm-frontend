@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import PropTypes from "prop-types";
 import {Icone} from "./Icone";
 import {BOTAO, ICONE} from "../util/Constantes";
+import {getClasse} from "./index";
 
-function Botao (props) {
-    let cor, spinner, tamanho;
+export function Botao (props) {
 
-        tamanho = !props.tamanho ? BOTAO.TAMANHO.MEDIO : props.tamanho;
+        const cor = !props.cor ? "primary" : props.cor;
+        const tamanho = !props.tamanho ? BOTAO.TAMANHO.MEDIO : props.tamanho;
 
-        if (props.carregando) {
-            spinner = (
+        const spinner = (props.carregando) ? (
                 <Spinner
                     className="ml-2"
                     as="span"
@@ -20,16 +20,14 @@ function Botao (props) {
                     role="status"
                     aria-hidden="true"
                 />
-            );
-        } else spinner = '';
-        !props.cor ? cor = 'primary' : cor = props.cor;
+            ) : "";
         return(
             <Button
                 variant={cor}
-                className={props.className+tamanho+" m-1"}
+                className={getClasse(props.className)+tamanho+" m-1"}
                 disabled={props.carregando || props.disabled}
                 onClick={props.onClick}
-                props
+                {...props}
             >
                 {props.icone ? <Icone icone={props.icone} /> : ''}
                 {props.children}
@@ -49,45 +47,35 @@ Botao.propTypes = {
 
 const protoTipo = {
     onClick: PropTypes.func,
-    tamanho: PropTypes.string,
+    tamanho: PropTypes.string
 }
-const BotaoAlterar = ({onClick, tamanho, ...otherProps}) => {
-    return(<Botao icone={ICONE.ALTERAR} cor={BOTAO.COR.ALERTA} tamanho={tamanho} onClick={onClick} {...otherProps}>Alterar</Botao>);
+
+export function BotaoAlterar (props) {
+    return(<Botao icone={ICONE.ALTERAR} cor={BOTAO.COR.ALERTA} tamanho={props.tamanho} onClick={props.onClick} {...props}>Alterar</Botao>);
 }
 BotaoAlterar.propTypes = protoTipo;
 
-const BotaoEnviar = ({onClick, tamanho, ...otherProps}) => {
-    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={tamanho} onClick={onClick} {...otherProps}>Enviar</Botao>);
+export function BotaoEnviar (props) {
+    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Enviar</Botao>);
 }
 BotaoEnviar.propTypes = protoTipo
 
-const BotaoImprimir = ({onClick, tamanho, ...otherProps}) => {
-    return(<Botao icone={ICONE.IMPRIMIR} cor={BOTAO.COR.PRIMARIO} tamanho={tamanho} onClick={onClick} {...otherProps}>Imprimir</Botao>);
+export function BotaoImprimir (props) {
+    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Imprimir</Botao>);
 }
 BotaoImprimir.propTypes = protoTipo
 
-const BotaoSalvar = ({onClick, tamanho, ...otherProps}) => {
-    return(<Botao icone={ICONE.SALVAR} cor={BOTAO.COR.SUCESSO} tamanho={tamanho} onClick={onClick} {...otherProps}>Salvar</Botao>);
+export function BotaoSalvar (props) {
+    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Salvar</Botao>);
 }
 BotaoSalvar.propTypes = protoTipo
 
-const BotaoExcluir = ({onClick, tamanho, ...otherProps}) => {
-    return(<Botao icone={ICONE.EXCLUIR} cor={BOTAO.COR.PERIGO} tamanho={tamanho} onClick={onClick} {...otherProps}>Excluir</Botao>);
+export function BotaoExcluir (props) {
+    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Excluir</Botao>);
 }
 BotaoExcluir.propTypes = protoTipo
 
-const BotaoPesquisar = ({onClick, tamanho, ...otherProps}) => {
-    return(<Botao icone={ICONE.PESQUISAR} cor={BOTAO.COR.PRIMARIO} tamanho={tamanho} onClick={onClick} {...otherProps}>Pesquisar</Botao>);
+export function BotaoPesquisar (props) {
+    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Pesquisar</Botao>);
 }
 BotaoPesquisar.propTypes = protoTipo
-
-export {
-    Botao,
-    BotaoAlterar,
-    BotaoEnviar,
-    BotaoExcluir,
-    BotaoImprimir,
-    BotaoPesquisar,
-    BotaoSalvar,
-};
-

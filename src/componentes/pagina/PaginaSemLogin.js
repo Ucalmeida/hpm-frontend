@@ -14,7 +14,7 @@ class PaginaSemLogin extends Component {
         <div className="login-box">
           <div className="login-logo">
             <Link to="/">
-              <img src={img} />
+              <img src={img}  alt={"Brasão"}/>
             </Link>
           </div>
           <div className="card card-outline card-primary">

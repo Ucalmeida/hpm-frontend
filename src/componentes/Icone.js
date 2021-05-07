@@ -1,10 +1,21 @@
 import React from 'react';
+import {getClasse} from "./index";
+import PropTypes from "prop-types";
 
-function Icone ({icone, cor, margem, className, ...otherProps}) {
+export function Icone (props) {
     //TODO falta implementar se o icone for SVG
-    if (!cor) cor = "";
-    if (margem === false) margem = ""; else margem = "  mr-2";
-    return (<i className={className+" "+icone+margem+cor} {...otherProps}></i>);
+    const cor = (!props.cor) ? "" : props.cor;
+    const margem = (props.margem) ? " mr-2" : "";
+    return (
+        <i className={getClasse(props.className) + props.icone + margem + cor}></i>
+    );
 }
-
-export {Icone};
+Icone.defaultProps = {
+    margem: true
+}
+Icone.propTypes = {
+    icone: PropTypes.string.isRequired,
+    cor: PropTypes.string,
+    margem: PropTypes.bool,
+    className: PropTypes.string,
+}

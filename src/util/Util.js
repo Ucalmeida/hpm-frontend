@@ -47,9 +47,12 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
             .catch(e => ExibirMensagem(e.message,MSG.ERRO));
     }
 }
-const IsLogado = () => {
-    let token = localStorage.getItem('token')
-    return !token;
+const Logado = () => {
+    xfetch('/validaToken',localStorage.getItem('token'), HttpVerbo.POST)
+        .then(json => {
+            console.log(json)
+            return json.resultado ? true : false;
+        })
 }
 
 const RemoverCaracteresEspeciais = (texto) => {
@@ -59,7 +62,7 @@ const RemoverCaracteresEspeciais = (texto) => {
 
 export {
     xfetch,
-    IsLogado,
+    Logado,
     RemoverCaracteresEspeciais,
 };
 

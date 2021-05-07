@@ -1,11 +1,14 @@
-import {Accordion} from './Accordion'
+import {Accordion} from './card/Accordion'
 import {Autocompletar, Input, Select} from './form'
 import {Botao, BotaoAlterar, BotaoEnviar, BotaoExcluir, BotaoImprimir, BotaoPesquisar, BotaoSalvar} from './Botao'
-import {Card} from "./Card";
+import {Card} from "./card/Card";
 import {Icone} from "./Icone";
 import {Pagina} from "./pagina/Pagina";
 import {Spinner} from "./Spinner";
 
+export function getClasse(classe) {
+    return !classe ? "" : classe.toString();
+}
 
 export {
     Accordion,
