@@ -1,8 +1,8 @@
 import React from "react";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
-import {IsLogado} from "../../util";
+import {Logado} from "../../util";
 import {BOTAO} from "../../util/Constantes";
 import {Botao} from "../Botao";
 
@@ -28,11 +28,9 @@ export default class Topo extends React.Component {
     }
 
     render() {
-        if (!IsLogado) return "";
+        console.log(Logado)
+        if (!Logado) return "";
         const {usuario, token} = this.state
-        if (!token) {
-            return <Redirect to='/'/>
-        }
         return (
             <nav className="main-header navbar navbar-expand navbar-white navbar-light" >
                 {/* Left navbar links */}
@@ -87,7 +85,7 @@ export default class Topo extends React.Component {
                         </a>
                         <div className='dropdown-divider'></div>
                         <a className='dropdown-item dropdown-footer cursor-pointer'>Ver mais notificações</a>
-                    </div> 
+                    </div>
                     </li>
                     <li className='nav-item dropdown user-menu'>
                         <a className='nav-link d-flex cursor-pointer mt-n1 p-0' data-toggle='dropdown'>
@@ -109,16 +107,16 @@ export default class Topo extends React.Component {
                             <li className='user-body border-bottom-verdepetroleo'>
                             <div className='row'>
                                 <div className='col-4 text-center'>
-                                    <Botao tamanho={2}> Meu Prontuário </Botao>
+                                    <Botao tamanho={BOTAO.TAMANHO.PEQUENO}> Meu Prontuário </Botao>
 						        </div>
                                 <div className='col-4 text-center'>
                                     <Botao> Manual </Botao>
                                 </div>
                                 <div className='col-4 text-center'>
                                     <Botao href='alterarSenha'> Alterar Senha </Botao>
-                                </div>  
-                            </div>  
-                            </li> 
+                                </div>
+                            </div>
+                            </li>
                             <li className='user-footer'>
                                 {/*<a className='btn btn-danger float-right' href={this.sair} onclick={this.sair}>*/}
                                 {/*    <i class='fas fa-power-off fa-sm fa-fw mr-2'></i>*/}
