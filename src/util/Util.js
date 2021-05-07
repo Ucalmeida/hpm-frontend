@@ -22,9 +22,10 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.47:8081'
 
     let myHeaders = new Headers();
+    let idTransacao = uuid();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "application/json");
-    myHeaders.append("idTransacao", uuid());
+    myHeaders.append("idTransacao", idTransacao);
     if (localStorage.getItem('token')) {
         myHeaders.append("token", localStorage.getItem('token'));
     }
@@ -41,10 +42,10 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
             body: JSON.stringify(dados)
         })
              .then(res => res.json())
-             .catch(e => ExibirMensagem(e.message,MSG.ERRO));
+             .catch(e => ExibirMensagem(e.message + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO));
     } else {
         return fetch(servidor+endpoint, myInit)
-            .catch(e => ExibirMensagem(e.message,MSG.ERRO));
+            .catch(e => ExibirMensagem(e.message + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO));
     }
 }
 const IsLogado = () => {
