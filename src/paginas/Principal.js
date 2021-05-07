@@ -31,7 +31,8 @@ function Principal () {
         return (
 
             <Pagina titulo="Bem Vindo" subTitulo="Sub Titulo">
-                <div className={"row"}>
+                <div className="col-12">
+                    <Autocompletar name="pessoa" url="/hpm/pessoa/porNome" retorno={() => {}}/>
 
                     <div className="col-12">
                         <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={() => {}}/>
