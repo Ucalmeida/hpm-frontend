@@ -7,7 +7,7 @@ import {Botao, Icone} from "../componentes";
 import PaginaSemLogin from "../componentes/pagina/PaginaSemLogin";
 import {HttpVerbo, MSG} from "../util/Constantes";
 
-document.getElementById('root').classList = 'hold-transition login-page';
+document.getElementById('root').classList = 'login-page';
 
 const log = console.log;
 

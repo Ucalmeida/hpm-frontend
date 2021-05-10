@@ -2,12 +2,12 @@ import React from "react";
 import {NavLink, Link} from "react-router-dom";
 
 import logoHPM from "../../img/brasoes/brasao_hpm.png";
-import {IsLogado} from "../../util/Util";
-import {Icone} from "./componentes/Icone";
+import {Logado} from "../../util/Util";
+import {Icone} from "../Icone";
 
 export default class MenuLateral extends React.Component {
     render() {
-        if (!IsLogado) return "";
+        if (!Logado) return "";
         return (
             <aside className="main-sidebar sidebar-dark-primary elevation-4" >
                 <Link to="/" className="brand-link border-bottom-verdepetroleo">

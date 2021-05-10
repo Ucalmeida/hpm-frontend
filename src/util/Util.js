@@ -52,11 +52,11 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
             .catch(e => erro(e, idTransacao));
     }
 }
+
 const Logado = () => {
-    xfetch('/validaToken',localStorage.getItem('token'), HttpVerbo.POST)
+    return  xfetch('/validaToken?token='+localStorage.getItem('token'),localStorage.getItem('token'), HttpVerbo.POST)
         .then(json => {
-            console.log(json)
-            return json.resultado ? true : false;
+            return json.resultado;
         })
 }
 
