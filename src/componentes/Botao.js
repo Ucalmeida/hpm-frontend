@@ -61,21 +61,21 @@ export function BotaoEnviar (props) {
 BotaoEnviar.propTypes = protoTipo
 
 export function BotaoImprimir (props) {
-    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Imprimir</Botao>);
+    return(<Botao icone={ICONE.IMPRIMIR} cor={BOTAO.COR.SECUNDARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Imprimir</Botao>);
 }
 BotaoImprimir.propTypes = protoTipo
 
 export function BotaoSalvar (props) {
-    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Salvar</Botao>);
+    return(<Botao icone={ICONE.SALVAR} cor={BOTAO.COR.SUCESSO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Salvar</Botao>);
 }
 BotaoSalvar.propTypes = protoTipo
 
 export function BotaoExcluir (props) {
-    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Excluir</Botao>);
+    return(<Botao icone={ICONE.EXCLUIR} cor={BOTAO.COR.PERIGO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Excluir</Botao>);
 }
 BotaoExcluir.propTypes = protoTipo
 
 export function BotaoPesquisar (props) {
-    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Pesquisar</Botao>);
+    return(<Botao icone={ICONE.PESQUISAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Pesquisar</Botao>);
 }
 BotaoPesquisar.propTypes = protoTipo

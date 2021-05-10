@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {HttpVerbo, MSG} from "./Constantes";
 import {ExibirMensagem} from "./ExibirMensagem";
 
@@ -53,11 +53,14 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     }
 }
 
-const Logado = () => {
-    return  xfetch('/validaToken?token='+localStorage.getItem('token'),null, HttpVerbo.POST)
-        .then(json => {
-            return json.resultado;
-        })
+function Logado () {
+    const token = {
+        token: localStorage.getItem('token')
+    }
+    if (!token.token) return false;
+
+    return xfetch('/validaToken', token, HttpVerbo.POST)
+        .then(json => json.resultado)
 }
 
 const RemoverCaracteresEspeciais = (texto) => {

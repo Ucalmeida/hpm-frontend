@@ -61,7 +61,7 @@ export default class RecuperarSenha extends React.Component {
                     ExibirMensagem(json.message,MSG.ERRO)
                 }
             })
-            .catch( e => ExibirMensagem('Um erro foi identificado - ') + e)
+            .catch( e => ExibirMensagem('Um erro foi identificado - '+ e, MSG.ERRO))
 
     }
 

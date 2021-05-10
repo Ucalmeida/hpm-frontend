@@ -5,6 +5,7 @@ import Rodape from "./Rodape";
 import BotaoScrollTop from "./BotaoScrollTop";
 import PropTypes from "prop-types";
 import {Logado} from "../../util/Util";
+import {Redirect} from "react-router-dom";
 
 export function Pagina (props) {
 
@@ -18,6 +19,7 @@ export function Pagina (props) {
         document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
     } else {
         document.getElementById('root').classList.add('login-page');
+        // return <Redirect to={"/"} />
     }
     window.document.title = titulo;
     return (

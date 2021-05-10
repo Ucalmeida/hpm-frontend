@@ -4,7 +4,7 @@ import bootbox from "bootbox";
 import {Icone} from "../componentes/Icone";
 import {BOTAO, ICONE, MSG, TEXTO} from "./Constantes";
 
-function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
+export function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
     //TODO implementar o tamanho e objeto
 
     let corBotao = BOTAO.COR.PRIMARIO;
@@ -14,13 +14,13 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
         case MSG.ALERTA:
             corBotao = BOTAO.COR.ALERTA;
             icone = <Icone icone={!icone ? ICONE.ERRO : icone} />
-            titulo = "<span id='icone' class="+TEXTO.ALERTA+"></span>" + (!titulo ? MSG.ALERTA : titulo);
+            titulo = "<span id='icone' class="+TEXTO.COR.ALERTA+"></span>" + (!titulo ? MSG.ALERTA : titulo);
             break;
 
         case MSG.ERRO:
             corBotao = BOTAO.COR.PERIGO;
             icone = <Icone icone={!icone ? ICONE.ERRO : icone} />
-            titulo = "<span id='icone' class="+TEXTO.PERIGO+"></span>" + (!titulo ? MSG.ERRO : titulo);
+            titulo = "<span id='icone' class="+TEXTO.COR.PERIGO+"></span>" + (!titulo ? MSG.ERRO : titulo);
             break;
 
         case MSG.SUCESSO:
@@ -34,13 +34,13 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
             };
             corBotao = BOTAO.COR.SUCESSO;
             icone = <Icone icone={!icone ? ICONE.OK : icone} />
-            titulo = "<span id='icone' class="+TEXTO.SUCESSO+"></span>" + (!titulo ? MSG.SUCESSO : titulo);
+            titulo = "<span id='icone' class="+TEXTO.COR.SUCESSO+"></span>" + (!titulo ? MSG.SUCESSO : titulo);
             mensagem = mensagem + msgObjeto;
             break;
 
         case MSG.INFO:
         default:
-            if (icone) icone = <Icone icone={icone} cor={TEXTO.PRIMARIO}/>;
+            if (icone) icone = <Icone icone={icone} cor={TEXTO.COR.PRIMARIO}/>;
             else icone = <Icone icone={ICONE.OK} />
     }
     bootbox.dialog({
@@ -58,5 +58,3 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
     if (icone) ReactDOM.render(icone,document.getElementById('icone2'))
     return;
 }
-
-export {ExibirMensagem};
