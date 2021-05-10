@@ -54,7 +54,7 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 }
 
 const Logado = () => {
-    return  xfetch('/validaToken?token='+localStorage.getItem('token'),localStorage.getItem('token'), HttpVerbo.POST)
+    return  xfetch('/validaToken?token='+localStorage.getItem('token'),null, HttpVerbo.POST)
         .then(json => {
             return json.resultado;
         })

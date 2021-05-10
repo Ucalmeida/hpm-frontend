@@ -1,6 +1,6 @@
 import React from "react";
 
-class Input extends React.Component {
+export class Input extends React.Component {
 
     render() {
         const {legenda} = this.props
