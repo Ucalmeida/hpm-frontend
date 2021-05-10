@@ -19,7 +19,17 @@ const uuid = () => {
 }
 
 const erro = (e, idTransacao) => {
+    console.log(e.message)
+    if (e.message === 'Could not connect to the server.') {
+        ExibirMensagem('O servidor está desconectado' + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO);
+        return;
+    }
     ExibirMensagem(e.message + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO);
+}
+
+function ExcecaoNegocio(message) {
+    this.message = message;
+    this.name = "ExcecaoNegocio";
 }
 
 const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
@@ -45,7 +55,13 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
             method: verbo,
             body: JSON.stringify(dados)
         })
-             .then(res => res.json())
+             .then((res, obj) => {
+                 if (res.message === 'Could not connect to the server.') {
+                     throw new ExcecaoNegocio("Servidor não encontrado.")
+                 }
+                 console.log(obj)
+                 return res.json();
+             })
              .catch(e => erro(e, idTransacao));
     } else {
         return fetch(servidor+endpoint, myInit)
@@ -54,10 +70,10 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 }
 
 const Logado = () => {
-    return  xfetch('/validaToken?token='+localStorage.getItem('token'),null, HttpVerbo.POST)
-        .then(json => {
-            return json.resultado;
-        })
+    if (localStorage.getItem('token')) {
+        return true
+    }
+    return false
 }
 
 const RemoverCaracteresEspeciais = (texto) => {

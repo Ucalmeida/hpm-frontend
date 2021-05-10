@@ -51,7 +51,6 @@ export default class Login extends React.Component {
                     window.location.reload();
                 }
             })
-            .catch(e => this.setState({carregando: false}) & ExibirMensagem(e))
     }
 
     naoTenhoUsuario = () => {
@@ -114,10 +113,10 @@ export default class Login extends React.Component {
                 <div className="social-auth-links text-center mt-2 mb-3">
                 </div>
                 <p className="mb-1">
-                    <Link to ="/esqueciMinhaSenha"><Icone icone={"fas fa-unlock-alt"}/> Esqueci minha senha</Link>
+                    <Link to="/esqueciMinhaSenha"><Icone icone={"fas fa-unlock-alt"}/> Esqueci minha senha</Link>
                 </p>
                 <p className="mb-0">
-                    <Link onClick={this.naoTenhoUsuario}> <Icone icone={"far fa-question-circle"}/> Não tenho usuário </Link>
+                    <Link to="#" onClick={this.naoTenhoUsuario}> <Icone icone={"far fa-question-circle"}/> Não tenho usuário </Link>
                 </p>
             </PaginaSemLogin>
         );
