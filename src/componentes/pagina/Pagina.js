@@ -3,7 +3,7 @@ import Topo from "./Topo";
 import MenuLateral from "./MenuLateral";
 import Rodape from "./Rodape";
 import BotaoScrollTop from "./BotaoScrollTop";
-import {Logado} from "../../util";
+import {IsLogado} from "../../util";
 import PropTypes from "prop-types";
 
 export function Pagina (props) {
@@ -13,7 +13,7 @@ export function Pagina (props) {
         if (props.titulo != null) {
             titulo = titulo + " | " + props.titulo
         }
-    if (Logado) {
+    if (IsLogado) {
         document.getElementById('root').classList.remove('login-page');
         document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
     } else {

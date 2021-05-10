@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
-import {Logado} from "../../util";
+import {IsLogado} from "../../util";
 import {BOTAO} from "../../util/Constantes";
 import {Botao} from "../Botao";
 
@@ -28,8 +28,8 @@ export default class Topo extends React.Component {
     }
 
     render() {
-        console.log(Logado)
-        if (!Logado) return "";
+        console.log(IsLogado)
+        if (!IsLogado) return "";
         const {usuario, token} = this.state
         return (
             <nav className="main-header navbar navbar-expand navbar-white navbar-light" >
