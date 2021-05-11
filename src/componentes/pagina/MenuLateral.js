@@ -7,7 +7,7 @@ import {Icone} from "../Icone";
 
 export default class MenuLateral extends React.Component {
     render() {
-        if (!Logado) return "";
+        if (!Logado()) return "";
         return (
             <aside className="main-sidebar sidebar-dark-primary elevation-4" >
                 <Link to="/" className="brand-link border-bottom-verdepetroleo">

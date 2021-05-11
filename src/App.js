@@ -10,6 +10,9 @@ import {CadastrarEspecialidade, CadastrarObjeto, CadastrarPessoa, CadastrarPredi
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 import RecuperarSenha from "./paginas/RecuperarSenha";
+import Topo from "./componentes/pagina/Topo";
+import MenuLateral from "./componentes/pagina/MenuLateral";
+import Rodape from "./componentes/pagina/Rodape";
 
 
 function verificaToken() {
@@ -32,8 +35,8 @@ class App extends Component {
     render() {
         return (
             <Router >
-                {/*<Topo />*/}
-                {/*<MenuLateral />*/}
+                <Topo />
+                <MenuLateral />
                 <Switch>
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/" component={Login} />
@@ -47,7 +50,7 @@ class App extends Component {
                     <Route exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
                     <Route exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
                 </Switch>
-                {/*<Rodape />*/}
+                <Rodape />
             </Router>
         );
     }
