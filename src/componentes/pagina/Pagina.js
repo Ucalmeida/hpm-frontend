@@ -23,7 +23,6 @@ export function Pagina (props) {
     }
     window.document.title = titulo;
     return (
-        <div className="wrapper">
          <div className="content-wrapper">
              <section className='content-header'>
                  <div className='container-fluid'>
@@ -47,10 +46,6 @@ export function Pagina (props) {
                  </div>
              </section>
          </div>
-            {/*<Rodape />*/}
-            <BotaoScrollTop />
-     </div>
-
     )
 }
 Pagina.propTypes = {

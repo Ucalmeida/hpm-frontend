@@ -29,9 +29,10 @@ export default function Principal () {
 
         <Pagina titulo="Bem Vindo" subTitulo="Sub Titulo">
             <div className="row">
-                <div className="col-12">
-                    <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={() => {}}/>
-
+                <div className="col-6">
+                    <Card titulo={"Auto completar"}>
+                        <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={() => {}}/>
+                    </Card>
                 </div>
                 <div className={"col-6"}>
                     <Card titulo={"Botões"} botaoFechar>
