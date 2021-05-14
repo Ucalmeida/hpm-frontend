@@ -6,7 +6,13 @@ import {HttpVerbo} from "./util/Constantes";
 
 import Login from './paginas/Login';
 import Principal from './paginas/Principal';
-import {CadastrarEspecialidade, CadastrarObjeto, CadastrarPessoa, CadastrarPredio, CadastrarSangue} from "./paginas/cadastrar";
+import {
+    CadastrarEspecialidade,
+    CadastrarObjeto,
+    CadastrarPessoa,
+    CadastrarPredio,
+    CadastrarSangue
+} from "./paginas/cadastrar";
 import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
@@ -14,7 +20,7 @@ import RecuperarSenha from "./paginas/RecuperarSenha";
 import Topo from "./componentes/pagina/Topo";
 import MenuLateral from "./componentes/pagina/MenuLateral";
 import Rodape from "./componentes/pagina/Rodape";
-import BotaoScrollTop from "./componentes/pagina/BotaoScrollTop";
+import {CadastrarSetor} from "./paginas/cadastrar/CadastrarSetor";
 
 
 function verificaToken() {
@@ -52,6 +58,7 @@ class App extends Component {
                     <Route exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
                     <Route exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
                     <Route exact path="/cadastrar/tipo" component={CadastrarTipo} />
+                    <Route exact path="/cadastrar/setor" component={CadastrarSetor} />
 
                 </Switch>
                 <Rodape />
