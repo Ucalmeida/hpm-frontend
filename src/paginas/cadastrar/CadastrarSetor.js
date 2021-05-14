@@ -49,7 +49,6 @@ export function CadastrarSetor() {
                     ExibirMensagem(res.message, MSG.ERRO)
                     setObjeto({...objeto, carregandoSalvar: false})
                 }
-
             })
     }
 
