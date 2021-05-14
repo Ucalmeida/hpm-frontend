@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {BotaoSalvar, Card, Pagina, Spinner} from "../../componentes";
 import {Input} from '../../componentes/form'
-import {xfetch} from "../../util";
-import {HttpVerbo} from "../../util/Constantes";
+import {ExibirMensagem, xfetch} from "../../util";
+import {HttpVerbo, MSG} from "../../util/Constantes";
 
 
 export function CadastrarSetor() {
@@ -45,6 +45,9 @@ export function CadastrarSetor() {
                     let lista = objeto.setores
                     lista.push(res.resultado)
                     setObjeto({...objeto, setores: lista, nome: ''})
+                } else {
+                    ExibirMensagem(res.message, MSG.ERRO)
+                    setObjeto({...objeto, carregandoSalvar: false})
                 }
 
             })
