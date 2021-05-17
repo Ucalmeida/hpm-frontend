@@ -11,7 +11,9 @@ import {
     CadastrarObjeto,
     CadastrarPessoa,
     CadastrarPredio,
-    CadastrarSangue
+    CadastrarSangue,
+    CadastrarSetor
+
 } from "./paginas/cadastrar";
 import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
 import AlterarSenha from "./paginas/AlterarSenha";
@@ -20,7 +22,6 @@ import RecuperarSenha from "./paginas/RecuperarSenha";
 import Topo from "./componentes/pagina/Topo";
 import MenuLateral from "./componentes/pagina/MenuLateral";
 import Rodape from "./componentes/pagina/Rodape";
-import {CadastrarSetor} from "./paginas/cadastrar/CadastrarSetor";
 
 
 function verificaToken() {

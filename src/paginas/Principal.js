@@ -68,6 +68,16 @@ export default function Principal () {
                 </div>
                 <div className={"col-6"}>
 
+                    <Card titulo="Componentes genéricos">
+                        <Tabs>
+                            <Tab title="CadastrarNome" eventKey="aba1">
+                                <p className='mt-1'>
+                                    <small>Componente para cadastro de tabelas que so tem nome como campo preenchivel</small>
+                                </p>
+                                <mark>{"<CadastrarNome label='' labelListagem='' url='' urlListagem='' />"}</mark>
+                            </Tab>
+                        </Tabs>
+                    </Card>
                 </div>
                 <div className={"col-6"}>
                 </div>

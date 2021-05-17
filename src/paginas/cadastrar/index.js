@@ -3,6 +3,7 @@ import {CadastrarObjeto} from "./CadastrarObjeto";
 import {CadastrarPessoa} from "./CadastrarPessoa";
 import {CadastrarPredio} from "./CadastrarPredio";
 import {CadastrarSangue} from "./CadastrarSangue";
+import {CadastrarSetor} from "./CadastrarSetor";
 
 export {
     CadastrarEspecialidade,
@@ -10,4 +11,5 @@ export {
     CadastrarPessoa,
     CadastrarPredio,
     CadastrarSangue,
+    CadastrarSetor
 };

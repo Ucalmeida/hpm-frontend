@@ -4,7 +4,6 @@ import {Input} from '../../componentes/form'
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-
 export function CadastrarSetor() {
 
     const [objeto, setObjeto] = useState({
