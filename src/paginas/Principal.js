@@ -74,7 +74,9 @@ export default function Principal () {
                                 <p className='mt-1'>
                                     <small>Componente para cadastro de tabelas que so tem nome como campo preenchivel</small>
                                 </p>
-                                <mark>{"<CadastrarNome label='' labelListagem='' url='' urlListagem='' />"}</mark>
+                                <mark>
+                                    {"<CadastrarNome label='' labelListagem='' url='' urlListagem='' />"}
+                                </mark>
                             </Tab>
                         </Tabs>
                     </Card>
