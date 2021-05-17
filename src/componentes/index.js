@@ -5,6 +5,7 @@ import {Card} from "./card/Card";
 import {Icone} from "./Icone";
 import {Pagina} from "./pagina/Pagina";
 import {Spinner} from "./Spinner";
+import {CadastrarNome} from "./CadastrarNome";
 
 export function getClasse(classe) {
     return !classe ? "" : classe.toString()+" ";
@@ -26,4 +27,5 @@ export {
     Pagina,
     Select,
     Spinner,
+    CadastrarNome
 }
