@@ -12,7 +12,8 @@ import {
     CadastrarPessoa,
     CadastrarPredio,
     CadastrarSangue,
-    CadastrarSetor
+    CadastrarSetor,
+    CadastrarFuncao
 
 } from "./paginas/cadastrar";
 import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
@@ -60,6 +61,7 @@ class App extends Component {
                     <Route exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
                     <Route exact path="/cadastrar/tipo" component={CadastrarTipo} />
                     <Route exact path="/cadastrar/setor" component={CadastrarSetor} />
+                    <Route exact path="/cadastrar/funcao" component={CadastrarFuncao} />
 
                 </Switch>
                 <Rodape />
