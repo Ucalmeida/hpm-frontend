@@ -1,4 +1,3 @@
-import React from "react";
 import {HttpVerbo, MSG} from "./Constantes";
 import {ExibirMensagem} from "./ExibirMensagem";
 

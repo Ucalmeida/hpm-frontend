@@ -15,7 +15,10 @@ import {
     CadastrarSetor,
     CadastrarFuncao
 
-} from "./paginas/cadastrar";
+} from "./paginas/cadastrar"
+import {
+    VincularSetorFuncao
+} from "./paginas/vincular";
 import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
@@ -38,7 +41,7 @@ function verificaToken() {
 }
 
 clearInterval(window.checaSeguranca)
-window.checaSeguranca = setInterval(function() {verificaToken();}, 1_000 * 60 * 3);
+window.checaSeguranca = setInterval(function() {verificaToken();}, 1_000 * 60 * 10);
 
 class App extends Component {
 
@@ -62,6 +65,7 @@ class App extends Component {
                     <Route exact path="/cadastrar/tipo" component={CadastrarTipo} />
                     <Route exact path="/cadastrar/setor" component={CadastrarSetor} />
                     <Route exact path="/cadastrar/funcao" component={CadastrarFuncao} />
+                    <Route exact path="/vincular/setorFuncao" component={VincularSetorFuncao} />
 
                 </Switch>
                 <Rodape />

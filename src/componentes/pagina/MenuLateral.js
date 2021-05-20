@@ -93,6 +93,12 @@ export default class MenuLateral extends React.Component {
                                     </li>
                                 </ul>
                             </li>
+                            <li className="nav-item">
+                                <NavLink to="/vincular/setorFuncao" exact className="nav-link">
+                                    <i className="nav-icon fas fa-lock" />
+                                    <p>Vincular Setor Função</p>
+                                </NavLink>
+                            </li>
                         </ul>
                     </nav>
                 </div>
