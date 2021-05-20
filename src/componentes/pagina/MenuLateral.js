@@ -7,7 +7,7 @@ import {Icone} from "../Icone";
 
 export default class MenuLateral extends React.Component {
     render() {
-        if (!Logado) return "";
+        if (!Logado()) return "";
         return (
             <aside className="main-sidebar sidebar-dark-primary elevation-4" >
                 <Link to="/" className="brand-link border-bottom-verdepetroleo">
@@ -67,12 +67,36 @@ export default class MenuLateral extends React.Component {
                                             <p>Prédio</p>
                                         </NavLink>
                                     </li>
+                                    <li className="nav-item">
+                                        <NavLink to="/cadastrar/especialidade" exact className="nav-link">
+                                            <Icone icone={"fas fa-user-nurse"} className={"nav-icon"} margem={false}/>
+                                            <p>Cadastrar Especialidade</p>
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to="/cadastrar/tipo" exact className="nav-link">
+                                            <Icone icone={"fas fa-user-nurse"} className={"nav-icon"} margem={false}/>
+                                            <p>Cadastrar Tipo</p>
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to="/cadastrar/setor" exact className="nav-link">
+                                            <Icone icone="fas fa-plus" className={"nav-icon"} margem={false}/>
+                                            <p>Cadastrar Setor</p>
+                                        </NavLink>
+                                    </li>
+                                    <li className="nav-item">
+                                        <NavLink to="/cadastrar/funcao" exact className="nav-link">
+                                            <Icone icone="fas fa-plus" className={"nav-icon"} margem={false}/>
+                                            <p>Cadastrar Funcao</p>
+                                        </NavLink>
+                                    </li>
                                 </ul>
                             </li>
                             <li className="nav-item">
-                                <NavLink to="/cadastrar/especialidade" exact className="nav-link">
-                                    <Icone icone={"fas fa-user-nurse"} className={"nav-icon"} margem={false}/>
-                                    <p>Cadastrar Especialidade</p>
+                                <NavLink to="/vincular/setorFuncao" exact className="nav-link">
+                                    <i className="nav-icon fas fa-lock" />
+                                    <p>Vincular Setor Função</p>
                                 </NavLink>
                             </li>
                         </ul>

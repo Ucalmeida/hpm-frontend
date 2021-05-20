@@ -1,7 +1,7 @@
 import React from 'react'
 import {ExibirMensagem} from "../util";
-import {Botao, Card, Input, Pagina} from "../componentes";
-import {ICONE, MSG} from "../util/Constantes";
+import {BotaoSalvar, Card, Input, Pagina} from "../componentes";
+import {MSG} from "../util/Constantes";
 
 export default class AlterarSenha extends React.Component {
     constructor() {
@@ -68,8 +68,8 @@ export default class AlterarSenha extends React.Component {
                              name="renova"
                              label="Repita nova senha"
                              placeholder="Repita a nova"/>
-                           <div className="align-items-end col-12">
-                               <Botao onClick={this.enviar} icone={ICONE.ALTERAR}> Alterar </Botao>
+                           <div className="align-items-end text-center col-12">
+                               <BotaoSalvar onClick={this.enviar}> Alterar </BotaoSalvar>
                            </div>
                        </Card>
                        </div>

@@ -1,6 +1,6 @@
-import React from "react";
 import {HttpVerbo, MSG} from "./Constantes";
 import {ExibirMensagem} from "./ExibirMensagem";
+import {Redirect} from "react-router-dom";
 
 const uuid = () => {
     var d = new Date().getTime();
@@ -70,13 +70,23 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 }
 
 function Logado () {
-    const token = {
-        token: localStorage.getItem('token')
-    }
-    if (!token.token) return false;
+    const token = localStorage.getItem('token');
+    if (!token) return false;
 
-    return xfetch('/validaToken', token, HttpVerbo.POST)
-        .then(json => json.resultado)
+    validaToken(token);
+    return true
+}
+function validaToken (token) {
+    const tokenJson = {
+        token: token
+    }
+    xfetch('/validaToken',tokenJson, HttpVerbo.POST)
+    .then(json => {
+       if (!json.resultado) {
+           <Redirect to={'login'} />
+       }
+        return;
+    })
 }
 
 const RemoverCaracteresEspeciais = (texto) => {

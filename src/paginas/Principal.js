@@ -29,9 +29,10 @@ export default function Principal () {
 
         <Pagina titulo="Bem Vindo" subTitulo="Sub Titulo">
             <div className="row">
-                <div className="col-12">
-                    <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={() => {}}/>
-
+                <div className="col-6">
+                    <Card titulo={"Auto completar"}>
+                        <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={() => {}}/>
+                    </Card>
                 </div>
                 <div className={"col-6"}>
                     <Card titulo={"Botões"} botaoFechar>
@@ -67,6 +68,18 @@ export default function Principal () {
                 </div>
                 <div className={"col-6"}>
 
+                    <Card titulo="Componentes genéricos">
+                        <Tabs>
+                            <Tab title="CadastrarNome" eventKey="aba1">
+                                <p className='mt-1'>
+                                    <small>Componente para cadastro de tabelas que so tem nome como campo preenchivel</small>
+                                </p>
+                                <mark>
+                                    {"<CadastrarNome label='' labelListagem='' url='' urlListagem='' />"}
+                                </mark>
+                            </Tab>
+                        </Tabs>
+                    </Card>
                 </div>
                 <div className={"col-6"}>
                 </div>

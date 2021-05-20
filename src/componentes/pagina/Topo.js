@@ -13,7 +13,6 @@ export default class Topo extends React.Component {
 
         let token = localStorage.getItem('token');
         let usuario = localStorage.getItem('usuario');
-        this.tokenValido = false
         this.state = {
             usuario: usuario,
             token: token
@@ -28,10 +27,8 @@ export default class Topo extends React.Component {
     }
 
     render() {
-        const teste  = Logado();
-        console.log(teste)
-        if (!Logado) return "";
-        const {usuario, token} = this.state
+        if (!Logado()) return ""
+        const {usuario} = this.state
         return (
             <nav className="main-header navbar navbar-expand navbar-white navbar-light" >
                 {/* Left navbar links */}

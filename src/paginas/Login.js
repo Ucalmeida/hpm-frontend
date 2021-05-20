@@ -7,7 +7,8 @@ import {Botao, Icone} from "../componentes";
 import PaginaSemLogin from "../componentes/pagina/PaginaSemLogin";
 import {HttpVerbo, MSG} from "../util/Constantes";
 
-document.getElementById('root').classList = 'login-page';
+document.getElementById('root').classList.remove('hold-transition','sidebar-mini','layout-fixed');
+document.getElementById('root').classList.add('login-page');
 
 const log = console.log;
 

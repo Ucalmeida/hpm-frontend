@@ -4,7 +4,7 @@ import bootbox from "bootbox";
 import {Icone} from "../componentes/Icone";
 import {BOTAO, ICONE, MSG, TEXTO} from "./Constantes";
 
-export function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
+function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
     //TODO implementar o tamanho e objeto
 
     let corBotao = BOTAO.COR.PRIMARIO;
@@ -14,7 +14,7 @@ export function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) 
         case MSG.ALERTA:
             corBotao = BOTAO.COR.ALERTA;
             icone = <Icone icone={!icone ? ICONE.ERRO : icone} />
-            titulo = "<span id='icone' class="+TEXTO.COR.ALERTA+"></span>" + (!titulo ? MSG.ALERTA : titulo);
+            titulo = "<span id='icone' class="+TEXTO.COR.PERIGO+"></span>" + (!titulo ? MSG.ALERTA : titulo);
             break;
 
         case MSG.ERRO:
@@ -40,7 +40,7 @@ export function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) 
 
         case MSG.INFO:
         default:
-            if (icone) icone = <Icone icone={icone} cor={TEXTO.COR.PRIMARIO}/>;
+            if (icone) icone = <Icone icone={icone} cor={TEXTO.COR.SUCESSO}/>;
             else icone = <Icone icone={ICONE.OK} />
     }
     bootbox.dialog({
@@ -58,3 +58,5 @@ export function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) 
     if (icone) ReactDOM.render(icone,document.getElementById('icone2'))
     return;
 }
+
+export {ExibirMensagem};

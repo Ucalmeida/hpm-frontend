@@ -6,10 +6,26 @@ import {HttpVerbo} from "./util/Constantes";
 
 import Login from './paginas/Login';
 import Principal from './paginas/Principal';
-import {CadastrarEspecialidade, CadastrarObjeto, CadastrarPessoa, CadastrarPredio, CadastrarSangue} from "./paginas/cadastrar";
+import {
+    CadastrarEspecialidade,
+    CadastrarObjeto,
+    CadastrarPessoa,
+    CadastrarPredio,
+    CadastrarSangue,
+    CadastrarSetor,
+    CadastrarFuncao
+
+} from "./paginas/cadastrar"
+import {
+    VincularSetorFuncao
+} from "./paginas/vincular";
+import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 import RecuperarSenha from "./paginas/RecuperarSenha";
+import Topo from "./componentes/pagina/Topo";
+import MenuLateral from "./componentes/pagina/MenuLateral";
+import Rodape from "./componentes/pagina/Rodape";
 
 
 function verificaToken() {
@@ -25,15 +41,15 @@ function verificaToken() {
 }
 
 clearInterval(window.checaSeguranca)
-window.checaSeguranca = setInterval(function() {verificaToken();}, 1_000 * 60 * 3);
+window.checaSeguranca = setInterval(function() {verificaToken();}, 1_000 * 60 * 10);
 
 class App extends Component {
 
     render() {
         return (
             <Router >
-                {/*<Topo />*/}
-                {/*<MenuLateral />*/}
+                <Topo />
+                <MenuLateral />
                 <Switch>
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/" component={Login} />
@@ -46,8 +62,13 @@ class App extends Component {
                     <Route exact path="/cadastrar/predio" component={CadastrarPredio} />
                     <Route exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
                     <Route exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
+                    <Route exact path="/cadastrar/tipo" component={CadastrarTipo} />
+                    <Route exact path="/cadastrar/setor" component={CadastrarSetor} />
+                    <Route exact path="/cadastrar/funcao" component={CadastrarFuncao} />
+                    <Route exact path="/vincular/setorFuncao" component={VincularSetorFuncao} />
+
                 </Switch>
-                {/*<Rodape />*/}
+                <Rodape />
             </Router>
         );
     }
