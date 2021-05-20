@@ -14,12 +14,15 @@ export function Pagina (props) {
         if (props.titulo != null) {
             titulo = titulo + " | " + props.titulo
         }
-    if (Logado()) {
-        document.getElementById('root').classList.remove('login-page');
-        document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
-    } else {
-        document.getElementById('root').classList.add('login-page');
+    if (!Logado()) {
         return <Redirect to={"/login"} />
+    }
+
+    //Checagem de classes de layout interno x externo
+    const cssBody = document.getElementById('root').classList;
+    if (cssBody.contains('login-page')) {
+        document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
+        document.getElementById('root').classList.remove('login-page');
     }
     window.document.title = titulo;
     return (
