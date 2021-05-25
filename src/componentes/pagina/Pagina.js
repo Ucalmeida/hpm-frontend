@@ -1,22 +1,15 @@
 import React from "react";
-import Topo from "./Topo";
-import MenuLateral from "./MenuLateral";
-import Rodape from "./Rodape";
-import BotaoScrollTop from "./BotaoScrollTop";
 import PropTypes from "prop-types";
-import {Logado} from "../../util/Util";
-import {Redirect} from "react-router-dom";
+import {ValidaToken} from "../../util";
 
 export function Pagina (props) {
 
+    ValidaToken()
 
     let titulo = "Portal HPM"
         if (props.titulo != null) {
             titulo = titulo + " | " + props.titulo
         }
-    if (!Logado()) {
-        return <Redirect to={"/login"} />
-    }
 
     //Checagem de classes de layout interno x externo
     const cssBody = document.getElementById('root').classList;

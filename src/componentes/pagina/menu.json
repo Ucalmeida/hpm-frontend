@@ -1,0 +1,14 @@
+{
+  "Principal": {
+    "nome": "Principal",
+    "descricao": "Página Principal",
+    "url": "/principal",
+    "icone": "fas fas-home"
+  },
+  "Alterar Senha": {
+    "nome": "Alterar Senha",
+    "descricao": "Página Principal",
+    "url": "/alterarSenha",
+    "icone": "fas fas-home"
+  }
+}

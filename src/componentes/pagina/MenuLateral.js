@@ -2,8 +2,8 @@ import React from "react";
 import {NavLink, Link} from "react-router-dom";
 
 import logoHPM from "../../img/brasoes/brasao_hpm.png";
-import {Logado} from "../../util/Util";
 import {Icone} from "../Icone";
+import {Logado} from "../../util";
 
 export default class MenuLateral extends React.Component {
     render() {
@@ -70,7 +70,7 @@ export default class MenuLateral extends React.Component {
                                     <li className="nav-item">
                                         <NavLink to="/cadastrar/especialidade" exact className="nav-link">
                                             <Icone icone={"fas fa-user-nurse"} className={"nav-icon"} margem={false}/>
-                                            <p>Cadastrar Especialidade</p>
+                                            <p>Especialidade</p>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
