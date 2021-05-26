@@ -76,13 +76,13 @@ export default class MenuLateral extends React.Component {
                                     <li className="nav-item">
                                         <NavLink to="/cadastrar/tipo" exact className="nav-link">
                                             <Icone icone={"fas fa-user-nurse"} className={"nav-icon"} margem={false}/>
-                                            <p>Cadastrar Tipo</p>
+                                            <p>Tipo</p>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
                                         <NavLink to="/cadastrar/setor" exact className="nav-link">
                                             <Icone icone="fas fa-plus" className={"nav-icon"} margem={false}/>
-                                            <p>Cadastrar Setor</p>
+                                            <p>Setor</p>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">
