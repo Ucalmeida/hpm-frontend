@@ -4,7 +4,7 @@ import {ValidaToken} from "../../util";
 
 export function Pagina (props) {
 
-    ValidaToken()
+    // ValidaToken()
 
     let titulo = "Portal HPM"
         if (props.titulo != null) {

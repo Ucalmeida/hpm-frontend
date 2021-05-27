@@ -34,15 +34,15 @@ function verificaToken() {
         .then(json => {
                 let valido = json.resultado
                 if (!valido) {
-                    localStorage.removeItem('token')
-                    localStorage.removeItem('usuario')
+                    localStorage.clear()
+                    window.location.replace('/login')
                 }
             }
         )
 }
 
 clearInterval(window.checaSeguranca)
-window.checaSeguranca = setInterval(function() {verificaToken();}, 1_000 * 60 * 10);
+window.checaSeguranca = setInterval(function() {verificaToken();}, 1_000 * 60 * 2);
 
 class App extends Component {
 
