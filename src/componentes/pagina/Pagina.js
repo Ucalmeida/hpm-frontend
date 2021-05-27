@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {ValidaToken} from "../../util";
+import {Logado, ValidaToken} from "../../util";
 
 export function Pagina (props) {
 
@@ -12,12 +12,13 @@ export function Pagina (props) {
         }
 
     //Checagem de classes de layout interno x externo
-    const cssBody = document.getElementById('root').classList;
+    const cssBody = document.getElementById('body').classList;
     if (cssBody.contains('login-page')) {
-        document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
-        document.getElementById('root').classList.remove('login-page');
+        document.getElementById('body').classList.add('sidebar-mini','layout-fixed');
+        document.getElementById('body').classList.remove('login-page');
     }
     window.document.title = titulo;
+    if (!Logado()) return "";
     return (
          <div className="content-wrapper">
              <section className='content-header'>
