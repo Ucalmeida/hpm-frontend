@@ -24,9 +24,7 @@ import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 import RecuperarSenha from "./paginas/RecuperarSenha";
-import Topo from "./componentes/pagina/Topo";
-import MenuLateral from "./componentes/pagina/MenuLateral";
-import Rodape from "./componentes/pagina/Rodape";
+import {MenuLateral, Rodape, Topo} from "./componentes/pagina";
 
 
 function verificaToken() {
@@ -48,29 +46,31 @@ class App extends Component {
 
     render() {
         return (
-            <Router >
-                <Topo />
-                <MenuLateral />
-                <Switch>
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/" component={Login} />
-                    <Route exact path="/principal" component={Principal}/>
-                    <Route exact path="/alterarSenha" component={AlterarSenha} />
-                    <Route exact path="/cadastrar/objeto" component={CadastrarObjeto} />
-                    <Route exact path="/cadastrar/sangue" component={CadastrarSangue} />
-                    <Route exact path="/cadastrar/especialidade" component={CadastrarEspecialidade} />
-                    <Route exact path="/cadastrar/pessoa" component={CadastrarPessoa} />
-                    <Route exact path="/cadastrar/predio" component={CadastrarPredio} />
-                    <Route exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
-                    <Route exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
-                    <Route exact path="/cadastrar/tipo" component={CadastrarTipo} />
-                    <Route exact path="/cadastrar/setor" component={CadastrarSetor} />
-                    <Route exact path="/cadastrar/funcao" component={CadastrarFuncao} />
-                    <Route exact path="/vincular/setorFuncao" component={VincularSetorFuncao} />
-                    <Route exact path="/vincular/setorFuncaoAcoes" component={SetorFuncaoAcoes} />
-                </Switch>
-                <Rodape />
-            </Router>
+            <div className={"wrapper principal"}>
+                <Router >
+                    <Topo />
+                    <MenuLateral />
+                    <Switch>
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/" component={Login} />
+                        <Route exact path="/principal" component={Principal}/>
+                        <Route exact path="/alterarSenha" component={AlterarSenha} />
+                        <Route exact path="/cadastrar/objeto" component={CadastrarObjeto} />
+                        <Route exact path="/cadastrar/sangue" component={CadastrarSangue} />
+                        <Route exact path="/cadastrar/especialidade" component={CadastrarEspecialidade} />
+                        <Route exact path="/cadastrar/pessoa" component={CadastrarPessoa} />
+                        <Route exact path="/cadastrar/predio" component={CadastrarPredio} />
+                        <Route exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
+                        <Route exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
+                        <Route exact path="/cadastrar/tipo" component={CadastrarTipo} />
+                        <Route exact path="/cadastrar/setor" component={CadastrarSetor} />
+                        <Route exact path="/cadastrar/funcao" component={CadastrarFuncao} />
+                        <Route exact path="/vincular/setorFuncao" component={VincularSetorFuncao} />
+                        <Route exact path="/vincular/setorFuncaoAcoes" component={SetorFuncaoAcoes} />
+                    </Switch>
+                    <Rodape />
+                </Router>
+            </div>
         );
     }
 }
