@@ -77,13 +77,13 @@ export function ValidaToken () {
     const tokenJson = {
         token: localStorage.getItem('token')
     }
-    // xfetch('/validaToken',tokenJson, HttpVerbo.POST)
-    //     .then(json => {
-    //         if (!json.resultado) {
-    //             localStorage.clear();
-    //             window.location.replace('/login')
-    //         }
-    //     })
+    xfetch('/validaToken',tokenJson, HttpVerbo.POST)
+        .then(json => {
+            if (!json.resultado) {
+                localStorage.clear();
+                window.location.replace('/login')
+            }
+        })
 }
 
 

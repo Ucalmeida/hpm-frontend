@@ -4,8 +4,6 @@ import {Logado, ValidaToken} from "../../util";
 
 export function Pagina (props) {
 
-    // ValidaToken()
-
     let titulo = "Portal HPM"
         if (props.titulo != null) {
             titulo = titulo + " | " + props.titulo
@@ -18,7 +16,8 @@ export function Pagina (props) {
         document.getElementById('body').classList.remove('login-page');
     }
     window.document.title = titulo;
-    if (!Logado()) return "";
+    if (!Logado()) return window.location.replace('/login');
+
     return (
          <div className="content-wrapper">
              <section className='content-header'>

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Botao, Card, Pagina, Select, Spinner} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
 
 const LOG = console.log
 
@@ -26,20 +26,18 @@ export function VincularSetorFuncao() {
     }
 
     function selecionarSetor(e) {
-        e.preventDefault()
-        let idSetor = e.target.value
-        objeto.idSetor = e.target.value
+        console.log(e)
+        let idSetor = e.value
+        objeto.idSetor = e.value
         carregarFuncoesPorSetor();
     }
 
     function selecionarFuncao(e) {
-        e.preventDefault()
-        const idFuncao = e.target.value
+        const idFuncao = e.value
         setObjeto({...objeto, idFuncao: idFuncao})
     }
 
     function vincular(e) {
-        e.preventDefault()
         const dados = {
             idSetor: objeto.idSetor,
             idFuncao: objeto.idFuncao
@@ -87,7 +85,7 @@ export function VincularSetorFuncao() {
                         </div>
                         <div className="row">
                             <div className="col-lg-12 text-lg-right mt-2 mb-2">
-                                <Botao className="" cor="success" onClick={vincular}>
+                                <Botao cor={BOTAO.COR.SUCESSO} icone={"fas fa-exchange-alt"} onClick={vincular}>
                                     Vincular
                                 </Botao>
                             </div>
