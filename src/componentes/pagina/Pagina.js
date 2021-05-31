@@ -1,30 +1,24 @@
 import React from "react";
-import Topo from "./Topo";
-import MenuLateral from "./MenuLateral";
-import Rodape from "./Rodape";
-import BotaoScrollTop from "./BotaoScrollTop";
 import PropTypes from "prop-types";
-import {Logado} from "../../util/Util";
-import {Redirect} from "react-router-dom";
+import {Logado, ValidaToken} from "../../util";
 
 export function Pagina (props) {
 
+    // ValidaToken()
 
     let titulo = "Portal HPM"
         if (props.titulo != null) {
             titulo = titulo + " | " + props.titulo
         }
-    if (!Logado()) {
-        return <Redirect to={"/login"} />
-    }
 
     //Checagem de classes de layout interno x externo
-    const cssBody = document.getElementById('root').classList;
+    const cssBody = document.getElementById('body').classList;
     if (cssBody.contains('login-page')) {
-        document.getElementById('root').classList.add('hold-transition','sidebar-mini','layout-fixed');
-        document.getElementById('root').classList.remove('login-page');
+        document.getElementById('body').classList.add('sidebar-mini','layout-fixed');
+        document.getElementById('body').classList.remove('login-page');
     }
     window.document.title = titulo;
+    if (!Logado()) return "";
     return (
          <div className="content-wrapper">
              <section className='content-header'>

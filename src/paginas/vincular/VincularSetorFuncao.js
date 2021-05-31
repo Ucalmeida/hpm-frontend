@@ -16,7 +16,7 @@ export function VincularSetorFuncao() {
     })
 
     function carregarFuncoesPorSetor() {
-        setObjeto({...objeto, carregandoFuncoes: true})
+        setObjeto({...objeto, carregandoFuncoes: true, funcoes: []})
         const {idSetor} = objeto
         xfetch("/hpm/setorFuncao/" + idSetor, {}, HttpVerbo.GET)
             .then(res => res.json())

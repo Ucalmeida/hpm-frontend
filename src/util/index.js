@@ -1,10 +1,10 @@
 import {ExibirMensagem} from './ExibirMensagem'
-import {xfetch, Logado, RemoverCaracteresEspeciais} from './Util'
+import {xfetch, RemoverCaracteresEspeciais, Logado, ValidaToken} from './Util'
 
 export {
     ExibirMensagem,
     xfetch,
     Logado,
     RemoverCaracteresEspeciais,
-
+    ValidaToken
 }

@@ -1,6 +1,6 @@
+import React from "react";
 import {HttpVerbo, MSG} from "./Constantes";
 import {ExibirMensagem} from "./ExibirMensagem";
-import {Redirect} from "react-router-dom";
 
 const uuid = () => {
     var d = new Date().getTime();
@@ -32,7 +32,7 @@ function ExcecaoNegocio(message) {
     this.name = "ExcecaoNegocio";
 }
 
-const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
+export const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.47:8081'
 
     let myHeaders = new Headers();
@@ -69,34 +69,26 @@ const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     }
 }
 
-function Logado () {
-    const token = localStorage.getItem('token');
-    if (!token) return false;
-
-    validaToken(token);
-    return true
+export function Logado () {
+    return localStorage.getItem('token');
 }
-function validaToken (token) {
+
+export function ValidaToken () {
     const tokenJson = {
-        token: token
+        token: localStorage.getItem('token')
     }
-    xfetch('/validaToken',tokenJson, HttpVerbo.POST)
-    .then(json => {
-       if (!json.resultado) {
-           <Redirect to={'login'} />
-       }
-        return;
-    })
+    // xfetch('/validaToken',tokenJson, HttpVerbo.POST)
+    //     .then(json => {
+    //         if (!json.resultado) {
+    //             localStorage.clear();
+    //             window.location.replace('/login')
+    //         }
+    //     })
 }
 
-const RemoverCaracteresEspeciais = (texto) => {
+
+export const RemoverCaracteresEspeciais = (texto) => {
     texto = texto.replace((/[ÀÁÂÃÄÅ]/g,"A"))
     return texto;
 }
-
-export {
-    xfetch,
-    Logado,
-    RemoverCaracteresEspeciais,
-};
 
