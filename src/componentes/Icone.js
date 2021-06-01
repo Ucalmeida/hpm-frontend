@@ -7,7 +7,7 @@ export function Icone (props) {
     const cor = (!props.cor) ? "" : props.cor;
     const margem = (props.margem) ? " mr-2" : "";
     return (
-        <i className={getClasse(props.className) + props.icone + margem + cor}></i>
+        <i id={props.id} onClick={props.onClick} className={getClasse(props.className) + props.icone + margem + cor}></i>
     );
 }
 Icone.defaultProps = {
@@ -18,4 +18,5 @@ Icone.propTypes = {
     cor: PropTypes.string,
     margem: PropTypes.bool,
     className: PropTypes.string,
+    id: PropTypes.any,
 }

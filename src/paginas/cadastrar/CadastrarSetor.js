@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {BotaoSalvar, Card, Pagina, Spinner} from "../../componentes";
+import React, {useEffect, useRef, useState} from "react";
+import {BotaoSalvar, Card, Icone, Pagina, Spinner} from "../../componentes";
 import {Input} from '../../componentes/form'
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {HttpVerbo, ICONE, MSG, TEXTO} from "../../util/Constantes";
+
+const LOG = console.log
 
 export function CadastrarSetor() {
 
@@ -20,7 +22,6 @@ export function CadastrarSetor() {
 
     let spiner = objeto.carregando ? <Spinner/> : ''
     let spinnerSalvar = objeto.carregandoSalvar ? <Spinner/> : ''
-
 
     function carregarSetores() {
         console.log('Aqui')
@@ -51,6 +52,11 @@ export function CadastrarSetor() {
             })
     }
 
+    function inativar(e) {
+        const id = e.target.id
+        //TODO fazer a chamada para remover
+    }
+
     return (
         <Pagina titulo="Cadastrar Setor">
             <div className="row animated--fade-in">
@@ -72,11 +78,17 @@ export function CadastrarSetor() {
                 <div className="col-lg-8">
                     <Card titulo="Setores cadastrados">
                         {spiner}
-                        <ul className={"list-unstyled"} style={{columns: 3}}>
+                        <div className={"list-unstyled"} style={{columns: 3}}>
                             {objeto.setores.map((v, k) => {
-                                return <li className="flex-fill" key={k}> {v.nome}</li>
+                                return (
+                                    <div className="flex-fill" key={k}>
+                                        {v.nome} &nbsp;
+                                        <Icone id={v.id} onClick={inativar} icone={ICONE.EXCLUIR} cor={TEXTO.COR.PERIGO}/>
+                                        <Icone id={v.id} icone={ICONE.EDITAR} cor={TEXTO.COR.PRIMARIO}/>
+                                    </div>
+                                )
                             })}
-                        </ul>
+                        </div>
                     </Card>
                 </div>
             </div>
