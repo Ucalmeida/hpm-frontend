@@ -3,7 +3,7 @@ import {xfetch} from "../../util/Util";
 import {HttpVerbo} from "../../util/Constantes";
 import ReactSelect, { components } from "react-select"
 
-export function Select({ url, valorAttr, nome, funcao, label }) {
+export function Select({ url, valorAttr, nome, funcao, label, nomeClasse }) {
     const [lists, setLists] = useState([]);
 
     const loadBloods = async () => {
@@ -31,9 +31,6 @@ export function Select({ url, valorAttr, nome, funcao, label }) {
     const Placeholder = props => {
         return <components.Placeholder {...props}>Selecione</components.Placeholder>;
     };
-
-
-
 
     return (
         <div className="col-lg-12">
