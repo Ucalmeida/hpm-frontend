@@ -18,7 +18,7 @@ export function Select({ url, valorAttr, nome, funcao, label, nomeClasse }) {
     }, [])
 
     const options = lists.map((item) => {
-        return {value: item.valor,label: item.texto}
+        return {value: item.valor,label: item.texto, key: item.valor}
     })
 
     const NoOptionsMessage = props => {

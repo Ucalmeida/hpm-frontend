@@ -48,7 +48,9 @@ export function CadastrarPessoa() {
     }
 
     const handleChange = (e) => {
-        if(e.target.value === 'Sim') {
+        if (!e.target) {
+            setObjeto({...objeto, [e.name]: e.value});
+        } else if(e.target.value === 'Sim') {
             setObjeto({...objeto, [e.target.name]: true});
         } else if(e.target.value === 'Não') {
             setObjeto({...objeto, [e.target.name]: false});
