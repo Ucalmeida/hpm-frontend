@@ -18,7 +18,8 @@ import {
 } from "./paginas/cadastrar"
 import {
     VincularSetorFuncao,
-    SetorFuncaoAcoes
+    SetorFuncaoAcoes, VincularSubSetor,
+
 } from "./paginas/vincular";
 import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
 import AlterarSenha from "./paginas/AlterarSenha";
@@ -67,6 +68,7 @@ class App extends Component {
                         <Route exact path="/cadastrar/funcao" component={CadastrarFuncao} />
                         <Route exact path="/vincular/setorFuncao" component={VincularSetorFuncao} />
                         <Route exact path="/vincular/setorFuncaoAcoes" component={SetorFuncaoAcoes} />
+                        <Route exact path="/vincular/setorSubSetor" component={VincularSubSetor} />
                     </Switch>
                     <Rodape />
                 </Router>

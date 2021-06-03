@@ -75,12 +75,18 @@ export const acoes = [
     "url": "vincular",
     "icone": "fas fa-lock",
     "acoes": [
-        {
+      {
+        "nome": "Sub Setor",
+        "descricao": "Página Principal",
+        "url": "setorSubSetor",
+        "icone": "fas fa-lock"
+      },
+      {
       "nome": "Setor Função",
-      "descricao": "Página Principal",
-      "url": "setorFuncao",
-      "icone": "fas fa-lock"
-    },
+        "descricao": "Página Principal",
+        "url": "setorFuncao",
+        "icone": "fas fa-lock"
+      },
       {
         "nome": "Setor Função acoes",
         "descricao": "Página Principal",
