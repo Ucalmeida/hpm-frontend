@@ -33,7 +33,7 @@ export function Select({ url, valorAttr, nome, funcao, label, nomeClasse }) {
     };
 
     return (
-        <div className="col-lg-12">
+        <div className={nomeClasse}>
             <div className={"form-group"}>
                 <label>{label}</label>
                 <ReactSelect options={options} value={valorAttr} name={nome} onChange={funcao} components={{ NoOptionsMessage,Placeholder }}/>
