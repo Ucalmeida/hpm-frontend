@@ -160,27 +160,30 @@ export function CadastrarPessoa() {
                                     <option value={pessoa.blVivo}>Não</option>
                                 </select>
                             </div>
-                            <Select
-                                funcao={handleChange}
-                                valorAttr={pessoa.idInstituicaoConvenio}
-                                nome={"idInstituicaoConvenio"}
-                                url={"/hpm/instituicao/opcoes"}
-                                label={"Instituição"}
-                                nomeClasse={"col-lg-3"}/>
-                            <Select
-                                funcao={handleChange}
-                                valorAttr={pessoa.idSangue}
-                                nome={"idSangue"}
-                                url={"/hpm/sangue/opcoes"}
-                                label={"Tipo Sanguíneo"}
-                                nomeClasse={"col-lg-2"}/>
-                            <Select
-                                funcao={handleChange}
-                                valorAttr={pessoa.sexo}
-                                nome={"sexo"}
-                                url={"/hpm/sexo/opcoes"}
-                                label={"Sexo"}
-                                nomeClasse={"col-lg-3"}/>
+                            <div className="col-lg-3">
+                                <label>Instituição</label>
+                                <Select
+                                    funcao={handleChange}
+                                    valorAttr={pessoa.idInstituicaoConvenio}
+                                    nome={"idInstituicaoConvenio"}
+                                    url={"/hpm/instituicao/opcoes"}/>
+                            </div>
+                            <div className="col-lg-2">
+                                <label>Tipo Sanguíneo</label>
+                                <Select
+                                    funcao={handleChange}
+                                    valorAttr={pessoa.idSangue}
+                                    nome={"idSangue"}
+                                    url={"/hpm/sangue/opcoes"} />
+                            </div>
+                            <div className="col-lg-3">
+                                <label>Sexo</label>
+                                <Select
+                                    funcao={handleChange}
+                                    valorAttr={pessoa.sexo}
+                                    nome={"sexo"}
+                                    url={"/hpm/sexo/opcoes"}/>
+                            </div>
                         </div>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
                             <BotaoSalvar onClick={enviar} />
