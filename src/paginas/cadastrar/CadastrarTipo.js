@@ -10,7 +10,7 @@ function CadastrarTipo(){
         {
             nome: "",
             idObjeto:null,
-            objetos: []
+            tipos: []
         }
     )
 
@@ -24,7 +24,7 @@ function CadastrarTipo(){
         xfetch('/hpm/tipo/opcoes',{}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setObjeto({'objetos': json.resultado})
+                    setObjeto({'tipos': json.resultado})
             }
         )
    }
@@ -45,6 +45,8 @@ function CadastrarTipo(){
            }
        )
    }
+
+   let tipos = objeto.tipos
     return(
 
         <Pagina>
@@ -79,9 +81,13 @@ function CadastrarTipo(){
                     </Card>
                 </div>
                 <div className="col-lg-6">
-                    <Card titulo="Tipos Cadastrados Por Objeto">
-                        <ul className={"list-unstyled"}>
-
+                    <Card titulo="Tipos No Objeto Selecionado">
+                        <ul className={"list-unstyled"} style={{columns: 3}}>
+                            {
+                                tipos.map((v,k) => {
+                                    return <li className="flex-fill" key={k}> {v.nome}</li>
+                                })
+                            }
                         </ul>
                     </Card>
                 </div>
