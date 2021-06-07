@@ -55,7 +55,7 @@ export function VincularSetorFuncao() {
             })
     }
 
-    let spinner = objeto.carregandoSubSetor ? <Spinner/> : ''
+    let spinner = objeto.carregandoFuncoes ? <Spinner/> : ''
     let spinnerVincular = objeto.carregandoVincular ? <Spinner/> : ''
     let funcoes = objeto.funcoes
     return (
