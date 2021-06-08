@@ -47,6 +47,21 @@ export function CadastrarPessoa() {
             })
     }
 
+    const handleInstituicao = (e) => {
+        const idInstituicaoConvenio = e.value;
+        setObjeto({...objeto, idInstituicaoConvenio : idInstituicaoConvenio});
+    }
+
+    const handleSangue = (e) => {
+        const idSangue = e.value;
+        setObjeto({...objeto, idSangue : idSangue});
+    }
+
+    const handleSexo = (e) => {
+        const sexo = e.value;
+        setObjeto({...objeto, sexo : sexo});
+    }
+
     const handleChange = (e) => {
         if (!e.target) {
             setObjeto({...objeto, [e.name]: e.value});
@@ -161,22 +176,19 @@ export function CadastrarPessoa() {
                                 </select>
                             </div>
                             <Select
-                                funcao={handleChange}
-                                valorAttr={pessoa.idInstituicaoConvenio}
+                                funcao={handleInstituicao}
                                 nome={"idInstituicaoConvenio"}
                                 url={"/hpm/instituicao/opcoes"}
                                 label={"Instituição"}
                                 nomeClasse={"col-lg-3"}/>
                             <Select
-                                funcao={handleChange}
-                                valorAttr={pessoa.idSangue}
+                                funcao={handleSangue}
                                 nome={"idSangue"}
                                 url={"/hpm/sangue/opcoes"}
                                 label={"Tipo Sanguíneo"}
                                 nomeClasse={"col-lg-2"}/>
                             <Select
-                                funcao={handleChange}
-                                valorAttr={pessoa.sexo}
+                                funcao={handleSexo}
                                 nome={"sexo"}
                                 url={"/hpm/sexo/opcoes"}
                                 label={"Sexo"}
