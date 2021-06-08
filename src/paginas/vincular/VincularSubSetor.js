@@ -9,7 +9,7 @@ export function VincularSubSetor() {
 
     const [objeto, setObjeto] = useState({
         idSetor: -1,
-        idFuncao: null,
+        idSubSetor: null,
         subsetores: [],
         carregandoSubSetor: false,
         carregandoVincular: false
@@ -32,26 +32,26 @@ export function VincularSubSetor() {
     }
 
     function selecionarSubSetor(e) {
-        const idFuncao = e.value
-        setObjeto({...objeto, idFuncao: idFuncao})
+        const idSubsSetor = e.value
+        setObjeto({...objeto, idSubSetor: idSubsSetor})
     }
 
     function vincular(e) {
         const dados = {
-            idSetor: objeto.idSetor,
-            idFuncao: objeto.idFuncao
+            idPai: objeto.idSetor,
+            idFilho: objeto.idSubSetor
         }
         setObjeto({...objeto, carregandoVincular: true})
-        // xfetch("/hpm/setorFuncao/vincular", dados, HttpVerbo.POST)
-        //     .then(dados => {
-        //         if (dados.status === 500) {
-        //             ExibirMensagem(dados.message, MSG.ERRO)
-        //             setObjeto({...objeto, carregandoVincular: false})
-        //             return
-        //         }
-        //         setObjeto({...objeto, carregandoVincular: false})
-        //         carregarSubsetoresPorSetor()
-        //     })
+        xfetch("/hpm/setor/vincular", dados, HttpVerbo.POST)
+            .then(dados => {
+                if (dados.status === 500) {
+                    ExibirMensagem(dados.message, MSG.ERRO)
+                    setObjeto({...objeto, carregandoVincular: false})
+                    return
+                }
+                setObjeto({...objeto, carregandoVincular: false})
+                carregarSubsetoresPorSetor()
+            })
     }
 
     let spinner = objeto.carregandoSubSetor ? <Spinner/> : ''

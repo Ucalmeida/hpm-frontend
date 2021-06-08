@@ -16,12 +16,12 @@ export function VincularSetorFuncao() {
     })
 
     function carregarFuncoesPorSetor() {
-        setObjeto({...objeto, carregandoFuncoes: true, subsetores: []})
+        setObjeto({...objeto, carregandoFuncoes: true, funcoes: []})
         const {idSetor} = objeto
         xfetch("/hpm/setorFuncao/" + idSetor, {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(dados => {
-                setObjeto({...objeto, subsetores: dados.resultado, carregandoFuncoes: false})
+                setObjeto({...objeto, funcoes: dados.resultado, carregandoFuncoes: false})
             })
     }
 
@@ -55,7 +55,7 @@ export function VincularSetorFuncao() {
             })
     }
 
-    let spinner = objeto.carregandoSubSetor ? <Spinner/> : ''
+    let spinner = objeto.carregandoFuncoes ? <Spinner/> : ''
     let spinnerVincular = objeto.carregandoVincular ? <Spinner/> : ''
     let funcoes = objeto.funcoes
     return (
