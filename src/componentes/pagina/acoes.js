@@ -26,6 +26,12 @@ export const acoes = [
         "icone": "fas fa-user"
       },
       {
+        "nome": "Piso",
+        "descricao": "Criando piso",
+        "url": "piso",
+        "icone": "fas fa-plus"
+      },
+      {
         "nome": "Objeto",
         "descricao": "Página Principal",
         "url": "objeto",
