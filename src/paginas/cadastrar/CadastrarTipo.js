@@ -3,8 +3,6 @@ import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-
-
 function CadastrarTipo(){
     const [objeto, setObjeto] = useState(
         {
@@ -14,22 +12,28 @@ function CadastrarTipo(){
         }
     )
 
-   let handleChange = (e) => {
-       e.preventDefault();
-        setObjeto({...objeto,[e.target.name]:e.target.value});
+   let selecionarObjeto = (e) => {
+       objeto.idObjeto = e.value;
+       listarTipos();
    }
 
+   let handleChange = (e) => {
+        e.preventDefault()
+       setObjeto({...objeto, nome: e.target.value})
+
+   }
 
   const listarTipos = () => {
-        xfetch('/hpm/tipo/opcoes',{}, HttpVerbo.GET)
+        xfetch('/hpm/tipo/' + objeto.idObjeto,{}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setObjeto({'tipos': json.resultado})
+                    setObjeto({...objeto,tipos: json.resultado})
             }
         )
    }
 
     const enviar = (e) => {
+        console.log(objeto)
         e.preventDefault()
        xfetch('/hpm/tipo/cadastrar', objeto, HttpVerbo.POST)
            .then(json => {
@@ -45,35 +49,32 @@ function CadastrarTipo(){
            }
        )
    }
+    let tipos = objeto.tipos
 
-   let tipos = objeto.tipos
     return(
-
         <Pagina>
-
             <div className="row animated--fade-in">
                 <div className="col-lg-6">
                     <Card>
-
-                        <div className="col-lg-6">
-                            <label>Objeto</label>
-                            <Select
-                                funcao={handleChange}
-                                valorAttr={objeto.idObjeto}
-                                nome={"idObjeto"}
-                                url={"/hpm/objeto/opcoes"} />
+                        <div className="row">
+                            <div className="col-lg-6">
+                                <label>Objeto</label>
+                                <Select
+                                    funcao={selecionarObjeto}
+                                    valorAttr={objeto.idObjeto}
+                                    nome={"idObjeto"}
+                                    url={"/hpm/objeto/opcoes"} />
+                            </div>
+                            <div className="col-lg-6">
+                                <label>Tipo</label>
+                                <Input
+                                    type="text"
+                                    value={objeto.nome}
+                                    onChange = {handleChange}
+                                    name="nome"
+                                    placeholder="Tipo"/>
+                            </div>
                         </div>
-
-                        <div className="col-lg-6">
-                            <Input
-                                type="text"
-                                value={objeto.nome}
-                                onChange = {handleChange}
-                                name="nome"
-                                label="Tipo"
-                                placeholder="Tipo"/>
-                        </div>
-
                         <div className="align-items-end col-12">
                             <BotaoSalvar onClick={enviar} />
                         </div>
@@ -83,11 +84,9 @@ function CadastrarTipo(){
                 <div className="col-lg-6">
                     <Card titulo="Tipos No Objeto Selecionado">
                         <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {
-                                tipos.map((v,k) => {
-                                    return <li className="flex-fill" key={k}> {v.nome}</li>
-                                })
-                            }
+                            {objeto.tipos.map((v, k) => {
+                                return <li className="flex-fill" key={k}> {v.nome}</li>
+                            })}
                         </ul>
                     </Card>
                 </div>
@@ -95,5 +94,4 @@ function CadastrarTipo(){
         </Pagina>
     );
 }
-
 export {CadastrarTipo};
