@@ -132,15 +132,15 @@ export function CadastrarPessoa() {
                                 label="Celular"
                                 placeholder={"Celular"}
                                 nomeClasse={"col-lg-2"}/>
-                            <div className="col-lg-2">
-                                <Input
-                                    type="text"
-                                    value={pessoa.telefone}
-                                    onChange={handleChange}
-                                    name="telefone"
-                                    label="Telefone"
-                                    placeholder="Telefone"/>
-                            </div>
+                            <MaskedInput
+                                mask={"(99)9999-9999"}
+                                type="text"
+                                value={pessoa.telefone}
+                                onChange={handleChange}
+                                name="telefone"
+                                label="Telefone"
+                                placeholder={"Telefone"}
+                                nomeClasse={"col-lg-2"}/>
                             <div className="col-lg-3">
                                 <Input
                                     type="text"
