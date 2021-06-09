@@ -42,6 +42,7 @@ function CadastrarTipo(){
                if(json.status === "OK"){
                    ExibirMensagem('Tipo Cadastrado Com Sucesso!', MSG.SUCESSO)
                    setObjeto({ idObjeto: '', tipos: []})
+                   listarTiposPorObjeto()
                }else{
                    ExibirMensagem(json.message, MSG.ERRO)
                }
