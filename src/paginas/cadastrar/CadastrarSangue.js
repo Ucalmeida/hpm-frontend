@@ -54,10 +54,10 @@ export class CadastrarSangue extends React.Component {
             spinner = <Spinner></Spinner>
         };
         return (
-            <Pagina>
+            <Pagina titulo="Cadastrar Sangue">
                 <div className="row animated--fade-in">
                     <div className="col-lg-4">
-                        <Card>
+                        <Card titulo= "Cadastrar">
                             <Input
                                 type="text"
                                 onChange={this.handleChange}
@@ -71,7 +71,7 @@ export class CadastrarSangue extends React.Component {
                             </div>
                         </Card>
                     </div>
-                    <div className="col-lg-4">
+                    <div className="col-lg-8">
                         <Card titulo="Sangue cadastrados">
                             {spinner}
                             <ul className={"list-unstyled"}>

@@ -61,7 +61,7 @@ export function CadastrarSetor() {
         <Pagina titulo="Cadastrar Setor">
             <div className="row animated--fade-in">
                 <div className="col-lg-4">
-                    <Card>
+                    <Card titulo="Cadastrar">
                         {spinnerSalvar}
                         <Input
                             type="text"

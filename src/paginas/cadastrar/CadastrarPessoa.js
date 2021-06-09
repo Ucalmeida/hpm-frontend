@@ -85,7 +85,7 @@ export function CadastrarPessoa() {
             <div className="row">
                 <div className="col-lg-12"></div>
                 <div className="col-lg-12">
-                    <Card>
+                    <Card titulo="Cadastrar">
                         <div className="row">
                             <div className="col-lg-6">
                                 <Input
