@@ -56,10 +56,10 @@ export class CadastrarEspecialidade extends React.Component {
             spinner = <Spinner />
         };
         return (
-            <Pagina titulo="Especialidades">
+            <Pagina titulo="Cadastrar Especialidade">
                 <div className="row animated--fade-in">
                     <div className="col-lg-4">
-                        <Card>
+                        <Card titulo="Cadastrar">
                             <Input
                                 type="text"
                                 onChange={this.handleChange}

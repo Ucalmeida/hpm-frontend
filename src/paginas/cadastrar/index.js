@@ -4,8 +4,9 @@ import {CadastrarPessoa} from "./CadastrarPessoa";
 import {CadastrarPredio} from "./CadastrarPredio";
 import {CadastrarSangue} from "./CadastrarSangue";
 import {CadastrarSetor} from "./CadastrarSetor";
-import {CadastrarFuncao} from "./CadastrarFuncao"
-import {CadastrarPerfil} from "./CadastrarPerfil"
+import {CadastrarFuncao} from "./CadastrarFuncao";
+import {CadastrarPerfil} from "./CadastrarPerfil";
+import {CadastrarPiso} from "./CadastrarPiso";
 
 export {
     CadastrarEspecialidade,
@@ -15,5 +16,6 @@ export {
     CadastrarSangue,
     CadastrarSetor,
     CadastrarFuncao,
-    CadastrarPerfil
+    CadastrarPerfil,
+    CadastrarPiso
 };

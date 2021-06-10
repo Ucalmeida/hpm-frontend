@@ -1,16 +1,8 @@
 import React from "react";
-import {Card, Input, Pagina} from "../../componentes";
+import {CadastrarNome} from "../../componentes";
 
-function CadastrarPredio() {
-    return (
-        <Pagina>
-            <div className="form-group col-lg-12">
-                <Card>
-                    <Input className = "" label = "Nome" />
-                </Card>
-            </div>
-        </Pagina>
-    );
+export function CadastrarPredio(){
+    return(
+        <CadastrarNome url="/hpm/predio/cadastrar" urlListagem="/hpm/predio" label="Prédio" labelListagem="Prédios Cadastrados"/>
+    )
 }
-
-export {CadastrarPredio};

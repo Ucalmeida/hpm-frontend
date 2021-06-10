@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
+import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
@@ -8,67 +8,74 @@ function CadastrarTipo(){
         {
             nome: "",
             idObjeto:null,
-            tipos: []
+            tipos: [],
+            carregandoTipos: false,
+            carregandoCadastrar: false
         }
     )
 
    let selecionarObjeto = (e) => {
-       objeto.idObjeto = e.value;
-       listarTipos();
+       objeto.idObjeto = e.value
+       listarTiposPorObjeto();
    }
 
    let handleChange = (e) => {
         e.preventDefault()
        setObjeto({...objeto, nome: e.target.value})
-
    }
 
-  const listarTipos = () => {
+  const listarTiposPorObjeto = () => {
+        setObjeto({...objeto, carregandoTipos: true, tipos: []})
         xfetch('/hpm/tipo/' + objeto.idObjeto,{}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setObjeto({...objeto,tipos: json.resultado})
+                    setObjeto({...objeto, tipos: json.resultado, carregandoTipos: false})
             }
         )
    }
 
-    const enviar = (e) => {
-        console.log(objeto)
+   const enviar = (e) => {
         e.preventDefault()
-       xfetch('/hpm/tipo/cadastrar', objeto, HttpVerbo.POST)
+       setObjeto({...objeto, carregandoCadastrar: true})
+        xfetch('/hpm/tipo/cadastrar', objeto, HttpVerbo.POST)
            .then(json => {
                if(json.status === "OK"){
                    ExibirMensagem('Tipo Cadastrado Com Sucesso!', MSG.SUCESSO)
-                   setObjeto({idObjeto: ''})
-                   setObjeto({nome: ''})
+                   setObjeto({ idObjeto: '', tipos: []})
+                   listarTiposPorObjeto()
                }else{
                    ExibirMensagem(json.message, MSG.ERRO)
-                   setObjeto({idObjeto: ''})
-                   setObjeto({nome: ''})
                }
+               setObjeto({...objeto, carregandoCadastrar: false})
            }
-       )
+        )
    }
+
+    let spinner = objeto.carregandoTipos ? <Spinner/> : ''
+    let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
     let tipos = objeto.tipos
 
     return(
-        <Pagina>
+        <Pagina titulo="Cadastrar Tipo">
             <div className="row animated--fade-in">
                 <div className="col-lg-6">
-                    <Card>
+                    <Card titulo="Cadastrar">
+                        <div className="col-lg-12">
+                            {spinnerCadastrar}
+                        </div>
                         <div className="row">
                             <div className="col-lg-6">
-                                <label>Objeto</label>
                                 <Select
+                                    label="Objeto"
                                     funcao={selecionarObjeto}
-                                    valorAttr={objeto.idObjeto}
-                                    nome={"idObjeto"}
+                                    nome="idObjeto"
                                     url={"/hpm/objeto/opcoes"} />
                             </div>
                             <div className="col-lg-6">
-                                <label>Tipo</label>
+
                                 <Input
                                     type="text"
+                                    label="Tipo"
                                     value={objeto.nome}
                                     onChange = {handleChange}
                                     name="nome"
@@ -83,8 +90,9 @@ function CadastrarTipo(){
                 </div>
                 <div className="col-lg-6">
                     <Card titulo="Tipos No Objeto Selecionado">
+                        {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {objeto.tipos.map((v, k) => {
+                            {tipos.map((v, k) => {
                                 return <li className="flex-fill" key={k}> {v.nome}</li>
                             })}
                         </ul>

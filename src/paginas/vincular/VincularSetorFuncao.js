@@ -68,19 +68,18 @@ export function VincularSetorFuncao() {
                         </div>
                         <div className="row">
                             <div className="col-lg-6">
+                                <label>Setor</label>
                                 <Select
                                     url="/hpm/setor/opcoes"
                                     funcao={selecionarSetor}
-                                    nome="setor"
-                                    label="Setor"/>
+                                    nome="setor"/>
                             </div>
                             <div className="col-lg-6">
-
+                                <label>Função</label>
                                 <Select
                                     url="/hpm/funcao/opcoes"
                                     funcao={selecionarFuncao}
-                                    nome="funcao"
-                                    label="Função"/>
+                                    nome="funcao"/>
                             </div>
                         </div>
                         <div className="row">

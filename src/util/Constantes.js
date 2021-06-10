@@ -38,9 +38,11 @@ const CARD = {
 const ICONE = {
         ALTERAR: 'fas fa-retweet',
         CANCELAR: 'far fa-times-circle',
+        EDITAR: 'fas fa-pencil',
         ENVIAR: 'far fa-paper-plane',
         ERRO: 'far fa-times-circle',
         EXCLUIR: 'far fa-trash-alt',
+        INFO: 'fas fa-info-circle',
         IMPRIMIR: 'fas fa-print',
         LIMPAR: 'fas fa-undo-alt',
         OK: 'far fa-check-circle',
@@ -48,7 +50,6 @@ const ICONE = {
         PESQUISAR: 'fas fa-search',
         SALVAR: 'far fa-save',
         VOLTAR: 'fas fa-reply',
-        EDITAR: 'fas fa-pencil',
 }
 
 const TEXTO = {
