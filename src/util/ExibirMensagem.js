@@ -9,6 +9,14 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
 
     let corBotao = BOTAO.COR.PRIMARIO;
 
+    let msgObjeto = '';
+    if (objeto) {
+        msgObjeto += '<br><br><ul className={"mt-5"}>'
+        for (const key in objeto) {
+            msgObjeto += (`<li id="${key}">${key}: ${objeto[key]}</li>`);
+        }
+        msgObjeto += '</ul>'
+    };
     switch (tipo) {
 
         case MSG.ALERTA:
@@ -24,28 +32,20 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
             break;
 
         case MSG.SUCESSO:
-            let msgObjeto = '';
-            if (objeto) {
-                msgObjeto += '<br><br><ul className={"mt-5"}>'
-                for (const key in objeto) {
-                    msgObjeto += (`<li id="${key}">${key}: ${objeto[key]}</li>`);
-                }
-                msgObjeto += '</ul>'
-            };
             corBotao = BOTAO.COR.SUCESSO;
             icone = <Icone icone={!icone ? ICONE.OK : icone} />
             titulo = "<span id='icone' class="+TEXTO.COR.SUCESSO+"></span>" + (!titulo ? MSG.SUCESSO : titulo);
-            mensagem = mensagem + msgObjeto;
             break;
 
         case MSG.INFO:
         default:
-            if (icone) icone = <Icone icone={icone} cor={TEXTO.COR.SUCESSO}/>;
-            else icone = <Icone icone={ICONE.OK} />
+            corBotao = BOTAO.COR.PRIMARIO;
+            icone = <Icone icone={!icone ? ICONE.INFO : icone} />
+            titulo = !titulo ? "" : "<span id='icone' class="+TEXTO.COR.PRIMARIO+"></span>" + titulo;
     }
     bootbox.dialog({
         title: titulo,
-        message: mensagem,
+        message: mensagem+msgObjeto,
         buttons: {
             ok: {
                 label: "<span id='icone2'></span>OK",
