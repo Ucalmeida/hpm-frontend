@@ -64,8 +64,8 @@ function CadastrarPiso(){
                         {spinnerCadastrar}
                         <div className="row">
                             <div className="col-lg-6">
+                                <label>Prédio</label>
                                 <Select
-                                    label="Prédio"
                                     funcao={selecionarPredio}
                                     nome="idPredio"
                                     url={"/hpm/predio/opcoes"} />
