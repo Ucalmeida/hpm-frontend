@@ -47,6 +47,21 @@ export function CadastrarPessoa() {
             })
     }
 
+    const handleInstituicao = (e) => {
+        const idInstituicaoConvenio = e.value;
+        setObjeto({...objeto, idInstituicaoConvenio : idInstituicaoConvenio});
+    }
+
+    const handleSangue = (e) => {
+        const idSangue = e.value;
+        setObjeto({...objeto, idSangue : idSangue});
+    }
+
+    const handleSexo = (e) => {
+        const sexo = e.value;
+        setObjeto({...objeto, sexo : sexo});
+    }
+
     const handleChange = (e) => {
         if (!e.target) {
             setObjeto({...objeto, [e.name]: e.value});
@@ -70,7 +85,7 @@ export function CadastrarPessoa() {
             <div className="row">
                 <div className="col-lg-12"></div>
                 <div className="col-lg-12">
-                    <Card>
+                    <Card titulo="Cadastrar">
                         <div className="row">
                             <div className="col-lg-6">
                                 <Input
@@ -117,15 +132,15 @@ export function CadastrarPessoa() {
                                 label="Celular"
                                 placeholder={"Celular"}
                                 nomeClasse={"col-lg-2"}/>
-                            <div className="col-lg-2">
-                                <Input
-                                    type="text"
-                                    value={pessoa.telefone}
-                                    onChange={handleChange}
-                                    name="telefone"
-                                    label="Telefone"
-                                    placeholder="Telefone"/>
-                            </div>
+                            <MaskedInput
+                                mask={"(99)9999-9999"}
+                                type="text"
+                                value={pessoa.telefone}
+                                onChange={handleChange}
+                                name="telefone"
+                                label="Telefone"
+                                placeholder={"Telefone"}
+                                nomeClasse={"col-lg-2"}/>
                             <div className="col-lg-3">
                                 <Input
                                     type="text"
@@ -160,30 +175,24 @@ export function CadastrarPessoa() {
                                     <option value={pessoa.blVivo}>Não</option>
                                 </select>
                             </div>
-                            <div className="col-lg-3">
-                                <label>Instituição</label>
-                                <Select
-                                    funcao={handleChange}
-                                    valorAttr={pessoa.idInstituicaoConvenio}
-                                    nome={"idInstituicaoConvenio"}
-                                    url={"/hpm/instituicao/opcoes"}/>
-                            </div>
-                            <div className="col-lg-2">
-                                <label>Tipo Sanguíneo</label>
-                                <Select
-                                    funcao={handleChange}
-                                    valorAttr={pessoa.idSangue}
-                                    nome={"idSangue"}
-                                    url={"/hpm/sangue/opcoes"} />
-                            </div>
-                            <div className="col-lg-3">
-                                <label>Sexo</label>
-                                <Select
-                                    funcao={handleChange}
-                                    valorAttr={pessoa.sexo}
-                                    nome={"sexo"}
-                                    url={"/hpm/sexo/opcoes"}/>
-                            </div>
+                            <Select
+                                funcao={handleInstituicao}
+                                nome={"idInstituicaoConvenio"}
+                                url={"/hpm/instituicao/opcoes"}
+                                label={"Instituição"}
+                                nomeClasse={"col-lg-3"}/>
+                            <Select
+                                funcao={handleSangue}
+                                nome={"idSangue"}
+                                url={"/hpm/sangue/opcoes"}
+                                label={"Tipo Sanguíneo"}
+                                nomeClasse={"col-lg-2"}/>
+                            <Select
+                                funcao={handleSexo}
+                                nome={"sexo"}
+                                url={"/hpm/sexo/opcoes"}
+                                label={"Sexo"}
+                                nomeClasse={"col-lg-3"}/>
                         </div>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
                             <BotaoSalvar onClick={enviar} />

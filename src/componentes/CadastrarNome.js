@@ -58,7 +58,7 @@ function CadastrarNome({label, labelListagem, url, urlListagem}) {
         <Pagina titulo={"Cadastrar " + label}>
             <div className="row animated--fade-in">
                 <div className="col-lg-4">
-                    <Card>
+                    <Card titulo="Cadastrar">
                         {spinnerSalvar}
                         <Input
                             type="text"

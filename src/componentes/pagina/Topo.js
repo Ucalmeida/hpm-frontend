@@ -2,9 +2,10 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
-import {Logado} from "../../util";
-import {BOTAO} from "../../util/Constantes";
+import {ExibirMensagem, Logado, TempoTranscorridoMilisegParaHoraData} from "../../util";
+import {BOTAO, MSG} from "../../util/Constantes";
 import {Botao} from "../Botao";
+import {notificacoes as listaNotificacoes} from "./notificacoes";
 
 export default class Topo extends React.Component {
     constructor(toggleMenuSidebar) {
@@ -17,16 +18,47 @@ export default class Topo extends React.Component {
             usuario: usuario,
             token: token
         }
-    }
+    };
 
     sair = (e) => {
         e.preventDefault();
         localStorage.clear();
         this.setState({usuario: ''});
         window.location.reload();
-    }
+    };
 
+    exibirNotificacao = (notificacao) => {
+        console.log("passou")
+        return ExibirMensagem(notificacao.descricao, MSG.INFO, "", notificacao.titulo)
+    };
     render() {
+        const notificacoes = () => {
+            if (listaNotificacoes.length < 1) return ""
+
+            return (
+                <li className='nav-item dropdown mr-2'>
+                    <a className='nav-link' data-toggle='dropdown' href='#'>
+                        <i className='far fa-bell'></i>
+                        <span className='badge badge-warning navbar-badge'> {listaNotificacoes.length} </span>
+                    </a>
+                    <div className='dropdown-menu dropdown-menu-lg dropdown-menu-center animated--grow-in'>
+                        <span className='dropdown-item dropdown-header text-bold'>Notificações</span>
+                        <div className='dropdown-divider'></div>
+                        {
+                            listaNotificacoes.map(function(notificacao, index) {
+                                return <a  className='dropdown-item' key={index}>
+                                        <i className={notificacao.icone}></i> {notificacao.titulo}
+                                        <span className='float-right text-muted text-sm'>{TempoTranscorridoMilisegParaHoraData(notificacao.tempo)}</span>
+                                    </a>
+                            })
+                        }
+                        <div className='dropdown-divider'></div>
+                        <a className='dropdown-item dropdown-footer cursor-pointer'>Ver mais notificações</a>
+                    </div>
+                </li>
+            )
+        };
+
         if (!Logado()) return ""
         const {usuario} = this.state
         return (
@@ -69,22 +101,8 @@ export default class Topo extends React.Component {
 
                                                     {/*//MenuSuperior Direito*/}
                 <ul className='navbar-nav ml-auto'>
-                    <li className='nav-item dropdown mr-2'>
-                        <a className='nav-link' data-toggle='dropdown' href='#'>
-                            <i className='far fa-bell'></i>
-                            <span className='badge badge-warning navbar-badge'> 10 </span>
-                        </a>
-                        <div className='dropdown-menu dropdown-menu-lg dropdown-menu-center animated--grow-in'>
-                            <span className='dropdown-item dropdown-header text-bold'>Notificações</span>
-                        <div className='dropdown-divider'></div>
-                        <a href='#' className='dropdown-item'>
-                            <i className='fas fa-file mr-2'></i> Consulta remarcada
-                                <span className='float-right text-muted text-sm'>1 dia</span>
-                        </a>
-                        <div className='dropdown-divider'></div>
-                        <a className='dropdown-item dropdown-footer cursor-pointer'>Ver mais notificações</a>
-                    </div>
-                    </li>
+                    {notificacoes()}
+                    {/*Menu Usuário*/}
                     <li className='nav-item dropdown user-menu'>
                         <a className='nav-link d-flex cursor-pointer mt-n1 p-0' data-toggle='dropdown'>
                             <p className="mt-2">{usuario}</p>

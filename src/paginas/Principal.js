@@ -22,7 +22,7 @@ export default function Principal () {
             texto: 'Muitas comobirdades e sarnagatcha',
     }
 
-    let dispararMsg = () => {
+    const dispararMsg = () => {
           return ExibirMensagem("Mensagem do popup", MSG.SUCESSO, objetoTeste,'TItulo bootbox',ICONE.PESQUISAR);
     }
     return (

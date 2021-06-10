@@ -13,7 +13,9 @@ import {
     CadastrarPredio,
     CadastrarSangue,
     CadastrarSetor,
-    CadastrarFuncao
+    CadastrarFuncao,
+    CadastrarPerfil,
+    CadastrarPiso
 
 } from "./paginas/cadastrar"
 import {
@@ -60,8 +62,9 @@ class App extends Component {
                         <Route exact path="/cadastrar/sangue" component={CadastrarSangue} />
                         <Route exact path="/cadastrar/especialidade" component={CadastrarEspecialidade} />
                         <Route exact path="/cadastrar/pessoa" component={CadastrarPessoa} />
-                        <Route exact path="/cadastrar/predio" component={CadastrarPredio} />
                         <Route exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
+                        <Route exact path="/cadastrar/predio" component={CadastrarPredio} />
+                        <Route exact path="/cadastrar/perfil" component={CadastrarPerfil} />
                         <Route exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
                         <Route exact path="/cadastrar/tipo" component={CadastrarTipo} />
                         <Route exact path="/cadastrar/setor" component={CadastrarSetor} />
@@ -69,6 +72,8 @@ class App extends Component {
                         <Route exact path="/vincular/setorFuncao" component={VincularSetorFuncao} />
                         <Route exact path="/vincular/setorFuncaoAcoes" component={SetorFuncaoAcoes} />
                         <Route exact path="/vincular/setorSubSetor" component={VincularSubSetor} />
+                        <Route exact path="/cadastrar/piso" component={CadastrarPiso} />
+
                     </Switch>
                     <Rodape />
                 </Router>
