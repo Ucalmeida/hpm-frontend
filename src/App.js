@@ -18,7 +18,9 @@ import {
 } from "./paginas/cadastrar"
 import {
     VincularSetorFuncao,
-    SetorFuncaoAcoes, VincularSubSetor,
+    SetorFuncaoAcoes,
+    VincularSubSetor,
+    VincularPerfilAcao,
 
 } from "./paginas/vincular";
 import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
@@ -70,6 +72,8 @@ class App extends Component {
                         <Route exact path="/vincular/setorFuncao" component={VincularSetorFuncao} />
                         <Route exact path="/vincular/setorFuncaoAcoes" component={SetorFuncaoAcoes} />
                         <Route exact path="/vincular/setorSubSetor" component={VincularSubSetor} />
+                        <Route exact path="/vincular/perfilAcao" component={VincularPerfilAcao} />
+
                     </Switch>
                     <Rodape />
                 </Router>

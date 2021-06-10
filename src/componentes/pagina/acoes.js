@@ -99,6 +99,12 @@ export const acoes = [
         "url": "setorFuncaoAcoes",
         "icone": "fas fa-lock"
       },
+      {
+        "nome": "Perfil ações",
+        "descricao": "Vincula ações por perfil",
+        "url": "perfilAcao",
+        "icone": "fas fa-user"
+      },
     ]
   },
 ]
