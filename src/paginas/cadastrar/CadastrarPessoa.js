@@ -28,21 +28,23 @@ export function CadastrarPessoa() {
         blVivo: null,
         idInstituicaoConvenio: null,
         idSangue: null,
-        sexo: null
+        sexo: null,
     }
 
     const enviar = async () => {
 
-        console.log(objeto);
+        console.log(objeto.value);
 
         await xfetch('/hpm/pessoa/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
-                if (json.status === "OK") {
-                    ExibirMensagem('Pessoa cadastrada',MSG.SUCESSO)
-                    window.location.reload();
-                    // this.carregarLista()
+                if (json.status == "OK") {
+                    ExibirMensagem('Pessoa cadastrada', MSG.SUCESSO);
                 } else {
-                    ExibirMensagem(json.message, MSG.ERRO)
+                    if (json.errors != undefined) {
+                        ExibirMensagem(json.errors[0].defaultMessage, MSG.ERRO);
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO);
+                    }
                 }
             })
     }
@@ -63,22 +65,24 @@ export function CadastrarPessoa() {
     }
 
     const handleChange = (e) => {
-        if (!e.target) {
-            setObjeto({...objeto, [e.name]: e.value});
-        } else if(e.target.value === 'Sim') {
-            setObjeto({...objeto, [e.target.name]: true});
-        } else if(e.target.value === 'Não') {
-            setObjeto({...objeto, [e.target.name]: false});
-        } else if(e.target.name === 'nome' || e.target.name === 'nomeSocial') {
-            setObjeto({...objeto, [e.target.name]: e.target.value.toUpperCase()});
-        } else if(e.target.name === 'email') {
-            setObjeto({...objeto, [e.target.name]: e.target.value.toLowerCase()});
-        } else {
-            setObjeto({...objeto, [e.target.name]: e.target.value});
-        }
-    }
+        const {name, value} = e.target;
 
-    console.log(objeto);
+        if (!e.target) {
+            setObjeto({...objeto, [name]: value});
+        } else if(value === 'Sim') {
+            setObjeto({...objeto, [name]: true});
+        } else if(value === 'Não') {
+            setObjeto({...objeto, [name]: false});
+        } else if(name === 'nome' || name === 'nomeSocial') {
+            setObjeto({...objeto, [name]: value.toUpperCase()});
+        } else if(name === 'email') {
+            setObjeto({...objeto, [name]: value.toLowerCase()});
+        } else {
+            setObjeto({...objeto, [name]: value});
+        }
+
+        console.log(objeto);
+    }
 
     return(
         <Pagina titulo="Cadastrar Pessoa">
@@ -94,7 +98,7 @@ export function CadastrarPessoa() {
                                     onChange={handleChange}
                                     name="nome"
                                     label="Nome"
-                                    placeholder="Nome"/>
+                                    placeholder="Nome" required/>
                             </div>
                             <div className="col-lg-3">
                                 <Input
@@ -105,15 +109,16 @@ export function CadastrarPessoa() {
                                     label="Nome Social"
                                     placeholder="Nome Social"/>
                             </div>
-                            <MaskedInput
-                                mask={"999.999.999-99"}
-                                type="text"
-                                value={pessoa.cpf}
-                                onChange={handleChange}
-                                name="cpf"
-                                label="CPF"
-                                placeholder={"CPF"}
-                                nomeClasse={"col-lg-3"}/>
+                            <div className="col-lg-3">
+                                <label>CPF</label>
+                                <MaskedInput
+                                    mask={"999.999.999-99"}
+                                    type="text"
+                                    value={pessoa.cpf}
+                                    onChange={handleChange}
+                                    name="cpf"
+                                    placeholder={"CPF"}/>
+                            </div>
                             <div className="col-lg-3">
                                 <Input
                                     type="text"
@@ -123,24 +128,26 @@ export function CadastrarPessoa() {
                                     label="Login"
                                     placeholder="Login"/>
                             </div>
-                            <MaskedInput
-                                mask={"(99)99999-9999"}
-                                type="text"
-                                value={pessoa.celular}
-                                onChange={handleChange}
-                                name="celular"
-                                label="Celular"
-                                placeholder={"Celular"}
-                                nomeClasse={"col-lg-2"}/>
-                            <MaskedInput
-                                mask={"(99)9999-9999"}
-                                type="text"
-                                value={pessoa.telefone}
-                                onChange={handleChange}
-                                name="telefone"
-                                label="Telefone"
-                                placeholder={"Telefone"}
-                                nomeClasse={"col-lg-2"}/>
+                            <div className="col-lg-2">
+                                <label>Celular</label>
+                                <MaskedInput
+                                    mask={"(99)99999-9999"}
+                                    type="text"
+                                    value={pessoa.celular}
+                                    onChange={handleChange}
+                                    name="celular"
+                                    placeholder={"Celular"}/>
+                            </div>
+                            <div className="col-lg-2">
+                                <label>Telefone</label>
+                                <MaskedInput
+                                    mask={"(99)9999-9999"}
+                                    type="text"
+                                    value={pessoa.telefone}
+                                    onChange={handleChange}
+                                    name="telefone"
+                                    placeholder={"Telefone"}/>
+                            </div>
                             <div className="col-lg-3">
                                 <Input
                                     type="text"
