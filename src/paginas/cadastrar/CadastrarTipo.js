@@ -65,8 +65,8 @@ function CadastrarTipo(){
                         </div>
                         <div className="row">
                             <div className="col-lg-6">
+                                <label>Objeto</label>
                                 <Select
-                                    label="Objeto"
                                     funcao={selecionarObjeto}
                                     nome="idObjeto"
                                     url={"/hpm/objeto/opcoes"} />
