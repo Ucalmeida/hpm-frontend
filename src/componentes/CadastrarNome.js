@@ -46,6 +46,7 @@ function CadastrarNome({label, labelListagem, url, urlListagem}) {
                 if (res.status === "OK") {
                     let lista = objeto.lista
                     lista.push(res.resultado)
+                    ExibirMensagem('Cadastro Efetuado Com Sucesso!', MSG.SUCESSO)
                     setObjeto({...objeto, lista: lista, nome: ''})
                 } else {
                     ExibirMensagem(res.message, MSG.ERRO)
