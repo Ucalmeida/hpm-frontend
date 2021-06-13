@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../componentes";
+import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
@@ -33,7 +33,6 @@ function CadastrarTipo(){
             }
         )
    }
-
    const enviar = (e) => {
         e.preventDefault()
        setObjeto({...objeto, carregandoCadastrar: true})
@@ -48,13 +47,8 @@ function CadastrarTipo(){
                }
                setObjeto({...objeto, carregandoCadastrar: false})
            }
-        )
+       )
    }
-
-    let spinner = objeto.carregandoTipos ? <Spinner/> : ''
-    let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
-    let tipos = objeto.tipos
-
     return(
         <Pagina titulo="Cadastrar Tipo">
             <div className="row animated--fade-in">
@@ -82,6 +76,7 @@ function CadastrarTipo(){
                                     placeholder="Tipo"/>
                             </div>
                         </div>
+
                         <div className="align-items-end col-12">
                             <BotaoSalvar onClick={enviar} />
                         </div>
