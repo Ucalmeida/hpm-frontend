@@ -7,7 +7,7 @@ export function CadastrarPerfil() {
         <CadastrarNome
             url="/hpm/perfil"
             label="Perfil"
-            labelListagem="Perfis Criados"
+            labelListagem="Perfis criados"
             urlListagem="/hpm/perfil"/>
     );
 }

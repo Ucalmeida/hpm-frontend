@@ -86,7 +86,7 @@ function CadastrarPiso(){
                     </Card>
                 </div>
                 <div className="col-lg-6">
-                    <Card titulo="Pisos Cadastrados No Predio Selecionado">
+                    <Card titulo="Pisos cadastrados no prédio selecionado">
                         {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>
                             {pisos.map((v, k) => {

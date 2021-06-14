@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
+import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
@@ -49,6 +49,10 @@ function CadastrarTipo(){
            }
        )
    }
+
+   let spinner = objeto.carregandoTipos ? <Spinner/> : ''
+    let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
+    let tipos = objeto.tipos
     return(
         <Pagina titulo="Cadastrar Tipo">
             <div className="row animated--fade-in">
@@ -84,7 +88,7 @@ function CadastrarTipo(){
                     </Card>
                 </div>
                 <div className="col-lg-6">
-                    <Card titulo="Tipos No Objeto Selecionado">
+                    <Card titulo="Tipos no objeto selecionado">
                         {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>
                             {tipos.map((v, k) => {

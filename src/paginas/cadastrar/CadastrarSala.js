@@ -64,7 +64,7 @@ function CadastrarSala() {
                         </div>
                         <div className="row">
                             <div className="col-lg-6">
-                                <label>Piso</label>
+                                <label>Prédio - Piso</label>
                                 <Select
                                     funcao={selecionarPiso}
                                     nome="idPiso"
@@ -86,7 +86,7 @@ function CadastrarSala() {
                     </Card>
                 </div>
                 <div className="col-lg-6">
-                    <Card titulo="Salas Cadastradas No Piso Selecionado">
+                    <Card titulo="Salas cadastradas no piso selecionado">
                         {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>
                             {salas.map((v, k) => {
