@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Card, Pagina, Select} from "../../componentes";
+import {Botao, Card, Pagina, Select} from "../../componentes";
 import {xfetch} from "../../util";
 import {HttpVerbo} from "../../util/Constantes";
 
@@ -43,11 +43,9 @@ export function VincularPerfilAcao() {
             .then(res => res.json())
             .then(dados => {
                 if (dados.status == "OK") {
-                    console.log(dados.resultado)
                     setObjeto({...objeto, listaAcoes: dados.resultado, carregandoAcoes: false})
                 }
             })
-
     }
     console.log("render")
 
@@ -78,18 +76,38 @@ export function VincularPerfilAcao() {
     }
 
     const acoesPerfil = objeto.listaAcoesDoPerfil
-    console.log(acoesPerfil)
+
+    function toggleAcao(e) {
+        e.preventDefault()
+        console.log(e.target.parentElement.id)
+    }
+
     return (
         <Pagina titulo="Vincular perfil ação">
             <Card titulo="Vincular">
-                <div className="col-lg-12">
+                <div className="row">
+                    <div className="col-lg-4">
+                        <Select
+                            placeholder="Perfil"
+                            funcao={selecionarPerfil}
+                            url="/hpm/perfil/opcoes"
+                            label="Perfil" />
+                    </div>
+                    <div className="col-lg-6">
+                        <Select
+                            placeholder="Perfil"
+                            funcao={selecionarPerfil}
+                            url="/hpm/perfil/opcoes"
+                            label="Perfil" />
+                    </div>
 
+                    <Botao className="col-lg-2" cor="success">
+                        Vincular
+                    </Botao>
                 </div>
-                <div className="col-lg-12">
-                    <Select funcao={selecionarPerfil} url="/hpm/perfil/opcoes" label="Perfil" />
-                </div>
-                <div className="col-lg-12">
-                    <div className="col-lg-12 form-group">
+
+                <div className="col-lg-12 mt-2 ">
+                    <div className="col-lg-6 form-group">
                         <input
                             className="pull-right form-control col-lg-2"
                             value={objeto.busca}
@@ -101,19 +119,21 @@ export function VincularPerfilAcao() {
                             <th>Descrição</th>
                             <th>Verbo</th>
                             <th>URI</th>
+                            <th>Publica</th>
                             <th>Ações</th>
                         </thead>
                         <tbody>
                             {objeto.listaAcoes.map((v, k) => {
                                 let classe = ''
-                                if (acoesPerfil.filter(a => a === v).length) {
-                                    classe = 'bg-success';
+                                if (acoesPerfil.filter(a => a.link === v.link).length) {
+                                    classe = 'bg-primary';
                                 }
                                 return (
-                                    <tr key={k} className={classe}>
+                                    <tr onClick={toggleAcao} id={v.id} key={v.id} className={classe}>
                                         <td> {v.descricao} </td>
                                         <td className={resolveCor(v.verbo)}> {v.verbo} </td>
                                         <td> {v.link} </td>
+                                        <td > {v.publica ? 'SIM' : 'NÃO'} </td>
                                         <td></td>
                                     </tr>
                                 )

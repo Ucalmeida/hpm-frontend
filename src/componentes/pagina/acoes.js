@@ -79,6 +79,14 @@ export const acoes = [
         "url": "funcao",
         "icone": "fas fa-plus"
       },
+      {
+        "nome": "Menu",
+        "descricao": "Página Principal",
+        "url": "menu",
+        "icone": "fas fa-plus",
+        "dependencias": [
+        ]
+      },
     ]
   },
   {
