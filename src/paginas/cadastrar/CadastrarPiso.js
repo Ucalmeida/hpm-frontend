@@ -1,14 +1,14 @@
 import React, {useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
-import {xfetch} from "../../util";
-import {HttpVerbo} from "../../util/Constantes";
+import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../componentes";
+import {ExibirMensagem, xfetch} from "../../util";
+import {HttpVerbo, MSG} from "../../util/Constantes";
 
 
 function CadastrarPiso(){
     const [objeto, setObjeto] = useState(
         {
             nome : '',
-            idObjeto : null,
+            idPredio : null,
             pisos : [],
             carregandoPisos : false,
             carregandoCadastrar : false
@@ -16,14 +16,14 @@ function CadastrarPiso(){
     )
 
     let selecionarPredio = (e) => {
-        console.log(e)
-        objeto.idObjeto = e.value
+        objeto.idPredio = e.value
         listarPisosPorPredio()
+        console.log(objeto)
     }
 
     const listarPisosPorPredio = () => {
         setObjeto({...objeto, carregandoPisos: true, pisos: []})
-        xfetch('/hpm/piso/' + objeto.idObjeto,{}, HttpVerbo.GET)
+        xfetch('/hpm/piso/' + objeto.idPredio,{}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
                     setObjeto({...objeto, pisos: json.resultado, carregandoPisos: false})
@@ -31,17 +31,43 @@ function CadastrarPiso(){
             )
     }
 
+    let handleChange = (e) => {
+        e.preventDefault()
+        setObjeto({...objeto, nome: e.target.value})
+    }
+
+    let enviar = (e) => {
+        e.preventDefault()
+        setObjeto({...objeto, carregandoCadastrar: true})
+        xfetch('/hpm/piso/cadastrar', objeto, HttpVerbo.POST)
+            .then( json =>{
+                if(json.status === "OK"){
+                    ExibirMensagem('Piso Cadastrado Com Sucesso!', MSG.SUCESSO)
+                    setObjeto({ idPredio: '', pisos: []})
+                    listarPisosPorPredio()
+                }else{
+                    ExibirMensagem(json.message, MSG.ERRO)
+                }
+                setObjeto({...objeto, carregandoCadastrar: false})
+            }
+        )
+    }
+
+    let spinner = objeto.carregandoPisos ? <Spinner/> : ''
+    let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
+    let pisos = objeto.pisos
     return(
         <Pagina titulo = "Cadastrar Piso">
             <div className="row animated--fade-in">
                 <div className="col-lg-6">
                     <Card titulo="Cadastrar">
+                        {spinnerCadastrar}
                         <div className="row">
                             <div className="col-lg-6">
+                                <label>Prédio</label>
                                 <Select
-                                    label="Prédio"
                                     funcao={selecionarPredio}
-                                    nome="idObjeto"
+                                    nome="idPredio"
                                     url={"/hpm/predio/opcoes"} />
                             </div>
                             <div className="col-lg-6">
@@ -49,30 +75,29 @@ function CadastrarPiso(){
                                     type="text"
                                     label="Piso"
                                     value={objeto.nome}
-                                   // onChange = {handleChange}
+                                    onChange = {handleChange}
                                     name="nome"
                                     placeholder="Piso"/>
                             </div>
                         </div>
                         <div className="align-items-end col-12">
-                            {/*<BotaoSalvar onClick={} />*/}
+                            <BotaoSalvar onClick={enviar} />
                         </div>
                     </Card>
                 </div>
                 <div className="col-lg-6">
-                    <Card titulo="Pisos No Predio Selecionado">
-
+                    <Card titulo="Pisos Cadastrados No Predio Selecionado">
+                        {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {/*{tipos.map((v, k) => {*/}
-                            {/*    return <li className="flex-fill" key={k}> {v.nome}</li>*/}
-                            {/*})}*/}
+                            {pisos.map((v, k) => {
+                                return <li className="flex-fill" key={k}> {v.nome}</li>
+                            })}
                         </ul>
                     </Card>
                 </div>
             </div>
         </Pagina>
     )
-
 }
 
 export {CadastrarPiso};

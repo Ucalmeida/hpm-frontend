@@ -15,17 +15,10 @@ const MaskedInput = ({ mask, value, onChange, name, label, placeholder, nomeClas
         })
     }
 
-    return (
-        <div className={'form-group ' + nomeClasse}>
-            <label>{label}</label>
-            <InputMask
-                className={"form-control"}
-                mask={mask}
-                value={value}
+    return (<InputMask className={"form-control"} mask={mask} value={value}
                 onChange={handleChange}
                 placeholder={placeholder}
             />
-        </div>
     );
 }
 
