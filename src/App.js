@@ -17,7 +17,8 @@ import {
     CadastrarPerfil,
     CadastrarPiso,
     CadastrarMenu,
-    CadastrarSala
+    CadastrarSala,
+    CadastrarInstituicaoConvenio
 
 } from "./paginas/cadastrar"
 import {
@@ -76,6 +77,7 @@ class App extends Component {
                         <Route exact path="/cadastrar/piso" component={CadastrarPiso} />
                         <Route exact path="/cadastrar/menu" component={CadastrarMenu} />
                         <Route exact path="/cadastrar/sala" component={CadastrarSala} />
+                        <Route exact path="/cadastrar/instituicaoConvenio" component={CadastrarInstituicaoConvenio} />
                         <Route exact path="/vincular/setorFuncao" component={VincularSetorFuncao} />
                         <Route exact path="/vincular/setorFuncaoAcoes" component={SetorFuncaoAcoes} />
                         <Route exact path="/vincular/setorSubSetor" component={VincularSubSetor} />

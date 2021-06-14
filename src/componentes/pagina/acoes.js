@@ -86,6 +86,12 @@ export const acoes = [
         "icone": "fas fa-plus"
       },
       {
+        "nome": "Instituição/Convênio",
+        "descricao": "Criando Instituição/Convênio",
+        "url": "instituicaoConvenio",
+        "icone": "fas fa-plus"
+      },
+      {
         "nome": "Menu",
         "descricao": "Página Principal",
         "url": "menu",
