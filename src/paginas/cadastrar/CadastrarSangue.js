@@ -27,7 +27,7 @@ export class CadastrarSangue extends React.Component {
         e.preventDefault()
         let objeto = {nome: this.state.nome}
 
-        xfetch('/hpm/sangue', objeto, HttpVerbo.POST)
+        xfetch('/hpm/sangue/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
                     ExibirMensagem('Sangue cadastrado',MSG.SUCESSO)
