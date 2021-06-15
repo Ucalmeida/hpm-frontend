@@ -7,7 +7,9 @@ RPC + Tab Key	create a react pure component class with proptypes and ES6 moudle 
 RRC + Tab Key	create a react component class connected to Redux
 RRDC + Tab Key	create a react component class connected to Redux through dispatch
 RSC + Tab key	create stateless react component without proptypes and ES6 module system
+
 RSCP + Tab key	create stateless react component with proptypes and ES6 module system
+
 RSF + Tab key	creates stateless react components in the form of named functions, without proptypes
 Rsfp + Tab key	use proptypes to create stateless react components as named functions
 RSI + Tab key	create stateless react component, not using proptypes and ES6 module system, but using implicit return and props
