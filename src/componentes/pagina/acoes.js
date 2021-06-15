@@ -92,6 +92,12 @@ export const acoes = [
         "icone": "fas fa-plus"
       },
       {
+        "nome": "Medicamento",
+        "descricao": "Criando Medicamento",
+        "url": "medicamento",
+        "icone": "fas fa-plus"
+      },
+      {
         "nome": "Menu",
         "descricao": "Página Principal",
         "url": "menu",
