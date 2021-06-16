@@ -30,14 +30,19 @@ function Select(props) {
         );
     };
     const Placeholder = props => {
-        let place = 'Selecione'
-        if (props.children) {
-            place = props.children
-        }
+        console.log(props.children)
+        const place = props.children === "Select..." ? 'Selecione...' : props.children;
         return <components.Placeholder {...props}>{place}</components.Placeholder>;
     };
 
-    return ( <ReactSelect options={options} value={props.valorAttr} name={props.nome} onChange={props.funcao} components={{ NoOptionsMessage,Placeholder }} {...props} /> );
+    return ( <ReactSelect
+            options={options}
+            value={props.valorAttr}
+            name={props.nome}
+            isMulti={props.multiplo}
+            onChange={props.funcao}
+            components={{ NoOptionsMessage,Placeholder }}
+            {...props} /> );
 }
 
 Select.propTypes = {
