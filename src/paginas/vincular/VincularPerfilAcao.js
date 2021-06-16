@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Botao, Card, Pagina, Select} from "../../componentes";
 import {xfetch} from "../../util";
 import {HttpVerbo} from "../../util/Constantes";
+import Tabela from "../../componentes/tabela/Tabela";
 
 
 export function VincularPerfilAcao() {
@@ -84,6 +85,9 @@ export function VincularPerfilAcao() {
 
     return (
         <Pagina titulo="Vincular perfil ação">
+            <Card>
+                <Tabela colunas={""} dados={""} />
+            </Card>
             <Card titulo="Vincular">
                 <div className="row">
                     <div className="col-lg-4">

@@ -5,7 +5,7 @@ import TCorpo from "./TCorpo";
 import TRodape from "./TRodape";
 import DataReact from "@ashvin27/react-datatable"
 
-export function Tabela (props) {
+function Tabela (props) {
     const columns = [
         {
             key: "name",
@@ -79,15 +79,29 @@ export function Tabela (props) {
 
     const config = {
         page_size: 10,
-        length_menu: [ 10, 20, 50 ],
+        length_menu: [ 10, 20, 50,100 ],
         button: {
             excel: true,
             print: true,
+            csv: true
+        },
+        language: {
+            length_menu: "Mostrar _MENU_ registros por página",
+            filter: "Pesquisar ...",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            pagination: {
+                first: "Primeira",
+                previous: "Anterior",
+                next: "Próxima",
+                last: "Última"
+            }
         }
     }
+    console.log(records)
+    console.log(<DataReact columns={columns} records={records} config={config} />)
 
     return (
-            <DataReact colums={columns} records={records} config={config} />
+            <DataReact columns={columns} records={records} config={config} />
             // {/*<TColunas colunas={props.colunas}/>*/}
             // {/*<TCorpo />*/}
             // {/*<TRodape />*/}
