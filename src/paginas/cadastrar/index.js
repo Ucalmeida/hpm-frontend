@@ -11,6 +11,7 @@ import {CadastrarMenu} from "./CadastrarMenu";
 import {CadastrarSala} from "./CadastrarSala";
 import {CadastrarInstituicaoConvenio} from "./CadastrarInstituicaoConvenio";
 import {CadastrarMedicamento} from "./CadastrarMedicamento";
+import {CadastrarStatus} from "./CadastrarStatus";
 
 export {
     CadastrarEspecialidade,
@@ -25,5 +26,6 @@ export {
     CadastrarMenu,
     CadastrarSala,
     CadastrarInstituicaoConvenio,
-    CadastrarMedicamento
+    CadastrarMedicamento,
+    CadastrarStatus
 };

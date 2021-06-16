@@ -74,7 +74,7 @@ export class CadastrarSangue extends React.Component {
                     <div className="col-lg-8">
                         <Card titulo="Sangue cadastrados">
                             {spinner}
-                            <ul className={"list-unstyled"}>
+                            <ul className={"list-unstyled"} style={{columns: 3}}>
                                 {objetos.map((v, k) => {
                                     return <li key={k}> {v.texto}</li>
                                 })}

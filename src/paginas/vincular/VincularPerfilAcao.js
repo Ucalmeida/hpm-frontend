@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {Botao, BotaoExcluir, Card, Pagina, Select} from "../../componentes";
+import {Botao, Card, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 import {acoes} from "../../componentes/pagina/acoes";
 import ReactSelect, {components} from "react-select";
+import Tabela from "../../componentes/tabela/Tabela";
+
 
 const LOG = console.log
 export function VincularPerfilAcao() {
@@ -106,6 +108,9 @@ export function VincularPerfilAcao() {
     const acoesBackend = getAcoes();
     return (
         <Pagina titulo="Vincular perfil ação">
+            <Card>
+                <Tabela colunas={""} dados={""} />
+            </Card>
             <Card titulo="Vincular">
                 <div className="row">
                     <div className="col-lg-4">

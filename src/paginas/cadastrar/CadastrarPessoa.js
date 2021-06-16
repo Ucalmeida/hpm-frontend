@@ -185,6 +185,7 @@ export function CadastrarPessoa() {
                             <div className="col-lg-3">
                                 <label>Instituição</label>
                                 <Select
+                                    placeholder={"Instituição"}
                                     funcao={handleInstituicao}
                                     nome={"idInstituicaoConvenio"}
                                     url={"/hpm/instituicao/opcoes"}/>
@@ -192,6 +193,7 @@ export function CadastrarPessoa() {
                             <div className="col-lg-2">
                                 <label>Tipo Sanguíneo</label>
                                 <Select
+                                    placeholder={"Tipo Sanguíneo"}
                                     funcao={handleSangue}
                                     nome={"idSangue"}
                                     url={"/hpm/sangue/opcoes"}/>
@@ -199,6 +201,7 @@ export function CadastrarPessoa() {
                             <div className="col-lg-3">
                                 <label>Sexo</label>
                                 <Select
+                                    placeholder={"Sexo"}
                                     funcao={handleSexo}
                                     nome={"sexo"}
                                     url={"/hpm/sexo/opcoes"}/>

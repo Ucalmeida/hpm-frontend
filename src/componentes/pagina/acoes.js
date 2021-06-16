@@ -68,6 +68,12 @@ export const acoes = [
         "icone": "fas fa-plus"
       },
       {
+        "nome": "Status",
+        "descricao": "Criando Status",
+        "url": "status",
+        "icone": "fas fa-plus"
+      },
+      {
         "nome": "Tipo",
         "descricao": "Página Principal",
         "url": "tipo",

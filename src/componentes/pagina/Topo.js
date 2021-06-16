@@ -31,12 +31,11 @@ export default class Topo extends React.Component {
         return ExibirMensagem(notificacao.descricao, MSG.INFO, "", notificacao.titulo)
     };
 
+    exibirNotificacao = (e) => {
+        const notificacao = listaNotificacoes[e.target.id];
+        ExibirMensagem(notificacao.descricao, MSG.INFO, "", notificacao.titulo)
+    }
     render() {
-        function teste (e) {
-            console.log(e)
-            console.log(e.target.value)
-            ExibirMensagem(e.descricao, MSG.INFO, "", e.titulo)
-        }
         const notificacoes = () => {
             if (listaNotificacoes.length < 1) return ""
 
@@ -50,8 +49,8 @@ export default class Topo extends React.Component {
                         <span className='dropdown-item dropdown-header text-bold'>Notificações</span>
                         <div className='dropdown-divider'></div>
                         {
-                            listaNotificacoes.map(function(notificacao, index) {
-                                return <a onClick={teste} className='dropdown-item' key={index}>
+                            listaNotificacoes.map((notificacao, index) => {
+                                return <a id={index} onClick={this.exibirNotificacao} className='dropdown-item cursor-pointer' key={index}>
                                         <i className={notificacao.icone}></i> {notificacao.titulo}
                                         <span className='float-right text-muted text-sm'>{TempoTranscorridoMilisegParaHoraData(notificacao.tempo)}</span>
                                     </a>
