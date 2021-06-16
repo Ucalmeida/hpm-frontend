@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react'
-import {Botao, Card, Pagina, Select} from "../../componentes";
-import {xfetch} from "../../util";
-import {HttpVerbo} from "../../util/Constantes";
+import {Botao, BotaoExcluir, Card, Pagina, Select} from "../../componentes";
+import {ExibirMensagem, xfetch} from "../../util";
+import {HttpVerbo, MSG} from "../../util/Constantes";
+import {acoes} from "../../componentes/pagina/acoes";
+import ReactSelect, {components} from "react-select";
 
-
+const LOG = console.log
 export function VincularPerfilAcao() {
     const [objeto, setObjeto] = useState({
         busca: '',
@@ -11,31 +13,19 @@ export function VincularPerfilAcao() {
         carregandoAcoes: false,
         carregandoAcoesPerfis: false,
         perfis: [],
+        perfil: undefined,
+        acao: undefined,
         listaAcoes: [],
-        listaAcoesDoPerfil: []
+        listaAcoesPerfil: []
     })
+
+    const Placeholder = props => {
+        return <components.Placeholder {...props}> Selecione ação </components.Placeholder>;
+    };
 
     useEffect(() => {
         carregarAcoes();
     }, [])
-
-    function buscaHandle(e) {
-        setObjeto({...objeto, busca: e.value})
-    }
-
-    // function carregarPerfis() {
-    //     setObjeto({...objeto, carregandoPerfis: true, perfis: []})
-    //     xfetch('/hpm/perfil', {}, HttpVerbo.GET)
-    //         .then(res => res.json())
-    //         .then(dados => {
-    //             if (dados.status === "OK") {
-    //                 setObjeto({...objeto, perfis: dados.resultado})
-    //             }
-    //         })
-    //         .finally((e) => setObjeto({...objeto, carregandoPerfis: false}))
-    //
-    // }
-
 
     const carregarAcoes = (e) => {
         setObjeto({...objeto, carregandoAcoes: true, acoes: []})
@@ -47,7 +37,6 @@ export function VincularPerfilAcao() {
                 }
             })
     }
-    console.log("render")
 
     function resolveCor(verbo) {
         if (verbo === "GET") {
@@ -66,75 +55,102 @@ export function VincularPerfilAcao() {
 
     function selecionarPerfil(e) {
         const idPerfil = e.value
+        objeto.perfil = idPerfil
         xfetch('/hpm/perfil/acoes/'+idPerfil, {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(dados => {
                 if (dados.status === "OK") {
-                    setObjeto({...objeto, listaAcoesDoPerfil: dados.resultado, carregandoAcoesPerfis: false})
+                    setObjeto({...objeto, listaAcoesPerfil: dados.resultado, carregandoAcoesPerfis: false})
                 }
             })
     }
 
-    const acoesPerfil = objeto.listaAcoesDoPerfil
-
-    function toggleAcao(e) {
+    function vincular(e) {
         e.preventDefault()
-        console.log(e.target.parentElement.id)
+        const idAcao = objeto.acao
+        const idPerfil = objeto.perfil
+
+        if (!idAcao || !idPerfil) {
+            ExibirMensagem("Um perfil e/ou uma ação precisa ser informadas", MSG.ERRO)
+            return
+        }
+
+        let dados = {
+            idAcao: idAcao,
+            idPerfil: idPerfil,
+            dependencias: []
+        }
+        let acaoEscolhida = objeto.listaAcoes.find(a => a.id == idAcao);
+        if (acaoEscolhida.isFrontend) {
+
+            let acaoFrontend = encontraAcao(acaoEscolhida.link);
+            if (acaoFrontend.dependencias) {
+                dados.dependencias = acaoFrontend.dependencias
+            }
+        }
+
+        xfetch("/hpm/perfil/acao/vincular", dados, HttpVerbo.POST)
+            .then(res => {
+                if (res.status === "OK") {
+                    ExibirMensagem("Ação cadastrada com sucesso", MSG.SUCESSO)
+                    setObjeto({...objeto, listaAcoesPerfil: res.resultado})
+                }
+            })
+
     }
 
+    function selecionarAcao(a) {
+        objeto.acao = a.value;
+    }
+
+    const acoesBackend = getAcoes();
     return (
         <Pagina titulo="Vincular perfil ação">
             <Card titulo="Vincular">
                 <div className="row">
                     <div className="col-lg-4">
                         <Select
-                            placeholder="Perfil"
+                            placeholder="Selecione o perfil"
                             funcao={selecionarPerfil}
-                            url="/hpm/perfil/opcoes"
-                            label="Perfil" />
+                            url="/hpm/perfil/opcoes"/>
                     </div>
                     <div className="col-lg-6">
-                        <Select
-                            placeholder="Perfil"
-                            funcao={selecionarPerfil}
-                            url="/hpm/perfil/opcoes"
-                            label="Perfil" />
+                        <ReactSelect
+                            options={acoesBackend}
+                            name="acao"
+                            onChange={selecionarAcao}
+                            components={{Placeholder}}/>
                     </div>
 
-                    <Botao className="col-lg-2" cor="success">
+                    <Botao className="col-lg-2" cor="success" onClick={vincular}>
                         Vincular
                     </Botao>
                 </div>
 
                 <div className="col-lg-12 mt-2 ">
                     <div className="col-lg-6 form-group">
-                        <input
-                            className="pull-right form-control col-lg-2"
-                            value={objeto.busca}
-                            onChange={buscaHandle}
-                            placeholder="Busca"/>
                     </div>
                     <table className="table table-striped table-hover table-bordered">
                         <thead>
-                            <th>Descrição</th>
-                            <th>Verbo</th>
-                            <th>URI</th>
-                            <th>Publica</th>
-                            <th>Ações</th>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Verbo</th>
+                                <th>URI</th>
+                                <th>Publica</th>
+                                <th>Ações</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            {objeto.listaAcoes.map((v, k) => {
-                                let classe = ''
-                                if (acoesPerfil.filter(a => a.link === v.link).length) {
-                                    classe = 'bg-primary';
-                                }
+                            {objeto.listaAcoesPerfil.map((v, k) => {
                                 return (
-                                    <tr onClick={toggleAcao} id={v.id} key={v.id} className={classe}>
+                                    <tr id={v.id} key={v.id}>
                                         <td> {v.descricao} </td>
                                         <td className={resolveCor(v.verbo)}> {v.verbo} </td>
                                         <td> {v.link} </td>
-                                        <td > {v.publica ? 'SIM' : 'NÃO'} </td>
-                                        <td></td>
+                                        <td> {v.publica ? 'SIM' : 'NÃO'} </td>
+                                        <td>
+                                            <Botao cor="danger" icone="fas fa-trash"/>
+                                        </td>
                                     </tr>
                                 )
                             })}
@@ -144,4 +160,26 @@ export function VincularPerfilAcao() {
             </Card>
         </Pagina>
     );
+
+    function getAcoes() {
+        return objeto.listaAcoes.map((a) => {
+            const local = a.isFrontend ? 'FRONTEND' : 'BACKEND'
+            let label = local + ' | ' + a.verbo + ' - ' + a.link
+            return {value: a.id, label: label, key: a.id}
+        });
+    }
+
+
+    function encontraAcao(link) {
+        const path = link.split("/")
+
+        let find = acoes.find(a => a.url === path[1]);
+
+        let i = 2
+        while (find !== undefined && find.acoes) {
+            find = find.acoes.filter(a => a.url === path[i])
+            i++
+        }
+        return find[0];
+    }
 }

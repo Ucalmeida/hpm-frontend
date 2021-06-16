@@ -5,6 +5,9 @@ import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
 const LOG = console.log
+const CADASTRA_ACAO_FRONTEND = '/hpm/acao/frontend';
+
+
 export function CadastrarMenu() {
     const [objeto, setObjeto] = useState({
         uri: '',
@@ -18,8 +21,8 @@ export function CadastrarMenu() {
 
     function encontraAcao() {
         const path = objeto.uri.split("/")
-        let find = acoes.find(a => a.url === path[0]);
-        let i = 1
+        let find = acoes.find(a => a.url === path[1]);
+        let i = 2
         while (find !== undefined && find.acoes) {
             find = find.acoes.filter(a => a.url === path[i])
             i++
@@ -44,8 +47,7 @@ export function CadastrarMenu() {
             verbo: 'GET',
             front: true
         }
-
-        xfetch('/hpm/acao/frontend', dados, HttpVerbo.POST)
+        xfetch(CADASTRA_ACAO_FRONTEND, dados, HttpVerbo.POST)
             .then(dados => {
                 if (dados.status === 'OK') {
                     ExibirMensagem("Ação cadastrada com sucesso.", MSG.SUCESSO)

@@ -103,6 +103,7 @@ export const acoes = [
         "url": "menu",
         "icone": "fas fa-plus",
         "dependencias": [
+          {"verbo": "POST", "uri": "/hpm/acao/frontend"}
         ]
       },
     ]
