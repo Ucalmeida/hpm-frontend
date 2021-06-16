@@ -4,7 +4,7 @@ import ReactSelect, { components } from "react-select"
 import {xfetch} from "../../util/Util";
 import {HttpVerbo} from "../../util/Constantes";
 
-export function Select(props) {
+function Select(props) {
     const [lists, setLists] = useState([]);
 
     const loadBloods = async () => {
@@ -30,14 +30,22 @@ export function Select(props) {
         );
     };
     const Placeholder = props => {
-        return <components.Placeholder {...props}>Selecione</components.Placeholder>;
+        let place = 'Selecione'
+        if (props.children) {
+            place = props.children
+        }
+        return <components.Placeholder {...props}>{place}</components.Placeholder>;
     };
 
     return ( <ReactSelect options={options} value={props.valorAttr} name={props.nome} onChange={props.funcao} components={{ NoOptionsMessage,Placeholder }} {...props} /> );
 }
+
 Select.propTypes = {
     url: PropTypes.string.isRequired,
     valorAttr: PropTypes.string,
     nome: PropTypes.string,
     funcao: PropTypes.func,
+    placeholder: PropTypes.string
 }
+
+export {Select};
