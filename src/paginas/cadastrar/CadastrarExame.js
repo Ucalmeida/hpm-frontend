@@ -54,13 +54,18 @@ function CadastrarExame() {
             )
     }
 
+
     let spinner = objeto.carregandoExames ? <Spinner/> : ''
+    let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
     let exames = objeto.exames;
     return(
         <Pagina titulo="Cadastrar Exame">
             <div className="row animated--fade-in">
                 <div className="col-lg-6">
                     <Card titulo="Cadastrar">
+                        <div className="col-lg-12">
+                            {spinnerCadastrar}
+                        </div>
 
                         <div className="row">
                             <div className="col-lg-6">
