@@ -87,7 +87,7 @@ function Tabela (props) {
         },
         language: {
             length_menu: "Mostrar _MENU_ registros por página",
-            filter: "Pesquisar ...",
+            filter: "Pesquisar...",
             info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
             pagination: {
                 first: "Primeira",
@@ -97,11 +97,9 @@ function Tabela (props) {
             }
         }
     }
-    console.log(records)
-    console.log(<DataReact columns={columns} records={records} config={config} />)
 
     return (
-            <DataReact columns={columns} records={records} config={config} />
+            <DataReact columns={props.colunas} records={props.dados} config={config} />
             // {/*<TColunas colunas={props.colunas}/>*/}
             // {/*<TCorpo />*/}
             // {/*<TRodape />*/}

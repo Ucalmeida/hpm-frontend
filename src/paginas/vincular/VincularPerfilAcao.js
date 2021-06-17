@@ -20,6 +20,13 @@ export function VincularPerfilAcao() {
         listaAcoes: [],
         listaAcoesPerfil: []
     })
+    // const [dados, setDados] = useState( [{
+    //     descricao: '',
+    //     verbo: '',
+    //     uri: '',
+    //     publica: '',
+    //     acoes: '',
+    // }])
 
     const Placeholder = props => {
         return <components.Placeholder {...props}> Selecione ação </components.Placeholder>;
@@ -104,12 +111,51 @@ export function VincularPerfilAcao() {
     function selecionarAcao(a) {
         objeto.acao = a.value;
     }
+    const colunas = [
+        {
+            key: "descricao",
+            text: "Descrição",
+        },
+        {
+            key: "verbo",
+            text: "Verbo",
+        },
+        {
+            key: "uri",
+            text: "URI",
+        },
+        {
+            key: "publica",
+            text: "Publica",
+        },
+        {
+            key: "acoes",
+            text: "Ações",
+        }
+    ];
+
+    const dados = () => {
+        console.log(objeto.listaAcoes)
+        return (
+            objeto.listaAcoes.map((acao, index) => {
+                return ({
+                    'id': acao.id,
+                    'descricao': acao.descricao,
+                    'verbo': acao.verbo,
+                    'uri': acao.uri,
+                    'publica': acao.publica,
+                    'acoes': 'botaao'
+                })
+            })
+        )
+    }
+    console.log(dados())
 
     const acoesBackend = getAcoes();
     return (
         <Pagina titulo="Vincular perfil ação">
             <Card>
-                <Tabela colunas={""} dados={""} />
+                <Tabela colunas={colunas} dados={dados()} />
             </Card>
             <Card titulo="Vincular">
                 <div className="row">
