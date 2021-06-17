@@ -12,6 +12,7 @@ import {CadastrarSala} from "./CadastrarSala";
 import {CadastrarInstituicaoConvenio} from "./CadastrarInstituicaoConvenio";
 import {CadastrarMedicamento} from "./CadastrarMedicamento";
 import {CadastrarStatus} from "./CadastrarStatus";
+import {CadastrarExame} from "./CadastrarExame";
 
 export {
     CadastrarEspecialidade,
@@ -27,5 +28,6 @@ export {
     CadastrarSala,
     CadastrarInstituicaoConvenio,
     CadastrarMedicamento,
-    CadastrarStatus
+    CadastrarStatus,
+    CadastrarExame
 };
