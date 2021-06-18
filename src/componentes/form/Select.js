@@ -30,7 +30,6 @@ function Select(props) {
         );
     };
     const Placeholder = props => {
-        console.log(props.children)
         const place = props.children === "Select..." ? 'Selecione...' : props.children;
         return <components.Placeholder {...props}>{place}</components.Placeholder>;
     };

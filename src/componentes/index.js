@@ -6,6 +6,7 @@ import {Icone} from "./Icone";
 import {Pagina} from "./pagina/Pagina";
 import {Spinner} from "./Spinner";
 import {CadastrarNome} from "./CadastrarNome";
+import {Tabela} from "./tabela/Tabela.js"
 
 export function getClasse(classe) {
     return !classe ? "" : classe.toString()+" ";
@@ -14,6 +15,7 @@ export function getClasse(classe) {
 export {
     Accordion,
     Autocompletar,
+    CadastrarNome,
     Botao,
     BotaoEnviar,
     BotaoAlterar,
@@ -27,5 +29,5 @@ export {
     Pagina,
     Select,
     Spinner,
-    CadastrarNome
+    Tabela,
 }

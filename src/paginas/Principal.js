@@ -10,7 +10,7 @@ import {
     Card, Icone,
     Pagina
 } from "../componentes";
-import {ExibirMensagem} from "../util";
+import {ExibirMensagem, RemoverCaracteresEspeciais, RemoverCaracteresEspeciaisMinusculo} from "../util";
 import {BOTAO, ICONE, MSG, TEXTO} from "../util/Constantes";
 import Tabela from "../componentes/tabela/Tabela";
 
@@ -83,9 +83,6 @@ export default function Principal () {
                     </Card>
                 </div>
                 <div className={"col-6"}>
-                    <Card>
-                        <Tabela />
-                    </Card>
                 </div>
                 <div className={"col-6"}>
                 </div>

@@ -86,9 +86,3 @@ export function ValidaToken () {
         })
 }
 
-
-export const RemoverCaracteresEspeciais = (texto) => {
-    texto = texto.replace((/[ÀÁÂÃÄÅ]/g,"A"))
-    return texto;
-}
-

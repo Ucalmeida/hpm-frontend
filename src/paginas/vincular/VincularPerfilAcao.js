@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import {Botao, Card, Pagina, Select} from "../../componentes";
+import {Botao, BotaoExcluir, Card, Pagina, Select, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {acoes} from "../../componentes/pagina/acoes";
 import ReactSelect, {components} from "react-select";
-import Tabela from "../../componentes/tabela/Tabela";
 
 
 const LOG = console.log
@@ -112,44 +111,27 @@ export function VincularPerfilAcao() {
         objeto.acao = a.value;
     }
     const colunas = [
-        {
-            key: "descricao",
-            text: "Descrição",
-        },
-        {
-            key: "verbo",
-            text: "Verbo",
-        },
-        {
-            key: "uri",
-            text: "URI",
-        },
-        {
-            key: "publica",
-            text: "Publica",
-        },
-        {
-            key: "acoes",
-            text: "Ações",
-        }
+        { texto: "Descrição" },
+        { texto: "Verbo" },
+        { texto: "URI" },
+        { texto: "Pública" },
+        { texto: "Ações" }
     ];
 
     const dados = () => {
-        console.log(objeto.listaAcoes)
         return (
             objeto.listaAcoes.map((acao, index) => {
                 return ({
                     'id': acao.id,
                     'descricao': acao.descricao,
                     'verbo': acao.verbo,
-                    'uri': acao.uri,
-                    'publica': acao.publica,
-                    'acoes': 'botaao'
+                    'uri': acao.link,
+                    'publica': acao.publica ? "SIM" : "NÃO",
+                    'acoes': <BotaoExcluir tamanho={BOTAO.TAMANHO.PEQUENO} />
                 })
             })
         )
     }
-    console.log(dados())
 
     const acoesBackend = getAcoes();
     return (
