@@ -19,13 +19,6 @@ export function VincularPerfilAcao() {
         listaAcoes: [],
         listaAcoesPerfil: []
     })
-    // const [dados, setDados] = useState( [{
-    //     descricao: '',
-    //     verbo: '',
-    //     uri: '',
-    //     publica: '',
-    //     acoes: '',
-    // }])
 
     const Placeholder = props => {
         return <components.Placeholder {...props}> Selecione ação </components.Placeholder>;
@@ -111,16 +104,16 @@ export function VincularPerfilAcao() {
         objeto.acao = a.value;
     }
     const colunas = [
-        { texto: "Descrição" },
-        { texto: "Verbo" },
-        { texto: "URI" },
-        { texto: "Pública" },
-        { texto: "Ações" }
+        { text: "Descrição" ,},
+        { text: "Verbo" },
+        { text: "URI" },
+        { text: "Pública" },
+        { text: "Ações" }
     ];
 
     const dados = () => {
         return (
-            objeto.listaAcoes.map((acao, index) => {
+            objeto.listaAcoesPerfil.map((acao, index) => {
                 return ({
                     'id': acao.id,
                     'descricao': acao.descricao,
@@ -136,9 +129,6 @@ export function VincularPerfilAcao() {
     const acoesBackend = getAcoes();
     return (
         <Pagina titulo="Vincular perfil ação">
-            <Card>
-                <Tabela colunas={colunas} dados={dados()} />
-            </Card>
             <Card titulo="Vincular">
                 <div className="row">
                     <div className="col-lg-4">
@@ -155,7 +145,7 @@ export function VincularPerfilAcao() {
                             components={{Placeholder}}/>
                     </div>
 
-                    <Botao className="col-lg-2" cor="success" onClick={vincular}>
+                    <Botao className="col-lg-2" cor="success" icone={"fas fa-retweet"} onClick={vincular}>
                         Vincular
                     </Botao>
                 </div>
@@ -163,32 +153,7 @@ export function VincularPerfilAcao() {
                 <div className="col-lg-12 mt-2 ">
                     <div className="col-lg-6 form-group">
                     </div>
-                    <table className="table table-striped table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Descrição</th>
-                                <th>Verbo</th>
-                                <th>URI</th>
-                                <th>Publica</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {objeto.listaAcoesPerfil.map((v, k) => {
-                                return (
-                                    <tr id={v.id} key={v.id}>
-                                        <td> {v.descricao} </td>
-                                        <td className={resolveCor(v.verbo)}> {v.verbo} </td>
-                                        <td> {v.link} </td>
-                                        <td> {v.publica ? 'SIM' : 'NÃO'} </td>
-                                        <td>
-                                            <Botao cor="danger" icone="fas fa-trash"/>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
+                    <Tabela colunas={colunas} dados={dados()} />
                 </div>
             </Card>
         </Pagina>
