@@ -23,7 +23,7 @@ export default function Principal () {
             texto: 'Muitas comobirdades e sarnagatcha',
     }
 
-    useEffect(() => { ValidaToken() }, [])
+    // useEffect(() => { ValidaToken() }, [])
 
     const dispararMsg = () => {
           return ExibirMensagem("Mensagem do popup", MSG.SUCESSO, objetoTeste,'TItulo bootbox',ICONE.PESQUISAR);
