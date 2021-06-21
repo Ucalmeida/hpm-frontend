@@ -43,6 +43,7 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
             icone = <Icone icone={!icone ? ICONE.INFO : icone} />
             titulo = !titulo ? "" : "<span id='icone' class="+TEXTO.COR.PRIMARIO+"></span>" + titulo;
     }
+    bootbox.hideAll()
     bootbox.dialog({
         title: titulo,
         message: mensagem+msgObjeto,

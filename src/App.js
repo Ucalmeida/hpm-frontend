@@ -41,10 +41,12 @@ import {MenuLateral, Rodape, Topo} from "./componentes/pagina";
 function verificaToken() {
     xfetch('/validaToken', {token: localStorage.getItem('token')}, HttpVerbo.POST)
         .then(json => {
-                let valido = json.resultado
-                if (!valido) {
-                    localStorage.clear()
-                    window.location.replace('/login')
+                if (json) {
+                    let valido = json.resultado
+                    if (!valido) {
+                        localStorage.clear()
+                        window.location.replace('/login')
+                    }
                 }
             }
         )

@@ -170,7 +170,6 @@ export function VincularPerfilAcao() {
 
     function encontraAcao(link) {
         const path = link.split("/")
-
         let find = acoes.find(a => a.url === path[1]);
 
         let i = 2

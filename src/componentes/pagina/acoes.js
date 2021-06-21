@@ -5,7 +5,8 @@ export const acoes = [
     "nome": "Alterar Senha",
     "descricao": "Página Principal",
     "url": "alterarSenha",
-    "icone": "fas fa-unlock-alt"
+    "icone": "fas fa-unlock-alt",
+    "depencias": []
   },
   {
     "nome": "Cadastrar",
