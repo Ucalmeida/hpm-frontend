@@ -76,7 +76,7 @@ export class CadastrarObjeto extends React.Component {
                     <div className="col-lg-8">
                         <Card titulo="Objetos cadastrados">
                             {spinner}
-                            <ul className={"list-unstyled"}>
+                            <ul className={"list-unstyled"} style={{columns: 3}}>
                                 {objetos.map((v, k) => {
                                     return <li key={k}>{v.nome}</li>
                                 })}

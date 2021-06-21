@@ -14,11 +14,23 @@ export const acoes = [
     "url": "cadastrar",
     "icone": "far fa-plus-square",
     "acoes": [
+        {
+            "nome": "Especialidade",
+            "descricao": "Página Principal",
+            "url": "especialidade",
+            "icone": "fas fa-user-nurse"
+        },
+        {
+            "nome": "Consultorio Bloco",
+            "descricao": "Criando Consultorio Bloco ",
+            "url": "consultorioBloco",
+            "icone": "fas fa-plus"
+         },
       {
-        "nome": "Especialidade",
-        "descricao": "Página Principal",
-        "url": "especialidade",
-        "icone": "fas fa-user-nurse"
+        "nome": "Perfil",
+        "descricao": "Criando perfil",
+        "url": "perfil",
+        "icone": "fas fa-user"
       },
       {
         "nome": "Exame",
