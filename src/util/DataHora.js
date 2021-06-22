@@ -36,3 +36,12 @@ export function TempoTranscorridoMilisegParaHoraData (tempo) {
     if (minutos > 0) return minutos + "m";
     return segundos + "s";
 }
+
+export function FormatarDataHora (dataHora) { // 2021-06-21T11:46:32.081
+    return (
+        dataHora.substring(8,10) + '/' +
+        dataHora.substring(5,7) + '/' +
+        dataHora.substring(0,4) + ' às ' +
+        dataHora.substring(11,19)
+    )
+}

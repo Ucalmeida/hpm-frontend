@@ -1,7 +1,7 @@
 import React from 'react'
 import {xfetch} from "../../util/Util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
-import {ExibirMensagem} from "../../util";
+import {CompararArrayObjetos, ExibirMensagem} from "../../util";
 import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
 
 
@@ -74,9 +74,23 @@ export class CadastrarSangue extends React.Component {
                     <div className="col-lg-8">
                         <Card titulo="Sangue cadastrados">
                             {spinner}
-                            <ul className={"list-unstyled"} style={{columns: 3}}>
-                                {objetos.map((v, k) => {
-                                    return <li key={k}> {v.texto}</li>
+                            <ul className={"list-unstyled"} style={{columns: 2}}>
+                                {objetos.sort(CompararArrayObjetos("texto")).map((v, k) => {
+                                // ➕ ➖ 🅰️ 🆎 🅱️ 🅾️
+                                    return (
+                                        <li className={"text-lg"} key={k}>
+                                        {/*    {*/}
+                                        {/*    v.texto === "A+" ? "🅰️➕" :*/}
+                                        {/*    v.texto === "A-" ? "🅰️➖" :*/}
+                                        {/*    v.texto === "B+" ? "🅱️➕" :*/}
+                                        {/*    v.texto === "B-" ? "🅱️➖" :*/}
+                                        {/*    v.texto === "AB+" ? "🆎➕" :*/}
+                                        {/*    v.texto === "AB-" ? "🆎➖" :*/}
+                                        {/*    v.texto === "O+" ? "🅾️➕" : "🅾️➖"*/}
+                                        {/*} */}
+                                        {v.texto}
+                                        </li>
+                                    )
                                 })}
                             </ul>
                         </Card>

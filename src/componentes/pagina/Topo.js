@@ -36,6 +36,8 @@ export default class Topo extends React.Component {
         ExibirMensagem(notificacao.descricao, MSG.INFO, "", notificacao.titulo)
     }
     render() {
+        if (!Logado()) return ""
+
         const notificacoes = () => {
             if (listaNotificacoes.length < 1) return ""
 
@@ -63,7 +65,6 @@ export default class Topo extends React.Component {
             )
         };
 
-        if (!Logado()) return ""
         const {usuario} = this.state
         return (
             <nav className="main-header navbar navbar-expand navbar-white navbar-light" >

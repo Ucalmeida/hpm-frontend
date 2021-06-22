@@ -4,6 +4,7 @@ import './index.scss';
 import 'bootstrap/dist/js/bootstrap.bundle.min'
 import 'overlayscrollbars-react/dist/overlayscrollbars-react';
 import 'admin-lte/dist/js/adminlte.min';
+import './componentes/pagina/menu.js'
 import App from './App';
 
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Tab, Tabs} from "react-bootstrap";
 import {
     Accordion,
@@ -10,7 +10,7 @@ import {
     Card, Icone,
     Pagina
 } from "../componentes";
-import {ExibirMensagem, RemoverCaracteresEspeciais, RemoverCaracteresEspeciaisMinusculo, ValidaToken} from "../util";
+import {ExibirMensagem} from "../util";
 import {BOTAO, ICONE, MSG, TEXTO} from "../util/Constantes";
 import Tabela from "../componentes/tabela/Tabela";
 
@@ -22,8 +22,6 @@ export default function Principal () {
             dados: 'Sexagenária de 64 anos',
             texto: 'Muitas comobirdades e sarnagatcha',
     }
-
-    // useEffect(() => { ValidaToken() }, [])
 
     const dispararMsg = () => {
           return ExibirMensagem("Mensagem do popup", MSG.SUCESSO, objetoTeste,'TItulo bootbox',ICONE.PESQUISAR);

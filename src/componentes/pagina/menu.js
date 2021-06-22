@@ -1,25 +1,26 @@
+import React from "react";
 import $ from 'jquery/src/jquery'
-$(document).ready( function () {
 
 // ativação dos links da pagina em exibição
+
     const url = document.location.href;
     let urlSeparada = url.split('/');
-    let uri = urlSeparada[urlSeparada.length-1];
-    let elemento = $('a[data-target="'+uri+'"]');
+    let uri = urlSeparada[urlSeparada.length - 1];
+    let elemento = $('a[data-target="' + uri + '"]');
 
     if (uri == "gestao" || uri == "principal") { //Interface Gestão
         $('#tituloIcone').html('<i class="fas fa-home mr-2"></i>');
     } else {
         if (elemento.attr('data-target') === undefined) {
             uri = sessionStorage.getItem("uriAnterior");
-            elemento = $('a[data-target="'+uri+'"]');
+            elemento = $('a[data-target="' + uri + '"]');
         }
 
         getIcone(elemento);
 
         elemento.addClass('active');
         elemento.has('img').find('img').addClass('active')//Caso ícone do menu lateral seja svg
-        var $parent = elemento.parent().parent().parent().get(0);
+        const $parent = elemento.parent().parent().parent().get(0);
         if ($parent != undefined && $parent.tagName !== undefined && $parent.tagName != 'NAV') {
             let elementoSup = elemento.parent().parent().parent();
             elementoSup.addClass('menu-open');
@@ -36,11 +37,10 @@ $(document).ready( function () {
         }
     }
     sessionStorage.setItem('uriAnterior', uri);
-});
-
 //Icone do Título da página.
 function getIcone(elemento) {
-    var iconeTitulo = null;
+    console.log(elemento)
+    let iconeTitulo = null;
     if (elemento.has('img').length) { //Caso ícone do menu lateral seja svg
         iconeTitulo = elemento.find('img').first().clone();
         iconeTitulo.addClass('icon-header')
@@ -53,18 +53,3 @@ function getIcone(elemento) {
     $('#tituloIcone').html(iconeTitulo);
 }
 
-//Maximiza ou minimiza automaticamente o menu
-window.onload = function () {
-    var corpo = $('body');
-    // Setar o menu
-    corpo.addClass(sessionStorage.getItem('ajustarMenu'));
-    sessionStorage.setItem('menuCollapse', document.body.classList.contains('sidebar-collapse'))
-};
-
-function ajustarMenu() {
-    if (sessionStorage.getItem('menuCollapse') == 'false') {
-        sessionStorage.setItem('ajustarMenu','sidebar-collapse');
-    } else {
-        sessionStorage.setItem('ajustarMenu','');
-    }
-}

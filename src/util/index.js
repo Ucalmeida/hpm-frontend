@@ -1,13 +1,23 @@
 import {ExibirMensagem} from './ExibirMensagem';
 import {xfetch, Logado, ValidaToken} from './Util';
-import {HoraAtual, DataAtual, DataHoraAtual, TempoTranscorridoMilisegParaHoraData, ConverterMilisegundoParaHoraDias} from "./DataHora";
-import {RemoverCaracteresEspeciais, RemoverCaracteresEspeciaisMinusculo} from "./Replace";
+import {
+    ConverterMilisegundoParaHoraDias,
+    DataAtual,
+    DataHoraAtual,
+    FormatarDataHora,
+    HoraAtual,
+    TempoTranscorridoMilisegParaHoraData,
+} from "./DataHora";
+import {CompararArrayObjetos, ConverterCaracteresEspeciais, ConverterCaracteresEspeciaisMinusculo,} from "./StringUtil";
 
 export {
     ExibirMensagem,
-    xfetch,
+    CompararArrayObjetos,
+    FormatarDataHora,
+    ConverterCaracteresEspeciais,
+    ConverterCaracteresEspeciaisMinusculo,
     Logado,
-    RemoverCaracteresEspeciais, RemoverCaracteresEspeciaisMinusculo,
+    HoraAtual, DataAtual, DataHoraAtual, TempoTranscorridoMilisegParaHoraData, ConverterMilisegundoParaHoraDias,
     ValidaToken,
-    HoraAtual, DataAtual, DataHoraAtual, TempoTranscorridoMilisegParaHoraData, ConverterMilisegundoParaHoraDias
+    xfetch,
 }

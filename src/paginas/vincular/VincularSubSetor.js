@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {Botao, Card, Pagina, Select, Spinner} from "../../componentes";
-import {ExibirMensagem, xfetch} from "../../util";
+import {Botao, BotaoExcluir, Card, Pagina, Select, Spinner, Tabela} from "../../componentes";
+import {ExibirMensagem, FormatarDataHora, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
 
 const LOG = console.log
@@ -57,32 +57,53 @@ export function VincularSubSetor() {
     let spinner = objeto.carregandoSubSetor ? <Spinner/> : ''
     let spinnerVincular = objeto.carregandoVincular ? <Spinner/> : ''
     let subsetores = objeto.subsetores
+
+    const colunas = [
+        { text: "Nome" ,},
+        { text: "Data de Criação" },
+        { text: "Data de Alteração" },
+        { text: "Sub Setores" },
+        { text: "Ações" }
+    ];
+    const dados = () => {
+        return (
+            subsetores.map((subSetor, index) => {
+                return ({
+                    'id': subSetor.id,
+                    'nome': subSetor.nome,
+                    'data_de_criacao': FormatarDataHora(subSetor.dataInclusao),
+                    'data_de_alteracao': FormatarDataHora(subSetor.dataAlteracao),
+                    'sub_setores': subSetor.subSetores,
+                    'acoes': <BotaoExcluir tamanho={BOTAO.TAMANHO.PEQUENO} />
+                })
+            })
+        )
+    }
+
     return (
         <Pagina titulo="Vincular Setor-Subsetor">
             <div className="row">
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Vincular">
                         <div className="col-lg-12">
                             {spinnerVincular}
                         </div>
                         <div className="row">
-                            <div className="col-lg-6">
+                            <div className="col-lg-5">
                                 <Select
                                     url="/hpm/setor/opcoes"
                                     funcao={selecionarSetor}
                                     nome="setor"
                                     label="Setor"/>
                             </div>
-                            <div className="col-lg-6">
+                            <div className="col-lg-5">
                                 <Select
                                     url="/hpm/setor/opcoes"
                                     funcao={selecionarSubSetor}
                                     nome="subSetor"
                                     label="SubSetor"/>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-12 text-lg-right mt-2 mb-2">
+                            <div className="col-lg-2 text-center">
                                 <Botao cor={BOTAO.COR.SUCESSO} icone={"fas fa-exchange-alt"} onClick={vincular}>
                                     Vincular
                                 </Botao>
@@ -90,16 +111,9 @@ export function VincularSubSetor() {
                         </div>
                     </Card>
                 </div>
-                <div className="col-lg-6">
-                    <Card titulo="Subsetores do setor selecionado">
-                        {spinner}
-                        <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {subsetores.map((v, k) => {
-                               return <li className="flex-fill" key={k}> {v.nome}</li>
-                            })}
-                        </ul>
-                    </Card>
-                </div>
+                <Card>
+                    <Tabela dados={dados()} colunas={colunas} />
+                </Card>
             </div>
         </Pagina>
     );

@@ -24,7 +24,7 @@ export function Botao (props) {
         return(
             <Button
                 variant={cor}
-                className={getClasse(props.className)+tamanho+" m-1"}
+                className={getClasse(props.className)+tamanho+" mb-1 mr-1"}
                 disabled={props.carregando || props.disabled}
                 onClick={props.onClick}
                 {...props}

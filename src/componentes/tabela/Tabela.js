@@ -1,37 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import DataReact from "@mkikets/react-datatable";
-import {RemoverCaracteresEspeciaisMinusculo, xfetch} from "../../util";
+import {ConverterCaracteresEspeciaisMinusculo, xfetch} from "../../util";
 import {HttpVerbo} from "../../util/Constantes";
 
 function Tabela (props) {
 
-    const [lists, setLists] = useState([]);
-
-    const carregarDados = async () => {
-        if (!Array.isArray(props.dados)) {
-            const dadosResponse = xfetch(props.dados, {}, HttpVerbo.GET)
-                .then(r => r.json());
-            dadosResponse.then(data => setLists(data.resultado));
-        }
-    }
-
-    useEffect(() => {
-        carregarDados();
-    }, [])
-
     const gerarColunas = () => {
         return props.colunas.map((coluna, index) => {
-            if (!coluna.key) coluna.key = RemoverCaracteresEspeciaisMinusculo(coluna.text);
+            if (!coluna.key) coluna.key = ConverterCaracteresEspeciaisMinusculo(coluna.text);
             if (!coluna.sortable) coluna.sortable = true
                 return coluna
             })
     }
 
     const gerarDados = () => {
-        if (Array.isArray(props.dados)) return props.dados
-        return lists
-
+        return props.dados
     }
 
     const getBotoes = () => {
