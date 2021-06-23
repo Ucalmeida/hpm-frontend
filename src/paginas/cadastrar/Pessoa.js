@@ -15,6 +15,14 @@ export default function Pessoa() {
         }
     );
 
+    const [psf, setPsf] = useState({
+        especialidades: [],
+        nmRegistroConselho: null,
+        nmCoren: null,
+        nmCrefito: null,
+        nmConter: null
+    })
+
     const pessoa = {
         nome: null,
         nomeSocial: null,
@@ -29,11 +37,12 @@ export default function Pessoa() {
         idInstituicaoConvenio: null,
         idSangue: null,
         sexo: null,
+        profissionalSaudeCmd: {
+            psf
+        }
     }
 
     const enviar = async () => {
-
-        console.log(objeto.value);
 
         await xfetch('/hpm/pessoa/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
@@ -64,6 +73,21 @@ export default function Pessoa() {
         setObjeto({...objeto, sexo : sexo});
     }
 
+    const handleEspecialidade = (e) => {
+        const especialidades = e.map((item) => { return item.value });
+        setPsf({...psf, especialidades : especialidades});
+    }
+
+    useEffect( () => {
+        setObjeto({...objeto, profissionalSaudeCmd : {
+            especialidades : psf.especialidades,
+            nmRegistroConselho : psf.nmRegistroConselho,
+            nmCoren: psf.nmCoren,
+            nmCrefito: psf.nmCrefito,
+            nmConter: psf.nmConter
+        }});
+    },[psf]);
+
     const handleChange = (e) => {
         const {name, value} = e.target;
 
@@ -77,11 +101,11 @@ export default function Pessoa() {
             setObjeto({...objeto, [name]: value.toUpperCase()});
         } else if(name === 'email') {
             setObjeto({...objeto, [name]: value.toLowerCase()});
+        } else if(name === 'nmRegistroConselho' || name === 'nmCoren' || name === 'nmCrefito' || name === 'nmConter') {
+            setPsf({...psf, [name] : value});
         } else {
             setObjeto({...objeto, [name]: value});
         }
-
-        console.log(objeto);
     }
 
     return(
@@ -174,7 +198,7 @@ export default function Pessoa() {
                                     <option value={pessoa.blAcessaSistema}>Não</option>
                                 </select>
                             </div>
-                            <div className="col-lg-2">
+                            <div className="col-lg-1">
                                 <label>Vivo</label>
                                 <select className={"form-control col-lg-12"} name="blVivo" onChange={handleChange}>
                                     <option></option>
@@ -182,7 +206,7 @@ export default function Pessoa() {
                                     <option value={pessoa.blVivo}>Não</option>
                                 </select>
                             </div>
-                            <div className="col-lg-3">
+                            <div className="col-lg-2">
                                 <label>Instituição</label>
                                 <Select
                                     placeholder={"Instituição"}
@@ -198,7 +222,7 @@ export default function Pessoa() {
                                     nome={"idSangue"}
                                     url={"/hpm/sangue/opcoes"}/>
                             </div>
-                            <div className="col-lg-3">
+                            <div className="col-lg-2">
                                 <label>Sexo</label>
                                 <Select
                                     placeholder={"Sexo"}
@@ -206,7 +230,48 @@ export default function Pessoa() {
                                     nome={"sexo"}
                                     url={"/hpm/sexo/opcoes"}/>
                             </div>
+                            <div className="col-lg-3">
+                                <label>É Profissional da Saúde?</label>
+                                <Input type="checkbox"/>
+                            </div>
                         </div>
+                        <br/>
+                        <Card titulo="Profissional de Saúde">
+                            <Select
+                                placeholder={"Especialidades"}
+                                funcao={handleEspecialidade}
+                                nome={"especialidades"}
+                                multiplo={true}
+                                url={"/hpm/especialidade/opcoes"}/>
+                            <Input
+                                type="text"
+                                value={psf.nmRegistroConselho}
+                                onChange={handleChange}
+                                name="nmRegistroConselho"
+                                label="Registro do Conselho"
+                                placeholder="Registro"/>
+                                <Input
+                                type="text"
+                                value={psf.nmCoren}
+                                onChange={handleChange}
+                                name="nmCoren"
+                                label="Registro do Coren"
+                                placeholder="Coren"/>
+                                <Input
+                                type="text"
+                                value={psf.nmCrefito}
+                                onChange={handleChange}
+                                name="nmCrefito"
+                                label="Registro do Crefito"
+                                placeholder="Crefito"/>
+                                <Input
+                                type="text"
+                                value={psf.nmConter}
+                                onChange={handleChange}
+                                name="nmConter"
+                                label="Registro do Conter"
+                                placeholder="Conter"/>
+                        </Card>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
                             <BotaoSalvar onClick={enviar} />
                         </div>
