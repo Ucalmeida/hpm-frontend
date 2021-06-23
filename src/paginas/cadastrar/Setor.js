@@ -6,7 +6,7 @@ import {HttpVerbo, ICONE, MSG, TEXTO} from "../../util/Constantes";
 
 const LOG = console.log
 
-export function CadastrarSetor() {
+export default function Setor() {
 
     const [objeto, setObjeto] = useState({
         nome: '',

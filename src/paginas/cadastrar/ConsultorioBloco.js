@@ -3,7 +3,7 @@ import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-function CadastrarConsultorioBloco(){
+export default function ConsultorioBloco(){
     const [objeto, setObjeto] = useState(
         {
             dataInicio : null,
@@ -148,4 +148,3 @@ function CadastrarConsultorioBloco(){
         </Pagina>
     )
 }
-export {CadastrarConsultorioBloco};

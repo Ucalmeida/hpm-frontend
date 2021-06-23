@@ -3,6 +3,9 @@ import React from 'react';
 export function ConverterCaracteresEspeciais(texto) {
     return  texto.normalize('NFD').replace(/[^a-zA-Zs]/g, "").replace(/\s/g, "_");
 }
+export function ConverterCaracteresEspeciaisSemEspaco(texto) {
+    return  texto.normalize('NFD').replace(/[^a-zA-Zs]/g, "");
+}
 export function ConverterCaracteresEspeciaisMinusculo(texto) {
     return  texto.normalize('NFD').replace(/[^a-zA-Zs\s]/g, "").replace(/\s/g, "_").toLowerCase();
 }

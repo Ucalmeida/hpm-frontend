@@ -1,7 +1,7 @@
 import React from 'react'
 import {CadastrarNome} from "../../componentes";
 
-export function CadastrarPerfil() {
+export default function Perfil() {
 
     return (
         <CadastrarNome

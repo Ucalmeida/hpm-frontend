@@ -4,7 +4,7 @@ import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import MaskedInput from "../../componentes/form/MaskedInput";
 
-export function CadastrarPessoa() {
+export default function Pessoa() {
     const [objeto, setObjeto] = useState(
         {
             blPolicialMilitar: false,

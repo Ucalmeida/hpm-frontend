@@ -7,7 +7,7 @@ import ReactSelect, {components} from "react-select";
 
 
 const LOG = console.log
-export function VincularPerfilAcao() {
+export function PerfilAcoes() {
     const [objeto, setObjeto] = useState({
         busca: '',
         carregandoPerfis: false,

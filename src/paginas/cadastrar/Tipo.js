@@ -3,7 +3,7 @@ import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../component
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-function CadastrarTipo(){
+export default function Tipo(){
     const [objeto, setObjeto] = useState(
         {
             nome: "",
@@ -101,4 +101,3 @@ function CadastrarTipo(){
         </Pagina>
     );
 }
-export {CadastrarTipo};

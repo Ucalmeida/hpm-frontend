@@ -3,7 +3,7 @@ import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-function CadastrarMedicamento() {
+export default function Medicamento() {
     const [objeto, setObjeto] = useState(
         {
             nome: "",
@@ -119,4 +119,3 @@ function CadastrarMedicamento() {
         </Pagina>
     )
 }
-export {CadastrarMedicamento};

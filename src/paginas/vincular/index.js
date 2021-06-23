@@ -1,11 +1,11 @@
-import {VincularSetorFuncao} from "./VincularSetorFuncao";
+import {SetorFuncao} from "./SetorFuncao";
 import {SetorFuncaoAcoes} from "./SetorFuncaoAcoes";
-import {VincularSubSetor} from "./VincularSubSetor";
-import {VincularPerfilAcao} from './VincularPerfilAcao'
+import {SubSetor} from "./SubSetor";
+import {PerfilAcoes} from './PerfilAcoes'
 
 export {
-    VincularSetorFuncao,
+    SetorFuncao,
     SetorFuncaoAcoes,
-    VincularSubSetor,
-    VincularPerfilAcao
+    SubSetor,
+    PerfilAcoes
 }

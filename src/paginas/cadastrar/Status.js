@@ -3,30 +3,28 @@ import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../component
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-
-function CadastrarPiso(){
+export default function Status(){
     const [objeto, setObjeto] = useState(
         {
-            nome : '',
-            idPredio : null,
-            pisos : [],
-            carregandoPisos : false,
-            carregandoCadastrar : false
+            nome: "",
+            idObjeto: null,
+            status: [],
+            carregandoStatus: false,
+            carregandoCadastrar: false
         }
     )
 
-    let selecionarPredio = (e) => {
-        objeto.idPredio = e.value
-        listarPisosPorPredio()
-        console.log(objeto)
+    let selecionarObjeto = (e) => {
+        objeto.idObjeto = e.value
+        listarStatusPorObjeto();
     }
 
-    const listarPisosPorPredio = () => {
-        setObjeto({...objeto, carregandoPisos: true, pisos: []})
-        xfetch('/hpm/piso/' + objeto.idPredio,{}, HttpVerbo.GET)
+    const listarStatusPorObjeto = () => {
+        setObjeto({...objeto, carregandoStatus: true, status: []})
+        xfetch('/hpm/status/' + objeto.idObjeto,{}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setObjeto({...objeto, pisos: json.resultado, carregandoPisos: false})
+                    setObjeto({...objeto, status: json.resultado, carregandoStatus: false})
                 }
             )
     }
@@ -36,48 +34,50 @@ function CadastrarPiso(){
         setObjeto({...objeto, nome: e.target.value})
     }
 
-    let enviar = (e) => {
+    const enviar = (e) => {
         e.preventDefault()
         setObjeto({...objeto, carregandoCadastrar: true})
-        xfetch('/hpm/piso/cadastrar', objeto, HttpVerbo.POST)
-            .then( json =>{
-                if(json.status === "OK"){
-                    ExibirMensagem('Piso Cadastrado Com Sucesso!', MSG.SUCESSO)
-                    setObjeto({ idPredio: '', pisos: []})
-                    listarPisosPorPredio()
-                }else{
-                    ExibirMensagem(json.message, MSG.ERRO)
+        xfetch('/hpm/status/cadastrar', objeto, HttpVerbo.POST)
+            .then(json => {
+                    if(json.status === "OK"){
+                        ExibirMensagem('Status Cadastrado Com Sucesso!', MSG.SUCESSO)
+                        setObjeto({ idObjeto: '', status: []})
+                        listarStatusPorObjeto()
+                    }else{
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                    setObjeto({...objeto, carregandoCadastrar: false})
                 }
-                setObjeto({...objeto, carregandoCadastrar: false})
-            }
-        )
+            )
     }
 
-    let spinner = objeto.carregandoPisos ? <Spinner/> : ''
+    let spinner = objeto.carregandoStatus ? <Spinner/> : ''
     let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
-    let pisos = objeto.pisos
+    let status = objeto.status;
     return(
-        <Pagina titulo = "Cadastrar Piso">
+        <Pagina titulo="Cadastrar Status">
             <div className="row animated--fade-in">
                 <div className="col-lg-6">
                     <Card titulo="Cadastrar">
-                        {spinnerCadastrar}
+                        <div className="col-lg-12">
+                            {spinnerCadastrar}
+                        </div>
                         <div className="row">
                             <div className="col-lg-6">
-                                <label>Prédio</label>
+                                <label>Objeto</label>
                                 <Select
-                                    funcao={selecionarPredio}
-                                    nome="idPredio"
-                                    url={"/hpm/predio/opcoes"} />
+                                    funcao={selecionarObjeto}
+                                    nome="idObjeto"
+                                    url={"/hpm/objeto/opcoes"} />
                             </div>
                             <div className="col-lg-6">
                                 <Input
                                     type="text"
-                                    label="Piso"
+                                    label="Status"
                                     value={objeto.nome}
                                     onChange = {handleChange}
                                     name="nome"
-                                    placeholder="Piso"/>
+                                    placeholder="Status"/>
                             </div>
                         </div>
                         <div className="align-items-end col-12">
@@ -86,10 +86,10 @@ function CadastrarPiso(){
                     </Card>
                 </div>
                 <div className="col-lg-6">
-                    <Card titulo="Pisos cadastrados no prédio selecionado">
+                    <Card titulo="Status cadastrados no objeto selecionado">
                         {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {pisos.map((v, k) => {
+                            {status.map((v, k) => {
                                 return <li className="flex-fill" key={k}> {v.nome}</li>
                             })}
                         </ul>
@@ -99,5 +99,3 @@ function CadastrarPiso(){
         </Pagina>
     )
 }
-
-export {CadastrarPiso};

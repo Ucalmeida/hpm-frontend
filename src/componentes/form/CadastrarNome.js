@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Spinner} from "./Spinner";
-import {ExibirMensagem, xfetch} from "../util";
-import {HttpVerbo, MSG} from "../util/Constantes";
-import {Pagina} from "./pagina/Pagina";
-import {Card} from "./card/Card";
-import {Input} from "./form/Input";
-import {BotaoSalvar} from "./Botao";
+import {Spinner} from "../Spinner";
+import {ExibirMensagem, xfetch} from "../../util";
+import {HttpVerbo, MSG} from "../../util/Constantes";
+import {Pagina} from "../pagina/Pagina";
+import {Card} from "../card/Card";
+import {Input} from "./Input";
+import {BotaoSalvar} from "../Botao";
 import PropTypes from 'prop-types';
 
 function CadastrarNome({label, labelListagem, url, urlListagem}) {

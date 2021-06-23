@@ -3,28 +3,28 @@ import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../component
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-function CadastrarStatus(){
-    const [objeto, setObjeto] = useState(
+export default function Sala() {
+    const [objeto , setObjeto] = useState(
         {
-            nome: "",
-            idObjeto: null,
-            status: [],
-            carregandoStatus: false,
+            nome: '',
+            idPiso:'',
+            salas: [],
+            carregandoSalas: false,
             carregandoCadastrar: false
         }
     )
 
-    let selecionarObjeto = (e) => {
-        objeto.idObjeto = e.value
-        listarStatusPorObjeto();
+    let selecionarPiso = (e) => {
+        objeto.idPiso = e.value
+        listarSalasPorPiso()
     }
 
-    const listarStatusPorObjeto = () => {
-        setObjeto({...objeto, carregandoStatus: true, status: []})
-        xfetch('/hpm/status/' + objeto.idObjeto,{}, HttpVerbo.GET)
+    const listarSalasPorPiso = () => {
+        setObjeto({...objeto, carregandoSalas: true, salas: []})
+        xfetch('/hpm/sala/' + objeto.idPiso,{}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setObjeto({...objeto, status: json.resultado, carregandoStatus: false})
+                    setObjeto({...objeto, salas: json.resultado,carregandoSalas: false});
                 }
             )
     }
@@ -37,25 +37,25 @@ function CadastrarStatus(){
     const enviar = (e) => {
         e.preventDefault()
         setObjeto({...objeto, carregandoCadastrar: true})
-        xfetch('/hpm/status/cadastrar', objeto, HttpVerbo.POST)
+        xfetch('/hpm/sala/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                     if(json.status === "OK"){
-                        ExibirMensagem('Status Cadastrado Com Sucesso!', MSG.SUCESSO)
-                        setObjeto({ idObjeto: '', status: []})
-                        listarStatusPorObjeto()
+                        ExibirMensagem('Sala Cadastrada Com Sucesso!', MSG.SUCESSO)
+                        setObjeto({ idPiso: '', salas: []})
+                        listarSalasPorPiso()
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)
                     }
-                    setObjeto({...objeto, carregandoCadastrar: false})
+                     setObjeto({...objeto, carregandoCadastrar: false})
                 }
             )
     }
 
-    let spinner = objeto.carregandoStatus ? <Spinner/> : ''
-    let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
-    let status = objeto.status;
+   let spinner = objeto.carregandoSalas ? <Spinner/> : ''
+   let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
+    let salas = objeto.salas;
     return(
-        <Pagina titulo="Cadastrar Status">
+        <Pagina titulo = "Cadastrar Sala">
             <div className="row animated--fade-in">
                 <div className="col-lg-6">
                     <Card titulo="Cadastrar">
@@ -64,20 +64,20 @@ function CadastrarStatus(){
                         </div>
                         <div className="row">
                             <div className="col-lg-6">
-                                <label>Objeto</label>
+                                <label>Prédio - Piso</label>
                                 <Select
-                                    funcao={selecionarObjeto}
-                                    nome="idObjeto"
-                                    url={"/hpm/objeto/opcoes"} />
+                                    funcao={selecionarPiso}
+                                    nome="idPiso"
+                                    url={"/hpm/piso/opcoes"} />
                             </div>
                             <div className="col-lg-6">
                                 <Input
                                     type="text"
-                                    label="Status"
+                                    label="Sala"
                                     value={objeto.nome}
                                     onChange = {handleChange}
                                     name="nome"
-                                    placeholder="Status"/>
+                                    placeholder="Sala"/>
                             </div>
                         </div>
                         <div className="align-items-end col-12">
@@ -86,10 +86,10 @@ function CadastrarStatus(){
                     </Card>
                 </div>
                 <div className="col-lg-6">
-                    <Card titulo="Status cadastrados no objeto selecionado">
+                    <Card titulo="Salas cadastradas no piso selecionado">
                         {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {status.map((v, k) => {
+                            {salas.map((v, k) => {
                                 return <li className="flex-fill" key={k}> {v.nome}</li>
                             })}
                         </ul>
@@ -98,5 +98,5 @@ function CadastrarStatus(){
             </div>
         </Pagina>
     )
+
 }
-export {CadastrarStatus};

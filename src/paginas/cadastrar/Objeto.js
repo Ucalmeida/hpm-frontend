@@ -6,7 +6,7 @@ import {ExibirMensagem} from "../../util";
 import {Card, Input, Pagina, Spinner} from "../../componentes";
 
 
-export class CadastrarObjeto extends React.Component {
+export default class Objeto extends React.Component {
     constructor() {
         super();
         this.state = {

@@ -5,7 +5,7 @@ import {CompararArrayObjetos, ExibirMensagem} from "../../util";
 import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
 
 
-export class CadastrarSangue extends React.Component {
+export default class Sangue extends React.Component {
     constructor() {
         super();
         this.state = {

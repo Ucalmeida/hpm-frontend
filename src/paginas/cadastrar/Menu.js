@@ -8,7 +8,7 @@ const LOG = console.log
 const CADASTRA_ACAO_FRONTEND = '/hpm/acao/frontend';
 
 
-export function CadastrarMenu() {
+export default function Menu() {
     const [objeto, setObjeto] = useState({
         uri: '',
         isPublica: false,

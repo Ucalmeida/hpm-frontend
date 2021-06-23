@@ -5,7 +5,7 @@ import {Card} from "./card/Card";
 import {Icone} from "./Icone";
 import {Pagina} from "./pagina/Pagina";
 import {Spinner} from "./Spinner";
-import {CadastrarNome} from "./CadastrarNome";
+import {CadastrarNome} from "./form/CadastrarNome";
 import {Tabela} from "./tabela/Tabela.js"
 
 export function getClasse(classe) {

@@ -35,7 +35,7 @@ export function Pagina (props) {
             return subMenu.url === url[url.length-1]
         } return getIconeSubmenu(subMenu.acoes)
     }
-    console.log(getIcone())
+    // console.log(getIcone())
 
     return (
          <div className="content-wrapper">

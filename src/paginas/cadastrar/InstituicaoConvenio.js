@@ -1,7 +1,7 @@
 import React from "react";
 import {CadastrarNome} from "../../componentes";
 
-export function CadastrarInstituicaoConvenio() {
+export default function InstituicaoConvenio() {
     return(
         <CadastrarNome
             url="/hpm/instituicao/cadastrar"

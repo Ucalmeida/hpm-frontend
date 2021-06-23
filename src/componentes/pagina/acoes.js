@@ -7,6 +7,12 @@ export const acoes = [
     "url": "alterarSenha",
     "icone": "fas fa-unlock-alt",
     "depencias": []
+  },{
+    "nome": "Calendario",
+    "descricao": "Componente Calendário",
+    "url": "calendario",
+    "icone": "fas fa-calendar",
+    "depencias": []
   },
   {
     "nome": "Cadastrar",
@@ -128,9 +134,9 @@ export const acoes = [
     "icone": "fas fa-retweet",
     "acoes": [
       {
-        "nome": "Perfil ações",
+        "nome": "Perfil Ações",
         "descricao": "Vincula ações por perfil",
-        "url": "perfilAcao",
+        "url": "perfilAcoes",
         "icone": "fas fa-people-arrows"
       },
       {
@@ -140,7 +146,7 @@ export const acoes = [
         "icone": "fas fa-users-cog"
       },
       {
-        "nome": "Setor Função acoes",
+        "nome": "Setor Função Acoes",
         "descricao": "Página Principal",
         "url": "setorFuncaoAcoes",
         "icone": "fas fa-sitemap"

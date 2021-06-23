@@ -4,7 +4,7 @@ import {ExibirMensagem, xfetch} from "../../util";
 import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
 
 
-export class CadastrarEspecialidade extends React.Component {
+export default class Especialidade extends React.Component {
     constructor() {
         super();
         this.state = {

@@ -3,7 +3,7 @@ import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../component
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-function CadastrarExame() {
+export default function Exame() {
     const [objeto, setObjeto] = useState(
         {
             nome: '',
@@ -110,5 +110,3 @@ function CadastrarExame() {
         </Pagina>
     )
 };
-
-export {CadastrarExame};
