@@ -237,40 +237,54 @@ export default function Pessoa() {
                         </div>
                         <br/>
                         <Card titulo="Profissional de Saúde">
-                            <Select
-                                placeholder={"Especialidades"}
-                                funcao={handleEspecialidade}
-                                nome={"especialidades"}
-                                multiplo={true}
-                                url={"/hpm/especialidade/opcoes"}/>
-                            <Input
-                                type="text"
-                                value={psf.nmRegistroConselho}
-                                onChange={handleChange}
-                                name="nmRegistroConselho"
-                                label="Registro do Conselho"
-                                placeholder="Registro"/>
-                                <Input
-                                type="text"
-                                value={psf.nmCoren}
-                                onChange={handleChange}
-                                name="nmCoren"
-                                label="Registro do Coren"
-                                placeholder="Coren"/>
-                                <Input
-                                type="text"
-                                value={psf.nmCrefito}
-                                onChange={handleChange}
-                                name="nmCrefito"
-                                label="Registro do Crefito"
-                                placeholder="Crefito"/>
-                                <Input
-                                type="text"
-                                value={psf.nmConter}
-                                onChange={handleChange}
-                                name="nmConter"
-                                label="Registro do Conter"
-                                placeholder="Conter"/>
+                            <div className="row form-group">
+                                <div className="col-lg-12">
+                                    <Select
+                                        placeholder={"Especialidades"}
+                                        funcao={handleEspecialidade}
+                                        nome={"especialidades"}
+                                        multiplo={true}
+                                        url={"/hpm/especialidade/opcoes"}/>
+                                </div>
+                                <br/>
+                                <br/>
+                                <div className="col-lg-3">
+                                    <Input
+                                        type="text"
+                                        value={psf.nmRegistroConselho}
+                                        onChange={handleChange}
+                                        name="nmRegistroConselho"
+                                        label="Registro do Conselho"
+                                        placeholder="Registro"/>
+                                </div>
+                                <div className="col-lg-3">
+                                    <Input
+                                        type="text"
+                                        value={psf.nmCoren}
+                                        onChange={handleChange}
+                                        name="nmCoren"
+                                        label="Registro do Coren"
+                                        placeholder="Coren"/>
+                                </div>
+                                <div className="col-lg-3">
+                                    <Input
+                                        type="text"
+                                        value={psf.nmCrefito}
+                                        onChange={handleChange}
+                                        name="nmCrefito"
+                                        label="Registro do Crefito"
+                                        placeholder="Crefito"/>
+                                </div>
+                                <div className="col-lg-3">
+                                    <Input
+                                        type="text"
+                                        value={psf.nmConter}
+                                        onChange={handleChange}
+                                        name="nmConter"
+                                        label="Registro do Conter"
+                                        placeholder="Conter"/>
+                                </div>
+                            </div>
                         </Card>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
                             <BotaoSalvar onClick={enviar} />
