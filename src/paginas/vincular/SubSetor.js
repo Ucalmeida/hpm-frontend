@@ -5,7 +5,7 @@ import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
 
 const LOG = console.log
 
-export function SubSetor() {
+export default function SubSetor() {
 
     const [objeto, setObjeto] = useState({
         idSetor: -1,

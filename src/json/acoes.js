@@ -7,11 +7,19 @@ export const acoes = [
     "url": "alterarSenha",
     "icone": "fas fa-unlock-alt",
     "depencias": []
-  },{
-    "nome": "Calendario",
+  },
+  {
+    "nome": "Agenda de Consultas",
     "descricao": "Componente Calendário",
-    "url": "calendario",
-    "icone": "fas fa-calendar",
+    "url": "agendaDeConsultas",
+    "icone": "far fa-calendar-alt",
+    "depencias": []
+  },
+  {
+    "nome": "Editor de Texto",
+    "descricao": "Componente Editor de textp",
+    "url": "editorTexto",
+    "icone": "fas fa-edit",
     "depencias": []
   },
   {
@@ -21,17 +29,17 @@ export const acoes = [
     "icone": "far fa-plus-square",
     "acoes": [
         {
+            "nome": "Consultorio Bloco",
+            "descricao": "Criando Consultorio Bloco ",
+            "url": "consultorioBloco",
+            "icone": "fas fa-clinic-medical"
+         },
+        {
             "nome": "Especialidade",
             "descricao": "Página Principal",
             "url": "especialidade",
             "icone": "fas fa-user-nurse"
         },
-        {
-            "nome": "Consultorio Bloco",
-            "descricao": "Criando Consultorio Bloco ",
-            "url": "consultorioBloco",
-            "icone": "fas fa-plus"
-         },
       {
         "nome": "Exame",
         "descricao": "Criando Exame",

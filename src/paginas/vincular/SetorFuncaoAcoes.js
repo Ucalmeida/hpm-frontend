@@ -1,7 +1,7 @@
 import React from "react";
 import {Botao, Card, Pagina, Select} from "../../componentes";
 
-export function SetorFuncaoAcoes() {
+export default function SetorFuncaoAcoes() {
     return (
         <Pagina titulo="Setor | Função | Ações" subTitulo="Vincula ações ao setor-função">
             <div className="row">

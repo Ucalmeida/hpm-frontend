@@ -4,7 +4,7 @@ import {NavLink, Link} from "react-router-dom";
 import logoHPM from "../../img/brasoes/brasao_hpm.png";
 import {Icone} from "../Icone";
 import {CompararArrayObjetos, Logado} from "../../util";
-import {acoes} from "./acoes.js"
+import {acoes} from "../../json/acoes.js"
 
 export default function () {
     if (!Logado()) return "";
