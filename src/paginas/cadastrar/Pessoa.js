@@ -22,7 +22,7 @@ export default function Pessoa() {
         nmCoren: null,
         nmCrefito: null,
         nmConter: null
-    })
+    });
 
     const pessoa = {
         nome: null,
@@ -89,7 +89,7 @@ export default function Pessoa() {
             nmCrefito: psf.nmCrefito,
             nmConter: psf.nmConter
         }});
-    },[psf]);
+    }, [psf]);
 
     const handleChange = (e) => {
         const {name, value} = e.target;

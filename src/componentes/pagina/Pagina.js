@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Logado, ValidaToken} from "../../util";
-import {acoes} from "./acoes.js"
+import {acoes} from "../../json/acoes.js"
 
 export function Pagina (props) {
     if (!Logado()) return window.location.replace('/login');

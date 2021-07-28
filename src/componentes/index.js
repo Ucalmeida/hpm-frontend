@@ -7,6 +7,8 @@ import {Pagina} from "./pagina/Pagina";
 import {Spinner} from "./Spinner";
 import {CadastrarNome} from "./form/CadastrarNome";
 import {Tabela} from "./tabela/Tabela.js"
+import {Calendario} from "./Calendario";
+import {EditorTexto} from "./EditorTexto";
 
 export function getClasse(classe) {
     return !classe ? "" : classe.toString()+" ";
@@ -30,4 +32,6 @@ export {
     Select,
     Spinner,
     Tabela,
+    Calendario,
+    EditorTexto,
 }

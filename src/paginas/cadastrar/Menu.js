@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {BotaoSalvar, Card, Input, Pagina} from "../../componentes";
-import {acoes} from "../../componentes/pagina/acoes";
+import {acoes} from "../../json/acoes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 

@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react'
 import {Botao, BotaoExcluir, Card, Pagina, Select, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
-import {acoes} from "../../componentes/pagina/acoes";
+import {acoes} from "../../json/acoes";
 import ReactSelect, {components} from "react-select";
 
 
 const LOG = console.log
-export function PerfilAcoes() {
+export default function PerfilAcoes() {
     const [objeto, setObjeto] = useState({
         busca: '',
         carregandoPerfis: false,

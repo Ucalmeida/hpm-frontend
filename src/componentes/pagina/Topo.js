@@ -5,7 +5,7 @@ import fotoUsuario from "../../img/icones/svg/solid/user-solid.svg"
 import {ExibirMensagem, Logado, TempoTranscorridoMilisegParaHoraData} from "../../util";
 import {BOTAO, MSG} from "../../util/Constantes";
 import {Botao} from "../Botao";
-import {notificacoes as listaNotificacoes} from "./notificacoes";
+import {notificacoes as listaNotificacoes} from "../../json/notificacoes";
 
 export default class Topo extends React.Component {
     constructor(toggleMenuSidebar) {
