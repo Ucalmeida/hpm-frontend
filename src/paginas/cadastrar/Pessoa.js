@@ -3,6 +3,7 @@ import {HttpVerbo, MSG} from "../../util/Constantes";
 import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import MaskedInput from "../../componentes/form/MaskedInput";
+import { UseVisibilityToggler } from '../../hooks/UseVisibilityToggler';
 
 export default function Pessoa() {
     const [objeto, setObjeto] = useState(
@@ -46,16 +47,18 @@ export default function Pessoa() {
 
         await xfetch('/hpm/pessoa/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
-                if (json.status == "OK") {
+                if (json.status === "OK") {
                     ExibirMensagem('Pessoa cadastrada', MSG.SUCESSO);
                 } else {
-                    if (json.errors != undefined) {
+                    if (json.errors !== undefined) {
                         ExibirMensagem(json.errors[0].defaultMessage, MSG.ERRO);
                     } else {
                         ExibirMensagem(json.message, MSG.ERRO);
                     }
                 }
             })
+            .catch(err => ExibirMensagem(err.message, MSG.ERRO))
+        window.location.reload();
     }
 
     const handleInstituicao = (e) => {
@@ -102,11 +105,108 @@ export default function Pessoa() {
         } else if(name === 'email') {
             setObjeto({...objeto, [name]: value.toLowerCase()});
         } else if(name === 'nmRegistroConselho' || name === 'nmCoren' || name === 'nmCrefito' || name === 'nmConter') {
-            setPsf({...psf, [name] : value});
+            setPsf({...psf, [name] : value.toUpperCase()});
         } else {
             setObjeto({...objeto, [name]: value});
         }
     }
+
+    const [ConselhoComponent, togglerConselhoVisibility] = UseVisibilityToggler(
+        <div className="col-lg-8">
+            <Input
+                type="text"
+                value={psf.nmRegistroConselho}
+                onChange={handleChange}
+                name="nmRegistroConselho"
+                placeholder="Registro"/>
+        </div>, false
+    );
+    
+    const [CorenComponent, togglerCorenVisibility] = UseVisibilityToggler(
+        <div className="col-lg-8">
+            <Input
+                type="text"
+                value={psf.nmCoren}
+                onChange={handleChange}
+                name="nmCoren"
+                placeholder="Coren"/>
+        </div>, false
+    );
+    
+    const [CrefitoComponent, togglerCrefitoVisibility] = UseVisibilityToggler(
+        <div className="col-lg-8">
+            <Input
+                type="text"
+                value={psf.nmCrefito}
+                onChange={handleChange}
+                name="nmCrefito"
+                placeholder="Crefito"/>
+        </div>, false
+    );
+    
+    const [ConterComponent, togglerConterVisibility] = UseVisibilityToggler(
+        <div className="col-lg-8">
+            <Input
+                type="text"
+                value={psf.nmConter}
+                onChange={handleChange}
+                name="nmConter"
+                placeholder="Conter"/>
+        </div>, false
+    );
+
+    const [CardComponent, togglerCardVisibility] = UseVisibilityToggler(
+        <Card titulo="Profissional de Saúde">
+            <div className="row form-group">
+                <div className="col-lg-12">
+                    <Select
+                        placeholder={"Especialidades"}
+                        funcao={handleEspecialidade}
+                        nome={"especialidades"}
+                        multiplo={true}
+                        url={"/hpm/especialidade/opcoes"}/>
+                </div>
+                <br/>
+                <br/>
+                <div className="form-check col-lg-3">
+                    <input
+                        id="conselhoCheck"
+                        type="checkbox"
+                        onClick={togglerConselhoVisibility}
+                        name="conselho"/>
+                    <label className="form-check-label" for="conselhoCheck">Registro do Conselho</label>
+                    {ConselhoComponent}
+                </div>
+                <div className="col-lg-3">
+                    <input
+                        id="corenCheck"
+                        type="checkbox"
+                        onClick={togglerCorenVisibility}
+                        name="coren"/>
+                    <label className="form-check-label" for="corenCheck">Registro do Coren</label>
+                {CorenComponent}
+                </div>
+                <div className="col-lg-3">
+                    <input
+                        id="crefitoCheck"
+                        type="checkbox"
+                        onClick={togglerCrefitoVisibility}
+                        name="crefito"/>
+                    <label className="form-check-label" for="crefitoCheck">Registro do Crefito</label>
+                {CrefitoComponent}
+                </div>
+                <div className="col-lg-3">
+                    <input
+                        id="conterCheck"
+                        type="checkbox"
+                        onClick={togglerConterVisibility}
+                        name="conter"/>
+                    <label className="form-check-label" for="conterCheck">Registro do Conter</label>
+                {ConterComponent}
+                </div>
+            </div>
+        </Card>, false
+    );
 
     return(
         <Pagina titulo="Cadastrar Pessoa">
@@ -231,61 +331,15 @@ export default function Pessoa() {
                                     url={"/hpm/sexo/opcoes"}/>
                             </div>
                             <div className="col-lg-3">
-                                <label>É Profissional da Saúde?</label>
-                                <Input type="checkbox"/>
+                                <label>É Profissional de Saúde? </label>
+                                <input
+                                    type="checkbox"
+                                    onClick={togglerCardVisibility}
+                                    name="psf"/>
                             </div>
                         </div>
                         <br/>
-                        <Card titulo="Profissional de Saúde">
-                            <div className="row form-group">
-                                <div className="col-lg-12">
-                                    <Select
-                                        placeholder={"Especialidades"}
-                                        funcao={handleEspecialidade}
-                                        nome={"especialidades"}
-                                        multiplo={true}
-                                        url={"/hpm/especialidade/opcoes"}/>
-                                </div>
-                                <br/>
-                                <br/>
-                                <div className="col-lg-3">
-                                    <Input
-                                        type="text"
-                                        value={psf.nmRegistroConselho}
-                                        onChange={handleChange}
-                                        name="nmRegistroConselho"
-                                        label="Registro do Conselho"
-                                        placeholder="Registro"/>
-                                </div>
-                                <div className="col-lg-3">
-                                    <Input
-                                        type="text"
-                                        value={psf.nmCoren}
-                                        onChange={handleChange}
-                                        name="nmCoren"
-                                        label="Registro do Coren"
-                                        placeholder="Coren"/>
-                                </div>
-                                <div className="col-lg-3">
-                                    <Input
-                                        type="text"
-                                        value={psf.nmCrefito}
-                                        onChange={handleChange}
-                                        name="nmCrefito"
-                                        label="Registro do Crefito"
-                                        placeholder="Crefito"/>
-                                </div>
-                                <div className="col-lg-3">
-                                    <Input
-                                        type="text"
-                                        value={psf.nmConter}
-                                        onChange={handleChange}
-                                        name="nmConter"
-                                        label="Registro do Conter"
-                                        placeholder="Conter"/>
-                                </div>
-                            </div>
-                        </Card>
+                        {CardComponent}
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
                             <BotaoSalvar onClick={enviar} />
                         </div>
