@@ -29,11 +29,17 @@ export const acoes = [
     "icone": "far fa-plus-square",
     "acoes": [
         {
+          "nome": "Consulta",
+          "descricao": "Consulta",
+          "url": "consulta",
+          "icone": "fas fa-clinic-medical"
+        },
+        {
             "nome": "Consultorio Bloco",
             "descricao": "Criando Consultorio Bloco ",
             "url": "consultorioBloco",
             "icone": "fas fa-clinic-medical"
-         },
+        },
         {
             "nome": "Especialidade",
             "descricao": "Página Principal",
