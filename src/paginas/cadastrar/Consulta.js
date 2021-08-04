@@ -4,10 +4,11 @@ import {
     Card,
     Pagina,
     Select,
-    Autocompletar
+    Autocompletar, Tabela
 } from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
+import * as $ from "jquery";
 
 
 export default function Consulta() {
@@ -21,7 +22,8 @@ export default function Consulta() {
             exibePessoaPorNome : false,
             exibePessoaPorCpf : false,
             exibePesquisaPaciente: 0,
-            consultoriosBloco: []
+            consultoriosBloco: [],
+            pessoas:[]
 
         }
     )
@@ -61,7 +63,6 @@ export default function Consulta() {
     }
 
     let listarConsultorioBlocoPorProfissionalSaude = () => {
-        console.log(objeto.idProfissional)
         setObjeto({...objeto, consultoriosBloco: []})
         xfetch('/hpm/consultorioBloco/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
@@ -79,19 +80,20 @@ export default function Consulta() {
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)
                     }
+                    window.location.reload();
                 }
             )
     }
 
     let opcaoNome = objeto.exibePesquisaPaciente == 1 ?
-        <div className="col-lg-6">
+        <div className="col-lg-8">
             <label>Nome do Paciente</label>
             <Autocompletar id="nome" name="idPessoa" url="/hpm/pessoa/porNome" retorno={selecionarPessoaNome}/>
         </div>
         :
         ''
     let opcaoCpf = objeto.exibePesquisaPaciente == 2 ?
-        <div className="col-lg-6">
+        <div className="col-lg-8">
             <label>CPF do Paciente</label>
             <Autocompletar id="cpf" name="idPessoa" url="/hpm/pessoa/porCpf" retorno={selecionarPessoaNome}/>
         </div>
@@ -147,8 +149,8 @@ export default function Consulta() {
 
                         <br/>
                         <div className="row">
-                            <div className="col-lg-3">
-                                <label>Selecionar Paciente</label>
+                            <div className="col-lg-4">
+                                <label>Paciente</label>
                                 <br/>
                                 <select
                                     className = "form-control"
@@ -158,17 +160,19 @@ export default function Consulta() {
                                     <option value="2">Por CPF</option>
                                 </select>
                             </div>
-                            <div className="col-lg-6">
+                            <div className="col-lg-8">
                                 {opcaoNome}
                                 {opcaoCpf}
                             </div>
-                        </div>
-                        <br/>
 
-                        <div className="col-lg-15 text-lg-right mt-4 mb-4">
-                            <BotaoSalvar onClick={enviar} />
+                            <div className="col-lg-12 text-lg-right mt-4 mb-4">
+                                <BotaoSalvar onClick={enviar} />
+                            </div>
                         </div>
                     </Card>
+                    {/*<Card titulo="Consultas cadastradas">*/}
+                    {/*    /!*<Tabela dados={} colunas={}*!/*/}
+                    {/*</Card>*/}
                 </div>
             </div>
         </Pagina>
