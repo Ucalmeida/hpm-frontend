@@ -332,10 +332,14 @@ export default function Pessoa() {
                             </div>
                             <div className="col-lg-3">
                                 <label>É Profissional de Saúde? </label>
-                                <input
-                                    type="checkbox"
-                                    onClick={togglerCardVisibility}
-                                    name="psf"/>
+                                {/*<input*/}
+                                {/*    type="checkbox"*/}
+                                {/*    onClick={togglerCardVisibility}*/}
+                                {/*    name="psf"/>*/}
+                                <select className={"form-control col-lg-12"} name="psf" onChange={togglerCardVisibility}>
+                                    <option>Não</option>
+                                    <option>Sim</option>
+                                </select>
                             </div>
                         </div>
                         <br/>
