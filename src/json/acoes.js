@@ -2,50 +2,65 @@ import React from "react";
 
 export const acoes = [
   {
+    "nome": "Principal",
+    "descricao": "Página Principal",
+    "url": "principal",
+    "icone": "fas fa-home"
+  },
+  {
     "nome": "Alterar Senha",
     "descricao": "Página Principal",
     "url": "alterarSenha",
-    "icone": "fas fa-unlock-alt",
-    "depencias": []
-  },
-  {
-    "nome": "Agenda de Consultas",
-    "descricao": "Componente Calendário",
-    "url": "agendaDeConsultas",
-    "icone": "far fa-calendar-alt",
-    "depencias": []
-  },
-  {
-    "nome": "Editor de Texto",
-    "descricao": "Componente Editor de textp",
-    "url": "editorTexto",
-    "icone": "fas fa-edit",
-    "depencias": []
+    "icone": "fas fa-lock"
   },
   {
     "nome": "Cadastrar",
     "descricao": "Menu de Cadastro",
     "url": "cadastrar",
-    "icone": "far fa-plus-square",
+    "icone": "fas fa-plus",
     "acoes": [
-        {
-          "nome": "Consulta",
-          "descricao": "Consulta",
-          "url": "consulta",
-          "icone": "fas fa-clinic-medical"
-        },
-        {
-            "nome": "Consultorio Bloco",
-            "descricao": "Criando Consultorio Bloco ",
-            "url": "consultorioBloco",
-            "icone": "fas fa-clinic-medical"
-        },
-        {
-            "nome": "Especialidade",
-            "descricao": "Página Principal",
-            "url": "especialidade",
-            "icone": "fas fa-user-nurse"
-        },
+      {
+        "nome": "Perfil",
+        "descricao": "Criando perfil",
+        "url": "perfil",
+        "icone": "fas fa-user"
+      },
+      {
+        "nome": "Piso",
+        "descricao": "Criando piso",
+        "url": "piso",
+        "icone": "fas fa-plus"
+      },
+      {
+        "nome": "Objeto",
+        "descricao": "Página Principal",
+        "url": "objeto",
+        "icone": "fas fa-cubes"
+      },
+      {
+        "nome": "Sangue",
+        "descricao": "Página Principal",
+        "url": "sangue",
+        "icone": "fas fa-burn"
+      },
+      {
+        "nome": "Pessoa",
+        "descricao": "Página Principal",
+        "url": "pessoa",
+        "icone": "fas fa-user-plus"
+      },
+      {
+        "nome": "Prédio",
+        "descricao": "Página Principal",
+        "url": "predio",
+        "icone": "fas fa-clinic-medical"
+      },
+      {
+        "nome": "Especialidade",
+        "descricao": "Página Principal",
+        "url": "especialidade",
+        "icone": "fas fa-user-nurse"
+      },
       {
         "nome": "Exame",
         "descricao": "Criando Exame",

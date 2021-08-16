@@ -3,7 +3,7 @@ import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-export default function ConsultorioBloco(){
+function CadastrarConsultorioBloco(){
     const [objeto, setObjeto] = useState(
         {
             dataInicio : null,
@@ -60,6 +60,7 @@ export default function ConsultorioBloco(){
     }
 
     let enviar = (e) => {
+
         xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
@@ -147,3 +148,4 @@ export default function ConsultorioBloco(){
         </Pagina>
     )
 }
+export {CadastrarConsultorioBloco};

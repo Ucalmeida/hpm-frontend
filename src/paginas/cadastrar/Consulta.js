@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     BotaoSalvar,
     Card,
@@ -9,6 +9,7 @@ import {
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 import * as $ from "jquery";
+import {number} from "prop-types";
 
 
 export default function Consulta() {
@@ -23,10 +24,12 @@ export default function Consulta() {
             exibePessoaPorCpf : false,
             exibePesquisaPaciente: 0,
             consultoriosBloco: [],
-            pessoas:[]
-
         }
     )
+
+    const [lista, setLista] = useState({
+            consultas: []
+    })
 
     let selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = e.value
@@ -36,7 +39,7 @@ export default function Consulta() {
     let selecionarProfissionalSaude = (e) => {
         e.preventDefault()
         objeto.idProfissional = e.target.value
-        listarConsultorioBlocoPorProfissionalSaude()
+        listarConsultorioBlocoPorEspecialidadeProfissionalSaude()
     }
 
     let selecionarConsultorioBloco = (e) => {
@@ -44,8 +47,8 @@ export default function Consulta() {
         objeto.idConsultorioBloco = e.target.value
     }
 
-   function selecionarPessoaNome(idPessoa) {
-       objeto.idPessoa = idPessoa
+   function selecionarPessoa(idPessoa) {
+    setObjeto({...objeto, idPessoa: idPessoa})
     }
 
     let selecionarPaciente = (e) => {
@@ -62,9 +65,9 @@ export default function Consulta() {
             )
     }
 
-    let listarConsultorioBlocoPorProfissionalSaude = () => {
+    let listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
         setObjeto({...objeto, consultoriosBloco: []})
-        xfetch('/hpm/consultorioBloco/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
+        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
                 setObjeto({...objeto, consultoriosBloco: json.resultado})
@@ -72,15 +75,23 @@ export default function Consulta() {
             )
     }
 
+    useEffect(() => {
+        xfetch('/hpm/consulta/opcoes', {}, HttpVerbo.GET)
+            .then(response => response.json())
+            .then(lista => setLista({...lista, consultas: lista.resultado}))
+    },[])
+
+
     let enviar = (e) => {
         xfetch('/hpm/consulta/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
-                        ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO)
+                        ExibirMensagem('Consulta Cadastrada Com Sucesso!', MSG.SUCESSO)
+                        window.location.reload();
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)
                     }
-                    window.location.reload();
+
                 }
             )
     }
@@ -88,17 +99,45 @@ export default function Consulta() {
     let opcaoNome = objeto.exibePesquisaPaciente == 1 ?
         <div className="col-lg-8">
             <label>Nome do Paciente</label>
-            <Autocompletar id="nome" name="idPessoa" url="/hpm/pessoa/porNome" retorno={selecionarPessoaNome}/>
+            <Autocompletar id="nome" name="idPessoa" url="/hpm/pessoa/porNome" retorno={selecionarPessoa}/>
         </div>
         :
         ''
     let opcaoCpf = objeto.exibePesquisaPaciente == 2 ?
         <div className="col-lg-8">
             <label>CPF do Paciente</label>
-            <Autocompletar id="cpf" name="idPessoa" url="/hpm/pessoa/porCpf" retorno={selecionarPessoaNome}/>
+            <Autocompletar id="cpf" name="idPessoa" url="/hpm/pessoa/porCpf" retorno={selecionarPessoa}/>
         </div>
         :
         ''
+    const colunas = [
+        {text: "Data - Hora"},
+        { text: "Piso" },
+        {text: "Sala"},
+       { text: "CPF do Paciente" },
+        {text: "Paciente"},
+        {text: "Especialidade"},
+        { text: "Médico" },
+
+    ]
+
+    const dados = () => {
+        return(
+        lista.consultas.map((consulta) => {
+            return({
+                        'id': consulta.valor,
+                        'data__hora': consulta.dtHora,
+                        'piso': consulta.piso,
+                        'sala': consulta.sala,
+                        'cpf_do_paciente': consulta.cpfPaciente,
+                        'paciente': consulta.nmPaciente,
+                        'especialidade': consulta.nmEspecialidade,
+                        'medico': consulta.nmMedico
+                    })
+                })
+            )
+    }
+
 
     let prof = objeto.profissionais
     let consultaBloco = objeto.consultoriosBloco
@@ -126,6 +165,7 @@ export default function Consulta() {
                                     name="idProfissional"
                                     value={objeto.idProfissional}
                                     onChange={selecionarProfissionalSaude}>
+                                    <option hidden>Selecione...</option>
                                     {prof.map((v, k) => {
                                         return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
                                     })}
@@ -140,6 +180,7 @@ export default function Consulta() {
                                     name="idConsultorioBloco"
                                     value={objeto.idConsultorioBloco}
                                     onChange={selecionarConsultorioBloco}>
+                                    <option hidden>Selecione...</option>
                                     {consultaBloco.map((v, k) => {
                                         return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
                                     })}
@@ -155,7 +196,7 @@ export default function Consulta() {
                                 <select
                                     className = "form-control"
                                     onChange= {selecionarPaciente}>
-                                    <option value="0" selected>Selecione</option>
+                                    <option value="0" selected>Selecione...</option>
                                     <option value="1">Por Nome</option>
                                     <option value="2">Por CPF</option>
                                 </select>
@@ -170,9 +211,9 @@ export default function Consulta() {
                             </div>
                         </div>
                     </Card>
-                    {/*<Card titulo="Consultas cadastradas">*/}
-                    {/*    /!*<Tabela dados={} colunas={}*!/*/}
-                    {/*</Card>*/}
+                    <Card titulo="Consultas cadastradas">
+                        <Tabela colunas={colunas} dados={dados()} />
+                    </Card>
                 </div>
             </div>
         </Pagina>
