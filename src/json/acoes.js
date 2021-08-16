@@ -2,57 +2,42 @@ import React from "react";
 
 export const acoes = [
   {
-    "nome": "Principal",
-    "descricao": "Página Principal",
-    "url": "principal",
-    "icone": "fas fa-home"
-  },
-  {
     "nome": "Alterar Senha",
     "descricao": "Página Principal",
     "url": "alterarSenha",
-    "icone": "fas fa-lock"
+    "icone": "fas fa-unlock-alt",
+    "depencias": []
+  },
+  {
+    "nome": "Agenda de Consultas",
+    "descricao": "Componente Calendário",
+    "url": "agendaDeConsultas",
+    "icone": "far fa-calendar-alt",
+    "depencias": []
+  },
+  {
+    "nome": "Editor de Texto",
+    "descricao": "Componente Editor de textp",
+    "url": "editorTexto",
+    "icone": "fas fa-edit",
+    "depencias": []
   },
   {
     "nome": "Cadastrar",
     "descricao": "Menu de Cadastro",
     "url": "cadastrar",
-    "icone": "fas fa-plus",
+    "icone": "far fa-plus-square",
     "acoes": [
       {
-        "nome": "Perfil",
-        "descricao": "Criando perfil",
-        "url": "perfil",
-        "icone": "fas fa-user"
+        "nome": "Consulta",
+        "descricao": "Consulta",
+        "url": "consulta",
+        "icone": "fas fa-clinic-medical"
       },
       {
-        "nome": "Piso",
-        "descricao": "Criando piso",
-        "url": "piso",
-        "icone": "fas fa-plus"
-      },
-      {
-        "nome": "Objeto",
-        "descricao": "Página Principal",
-        "url": "objeto",
-        "icone": "fas fa-cubes"
-      },
-      {
-        "nome": "Sangue",
-        "descricao": "Página Principal",
-        "url": "sangue",
-        "icone": "fas fa-burn"
-      },
-      {
-        "nome": "Pessoa",
-        "descricao": "Página Principal",
-        "url": "pessoa",
-        "icone": "fas fa-user-plus"
-      },
-      {
-        "nome": "Prédio",
-        "descricao": "Página Principal",
-        "url": "predio",
+        "nome": "Consultorio Bloco",
+        "descricao": "Criando Consultorio Bloco ",
+        "url": "consultorioBloco",
         "icone": "fas fa-clinic-medical"
       },
       {
@@ -169,7 +154,7 @@ export const acoes = [
         "icone": "fas fa-people-arrows"
       },
       {
-      "nome": "Setor Função",
+        "nome": "Setor Função",
         "descricao": "Página Principal",
         "url": "setorFuncao",
         "icone": "fas fa-users-cog"
