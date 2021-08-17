@@ -16,6 +16,20 @@ export const acoes = [
     "depencias": []
   },
   {
+    "nome": "Agendar",
+    "descricao": "Menu de Agendamento",
+    "url": "agendar",
+    "icone": "far fa-calendar-alt",
+    "acoes": [
+      {
+        "nome": "Consulta",
+        "descricao": "Consulta",
+        "url": "consulta",
+        "icone": "fas fa-clinic-medical"
+      }
+    ]
+  },
+  {
     "nome": "Editor de Texto",
     "descricao": "Componente Editor de textp",
     "url": "editorTexto",

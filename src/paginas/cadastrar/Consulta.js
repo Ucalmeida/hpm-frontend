@@ -211,7 +211,7 @@ export default function Consulta() {
                             </div>
                         </div>
                     </Card>
-                    <Card titulo="Consultas cadastradas">
+                    <Card titulo="Consultas cadastradas para hoje">
                         <Tabela colunas={colunas} dados={dados()} />
                     </Card>
                 </div>

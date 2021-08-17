@@ -34,7 +34,7 @@ export default function Consulta() {
     let selecionarProfissionalSaude = (e) => {
         e.preventDefault()
         objeto.idProfissional = e.target.value
-        listarConsultorioBlocoPorProfissionalSaude()
+       listarConsultorioBlocoPorEspecialidadeProfissionalSaude()
     }
 
     let selecionarConsultorioBloco = (e) => {
@@ -43,9 +43,9 @@ export default function Consulta() {
         console.log(objeto.idConsultorioBloco)
     }
 
-    let listarConsultorioBlocoPorProfissionalSaude = () => {
+    let listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
         setObjeto({...objeto, consultoriosBloco: []})
-        xfetch('/hpm/consultorioBloco/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
+        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
                     setObjeto({...objeto, consultoriosBloco: json.resultado})
