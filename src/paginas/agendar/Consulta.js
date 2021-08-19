@@ -19,7 +19,9 @@ export default function Consulta() {
 
     let selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = e.value
-       listarProfissionalPorEspecialidade()
+        listarProfissionalPorEspecialidade()
+        // objeto.idPessoa = localStorage.getItem('id')
+
     }
 
     let listarProfissionalPorEspecialidade = () => {
@@ -40,7 +42,6 @@ export default function Consulta() {
     let selecionarConsultorioBloco = (e) => {
         e.preventDefault()
         objeto.idConsultorioBloco = e.target.value
-        console.log(objeto.idConsultorioBloco)
     }
 
     let listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
@@ -54,15 +55,15 @@ export default function Consulta() {
     }
 
     let enviar = (e) => {
-
         xfetch('/hpm/consulta/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
-                        ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO)
+                        ExibirMensagem('Consulta Agendada com Sucesso!', MSG.SUCESSO)
+                        window.location.reload();
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)
                     }
-                    window.location.reload();
+
                 }
             )
     }
