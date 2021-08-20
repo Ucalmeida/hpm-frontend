@@ -52,10 +52,6 @@ export default function Consulta() {
     setObjeto({...objeto, idPessoa: idPessoa})
     }
 
-    let selecionarPaciente = (e) => {
-        setObjeto({...objeto, exibePesquisaPaciente: e.target.value})
-    }
-
     let listarProfissionalPorEspecialidade = () => {
         setObjeto({...objeto, profissionais: []})
         xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
@@ -178,7 +174,7 @@ export default function Consulta() {
                         <br/>
                         <div className="row">
                             <div className="col-lg-8">
-                                <Autocomplete url="/hpm/pessoa/" label="Digite os Dados:" placeholder="Digite os dados aqui" onSelect={selecionarPessoa}/>
+                                <Autocomplete url="/hpm/pessoa/" label="Digite os Dados:" placeholder="Digite os dados aqui" onSelect={selecionarPessoa} />
                             </div>
 
                             <div className="col-lg-12 text-lg-right mt-4 mb-4">
