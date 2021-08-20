@@ -10,6 +10,7 @@ import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 import * as $ from "jquery";
 import {number} from "prop-types";
+import { Autocomplete } from '../../componentes/form/Autocomplete';
 
 
 export default function Consulta() {
@@ -96,20 +97,6 @@ export default function Consulta() {
             )
     }
 
-    let opcaoNome = objeto.exibePesquisaPaciente == 1 ?
-        <div className="col-lg-8">
-            <label>Nome do Paciente</label>
-            <Autocompletar id="nome" name="idPessoa" url="/hpm/pessoa/porNome" retorno={selecionarPessoa}/>
-        </div>
-        :
-        ''
-    let opcaoCpf = objeto.exibePesquisaPaciente == 2 ?
-        <div className="col-lg-8">
-            <label>CPF do Paciente</label>
-            <Autocompletar id="cpf" name="idPessoa" url="/hpm/pessoa/porCpf" retorno={selecionarPessoa}/>
-        </div>
-        :
-        ''
     const colunas = [
         {text: "Data - Hora"},
         { text: "Piso" },
@@ -190,20 +177,8 @@ export default function Consulta() {
 
                         <br/>
                         <div className="row">
-                            <div className="col-lg-4">
-                                <label>Paciente</label>
-                                <br/>
-                                <select
-                                    className = "form-control"
-                                    onChange= {selecionarPaciente}>
-                                    <option value="0" selected>Selecione...</option>
-                                    <option value="1">Por Nome</option>
-                                    <option value="2">Por CPF</option>
-                                </select>
-                            </div>
                             <div className="col-lg-8">
-                                {opcaoNome}
-                                {opcaoCpf}
+                                <Autocomplete url="/hpm/pessoa/" label="Digite os Dados:" placeholder="Digite os dados aqui" onSelect={selecionarPessoa}/>
                             </div>
 
                             <div className="col-lg-12 text-lg-right mt-4 mb-4">
