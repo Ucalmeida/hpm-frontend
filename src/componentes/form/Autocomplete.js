@@ -47,10 +47,17 @@ export const Autocomplete = (props) => {
 
         setCursor(-1);
         scrollIntoView(0);
-
-        return data.filter(pessoa => isNaN(search) ? pessoa.name.toLowerCase().includes(search.toLowerCase()) : pessoa);
-    }, [data, search]);
-
+        console.log("Tamanho", props.tamanho);
+        if(typeof search !== 'undefined' && 
+            search.length >= (typeof props.tamanho !== 'undefined' ? props.tamanho : 5)) {
+            
+                return data.filter(pessoa =>
+                    isNaN(search) ? 
+                        pessoa.name.toLowerCase().includes(search.toLowerCase()) : pessoa
+                )
+        }
+    }, [data, search, props.tamanho]);
+     
     let url = props.url;
 
     const loadPessoas = async (key) => {
