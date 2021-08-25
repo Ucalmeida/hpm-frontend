@@ -1,9 +1,7 @@
 import React, {useState} from "react";
 import {Botao, BotaoExcluir, Card, Pagina, Select, Spinner, Tabela} from "../../componentes";
 import {ExibirMensagem, FormatarDataHora, xfetch} from "../../util";
-import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
-
-const LOG = console.log
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
 export default function SubSetor() {
 
@@ -26,7 +24,6 @@ export default function SubSetor() {
     }
 
     function selecionarSetor(e) {
-        let idSetor = e.value
         objeto.idSetor = e.value
         carregarSubsetoresPorSetor();
     }
@@ -54,7 +51,6 @@ export default function SubSetor() {
             })
     }
 
-    let spinner = objeto.carregandoSubSetor ? <Spinner/> : ''
     let spinnerVincular = objeto.carregandoVincular ? <Spinner/> : ''
     let subsetores = objeto.subsetores
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function ConverterCaracteresEspeciais(texto) {
     return  texto.normalize('NFD').replace(/[^a-zA-Zs]/g, "").replace(/\s/g, "_");
 }

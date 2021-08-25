@@ -1,4 +1,3 @@
-import React, {useEffect, useState} from "react";
 import {NavLink, Link} from "react-router-dom";
 
 import logoHPM from "../../img/brasoes/brasao_hpm.png";
