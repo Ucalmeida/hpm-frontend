@@ -4,6 +4,7 @@ import {
     Card,
     Pagina,
     Select,
+    Autocomplete,
     Tabela
 } from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
@@ -170,9 +171,9 @@ export default function Consulta() {
 
                         <br/>
                         <div className="row">
-                            {/*<div className="col-lg-8">*/}
-                            {/*    <Autocomplete tamanho="6" url="/hpm/pessoa/" label="Digite os Dados:" placeholder="Digite os dados aqui" onSelect={selecionarPessoa} />*/}
-                            {/*</div>*/}
+                            <div className="col-lg-8">
+                                <Autocomplete tamanho="6" url="/hpm/pessoa/" label="Digite os Dados:" placeholder="Digite os dados aqui" onSelect={selecionarPessoa} />
+                            </div>
 
                             <div className="col-lg-12 text-lg-right mt-4 mb-4">
                                 <BotaoSalvar onClick={enviar} />
