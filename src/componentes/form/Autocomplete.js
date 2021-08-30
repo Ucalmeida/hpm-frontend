@@ -14,15 +14,6 @@ export const Autocomplete = (props) => {
     const searchContainer = useRef(null);
     const searchResultRef = useRef(null);
 
-    useEffect(() => {
-        window.addEventListener("mousedown", handleClickOutside);
-        // window.addEventListener("mousedown", handleClick);
-
-        return () => {
-            window.removeEventListener("mousedown", handleClickOutside);
-        }
-    }, []);
-
     const scrollIntoView = position => {
         searchResultRef.current.parentNode.scrollTo({
             top: position,
@@ -47,10 +38,16 @@ export const Autocomplete = (props) => {
 
         setCursor(-1);
         scrollIntoView(0);
-
-        return data.filter(pessoa => isNaN(search) ? pessoa.name.toLowerCase().includes(search.toLowerCase()) : pessoa);
-    }, [data, search]);
-
+        if(typeof search !== 'undefined' && 
+            search.length >= (typeof props.tamanho !== 'undefined' ? props.tamanho : 5)) {
+            
+                return data.filter(pessoa =>
+                    isNaN(search) ? 
+                        pessoa.name.toLowerCase().includes(search.toLowerCase()) : pessoa
+                )
+        }
+    }, [data, search, props.tamanho]);
+     
     let url = props.url;
 
     const loadPessoas = async (key) => {
@@ -73,6 +70,15 @@ export const Autocomplete = (props) => {
             hideSuggestion();
         }
     }
+
+    useEffect(() => {
+        window.addEventListener("mousedown", handleClickOutside);
+        // window.addEventListener("mousedown", handleClick);
+
+        return () => {
+            window.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, []);
 
     // const handleClick = () => {
     //     if(cursor >= 0) {
@@ -143,8 +149,8 @@ export const Autocomplete = (props) => {
                         typeof suggestions === 'undefined' ? '' : suggestions.map((item, idx) => (
                             <AutoCompleteItem key={item.value} 
                             onSelectItem={() => {
-                                hideSuggestion();
                                 setSearch(item.name);
+                                hideSuggestion();
                                 props.onSelect(item.value);
                             }}
                             isHighlighted={cursor === idx ? true : false}

@@ -1,4 +1,3 @@
-import React from "react";
 import {HttpVerbo, MSG} from "./Constantes";
 import {ExibirMensagem} from "./ExibirMensagem";
 
@@ -21,7 +20,7 @@ const uuid = () => {
 const erro = (e, idTransacao) => {
     console.log(e.message)
     if (e.message === 'Could not connect to the server.') {
-        ExibirMensagem('O servidor está desconectado' + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO);
+        ExibirMensagem('O servidor está desconectado <br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO);
         return;
     }
     ExibirMensagem(e.message + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO);

@@ -1,4 +1,3 @@
-import React from 'react';
 
 export function HoraAtual() {
     return new Date().toLocaleString().split(" ")[1];

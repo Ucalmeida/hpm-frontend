@@ -1,9 +1,7 @@
 import React, {useState} from "react";
 import {Botao, Card, Pagina, Select, Spinner} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
-
-const LOG = console.log
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
 export default function SetorFuncao() {
 
