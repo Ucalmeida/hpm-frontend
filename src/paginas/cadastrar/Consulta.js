@@ -43,9 +43,9 @@ export default function Consulta() {
         listarConsultorioBlocoPorEspecialidadeProfissionalSaude()
     }
 
-    let selecionarConsultorioBloco = (e) => {
+    const selecionarConsultorioBloco = (e) => {
         e.preventDefault()
-        objeto.idConsultorioBloco = e.target.value
+        setObjeto({...objeto, idConsultorioBloco: e.target.value})
     }
 
    function selecionarPessoa(idPessoa) {
@@ -174,7 +174,7 @@ export default function Consulta() {
                         <br/>
                         <div className="row">
                             <div className="col-lg-8">
-                                <Autocomplete url="/hpm/pessoa/" label="Digite os Dados:" placeholder="Digite os dados aqui" onSelect={selecionarPessoa} />
+                                <Autocomplete url="/hpm/pessoa/" label="Nome ou CPF do paciente:" placeholder="Nome ou CPF do paciente" onSelect={selecionarPessoa} />
                             </div>
 
                             <div className="col-lg-12 text-lg-right mt-4 mb-4">
