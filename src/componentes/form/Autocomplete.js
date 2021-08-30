@@ -38,7 +38,6 @@ export const Autocomplete = (props) => {
 
         setCursor(-1);
         scrollIntoView(0);
-        console.log("Tamanho", props.tamanho);
         if(typeof search !== 'undefined' && 
             search.length >= (typeof props.tamanho !== 'undefined' ? props.tamanho : 5)) {
             
