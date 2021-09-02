@@ -42,7 +42,7 @@ export default function Consulta() {
 
     const selecionarConsultorioBloco = (e) => {
         e.preventDefault()
-        objeto.idConsultorioBloco = e.target.value
+        setObjeto({...objeto, idConsultorioBloco: e.target.value, idPessoa: 0})
     }
 
     let listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
@@ -70,7 +70,6 @@ export default function Consulta() {
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)
                     }
-
                 }
             )
     }
@@ -92,7 +91,7 @@ export default function Consulta() {
                                 />
                             </div>
 
-                                <input type="hidden" name="idPessoa" />
+                                <input type="hidden" name="idPessoa"/>
 
                             <div className="col-lg-4">
                                 <label>Médico</label>
