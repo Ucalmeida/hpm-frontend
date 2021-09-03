@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import ReactSelect, { components } from "react-select"
-import {xfetch} from "../../util/Util";
+import {xfetch} from "../../util";
 import {HttpVerbo} from "../../util/Constantes";
 
 function Select(props) {
@@ -33,6 +33,7 @@ function Select(props) {
         const place = props.children === "Select..." ? 'Selecione...' : props.children;
         return <components.Placeholder {...props}>{place}</components.Placeholder>;
     };
+
 
     return ( <ReactSelect
             options={options}

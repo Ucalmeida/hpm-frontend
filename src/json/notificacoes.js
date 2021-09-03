@@ -1,5 +1,3 @@
-import React from "react";
-
 export const notificacoes = [
     {
         "titulo": "Consulta Remarcada",

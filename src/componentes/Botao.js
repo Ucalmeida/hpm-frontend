@@ -50,6 +50,9 @@ const protoTipo = {
     tamanho: PropTypes.string
 }
 
+function SetarTexto(texto, textoProps) {
+    if (!textoProps) return texto
+}
 export function BotaoAlterar (props) {
     return(<Botao icone={ICONE.ALTERAR} cor={BOTAO.COR.ALERTA} tamanho={props.tamanho} onClick={props.onClick} {...props}>Alterar</Botao>);
 }
@@ -76,6 +79,6 @@ export function BotaoExcluir (props) {
 BotaoExcluir.propTypes = protoTipo
 
 export function BotaoPesquisar (props) {
-    return(<Botao icone={ICONE.PESQUISAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Pesquisar</Botao>);
+    return(<Botao icone={ICONE.PESQUISAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>{SetarTexto('Pesquisar',props.children)}</Botao>);
 }
 BotaoPesquisar.propTypes = protoTipo
