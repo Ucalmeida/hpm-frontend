@@ -54,8 +54,14 @@ export const acoes = [
             ""
       },
       {
+        "nome": "Dependente",
+        "descricao": "Cadastro de dependente",
+        "url": "dependente",
+        "icone": "fas fa-clinic-medical"
+      },
+      {
         "nome": "Especialidade",
-        "descricao": "Página Principal",
+        "descricao": "Criando Especialidade",
         "url": "especialidade",
         "icone": "fas fa-user-nurse"
       },
