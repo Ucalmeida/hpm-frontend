@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, {useEffect, useRef, useState, useMemo} from 'react'
 import {xfetch} from "../../util";
 import {HttpVerbo} from "../../util/Constantes";
@@ -40,7 +41,6 @@ export const Autocomplete = (props) => {
         scrollIntoView(0);
         if(typeof search !== 'undefined' && 
             search.length >= (typeof props.tamanho !== 'undefined' ? props.tamanho : 5)) {
-            
                 return data.filter(pessoa =>
                     isNaN(search) ? 
                         pessoa.name.toLowerCase().includes(search.toLowerCase()) : pessoa
@@ -52,8 +52,6 @@ export const Autocomplete = (props) => {
 
     const loadPessoas = async (key) => {
         let complementoUrl = !isNaN(+key) ? 'porCpf/' : 'porNome/';
-
-        console.warn(complementoUrl);
 
         let result = await xfetch(url + complementoUrl + key, {}, HttpVerbo.GET);
         result = await result.json();
@@ -73,36 +71,35 @@ export const Autocomplete = (props) => {
 
     useEffect(() => {
         window.addEventListener("mousedown", handleClickOutside);
-        // window.addEventListener("mousedown", handleClick);
+        window.addEventListener("mousedown", handleClick);
 
         return () => {
             window.removeEventListener("mousedown", handleClickOutside);
         }
     }, []);
 
-    // const handleClick = () => {
-    //     if(cursor >= 0) {
-    //         setCursor(c => (c > 0 ? c - 1 : 0));
-    //         props.onSelect(suggestions[cursor].value);
-    //     } else {
-    //         isVisible ?
-    //         setCursor(c => (tamanhoSuggestions(c)))
-    //         : showSuggestion();         
-    //         if(typeof suggestions !== 'undefined') {
-    //             props.onSelect(suggestions[cursor].value);
-    //         }
-    //     }
-    // }
-    // console.log("Outro Cursor", cursor);
-
-    const showSuggestion = () => setVisibility(true);
-    const hideSuggestion = () => setVisibility(false);
-
     const tamanhoSuggestions = (c) => {
         if(typeof suggestions !== 'undefined') {
             return (c < suggestions.length - 1 ? c + 1 : c)
         }
     }
+
+    const handleClick = () => {
+        if(cursor >= 0) {
+            setCursor(c => (c > 0 ? c - 1 : 0));
+            props.onSelect(suggestions[cursor].value);
+        } else {
+            isVisible ?
+            setCursor(c => (tamanhoSuggestions(c)))
+            : showSuggestion();
+            if(typeof suggestions !== 'undefined') {
+                props.onSelect(suggestions[cursor].value);
+            }
+        }
+    }
+
+    const showSuggestion = () => setVisibility(true);
+    const hideSuggestion = () => setVisibility(false);
 
     const keyboardNavigation = (e) => {
         if(e.key === 'ArrowDown') {
@@ -161,4 +158,12 @@ export const Autocomplete = (props) => {
             </div>
         </div>
     )
+}
+
+Autocomplete.propTypes = {
+  label: PropTypes.string,
+  onSelect: PropTypes.func,
+  placeholder: PropTypes.string,
+  tamanho: PropTypes.number,
+  url: PropTypes.string
 }
