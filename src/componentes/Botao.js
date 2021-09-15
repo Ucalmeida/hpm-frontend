@@ -50,32 +50,37 @@ const protoTipo = {
     tamanho: PropTypes.string
 }
 
+function SetarTexto(texto, textoProps) {
+    console.log(texto)
+    console.log(textoProps)
+    return (!textoProps ? texto : textoProps)
+}
 export function BotaoAlterar (props) {
-    return(<Botao icone={ICONE.ALTERAR} cor={BOTAO.COR.ALERTA} tamanho={props.tamanho} onClick={props.onClick} {...props}>Alterar</Botao>);
+    return(<Botao icone={ICONE.ALTERAR} cor={BOTAO.COR.ALERTA} tamanho={props.tamanho} onClick={props.onClick} {...props}>{SetarTexto('Alterar',props.children)}</Botao>);
 }
 BotaoAlterar.propTypes = protoTipo;
 
 export function BotaoEnviar (props) {
-    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Enviar</Botao>);
+    return(<Botao icone={ICONE.ENVIAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>{SetarTexto('Enviar',props.children)}</Botao>);
 }
 BotaoEnviar.propTypes = protoTipo
 
 export function BotaoImprimir (props) {
-    return(<Botao icone={ICONE.IMPRIMIR} cor={BOTAO.COR.SECUNDARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Imprimir</Botao>);
+    return(<Botao icone={ICONE.IMPRIMIR} cor={BOTAO.COR.SECUNDARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>{SetarTexto('Imprimir',props.children)}</Botao>);
 }
 BotaoImprimir.propTypes = protoTipo
 
 export function BotaoSalvar (props) {
-    return(<Botao icone={ICONE.SALVAR} cor={BOTAO.COR.SUCESSO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Salvar</Botao>);
+    return(<Botao icone={ICONE.SALVAR} cor={BOTAO.COR.SUCESSO} tamanho={props.tamanho} onClick={props.onClick} {...props}>{SetarTexto('Salvar',props.children)}</Botao>);
 }
 BotaoSalvar.propTypes = protoTipo
 
 export function BotaoExcluir (props) {
-    return(<Botao icone={ICONE.EXCLUIR} cor={BOTAO.COR.PERIGO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Excluir</Botao>);
+    return(<Botao icone={ICONE.EXCLUIR} cor={BOTAO.COR.PERIGO} tamanho={props.tamanho} onClick={props.onClick} {...props}>{SetarTexto('Excluir',props.children)}</Botao>);
 }
 BotaoExcluir.propTypes = protoTipo
 
 export function BotaoPesquisar (props) {
-    return(<Botao icone={ICONE.PESQUISAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>Pesquisar</Botao>);
+    return(<Botao icone={ICONE.PESQUISAR} cor={BOTAO.COR.PRIMARIO} tamanho={props.tamanho} onClick={props.onClick} {...props}>{SetarTexto('Pesquisar',props.children)}</Botao>);
 }
 BotaoPesquisar.propTypes = protoTipo

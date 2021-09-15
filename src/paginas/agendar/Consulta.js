@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Botao, BotaoSalvar, Card, Pagina, Select} from "../../componentes";
+import React, {useEffect, useState} from "react";
+import Input, {Botao, BotaoSalvar, Card, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
 import Pessoa from "../cadastrar/Pessoa";
@@ -13,7 +13,8 @@ export default function Consulta() {
             idProfissional: null,
             idEspecialidade: null,
             profissionais: [],
-            consultoriosBloco: []
+            consultoriosBloco: [],
+            pessoas:[]
         }
     )
 
@@ -39,9 +40,9 @@ export default function Consulta() {
        listarConsultorioBlocoPorEspecialidadeProfissionalSaude()
     }
 
-    let selecionarConsultorioBloco = (e) => {
+    const selecionarConsultorioBloco = (e) => {
         e.preventDefault()
-        objeto.idConsultorioBloco = e.target.value
+        setObjeto({...objeto, idConsultorioBloco: e.target.value, idPessoa: 0})
     }
 
     let listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
@@ -54,8 +55,14 @@ export default function Consulta() {
             )
     }
 
+    useEffect(() => {
+        xfetch('/hpm/pessoa/opcoes', {}, HttpVerbo.GET)
+            .then(response => response.json())
+            .then(pessoas => setObjeto({...objeto, pessoas: pessoas.resultado}))
+    },[])
+
     let enviar = (e) => {
-        xfetch('/hpm/consulta/cadastrar', objeto, HttpVerbo.POST)
+        xfetch('/hpm/consulta/cadastrarComPessoaLogada', objeto, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
                         ExibirMensagem('Consulta Agendada com Sucesso!', MSG.SUCESSO)
@@ -63,7 +70,6 @@ export default function Consulta() {
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)
                     }
-
                 }
             )
     }
@@ -85,6 +91,8 @@ export default function Consulta() {
                                 />
                             </div>
 
+                                <input type="hidden" name="idPessoa"/>
+
                             <div className="col-lg-4">
                                 <label>Médico</label>
                                 <br/>
@@ -93,6 +101,7 @@ export default function Consulta() {
                                     name="idProfissional"
                                     value={objeto.idProfissional}
                                     onChange={selecionarProfissionalSaude}>
+                                    <option hidden>Selecione...</option>
                                     {prof.map((v, k) => {
                                         return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
                                     })}
@@ -107,6 +116,7 @@ export default function Consulta() {
                                     name="idConsultorioBloco"
                                     value={objeto.idConsultorioBloco}
                                     onChange={selecionarConsultorioBloco}>
+                                    <option hidden>Selecione...</option>
                                     {consultaBloco.map((v, k) => {
                                         return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
                                     })}

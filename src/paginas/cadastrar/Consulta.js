@@ -43,7 +43,7 @@ export default function Consulta() {
 
     let selecionarConsultorioBloco = (e) => {
         e.preventDefault()
-        objeto.idConsultorioBloco = e.target.value
+        setObjeto({...objeto, idConsultorioBloco: e.target.value})
     }
 
    function selecionarPessoa(idPessoa) {

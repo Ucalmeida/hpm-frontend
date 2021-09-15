@@ -1,5 +1,3 @@
-import React from "react";
-
 export const acoes = [
   {
     "nome": "Alterar Senha",
@@ -25,13 +23,13 @@ export const acoes = [
         "nome": "Consulta",
         "descricao": "Consulta",
         "url": "consulta",
-        "icone": "fas fa-clinic-medical"
+        "icone": "fas fa-stethoscope"
       }
     ]
   },
   {
     "nome": "Editor de Texto",
-    "descricao": "Componente Editor de textp",
+    "descricao": "Componente Editor de texto",
     "url": "editorTexto",
     "icone": "fas fa-edit",
     "depencias": []
@@ -46,17 +44,24 @@ export const acoes = [
         "nome": "Consulta",
         "descricao": "Consulta",
         "url": "consulta",
-        "icone": "fas fa-clinic-medical"
+        "icone": "fas fa-stethoscope"
       },
       {
         "nome": "Consultorio Bloco",
         "descricao": "Criando Consultorio Bloco ",
         "url": "consultorioBloco",
+        "icone": "fas fa-hospital-alt" +
+            ""
+      },
+      {
+        "nome": "Dependente",
+        "descricao": "Cadastro de dependente",
+        "url": "dependente",
         "icone": "fas fa-clinic-medical"
       },
       {
         "nome": "Especialidade",
-        "descricao": "Página Principal",
+        "descricao": "Criando Especialidade",
         "url": "especialidade",
         "icone": "fas fa-user-nurse"
       },
