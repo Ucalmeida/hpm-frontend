@@ -70,8 +70,8 @@ export const Autocomplete = (props) => {
     }
 
     useEffect(() => {
-        window.addEventListener("mousedown", handleClickOutside );
-        window.addEventListener("mousedown", handleClick );
+        window.addEventListener("mousedown", handleClickOutside);
+        window.addEventListener("mousedown", handleClick);
 
         return () => {
             window.removeEventListener("mousedown", handleClickOutside);
