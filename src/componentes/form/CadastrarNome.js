@@ -58,7 +58,7 @@ function CadastrarNome({label, labelListagem, url, urlListagem}) {
     return (
         <Pagina titulo={"Cadastrar " + label}>
             <div className="row animated--fade-in">
-                <div className="col-lg-4">
+                <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         {spinnerSalvar}
                         <Input
@@ -73,7 +73,7 @@ function CadastrarNome({label, labelListagem, url, urlListagem}) {
                         </div>
                     </Card>
                 </div>
-                <div className="col-lg-8">
+                <div className="col-lg-12">
                     <Card titulo={labelListagem}>
                         {spiner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>

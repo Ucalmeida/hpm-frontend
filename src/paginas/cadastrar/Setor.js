@@ -60,7 +60,7 @@ export default function Setor() {
     return (
         <Pagina titulo="Cadastrar Setor">
             <div className="row animated--fade-in">
-                <div className="col-lg-4">
+                <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         {spinnerSalvar}
                         <Input
@@ -75,7 +75,7 @@ export default function Setor() {
                         </div>
                     </Card>
                 </div>
-                <div className="col-lg-8">
+                <div className="col-lg-12">
                     <Card titulo="Setores cadastrados">
                         {spiner}
                         <div className={"list-unstyled"} style={{columns: 3}}>

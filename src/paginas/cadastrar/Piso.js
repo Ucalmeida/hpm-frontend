@@ -59,7 +59,7 @@ export default function Piso(){
     return(
         <Pagina titulo = "Cadastrar Piso">
             <div className="row animated--fade-in">
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         {spinnerCadastrar}
                         <div className="row">
@@ -85,7 +85,7 @@ export default function Piso(){
                         </div>
                     </Card>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Pisos cadastrados no prédio selecionado">
                         {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>

@@ -64,7 +64,7 @@ export default function Medicamento() {
 
             <div className="row animated--fade-in">
 
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Cadastrar">
 
                         <div className="col-lg-12">
@@ -104,7 +104,7 @@ export default function Medicamento() {
                     </Card>
                 </div>
 
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Medicamentos cadastrados">
                         {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>

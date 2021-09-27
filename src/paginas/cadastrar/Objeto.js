@@ -58,7 +58,7 @@ export default class Objeto extends React.Component {
         return (
             <Pagina titulo= "Cadastrar Objeto">
                 <div className="row animated--fade-in">
-                    <div className="col-lg-4">
+                    <div className="col-lg-12">
                         <Card titulo="Cadastrar">
                             <Input
                                 type="text"
@@ -73,7 +73,7 @@ export default class Objeto extends React.Component {
                             </div>
                         </Card>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-12">
                         <Card titulo="Objetos cadastrados">
                             {spinner}
                             <ul className={"list-unstyled"} style={{columns: 3}}>

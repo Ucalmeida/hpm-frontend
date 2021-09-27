@@ -61,7 +61,7 @@ export default function Exame() {
     return(
         <Pagina titulo="Cadastrar Exame">
             <div className="row animated--fade-in">
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className="col-lg-12">
                             {spinnerCadastrar}
@@ -96,7 +96,7 @@ export default function Exame() {
 
                     </Card>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Exames cadastrados">
                         {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>

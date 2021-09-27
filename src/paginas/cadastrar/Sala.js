@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../componentes";
+import {BotaoSalvar, Card, Icone, Input, Pagina, Select, Spinner} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {HttpVerbo, ICONE, MSG, TEXTO} from "../../util/Constantes";
 
 export default function Sala() {
     const [objeto , setObjeto] = useState(
@@ -51,13 +51,19 @@ export default function Sala() {
             )
     }
 
+    function inativar(e) {
+        const id = e.target.id
+        // TODO fazer a chamada para devolver
+    }
+
    let spinner = objeto.carregandoSalas ? <Spinner/> : ''
    let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
-    let salas = objeto.salas;
+   let salas = objeto.salas;
+
     return(
         <Pagina titulo = "Cadastrar Sala">
             <div className="row animated--fade-in">
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className="col-lg-12">
                             {spinnerCadastrar}
@@ -85,12 +91,15 @@ export default function Sala() {
                         </div>
                     </Card>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Salas cadastradas no piso selecionado">
                         {spinner}
                         <ul className={"list-unstyled"} style={{columns: 3}}>
                             {salas.map((v, k) => {
-                                return <li className="flex-fill" key={k}> {v.nome}</li>
+                                return <li className="flex-fill" key={k}>
+                                    {v.nome}
+                                    <Icone id={v.id} onClick={inativar} icone={ICONE.EXCLUIR} cor={TEXTO.COR.PERIGO}/>
+                                </li>
                             })}
                         </ul>
                     </Card>

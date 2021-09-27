@@ -1,8 +1,8 @@
 import React from 'react'
 import {xfetch} from "../../util/Util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {HttpVerbo, ICONE, MSG, TEXTO} from "../../util/Constantes";
 import {CompararArrayObjetos, ExibirMensagem} from "../../util";
-import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
+import {BotaoSalvar, Card, Icone, Input, Pagina, Spinner} from "../../componentes";
 
 
 export default class Sangue extends React.Component {
@@ -47,16 +47,23 @@ export default class Sangue extends React.Component {
         this.carregarLista()
     }
 
+
     render() {
         const {nome, carregando, objetos} = this.state
         let spinner = '';
         if (carregando) {
             spinner = <Spinner></Spinner>
         };
+
+        function inativar(e) {
+            const id = e.target.id
+            //TODO fazer a chamada para remover
+        }
+
         return (
             <Pagina titulo="Cadastrar Sangue">
                 <div className="row animated--fade-in">
-                    <div className="col-lg-4">
+                    <div className="col-lg-12">
                         <Card titulo= "Cadastrar">
                             <Input
                                 type="text"
@@ -71,7 +78,7 @@ export default class Sangue extends React.Component {
                             </div>
                         </Card>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-12">
                         <Card titulo="Sangue cadastrados">
                             {spinner}
                             <ul className={"list-unstyled"} style={{columns: 2}}>
@@ -79,16 +86,17 @@ export default class Sangue extends React.Component {
                                 // ➕ ➖ 🅰️ 🆎 🅱️ 🅾️
                                     return (
                                         <li className={"text-lg"} key={k}>
-                                        {/*    {*/}
-                                        {/*    v.texto === "A+" ? "🅰️➕" :*/}
-                                        {/*    v.texto === "A-" ? "🅰️➖" :*/}
-                                        {/*    v.texto === "B+" ? "🅱️➕" :*/}
-                                        {/*    v.texto === "B-" ? "🅱️➖" :*/}
-                                        {/*    v.texto === "AB+" ? "🆎➕" :*/}
-                                        {/*    v.texto === "AB-" ? "🆎➖" :*/}
-                                        {/*    v.texto === "O+" ? "🅾️➕" : "🅾️➖"*/}
-                                        {/*} */}
-                                        {v.texto}
+                                            {/*    {*/}
+                                            {/*    v.texto === "A+" ? "🅰️➕" :*/}
+                                            {/*    v.texto === "A-" ? "🅰️➖" :*/}
+                                            {/*    v.texto === "B+" ? "🅱️➕" :*/}
+                                            {/*    v.texto === "B-" ? "🅱️➖" :*/}
+                                            {/*    v.texto === "AB+" ? "🆎➕" :*/}
+                                            {/*    v.texto === "AB-" ? "🆎➖" :*/}
+                                            {/*    v.texto === "O+" ? "🅾️➕" : "🅾️➖"*/}
+                                            {/*} */}
+                                            {v.texto}
+                                            <Icone id={v.id} onClick={inativar} icone={ICONE.EXCLUIR} cor={TEXTO.COR.PERIGO}/>
                                         </li>
                                     )
                                 })}
