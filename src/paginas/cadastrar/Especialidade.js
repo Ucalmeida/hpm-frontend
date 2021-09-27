@@ -1,7 +1,7 @@
 import React from 'react'
 import {HttpVerbo, MSG} from "../../util/Constantes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
+import {Botao, BotaoSalvar, Card, Input, Pagina, Spinner, Tabela} from "../../componentes";
 
 
 export default class Especialidade extends React.Component {
@@ -55,10 +55,11 @@ export default class Especialidade extends React.Component {
         if (carregando) {
             spinner = <Spinner />
         };
+
         return (
             <Pagina titulo="Cadastrar Especialidade">
                 <div className="row animated--fade-in">
-                    <div className="col-lg-4">
+                    <div className="col-lg-12">
                         <Card titulo="Cadastrar">
                             <Input
                                 type="text"
@@ -68,14 +69,15 @@ export default class Especialidade extends React.Component {
                                 label="Especialidade"
                                 placeholder="Especialidade" required/>
 
-                            <div className="align-items-end col-12">
+                            <div className="align-items-end col-8">
                                 <BotaoSalvar onClick={this.enviar}/>
                             </div>
                         </Card>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-12">
                         <Card titulo="Especialidades cadastradas">
                             {spinner}
+                                {/*<Tabela colunas={colunas} dados={dados()} />*/}
                             <ul className={"list-unstyled"} style={{columns: 3}}>
                                 {especialidades.map((v, k) => {
                                     return <li className="flex-fill" key={k}> {v.texto}</li>
