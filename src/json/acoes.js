@@ -161,6 +161,20 @@ export const acoes = [
     ]
   },
   {
+    "nome": "Listar",
+    "descricao": "Menu de Listas",
+    "url": "listar",
+    "icone": "far fa-plus-square",
+    "acoes": [
+      {
+        "nome": "Listar Profissionais Saúde",
+        "descricao": "Listagem de Profissionais de Saúde",
+        "url": "listarProfissionaisSaude",
+        "icone": "fas fa-stethoscope"
+      }
+    ]
+  },
+  {
     "nome": "Vincular",
     "descricao": "Página Principal",
     "url": "vincular",

@@ -131,7 +131,7 @@ export const Autocomplete = (props) => {
                         autoComplete="off"
                         type="text"
                         className="form-control"
-                        name="nome"
+                        name={props.name}
                         value={search}
                         onClick={showSuggestion}
                         onChange={(e) => loadPessoas(e.target.value)}
