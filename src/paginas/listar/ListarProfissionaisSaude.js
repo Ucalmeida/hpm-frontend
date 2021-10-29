@@ -1,4 +1,4 @@
-import {Autocomplete, BotaoEnviar, BotaoSalvar, Card, Input, Pagina, Select, Tabela} from "../../componentes";
+import {Card, Pagina, Select, Tabela} from "../../componentes";
 import React, {useState, useEffect} from "react";
 import {HttpVerbo} from "../../util/Constantes";
 import {xfetch} from "../../util";
