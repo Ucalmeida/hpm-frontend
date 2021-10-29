@@ -1,12 +1,38 @@
-import { useState } from "react";
-import { Card, Pagina, Tabela } from "../../componentes";
+import { useEffect, useState } from "react";
+import { Card, Pagina, Select, Tabela } from "../../componentes";
+import { xfetch } from "../../util";
+import { HttpVerbo } from "../../util/Constantes";
 
 export default function ListarEspecialidadePorProfissionalSaude() {
 
+    const [objeto, setObjeto] = useState({
+        profissionais: []
+    });
     
     const [lista, setLista] = useState({
-        medicos: []
+        especialidades: []
     });
+
+    const handleProfissionalSaude = (e) => {
+        const idProfissionalSaude = e.value;
+        setObjeto({...objeto, idProfissionalSaude: idProfissionalSaude});
+    }
+
+    useEffect(() => {
+        if(typeof(objeto.idProfissionalSaude) !== undefined) {
+            listarEspecialidadePorProfissionalSaude();
+        }
+    }, [objeto])
+
+    const listarEspecialidadePorProfissionalSaude = () => {
+        console.log("Objeto", objeto);
+        xfetch('/hpm/especialidade/' + objeto.idProfissionalSaude + '/opcoes', {objeto}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(lista => {
+                setLista({...lista, especialidades: lista.resultado})
+                console.log("Lista", lista);
+            })
+    }
 
     const colunas = [
         {text: "ID"},
@@ -14,12 +40,12 @@ export default function ListarEspecialidadePorProfissionalSaude() {
     ]
 
     const dados = () => {
-        if(typeof(lista.medicos) !== "undefined") {
+        if(typeof(lista.especialidades) !== "undefined") {
             return(
-                lista.medicos.map((medico, indice) => {
+                lista.especialidades.map((especialidade, indice) => {
                     return({
-                        'id': medico.valor,
-                        'nome': medico.texto
+                        'id': especialidade.valor,
+                        'nome': especialidade.texto
                     })
                 })
             )
@@ -28,7 +54,18 @@ export default function ListarEspecialidadePorProfissionalSaude() {
 
     return(
         <Pagina titulo="Listar Especialidades">
-            <Card titulo="Listar"></Card>
+            <Card titulo="Listar">
+                <div className={"row"}>
+                    <div className={"col-lg-12"}>
+                        <label>Selecionar Especialidade</label>
+                        <Select
+                            url={"/hpm/profissionalSaude/opcoes"}
+                            nome={"idProfissionalSaude"}
+                            funcao={handleProfissionalSaude}
+                        />
+                    </div>
+                </div>
+            </Card>
             <Card titulo="Lista de especialidades por médico">
                 <Tabela colunas={colunas} dados={dados()}></Tabela>
             </Card>
