@@ -57,7 +57,7 @@ export default function ListarEspecialidadePorProfissionalSaude() {
             <Card titulo="Listar">
                 <div className={"row"}>
                     <div className={"col-lg-12"}>
-                        <label>Selecionar Especialidade</label>
+                        <label>Selecionar Profissional de Saúde</label>
                         <Select
                             url={"/hpm/profissionalSaude/opcoes"}
                             nome={"idProfissionalSaude"}
@@ -66,7 +66,7 @@ export default function ListarEspecialidadePorProfissionalSaude() {
                     </div>
                 </div>
             </Card>
-            <Card titulo="Lista de especialidades por médico">
+            <Card titulo="Lista de especialidades por profissional de saúde">
                 <Tabela colunas={colunas} dados={dados()}></Tabela>
             </Card>
         </Pagina>
