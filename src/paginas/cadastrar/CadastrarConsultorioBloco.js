@@ -16,40 +16,38 @@ function CadastrarConsultorioBloco(){
             profissionais: []
         }
     )
-    let handleDtHrInicio = (e) => {
+    const handleDtHrInicio = (e) => {
         setObjeto({...objeto, dataInicio: e.target.value});
     }
 
-    let handleDtHrTermino = (e) => {
+    const handleDtHrTermino = (e) => {
        setObjeto({...objeto, dataTermino: e.target.value});
     }
 
-    let handleQtdConsulta = (e) => {
+    const handleQtdConsulta = (e) => {
         e.preventDefault()
        setObjeto({...objeto, qtdConsultas: e.target.value})
     }
 
-    let handleQtdEmergencia = (e) => {
+    const handleQtdEmergencia = (e) => {
         e.preventDefault()
         setObjeto({...objeto, qtdEmergencias: e.target.value})
     }
 
-    let selecionarEspecialidade = (e) => {
+    const selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = e.value
         listarProfissionalPorEspecialidade()
     }
 
-    let selecionarProfissionalSaude = (e) => {
+    const selecionarProfissionalSaude = (e) => {
         objeto.idProfissionalSaude = e.value
-
-
     }
 
-    let selecionarSala = (e) => {
+    const selecionarSala = (e) => {
         objeto.idSala = e.value
     }
 
-    let listarProfissionalPorEspecialidade = () => {
+    const listarProfissionalPorEspecialidade = () => {
         setObjeto({...objeto, profissionais: []})
         xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
             .then(res => res.json())
@@ -59,7 +57,7 @@ function CadastrarConsultorioBloco(){
             )
     }
 
-    let enviar = (e) => {
+    const enviar = (e) => {
 
         xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
@@ -73,7 +71,7 @@ function CadastrarConsultorioBloco(){
 
     }
 
- let selectEspeciaista =  objeto.idEspecialidade ?   <div className="col-lg-6">
+ const selectEspeciaista =  objeto.idEspecialidade ?   <div className="col-lg-6">
      <label>Profissional</label>
      <Select
          funcao={selecionarProfissionalSaude}

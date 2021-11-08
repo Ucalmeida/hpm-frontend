@@ -1,3 +1,5 @@
+import CadastrarEscala from "../paginas/cadastrar/CadastrarEscala";
+
 export const acoes = [
   {
     "nome": "Alterar Senha",
@@ -164,6 +166,12 @@ export const acoes = [
         "url": "tipo",
         "icone": "fab fa-delicious"
       },
+      {
+        "nome": "Cadastrar Escala",
+        "descricao": "Cadastro de Escala",
+        "url": "cadastrarEscala",
+        "icone": "fas fa-stethoscope"
+      }
     ]
   },
   {
