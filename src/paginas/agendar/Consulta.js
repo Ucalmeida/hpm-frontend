@@ -18,14 +18,14 @@ export default function Consulta() {
         }
     )
 
-    let selecionarEspecialidade = (e) => {
+    const selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = e.value
         listarProfissionalPorEspecialidade()
         // objeto.idPessoa = localStorage.getItem('id')
 
     }
 
-    let listarProfissionalPorEspecialidade = () => {
+    const listarProfissionalPorEspecialidade = () => {
         setObjeto({...objeto, profissionais: []})
         xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
             .then(res => res.json())
@@ -34,7 +34,7 @@ export default function Consulta() {
                 }
             )
     }
-    let selecionarProfissionalSaude = (e) => {
+    const selecionarProfissionalSaude = (e) => {
         e.preventDefault()
         objeto.idProfissional = e.target.value
        listarConsultorioBlocoPorEspecialidadeProfissionalSaude()
@@ -45,7 +45,7 @@ export default function Consulta() {
         setObjeto({...objeto, idConsultorioBloco: e.target.value, idPessoa: 0})
     }
 
-    let listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
+    const listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
         setObjeto({...objeto, consultoriosBloco: []})
         xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
@@ -61,7 +61,7 @@ export default function Consulta() {
             .then(pessoas => setObjeto({...objeto, pessoas: pessoas.resultado}))
     },[])
 
-    let enviar = (e) => {
+    const enviar = (e) => {
         xfetch('/hpm/consulta/cadastrarComPessoaLogada', objeto, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
@@ -76,6 +76,7 @@ export default function Consulta() {
 
     let prof = objeto.profissionais
     let consultaBloco = objeto.consultoriosBloco
+
     return(
         <Pagina titulo="Agendar Consulta">
             <div className="row">

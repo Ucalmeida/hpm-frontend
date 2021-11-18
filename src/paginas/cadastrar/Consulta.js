@@ -95,7 +95,7 @@ export default function Consulta() {
         {text: "Data - Hora"},
         { text: "Piso" },
         {text: "Sala"},
-       { text: "CPF do Paciente" },
+        {text: "CPF do Paciente" },
         {text: "Paciente"},
         {text: "Especialidade"},
         { text: "Médico" },

@@ -59,9 +59,9 @@ export const Autocomplete = (props) => {
         setSearch(key);
     }
 
-    useEffect(() => {
-        loadPessoas();
-    }, []);
+    // useEffect(() => {
+    //     loadPessoas();
+    // }, []);
 
     const handleClickOutside = (event) => {
         if(searchContainer.current && !searchContainer.current.contains(event.target)) {
