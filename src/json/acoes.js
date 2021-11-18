@@ -1,3 +1,5 @@
+import CadastrarEscala from "../paginas/cadastrar/CadastrarEscala";
+
 export const acoes = [
   {
     "nome": "Alterar Senha",
@@ -164,6 +166,12 @@ export const acoes = [
         "url": "tipo",
         "icone": "fab fa-delicious"
       },
+      {
+        "nome": "Cadastrar Escala",
+        "descricao": "Cadastro de Escala",
+        "url": "cadastrarEscala",
+        "icone": "fas fa-stethoscope"
+      }
     ]
   },
   {
@@ -176,6 +184,12 @@ export const acoes = [
         "nome": "Listar Profissionais Saúde",
         "descricao": "Listagem de Profissionais de Saúde",
         "url": "listarProfissionaisSaude",
+        "icone": "fas fa-stethoscope"
+      },
+      {
+        "nome": "Listar Especialidade Por Profissional Saúde",
+        "descricao": "Listagem de Especialidade Por Profissional de Saúde",
+        "url": "listarEspecialidadePorProfissionalSaude",
         "icone": "fas fa-stethoscope"
       }
     ]

@@ -41,8 +41,6 @@ function CadastrarConsultorioBloco(){
 
     const selecionarProfissionalSaude = (e) => {
         objeto.idProfissionalSaude = e.value
-
-
     }
 
     const selecionarSala = (e) => {

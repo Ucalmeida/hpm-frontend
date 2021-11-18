@@ -15,6 +15,7 @@ export default function Dependente(){
 
     const [pessoa, setPessoa] = useState(
         {
+            idPessoa: null,
             nome: null,
             nomeSocial:null,
             cpf:null,
@@ -28,7 +29,7 @@ export default function Dependente(){
             idInstituicaoConvenio: null,
             blAcessaSistema: null,
             blVivo: null,
-            tipoDependencia: null
+            idTipoDependencia: null
         }
     )
 
@@ -49,6 +50,7 @@ export default function Dependente(){
     }
 
     function verificarVinculo(){
+        console.log(objeto);
         xfetch('/hpm/pessoa/porId/'+objeto.idPessoa, {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json =>{
@@ -56,6 +58,8 @@ export default function Dependente(){
                     objeto.titular = json.resultado
                     pessoa.idInstituicaoConvenio = objeto.titular.instituicaoConvenio.id
                     dependencia.idTitular = json.resultado.id
+                    pessoa.idPessoa = json.resultado.id
+                    selecionarPessoa();
                 }else{
                     ExibirMensagem(json.message, MSG.ERRO)
                 }
@@ -64,12 +68,12 @@ export default function Dependente(){
     }
 
     function cadastrarDependente(){
-        xfetch('/hpm/pessoa/cadastrar', pessoa, HttpVerbo.POST)
+        xfetch('/hpm/dependente/cadastrar', pessoa, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK"){
                     ExibirMensagem('Dependente cadastrado(a) com sucesso!', MSG.SUCESSO);
                     dependencia.cpfDependente = pessoa.cpf
-                    dependencia.idTipoDependencia = pessoa.tipoDependencia
+                    dependencia.idTipoDependencia = pessoa.idTipoDependencia
                     salvarDependencia()
                 }else{
                     ExibirMensagem(json.message, MSG.ERRO);
@@ -136,13 +140,17 @@ export default function Dependente(){
         setPessoa({...pessoa,sexo: e.value})
     }
     const handleDependencia = (e) => {
-        setPessoa({...pessoa,tipoDependencia: e.value})
+        setPessoa({...pessoa,idTipoDependencia: e.value})
     }
 
-    const cadastraDependente = (objeto.titular.blPolicialMilitar || objeto.titular.blPolicialMilitar === undefined ||objeto.titular.blBombeiroMilitar || objeto.titular.blBombeiroMilitar === undefined||  objeto.titular.blPolicialCivil || objeto.titular.blPolicialCivil === undefined) ?
-        ''
-        :
-        <Card titulo="Dependente">
+    let cadastraDependente = '';
+    if(objeto.titular.blPolicialMilitar === undefined || objeto.titular.blBombeiroMilitar === undefined||objeto.titular.blPolicialCivil === undefined){
+        cadastraDependente = ''
+    } else if(objeto.titular.blPolicialMilitar || objeto.titular.blBombeiroMilitar || objeto.titular.blPolicialCivil){
+        cadastraDependente = 'ERRO!!! Cadastro de dependentes indisponível devido o vínculo do titular!';
+    }else {
+        cadastraDependente =
+           <Card titulo="Dependente">
             <div className="col-lg-12">
                 <div className="row">
                     <div className="col-lg-6">
@@ -267,6 +275,7 @@ export default function Dependente(){
                 </div>
             </div>
         </Card>
+    }
 
     return(
         <Pagina titulo="Cadastrar Dependente">
