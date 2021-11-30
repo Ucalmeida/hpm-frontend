@@ -40,28 +40,29 @@ export const Autocomplete = (props) => {
         setCursor(-1);
         scrollIntoView(0);
         if(typeof search !== 'undefined' && 
-            search.length >= (typeof props.tamanho !== 'undefined' ? props.tamanho : 5)) {
+            search.length >= (typeof parseInt(props.tamanho) !== 'undefined' ? parseInt(props.tamanho) : 5)) {
                 return data.filter(pessoa =>
-                    isNaN(search) ? 
+                    isNaN(search) ?
                         pessoa.name.toLowerCase().includes(search.toLowerCase()) : pessoa
                 )
         }
-    }, [data, search, props.tamanho]);
+    }, [data, search, parseInt(props.tamanho)]);
      
     let url = props.url;
 
     const loadPessoas = async (key) => {
-        let complementoUrl = !isNaN(+key) ? 'porCpf/' : 'porNome/';
-
-        let result = await xfetch(url + complementoUrl + key, {}, HttpVerbo.GET);
-        result = await result.json();
-        setData(result.resultado);
+        if(key.length >= parseInt(props.tamanho)) {
+            let complementoUrl = !isNaN(+key) ? 'porCpf/' : 'porNome/';
+            let result = await xfetch(url + complementoUrl + key, {}, HttpVerbo.GET);
+            result = await result.json();
+            setData(result.resultado);
+        }
         setSearch(key);
     }
 
-    // useEffect(() => {
-    //     loadPessoas();
-    // }, []);
+    useEffect(() => {
+        loadPessoas();
+    }, []);
 
     const handleClickOutside = (event) => {
         if(searchContainer.current && !searchContainer.current.contains(event.target)) {
@@ -164,6 +165,6 @@ Autocomplete.propTypes = {
   label: PropTypes.string,
   onSelect: PropTypes.func,
   placeholder: PropTypes.string,
-  tamanho: PropTypes.number,
+  tamanho: PropTypes.string,
   url: PropTypes.string
 }
