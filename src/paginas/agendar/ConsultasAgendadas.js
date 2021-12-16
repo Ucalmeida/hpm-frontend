@@ -18,25 +18,29 @@ export default function ConsultasAgendadas() {
                         <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar}>Cancelar</Botao>
                     </div>;
 
+    const idPessoa = localStorage.getItem('id');
+
     const [lista, setLista] = useState({
-        consultas: [{
-            nmPaciente: "Urian de Castro Almeida",
-            cpfPaciente: "9311880544",
-            dtHora: "25/10/2021 09:15",
-            nmEspecialidade: "Cardiologista",
-            nmMedico: "Dr Whoo",
-            sala: "1A",
-            piso: "Clínico",
-            status: "Ativo",
-            acoes: acoes
-        }]
+        consultas: [
+            {
+                nmPaciente: "",
+                cpfPaciente: "",
+                dtHora: "",
+                nmEspecialidade: "",
+                nmMedico: "",
+                sala: "",
+                piso: "",
+                status: "",
+                acoes: acoes
+            }
+        ]
     })
 
-    // useEffect(() => {
-    //     xfetch('consultaAqui', {}, HttpVerbo.GET)
-    //         .then(response => response.json())
-    //         .then(lista => setLista({...lista, consultas: lista.resultado}))
-    // }, [])
+    useEffect(() => {
+        xfetch('/hpm/consulta/agendadas/' + idPessoa, {}, HttpVerbo.GET)
+            .then(response => response.json())
+            .then(lista => setLista({...lista, consultas: lista.resultado}))
+    }, [])
 
     const colunas = [
         {text: "Paciente"},
@@ -62,8 +66,8 @@ export default function ConsultasAgendadas() {
                         'medico': consulta.nmMedico,
                         'sala': consulta.sala,
                         'piso': consulta.piso,
-                        'status': consulta.status,
-                        'acoes': consulta.acoes
+                        'status': consulta.nmStatus,
+                        'acoes': acoes
                     })
                 })
             )
