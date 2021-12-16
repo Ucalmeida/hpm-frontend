@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Pagina, Card, Select, Botao, Tabela } from "../../componentes";
-import { xfetch } from "../../util";
-import { BOTAO, HttpVerbo } from "../../util/Constantes";
+import React, { useEffect, useState } from "react";
+import { Pagina, Card, Botao, Tabela } from "../../componentes";
+import {ExibirMensagem, xfetch} from "../../util";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
 export default function ConsultasAgendadas() {
     
@@ -9,20 +9,25 @@ export default function ConsultasAgendadas() {
         alert('Conteúdo Impresso');
     }
 
-    const handleBtnCancelar = () => {
-        alert('Consulta Cancelada');
+    const handleBtnCancelar = async (e) => {
+        await xfetch('/hpm/consulta/alterar/' + e.target.value, {}, HttpVerbo.PUT)
+            .then( json =>{
+                    if(json.status === "OK"){
+                        ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
+                    }else{
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        console.log("Consulta: ", e.target.value);
     }
-
-    const acoes = <div>
-                        <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleBtnImprimir}>Imprimir</Botao>
-                        <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar}>Cancelar</Botao>
-                    </div>;
 
     const idPessoa = localStorage.getItem('id');
 
     const [lista, setLista] = useState({
         consultas: [
             {
+                id: "",
                 nmPaciente: "",
                 cpfPaciente: "",
                 dtHora: "",
@@ -31,7 +36,7 @@ export default function ConsultasAgendadas() {
                 sala: "",
                 piso: "",
                 status: "",
-                acoes: acoes
+                acoes: ""
             }
         ]
     })
@@ -43,6 +48,7 @@ export default function ConsultasAgendadas() {
     }, [])
 
     const colunas = [
+        {text: "ID"},
         {text: "Paciente"},
         {text: "CPF do Paciente"},
         {text: "Data - Hora"},
@@ -58,7 +64,7 @@ export default function ConsultasAgendadas() {
         return(
         lista.consultas.map((consulta) => {
             return({
-                        'id': consulta.valor,
+                        'id': consulta.id,
                         'paciente': consulta.nmPaciente,
                         'cpf_do_paciente': consulta.cpfPaciente,
                         'data__hora': consulta.dtHora,
@@ -67,7 +73,10 @@ export default function ConsultasAgendadas() {
                         'sala': consulta.sala,
                         'piso': consulta.piso,
                         'status': consulta.nmStatus,
-                        'acoes': acoes
+                        'acoes': <div>
+                                    <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleBtnImprimir}>Imprimir</Botao>
+                                    <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id}>Cancelar</Botao>
+                                </div>
                     })
                 })
             )
