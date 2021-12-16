@@ -46,8 +46,8 @@ export default class Login extends React.Component {
                     log(dados);
                     ExibirMensagem('Usuário e/ou senha inválidos',MSG.ERRO)
                 } else {
-                    // localStorage.setItem('id', dados.id)
-                    localStorage.setItem('usuario', dados.usuario)
+                    localStorage.setItem('id', dados.id);
+                    localStorage.setItem('usuario', dados.usuario);
                     localStorage.setItem('token', dados.token);
                     this.setState({logado: true})
                     window.location.reload();
