@@ -27,7 +27,7 @@ export default function Consulta() {
     )
 
     const [lista, setLista] = useState({
-            consultas: []
+        consultas: []
     })
 
     let selecionarEspecialidade = (e) => {
@@ -50,15 +50,15 @@ export default function Consulta() {
     setObjeto({...objeto, idPessoa: idPessoa})
     }
 
-    let listarProfissionalPorEspecialidade = () => {
-        setObjeto({...objeto, profissionais: []})
-        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
-            .then(res => res.json())
-            .then(json => {
-                    setObjeto({...objeto, profissionais: json.resultado})
-                }
-            )
-    }
+   let listarProfissionalPorEspecialidade = () => {
+       setObjeto({...objeto, profissionais: []})
+       xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
+           .then(res => res.json())
+           .then(json => {
+                   setObjeto({...objeto, profissionais: json.resultado})
+               }
+           )
+   }
 
     let listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
         setObjeto({...objeto, consultoriosBloco: []})
@@ -93,12 +93,12 @@ export default function Consulta() {
 
     const colunas = [
         {text: "Data - Hora"},
-        { text: "Piso" },
+        {text: "Piso" },
         {text: "Sala"},
         {text: "CPF do Paciente" },
         {text: "Paciente"},
         {text: "Especialidade"},
-        { text: "Médico" },
+        {text: "Médico" },
 
     ]
 
