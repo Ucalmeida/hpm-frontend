@@ -4,22 +4,10 @@ import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
 export default function ConsultasAgendadas() {
-    
+    const [apagar, setApagar] = useState(false);
+
     const handleBtnImprimir = () => {
         alert('Conteúdo Impresso');
-    }
-
-    const handleBtnCancelar = async (e) => {
-        await xfetch('/hpm/consulta/alterar/' + e.target.value, {}, HttpVerbo.PUT)
-            .then( json =>{
-                    if(json.status === "OK"){
-                        ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
-                    }else{
-                        ExibirMensagem(json.message, MSG.ERRO)
-                    }
-                }
-            )
-        console.log("Consulta: ", e.target.value);
     }
 
     const idPessoa = localStorage.getItem('id');
@@ -41,11 +29,24 @@ export default function ConsultasAgendadas() {
         ]
     })
 
+    const handleBtnCancelar = async (e) => {
+        await xfetch('/hpm/consulta/alterar/' + e.target.value, {}, HttpVerbo.PUT)
+            .then( json =>{
+                if(json.status === "OK"){
+                    ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
+                }else{
+                    ExibirMensagem(json.message, MSG.ERRO)
+                }
+            }
+        )
+        setApagar(!apagar);
+    }
+
     useEffect(() => {
         xfetch('/hpm/consulta/agendadas/' + idPessoa, {}, HttpVerbo.GET)
             .then(response => response.json())
             .then(lista => setLista({...lista, consultas: lista.resultado}))
-    }, [])
+    }, [apagar])
 
     const colunas = [
         {text: "ID"},
