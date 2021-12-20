@@ -32,7 +32,13 @@ export default function Principal () {
             <div className="row">
                 <div className="col-6">
                     <Card titulo={"Auto completar"}>
-                        <Autocompletar name="pessoa" url="/hpm/pessoa/porNome/" retorno={() => {}}/>
+                        <Autocompletar
+                            name="pessoa"
+                            url="/hpm/pessoa/"
+                            label="Digite os Dados:"
+                            placeholder="Nome ou CPF aqui"
+                            tamanho={6}
+                            retorno={() => {}} />
                     </Card>
                 </div>
                 <div className={"col-6"}>

@@ -4,7 +4,7 @@ import {
     Card,
     Pagina,
     Select,
-    Autocomplete,
+    Autocompletar,
     Tabela
 } from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
@@ -30,27 +30,28 @@ export default function Consulta() {
         consultas: []
     })
 
-    let selecionarEspecialidade = (e) => {
+    const selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = e.value
         listarProfissionalPorEspecialidade()
     }
 
-    let selecionarProfissionalSaude = (e) => {
+    const selecionarProfissionalSaude = (e) => {
         e.preventDefault()
         objeto.idProfissional = e.target.value
         listarConsultorioBlocoPorEspecialidadeProfissionalSaude()
     }
 
-    let selecionarConsultorioBloco = (e) => {
+    const selecionarConsultorioBloco = (e) => {
         e.preventDefault()
         setObjeto({...objeto, idConsultorioBloco: e.target.value})
     }
 
-   function selecionarPessoa(idPessoa) {
-    setObjeto({...objeto, idPessoa: idPessoa})
+    const selecionarPessoa = (e) => {
+        let idpessoa = document.getElementById('idpessoa').value;
+        setObjeto({...objeto, idPessoa: idpessoa});
     }
 
-   let listarProfissionalPorEspecialidade = () => {
+    const listarProfissionalPorEspecialidade = () => {
        setObjeto({...objeto, profissionais: []})
        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
            .then(res => res.json())
@@ -58,9 +59,9 @@ export default function Consulta() {
                    setObjeto({...objeto, profissionais: json.resultado})
                }
            )
-   }
+    }
 
-    let listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
+    const listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
         setObjeto({...objeto, consultoriosBloco: []})
         xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
@@ -77,7 +78,7 @@ export default function Consulta() {
     },[])
 
 
-    let enviar = (e) => {
+    const enviar = (e) => {
         xfetch('/hpm/consulta/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
@@ -172,7 +173,13 @@ export default function Consulta() {
                         <br/>
                         <div className="row">
                             <div className="col-lg-8">
-                                <Autocomplete tamanho="6" url="/hpm/pessoa/" label="Digite os Dados:" placeholder="Digite os dados aqui" onSelect={selecionarPessoa} />
+                                <Autocompletar
+                                    name="pessoa"
+                                    url="/hpm/pessoa/"
+                                    label="Digite os Dados:"
+                                    placeholder="Nome ou CPF aqui"
+                                    tamanho={6}
+                                    retorno={selecionarPessoa} />
                             </div>
 
                             <div className="col-lg-12 text-lg-right mt-4 mb-4">
