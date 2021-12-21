@@ -1,17 +1,31 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BotaoSalvar, Card, Input, Pagina, Select } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
 import { HttpVerbo, MSG } from "../../util/Constantes";
 
 export default function CadastrarEscala() {
-    const [objeto, setObjeto] = useState({});
+
+    const [objeto, setObjeto] = useState({
+        nome: '',
+        dataInicio: null,
+        dataTermino: null,
+        idStatus: null
+    });
+
+    const [status, setStatus] = useState({
+        listaStatus: []
+    });
+
+    let escalaObjeto = 31;
 
     const handleDtHrInicio = (e) => {
-        setObjeto({...objeto, dataInicio: e.target.value});
+        let dt = e.target.value;
+        setObjeto({...objeto, dataInicio: dt});
     }
 
     const handleDtHrTermino = (e) => {
-       setObjeto({...objeto, dataTermino: e.target.value});
+       let dt = e.target.value;
+       setObjeto({...objeto, dataTermino: dt});
     }
     
     const handleChange = (e) => {
@@ -20,11 +34,12 @@ export default function CadastrarEscala() {
     }
 
     const handleStatus = (e) => {
-        const idStatus = e.value;
-        setObjeto({...objeto, idStatus : idStatus});
+        const status = e.target.value;
+        setObjeto({...objeto, idStatus : status});
     }
 
-    let enviar = (e) => {
+    const enviar = (e) => {
+        console.log("Objeto", objeto);
         xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
@@ -35,6 +50,12 @@ export default function CadastrarEscala() {
                 }
             )
     }
+
+    useEffect(() => {
+        xfetch('/hpm/status/' + escalaObjeto, {}, HttpVerbo.GET)
+        .then( res => res.json())
+        .then(status => setStatus({...status, listaStatus: status.resultado}))
+    }, [])
     
     return(
         <Pagina titulo="Cadastrar Escala">
@@ -56,6 +77,7 @@ export default function CadastrarEscala() {
                                 value={objeto.dataInicio}
                                 onChange={handleDtHrInicio}
                                 name="dataInicio"
+                                step="1"
                                 label="Data e hora início"
                                 placeholder="Data e hora"/>
                         </div>
@@ -65,16 +87,22 @@ export default function CadastrarEscala() {
                                 value={objeto.dataTermino}
                                 onChange={handleDtHrTermino}
                                 name="dataTermino"
+                                step="1"
                                 label="Data e hora término"
                                 placeholder="Data e hora"/>
                         </div>
                         <div className="col-lg-2">
                             <label>Tipo Escala</label>
-                            <Select
-                                placeholder={"Status"}
-                                funcao={handleStatus}
-                                nome={"idStatus"}
-                                url={"/hpm/status/" + 31}/>
+                            <select
+                                className="form-control"
+                                name="idStatus"
+                                value={objeto.idStatus}
+                                onChange={handleStatus}>
+                                <option hidden>Selecione...</option>
+                                {status.listaStatus.map((v, k) => {
+                                    return <option className="flex-fill" value={v.id} key={k}> {v.nome}</option>
+                                })}
+                            </select>
                         </div>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
                             <BotaoSalvar onClick={enviar} />
