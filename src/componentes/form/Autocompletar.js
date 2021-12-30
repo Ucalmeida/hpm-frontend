@@ -5,6 +5,7 @@ import 'jquery-ui/ui/widgets/autocomplete'
 import {xfetch} from "../../util";
 import {HttpVerbo} from "../../util/Constantes";
 
+
 export class Autocompletar extends React.Component {
     constructor(props) {
         super(props);
@@ -23,8 +24,9 @@ export class Autocompletar extends React.Component {
 
     componentDidMount() {
         const url = this.props.url;
-        let that = this
-        $('#idAuto').autocomplete({
+        let that = this;
+        let idAuto = 'id' + this.props.name + 'Auto';
+        $('#' + idAuto).autocomplete({
             source: function( request, response ) {
                 that.setState({carregando: true})
                 let key = request.term;
@@ -57,7 +59,7 @@ export class Autocompletar extends React.Component {
                 {/*<div className="col-lg-12">*/}
                 <div>
                     <label>{this.props.label}</label>
-                    <input id="idAuto"
+                    <input id={'id' + this.props.name + 'Auto'}
                        autoComplete="off"
                        className="form-control"
                        type="text" name="busca" onChange={this.handle}
