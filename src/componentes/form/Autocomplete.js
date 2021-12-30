@@ -32,31 +32,32 @@ export const Autocomplete = (props) => {
 
     }, [cursor])
 
-    const suggestions = useMemo(() => { 
+    const suggestions = useMemo(() => {
         if(!search || typeof data === 'undefined') {
             return undefined;
         }
 
         setCursor(-1);
         scrollIntoView(0);
-        if(typeof search !== 'undefined' && 
-            search.length >= (typeof parseInt(props.tamanho) !== 'undefined' ? parseInt(props.tamanho) : 5)) {
-                return data.filter(pessoa =>
-                    isNaN(search) ?
-                        pessoa.name.toLowerCase().includes(search.toLowerCase()) : pessoa
-                )
+
+        if(typeof search !== 'undefined' && search.length >= (typeof props.tamanho !== 'undefined' ? props.tamanho : 5)) {
+            return data.filter(pessoa =>
+                isNaN(search)
+                    ? pessoa.name.toLowerCase().includes(search.toLowerCase())
+                    : pessoa
+            )
         }
-    }, [data, search, parseInt(props.tamanho)]);
-     
+    }, [data,search,props.tamanho])
+
+    console.log('@@@: ' + suggestions)
     let url = props.url;
 
     const loadPessoas = async (key) => {
-        if(key.length >= parseInt(props.tamanho)) {
-            let complementoUrl = !isNaN(+key) ? 'porCpf/' : 'porNome/';
-            let result = await xfetch(url + complementoUrl + key, {}, HttpVerbo.GET);
-            result = await result.json();
-            setData(result.resultado);
-        }
+        let complementoUrl = !isNaN(+key) ? 'porCpf/' : 'porNome/';
+
+        let result = await xfetch(url + complementoUrl + key, {}, HttpVerbo.GET);
+        result = await result.json();
+        setData(result.resultado);
         setSearch(key);
     }
 
@@ -72,7 +73,7 @@ export const Autocomplete = (props) => {
 
     useEffect(() => {
         window.addEventListener("mousedown", handleClickOutside);
-        window.addEventListener("mousedown", handleClick);
+      //  window.addEventListener("mousedown", handleClick);
 
         return () => {
             window.removeEventListener("mousedown", handleClickOutside);
@@ -128,16 +129,18 @@ export const Autocomplete = (props) => {
         <div>
             <div ref={searchContainer}>
                 <label>{props.label}</label>
-                <input id="idAuto"
-                        autoComplete="off"
-                        type="text"
-                        className="form-control"
-                        name={props.name}
-                        value={search}
-                        onClick={showSuggestion}
-                        onChange={(e) => loadPessoas(e.target.value)}
-                        onKeyDown={(e) => keyboardNavigation(e)}
-                        placeholder={props.placeholder}/>
+                <input
+                    id={props.identificacao}
+                    autoComplete="off"
+                    type="text"
+                    className="form-control"
+                    name={props.name}
+                    value={search}
+                    onClick={showSuggestion}
+                    onChange={(e) => loadPessoas(e.target.value)}
+                    onKeyDown={(e) => keyboardNavigation(e)}
+                    placeholder={props.placeholder}
+                />
             </div>
             <div className={`search-result ${
                 isVisible ? "visible" : "invisible"
@@ -162,9 +165,10 @@ export const Autocomplete = (props) => {
 }
 
 Autocomplete.propTypes = {
+  identificacao: PropTypes.string,
   label: PropTypes.string,
   onSelect: PropTypes.func,
   placeholder: PropTypes.string,
-  tamanho: PropTypes.string,
+  tamanho: PropTypes.number,
   url: PropTypes.string
 }

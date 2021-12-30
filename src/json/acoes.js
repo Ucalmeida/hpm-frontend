@@ -181,6 +181,12 @@ export const acoes = [
     "icone": "far fa-plus-square",
     "acoes": [
       {
+        "nome": "Listar Dependentes",
+        "descricao": "Listagem de Dependentes",
+        "url": "listarDependentes",
+        "icone": "fas fa-stethoscope"
+      },
+      {
         "nome": "Listar Profissionais Saúde",
         "descricao": "Listagem de Profissionais de Saúde",
         "url": "listarProfissionaisSaude",

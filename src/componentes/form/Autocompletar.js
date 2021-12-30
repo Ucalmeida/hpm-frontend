@@ -35,6 +35,7 @@ export class Autocompletar extends React.Component {
                     .catch(e => that.setState({carregando: false}))
             },
             minLength: this.props.tamanho,
+            idAUto: 'id' + this.props.name + 'Auto',
             select: function( event, ui ) {
                 that.setState({valor: ui.item.value, busca: ui.item.label})
                 that.props.retorno(ui.item.value)
@@ -57,7 +58,7 @@ export class Autocompletar extends React.Component {
                 {/*<div className="col-lg-12">*/}
                 <div>
                     <label>{this.props.label}</label>
-                    <input id="idAuto"
+                    <input id={'idAuto'}
                        autoComplete="off"
                        className="form-control"
                        type="text" name="busca" onChange={this.handle}

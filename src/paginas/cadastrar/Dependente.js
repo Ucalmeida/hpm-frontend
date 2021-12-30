@@ -56,7 +56,10 @@ export default function Dependente(){
             .then(json =>{
                 if(json.status === 'OK'){
                     objeto.titular = json.resultado
-                    pessoa.idInstituicaoConvenio = objeto.titular.instituicaoConvenio.id
+                    console.log("id da inst: " + objeto.titular.instituicaoConvenio)
+                     if(objeto.titular.instituicaoConvenio !== null){
+                        pessoa.idInstituicaoConvenio = objeto.titular.instituicaoConvenio.id
+                     }
                     dependencia.idTitular = json.resultado.id
                     pessoa.idPessoa = json.resultado.id
                     selecionarPessoa();
@@ -143,12 +146,16 @@ export default function Dependente(){
         setPessoa({...pessoa,idTipoDependencia: e.value})
     }
 
+
+
     let cadastraDependente = '';
     if(objeto.titular.blPolicialMilitar === undefined || objeto.titular.blBombeiroMilitar === undefined||objeto.titular.blPolicialCivil === undefined){
         cadastraDependente = ''
     } else if(objeto.titular.blPolicialMilitar || objeto.titular.blBombeiroMilitar || objeto.titular.blPolicialCivil){
         cadastraDependente = 'ERRO!!! Cadastro de dependentes indisponível devido o vínculo do titular!';
-    }else {
+    }else if(objeto.titular.instituicaoConvenio === null){
+        cadastraDependente = 'ERRO!!! Tentando inserir um dependente como titular!';
+    }else{
         cadastraDependente =
            <Card titulo="Dependente">
             <div className="col-lg-12">
@@ -266,7 +273,7 @@ export default function Dependente(){
                             placeholder={"Tipo"}
                             funcao={handleDependencia}
                             nome={"tipo"}
-                            url={"/hpm/tipo/opcoes/30"}/>
+                            url={"/hpm/tipo/opcoes/"}/>
                     </div>
                 </div>
                 <br/>
