@@ -1,5 +1,15 @@
 import React, {useState} from "react";
-import {Autocomplete, Botao, BotaoPesquisar, BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
+import {
+    Autocompletar,
+    Autocomplete,
+    Botao,
+    BotaoPesquisar,
+    BotaoSalvar,
+    Card,
+    Input,
+    Pagina,
+    Select
+} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 import MaskedInput from "../../componentes/form/MaskedInput";
@@ -291,7 +301,13 @@ export default function Dependente(){
                     <Card titulo="Titular">
                         <div className="row">
                             <div className="col-lg-8">
-                                <Autocomplete tamanho="3" url="/hpm/pessoa/" label="Nome ou CPF do titular:" placeholder="Digite aqui"  onSelect={selecionarPessoa}/>
+                                <Autocompletar
+                                    name="pessoa"
+                                    url="/hpm/pessoa/"
+                                    label="Digite os Dados:"
+                                    placeholder="Nome ou CPF aqui"
+                                    tamanho={6}
+                                    retorno={selecionarPessoa} />
                             </div>
                             <div className="col-lg-4 mt-4 mb-4">
                                 <BotaoPesquisar onClick={verificarVinculo}>Verificar Vínculo</BotaoPesquisar>
