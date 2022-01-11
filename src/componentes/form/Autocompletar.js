@@ -53,9 +53,7 @@ export class Autocompletar extends React.Component {
 
         }
         return (
-            // <div className="col-lg-12 form-group">
             <>
-                {/*<div className="col-lg-12">*/}
                 <div>
                     <label>{this.props.label}</label>
                     <input id={'id' + this.props.name + 'Auto'}
@@ -69,7 +67,6 @@ export class Autocompletar extends React.Component {
                     <input type="hidden" id={'id'+this.props.name} name={this.props.name} value={valor} />
                 </div>
             </>
-            // </div>
         );
     }
 
