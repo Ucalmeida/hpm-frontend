@@ -197,6 +197,12 @@ export const acoes = [
         "descricao": "Listagem de Especialidade Por Profissional de Saúde",
         "url": "listarEspecialidadePorProfissionalSaude",
         "icone": "fas fa-stethoscope"
+      },
+      {
+        "nome": "Listar Escalas",
+        "descricao": "Listagem de Escalas por Status",
+        "url": "listarEscalas",
+        "icone": "fas fa-stethoscope"
       }
     ]
   },
