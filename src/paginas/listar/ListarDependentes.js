@@ -1,6 +1,6 @@
 import {
     Autocompletar,
-    Autocomplete,
+    Autocomplete, Botao,
     BotaoImprimir,
     BotaoPesquisar,
     Card,
@@ -28,7 +28,7 @@ export default function ListarDependentes() {
 
 
     function limparCampoId(id){
-        document.getElementById(id).value = '';
+        document.getElementById(id).value = null;
     }
 
     let url = ''
@@ -38,7 +38,7 @@ export default function ListarDependentes() {
     }
 
     if(objeto.idDependente === null && objeto.idPessoa !== null && objeto.idTipoDependencia === null){
-        url = '/hpm/dependente/' + objeto.idPessoa + '/opcoes'
+        url = '/hpm/dependente/tit/' + objeto.idPessoa + '/opcoes'
     }
 
     if(objeto.idDependente === null && objeto.idPessoa === null && objeto.idTipoDependencia !== null){
@@ -51,11 +51,11 @@ export default function ListarDependentes() {
 
 
 
+
      let valor = ''
      let selecao = ''
     var opcaoTxt = ''
     const listarDependentes = () => {
-
         xfetch(url, {objeto}, HttpVerbo.GET)
             .then(res => res.json())
             .then(lista => {
@@ -63,23 +63,25 @@ export default function ListarDependentes() {
 
                 if(lista.status === "OK") {
                     if(objeto.idDependente !== null  && objeto.idPessoa === null && objeto.idTipoDependencia === null){
-                         limparCampoId("idDep")
-                         limparCampoId('idTit')
+                        limparCampoId("iddepAuto")
+                        limparCampoId('iddep')
                         objeto.idDependente = null
                     }
                     if(objeto.idDependente === null && objeto.idPessoa !== null && objeto.idTipoDependencia === null){
-                        limparCampoId('idDep')
-                        limparCampoId('idTit')
+                        console.log(objeto.idDependente)
+                        limparCampoId('idtitAuto')
+                        limparCampoId('idtit')
                         objeto.idPessoa = null
                     }
+
                     if(objeto.idDependente === null && objeto.idPessoa === null && objeto.idTipoDependencia !== null){
-                        limparCampoId('idDep')
-                        limparCampoId('idTit')
+                        limparCampoId('iddepAuto')
+                        limparCampoId('iddep')
                         selecao = document.getElementById('idTipoDependencia')
                     }
                 }else{
-                    limparCampoId('idDep')
-                    limparCampoId('idTit')
+                    limparCampoId('iddepAuto')
+                    limparCampoId('idtitAuto')
                     ExibirMensagem('Não existem resultados para essa pesquisa!', MSG.ERRO)
                 }
             })
@@ -93,29 +95,28 @@ export default function ListarDependentes() {
     ]
 
     const dados = () => {
+        console.log(list.dependentes)
         return (
-            list.dependentes.map((dependente, indice) => {
+            typeof list.dependentes != 'undefined' ? list.dependentes.map((dependente, indice) => {
                     return ({
-                        'nome_do_dependente': dependente.nome,
-                        'cpf_do_dependente': dependente.cpf,
-                        'nome_do_titular': dependente.nomeTitular,
-                        'cpf_do_titular': dependente.cpfTitular
+                        'nome_do_dependente': dependente.texto,
+                        'cpf_do_dependente': dependente.texto2,
+                        'nome_do_titular': dependente.texto3,
+                        'cpf_do_titular': dependente.texto4
                     })
                 }
-            )
+            ) : ''
         )
     }
 
     const selecionarDependente = (e) => {
         let idDep = document.getElementById('iddep').value;
         setObjeto({...objeto, idDependente: idDep});
-        console.log("Dependente", idDep)
     }
 
     const selecionarTitular = (e) => {
         let idTit = document.getElementById('idtit').value;
         setObjeto({...objeto, idPessoa: idTit});
-        console.log("Titular", idTit)
     }
 
     const handleTipoDependencia = (e) => {
