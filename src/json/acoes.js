@@ -238,4 +238,24 @@ export const acoes = [
       },
     ]
   },
+  {
+    "nome": "Recepção",
+    "descricao": "Página Recepção",
+    "url": "recepcao",
+    "icone": "fas fa-retweet",
+    "acoes": [
+      {
+        "nome": "Listar Pacientes",
+        "descricao": "Lista Pacientes por especialidade, profissional de saúde e data",
+        "url": "listarPacientes",
+        "icone": "fas fa-people-arrows"
+      },
+      // {
+      //   "nome": "Setor Função",
+      //   "descricao": "Página Principal",
+      //   "url": "setorFuncao",
+      //   "icone": "fas fa-users-cog"
+      // },
+    ]
+  },
 ]
