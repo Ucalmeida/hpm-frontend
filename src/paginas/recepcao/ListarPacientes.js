@@ -10,7 +10,7 @@ export default function ListarPacientes() {
     const handleBtnConfirmar = async (e) => {
         await xfetch('/hpm/consulta/alterarConfirmacao/' + e.target.value, {}, HttpVerbo.PUT)
             .then( json =>{
-                    if(json.status === "OK"){
+                    if(json.status){
                         ExibirMensagem('Consulta Confirmada!', MSG.SUCESSO)
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)

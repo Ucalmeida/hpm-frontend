@@ -50,7 +50,10 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
         buttons: {
             ok: {
                 label: "<span id='icone2'></span>OK",
-                className: corBotao
+                className: corBotao,
+                callback: function() {
+                    window.location.reload();
+                }
             }
         }
 
