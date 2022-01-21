@@ -1,11 +1,23 @@
 import React, {useEffect, useState} from "react";
 import {Select} from "../../componentes/form";
-import {xfetch} from "../../util";
-import {HttpVerbo} from "../../util/Constantes";
+import {ExibirMensagem, xfetch} from "../../util";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {Botao, Card, Pagina, Tabela} from "../../componentes";
 
 export default function ListarPacientes() {
     const [objeto, setObjeto] = useState({});
+
+    const handleBtnConfirmar = async (e) => {
+        await xfetch('/hpm/consulta/alterarConfirmacao/' + e.target.value, {}, HttpVerbo.PUT)
+            .then( json =>{
+                    if(json.status === "OK"){
+                        ExibirMensagem('Consulta Confirmada!', MSG.SUCESSO)
+                    }else{
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+    }
 
     const selecionarEspecialidade = (e) => {
         setObjeto({...objeto, idEspecialidade: e.value});
@@ -14,23 +26,22 @@ export default function ListarPacientes() {
     const selecionarProfissionalSaude = (e) => {
         objeto.idProfissionalSaude = e.target.value;
         listarDatasPorEspecialidadeProfissionalSaude();
-        console.log("Profissional Selecionado:", e.target.value);
     }
 
     const selecionarConsultorioBloco = (e) => {
         objeto.idConsultorioBloco = e.target.value;
-        listarPacientesPorEspecialidadeProfissionalData();
-        console.log("Consultório Selecionado:", objeto.idConsultorioBloco);
+        listarPacientesPorData();
     }
 
     const listarProfissionalPorEspecialidade = () => {
-        console.log("Especialidade:", objeto.idEspecialidade);
-        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
-            .then(res => res.json())
-            .then(json => {
-                    setObjeto({...objeto, profissionais: json.resultado});
-                }
-            )
+        if(typeof objeto.idEspecialidade !== 'undefined') {
+            xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
+                .then(res => res.json())
+                .then(json => {
+                        setObjeto({...objeto, profissionais: json.resultado});
+                    }
+                )
+        }
     }
 
     const listarDatasPorEspecialidadeProfissionalSaude = () => {
@@ -43,10 +54,15 @@ export default function ListarPacientes() {
             )
     }
 
-    const listarPacientesPorEspecialidadeProfissionalData = () => {
-        xfetch('/hpm/consulta/agendadas/' + objeto.idEspecialidade + "/" + objeto.idProfissionalSaude + "/" + objeto.idConsultorioBloco, {}, HttpVerbo.GET)
+    const listarPacientesPorData = () => {
+        let dataConsulta = objeto.idConsultorioBloco;
+        xfetch('/hpm/consulta/' + dataConsulta + '/opcoes', {}, HttpVerbo.GET)
             .then(response => response.json())
-            .then(json => {setObjeto({...objeto, consultas: json.resultado})})
+            .then(json => {
+                    setObjeto({...objeto, consultas: json.resultado})
+                    console.log("Consultas:", objeto.consultas);
+                }
+            )
     }
 
     useEffect( () => {
@@ -67,10 +83,10 @@ export default function ListarPacientes() {
                 return({
                     'id': consulta.valor,
                     'paciente': consulta.nmPaciente,
-                    'telefone': consulta.telefone,
-                    'atendimento': consulta.status,
+                    'telefone': consulta.nmCelular,
+                    'atendimento': consulta.nmStatus,
                     'acoes': <div>
-                                <Botao>Confirmado</Botao>
+                                <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnConfirmar.bind(consulta.id)} value={consulta.id}>Confirmar</Botao>
                                 <Botao>Cancelar</Botao>
                             </div>
                 })
@@ -79,9 +95,6 @@ export default function ListarPacientes() {
     }
 
     let consultaBloco = objeto.consultoriosBloco;
-    console.log("Bloco:", consultaBloco);
-    console.log("Consultas:", objeto.consultas);
-    console.log("Profissionais:", objeto.profissionais);
 
     return (
         <Pagina titulo={"Listar Pacientes"}>
