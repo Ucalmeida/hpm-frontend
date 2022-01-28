@@ -7,11 +7,25 @@ import {Botao, Card, Pagina, Tabela} from "../../componentes";
 export default function ListarPacientes() {
     const [objeto, setObjeto] = useState({});
 
+    let statusConsulta = '';
+
     const handleBtnConfirmar = async (e) => {
         await xfetch('/hpm/consulta/alterarConfirmacao/' + e.target.value, {}, HttpVerbo.PUT)
             .then( json =>{
                     if(json.status){
-                        ExibirMensagem('Consulta Confirmada!', MSG.SUCESSO)
+                        ExibirMensagem('Consulta Alterada!', MSG.SUCESSO, '', '', '', '', listarPacientesPorData())
+                    }else{
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+    }
+
+    const handleBtnCancelar = async (e) => {
+        await xfetch('/hpm/consulta/alterar/' + e.target.value, {}, HttpVerbo.PUT)
+            .then( json =>{
+                    if(json.status === "OK"){
+                        ExibirMensagem('Consulta Cancelada!', MSG.SUCESSO, '', '', '', '', listarPacientesPorData())
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)
                     }
@@ -60,7 +74,6 @@ export default function ListarPacientes() {
             .then(response => response.json())
             .then(json => {
                     setObjeto({...objeto, consultas: json.resultado})
-                    console.log("Consultas:", objeto.consultas);
                 }
             )
     }
@@ -79,16 +92,16 @@ export default function ListarPacientes() {
 
     const dados = () => {
         return(
-            typeof(objeto.consultas) !== 'undefined' ? objeto.consultas.map((consulta) => {
-                return({
-                    'id': consulta.valor,
+            typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta, indice) => {
+                return ({
+                    'id': consulta.id,
                     'paciente': consulta.nmPaciente,
                     'telefone': consulta.nmCelular,
                     'atendimento': consulta.nmStatus,
                     'acoes': <div>
-                                <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnConfirmar.bind(consulta.id)} value={consulta.id}>Confirmar</Botao>
-                                <Botao>Cancelar</Botao>
-                            </div>
+                                <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleBtnConfirmar.bind(consulta.id)} value={consulta.id}>Confirmar</Botao>
+                                <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id}>Cancelar</Botao>
+                             </div>
                 })
             }) : ''
         )
@@ -117,7 +130,7 @@ export default function ListarPacientes() {
                                     onChange={selecionarProfissionalSaude}
                                     name="idProfissionalSaude">
                                     <option hidden>Selecione...</option>
-                                    {typeof objeto.profissionais != 'undefined' ? objeto.profissionais.map((v, k) => {
+                                    {(typeof objeto.profissionais !== 'undefined') ? objeto.profissionais.map((v, k) => {
                                         return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
                                     }) : ''}
                                 </select>

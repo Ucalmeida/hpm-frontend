@@ -4,7 +4,7 @@ import bootbox from "bootbox";
 import {Icone} from "../componentes/Icone";
 import {BOTAO, ICONE, MSG, TEXTO} from "./Constantes";
 
-function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
+function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho, funcao) {
     //TODO implementar o tamanho e objeto
 
     let corBotao = BOTAO.COR.PRIMARIO;
@@ -51,9 +51,8 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho) {
             ok: {
                 label: "<span id='icone2'></span>OK",
                 className: corBotao,
-                callback: function() {
-                    window.location.reload();
-                }
+                callback:
+                    funcao
             }
         }
 
