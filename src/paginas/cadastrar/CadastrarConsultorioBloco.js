@@ -16,38 +16,40 @@ function CadastrarConsultorioBloco(){
             profissionais: []
         }
     )
-    const handleDtHrInicio = (e) => {
+    let handleDtHrInicio = (e) => {
         setObjeto({...objeto, dataInicio: e.target.value});
     }
 
-    const handleDtHrTermino = (e) => {
+    let handleDtHrTermino = (e) => {
        setObjeto({...objeto, dataTermino: e.target.value});
     }
 
-    const handleQtdConsulta = (e) => {
+    let handleQtdConsulta = (e) => {
         e.preventDefault()
        setObjeto({...objeto, qtdConsultas: e.target.value})
     }
 
-    const handleQtdEmergencia = (e) => {
+    let handleQtdEmergencia = (e) => {
         e.preventDefault()
         setObjeto({...objeto, qtdEmergencias: e.target.value})
     }
 
-    const selecionarEspecialidade = (e) => {
+    let selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = e.value
         listarProfissionalPorEspecialidade()
     }
 
-    const selecionarProfissionalSaude = (e) => {
+    let selecionarProfissionalSaude = (e) => {
         objeto.idProfissionalSaude = e.value
+
+
     }
 
-    const selecionarSala = (e) => {
+    let selecionarSala = (e) => {
         objeto.idSala = e.value
     }
 
-    const listarProfissionalPorEspecialidade = () => {
+    let listarProfissionalPorEspecialidade = () => {
         setObjeto({...objeto, profissionais: []})
         xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
             .then(res => res.json())
@@ -57,7 +59,7 @@ function CadastrarConsultorioBloco(){
             )
     }
 
-    const enviar = (e) => {
+    let enviar = (e) => {
 
         xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
@@ -71,13 +73,13 @@ function CadastrarConsultorioBloco(){
 
     }
 
-     const selectEspecialista =  objeto.idEspecialidade ?   <div className="col-lg-6">
-         <label>Profissional</label>
-         <Select
-             funcao={selecionarProfissionalSaude}
-             nome="idProfissionalSaude"
-             url={"/hpm/profissionalSaude/"+ objeto.idEspecialidade+"/opcoes"} />
-     </div> : ''
+ let selectEspeciaista =  objeto.idEspecialidade ?   <div className="col-lg-6">
+     <label>Profissional</label>
+     <Select
+         funcao={selecionarProfissionalSaude}
+         nome="idProfissionalSaude"
+         url={"/hpm/profissionalSaude/"+ objeto.idEspecialidade+"/opcoes"} />
+ </div> : ''
 
     return(
         <Pagina titulo="Cadastrar ConsultorioBloco">
@@ -128,7 +130,7 @@ function CadastrarConsultorioBloco(){
                                     nome="idEspecialidade"
                                     url={"/hpm/especialidade/opcoes"} />
                             </div>
-                            {selectEspecialista}
+                            {selectEspeciaista}
                             <div className="col-lg-6">
                                 <label>Prédio - Piso - Sala</label>
                                 <Select
