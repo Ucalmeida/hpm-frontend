@@ -44,27 +44,39 @@ export class Autocompletar extends React.Component {
         });
     }
 
+
+
     render() {
         const {busca, valor, carregando} = this.state
         let spinner = '';
         if (carregando) {
             spinner =
                 <span className="spinner-border spinner-border-sm text-success" role="status"/>
-
         }
+
         return (
             <>
                 <div>
                     <label>{this.props.label}</label>
-                    <input id={'id' + this.props.name + 'Auto'}
+                    <input
+                       id={'id' + this.props.name + 'Auto'}
                        autoComplete="off"
                        className="form-control"
-                       type="text" name="busca" onChange={this.handle}
-                       value={busca} placeholder={this.props.placeholder} />
+                       type="text"
+                       name="busca"
+                       onChange={this.handle}
+                       value={busca}
+                       placeholder={this.props.placeholder}
+                    />
                     {spinner}
                 </div>
                 <div className="col-lg-1">
-                    <input type="hidden" id={'id'+this.props.name} name={this.props.name} value={valor} />
+                    <input
+                        type="hidden"
+                        id={'id'+this.props.name}
+                        name={this.props.name}
+                        value={valor}
+                    />
                 </div>
             </>
         );

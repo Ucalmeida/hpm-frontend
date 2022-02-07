@@ -72,6 +72,7 @@ export default function Dependente(){
                      }
                     dependencia.idTitular = json.resultado.id
                     pessoa.idPessoa = json.resultado.id
+                    console.log('@@@@: ' + objeto.titular.instituicaoConvenio)
                     selecionarPessoa();
                 }else{
                     ExibirMensagem(json.message, MSG.ERRO)
