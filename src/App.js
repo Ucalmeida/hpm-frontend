@@ -22,7 +22,6 @@ import {
     CadastrarMedicamento,
     CadastrarStatus,
     CadastrarExame
-
 } from "./paginas/cadastrar";
 import {
     VincularSetorFuncao,
