@@ -1,7 +1,7 @@
 import CadastrarEscala from "../paginas/cadastrar/CadastrarEscala";
 
 export const acoes = [
-  {
+    {
     "nome": "Alterar Senha",
     "descricao": "Página Principal",
     "url": "alterarSenha",
@@ -256,6 +256,20 @@ export const acoes = [
       //   "url": "setorFuncao",
       //   "icone": "fas fa-users-cog"
       // },
+    ]
+  },
+  {
+    "nome": "Relatório",
+    "descricao": "Menu de Relatorio",
+    "url": "relatorio",
+    "icone": "fas fa-list",
+    "acoes": [
+      {
+        "nome": "Atendimentos ",
+        "descricao": "Relatório de Consultas",
+        "url": "atendimentos",
+        "icone": "fas fa-stethoscope"
+      },
     ]
   },
 ]
