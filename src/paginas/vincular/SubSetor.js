@@ -3,7 +3,7 @@ import {Botao, BotaoExcluir, Card, Pagina, Select, Spinner, Tabela} from "../../
 import {ExibirMensagem, FormatarDataHora, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
-export default function SubSetor() {
+export function SubSetor() {
 
     const [objeto, setObjeto] = useState({
         idSetor: -1,
