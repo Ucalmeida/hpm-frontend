@@ -31,7 +31,7 @@ import {
     VincularPerfilAcao,
 
 } from "./paginas/vincular";
-import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
+// import {CadastrarTipo} from "./paginas/cadastrar/CadastrarTipo";
 import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 import RecuperarSenha from "./paginas/RecuperarSenha";
@@ -74,7 +74,7 @@ class App extends Component {
                         <Route exact path="/cadastrar/predio" component={CadastrarPredio} />
                         <Route exact path="/cadastrar/perfil" component={CadastrarPerfil} />
                         <Route exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
-                        <Route exact path="/cadastrar/tipo" component={CadastrarTipo} />
+                        {/* <Route exact path="/cadastrar/tipo" component={CadastrarTipo} /> */}
                         <Route exact path="/cadastrar/setor" component={CadastrarSetor} />
                         <Route exact path="/cadastrar/funcao" component={CadastrarFuncao} />
                         <Route exact path="/cadastrar/piso" component={CadastrarPiso} />
