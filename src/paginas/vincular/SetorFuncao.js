@@ -3,7 +3,7 @@ import {Botao, Card, Pagina, Select, Spinner} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
-export default function SetorFuncao() {
+export function SetorFuncao() {
 
     const [objeto, setObjeto] = useState({
         idSetor: -1,
