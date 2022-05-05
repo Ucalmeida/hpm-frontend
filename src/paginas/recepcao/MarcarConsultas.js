@@ -49,8 +49,8 @@ export default function MarcarConsultas() {
                         'termino': medico.celular,
                         'vagas': medico.email,
                         'acoes': <div>
-                                    <Botao cor={BOTAO.COR.PRIMARIO}>Confirmar</Botao>
-                                    <Botao cor={BOTAO.COR.ALERTA}>Cancelar</Botao>
+                                    <Botao cor={BOTAO.COR.PRIMARIO}>Confirmar Novo Teste</Botao>
+                                    <Botao cor={BOTAO.COR.ALERTA}>Cancelar Novo Teste</Botao>
                                 </div>
                     })
                 })
