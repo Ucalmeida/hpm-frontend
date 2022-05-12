@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {BOTAO, HttpVerbo} from "../../util/Constantes";
-import {Botao, Card, Pagina, Select, Tabela} from "../../componentes";
+import {Select} from "../../componentes/form";
 import {xfetch} from "../../util";
+import {BOTAO, HttpVerbo} from "../../util/Constantes";
+import {Botao, Card, Pagina, Tabela} from "../../componentes";
 
 export default function MarcarConsultas() {
     const [objeto, setObjeto] = useState({
@@ -49,9 +50,9 @@ export default function MarcarConsultas() {
                         'termino': medico.celular,
                         'vagas': medico.email,
                         'acoes': <div>
-                                    <Botao cor={BOTAO.COR.PRIMARIO}>Confirmar Novo Teste</Botao>
-                                    <Botao cor={BOTAO.COR.ALERTA}>Cancelar Novo Teste</Botao>
-                                </div>
+                            <Botao cor={BOTAO.COR.PRIMARIO}>Confirmar Novo Teste</Botao>
+                            <Botao cor={BOTAO.COR.ALERTA}>Cancelar Novo Teste</Botao>
+                        </div>
                     })
                 })
             )

@@ -65,6 +65,7 @@ import ListarEspecialidadePorProfissionalSaude from "./paginas/listar/ListarEspe
 import ListarProfissionaisSaude from "./paginas/listar/ListarProfissionaisSaude";
 
 import ListarPacientes from "./paginas/recepcao/ListarPacientes";
+import MarcarConsultas from "./paginas/recepcao/MarcarConsultas";
 
 import Atendimentos from "./paginas/relatorio/Atendimentos";
 
@@ -145,6 +146,7 @@ class App extends Component {
                         <Route exact path="/listar/listarProfissionaisSaude" component={ListarProfissionaisSaude} />
 
                         <Route exact path="/recepcao/listarPacientes" component={ListarPacientes} />
+                        <Route exact path="/recepcao/marcarConsultas" component={MarcarConsultas} />
 
                         <Route exact path="/relatorio/atendimentos" component={Atendimentos} />
 
