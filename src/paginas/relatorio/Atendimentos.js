@@ -43,8 +43,7 @@ export default function Atendimentos(){
             .then(res => res.json())
             .then(json => {
                     list.especialidades = json.resultado
-                console.log('Lista de especialidades: ', list.especialidades)
-                }
+               }
             )
     }
 
