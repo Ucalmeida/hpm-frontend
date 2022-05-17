@@ -85,7 +85,7 @@ export default function Consulta() {
                         ExibirMensagem('Consulta Cadastrada Com Sucesso!', MSG.SUCESSO)
                         window.location.reload();
                     }else{
-                        ExibirMensagem(json.message, MSG.ERRO)
+                        ExibirMensagem(json.message, MSG.ALERTA)
                     }
 
                 }
