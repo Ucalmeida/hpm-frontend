@@ -8,9 +8,10 @@ function Select(props) {
     const [lists, setLists] = useState([]);
 
     const loadBloods = async () => {
-        const bloodResponse = xfetch(props.url, {}, HttpVerbo.GET)
+            const bloodResponse = xfetch(props.url, {}, HttpVerbo.GET)
             .then(r => r.json());
-        bloodResponse.then(data => setLists(data.resultado));
+        bloodResponse.then(data => setLists(data.resultado ));
+
     }
 
     useEffect(() => {
@@ -18,9 +19,11 @@ function Select(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const options = lists.map((item) => {
-        return {value: item.valor,label: item.texto, key: item.valor}
+    let options = lists.map((item) => {
+        return {value: item.valor, label: item.texto, key: item.valor}
     })
+
+    options.unshift({value: '', label: 'Selecione...', key: ''})
 
     const NoOptionsMessage = props => {
         return (
@@ -29,13 +32,14 @@ function Select(props) {
             </span>
         );
     };
+
     const Placeholder = props => {
         const place = props.children === "Select..." ? 'Selecione...' : props.children;
         return <components.Placeholder {...props}>{place}</components.Placeholder>;
     };
 
-
     return ( <ReactSelect
+
             options={options}
             value={props.valorAttr}
             name={props.nome}
