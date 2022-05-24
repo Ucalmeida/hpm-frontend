@@ -250,12 +250,12 @@ export const acoes = [
         "url": "listarPacientes",
         "icone": "fas fa-people-arrows"
       },
-      // {
-      //   "nome": "Setor Função",
-      //   "descricao": "Página Principal",
-      //   "url": "setorFuncao",
-      //   "icone": "fas fa-users-cog"
-      // },
+      {
+        "nome": "Marcar Consulta",
+        "descricao": "Marca consulta por especialidade e paciente",
+        "url": "marcarConsultas",
+        "icone": "fas fa-users-cog"
+      },
     ]
   },
   {
