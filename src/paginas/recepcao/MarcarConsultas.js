@@ -25,7 +25,7 @@ export default function MarcarConsultas() {
     }, [objeto])
 
     const listarProfissionalPorEspecialidade = () => {
-        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes', {objeto}, HttpVerbo.GET)
+        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/opcoes', {objeto}, HttpVerbo.GET)
             .then(res => res.json())
             .then(lista => {
                 setLista({...lista, medicos: lista.resultado})
