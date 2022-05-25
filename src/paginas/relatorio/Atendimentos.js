@@ -70,6 +70,7 @@ export default function Atendimentos(){
         if(e.value == ''){
           aux.idEspecialidade = null
             setList({...list,profissionais: []})
+            aux.idProfissionalSaude = null
         }else{
             objeto.idEspecialidade = e.value;
             aux.idEspecialidade = objeto.idEspecialidade;
@@ -117,7 +118,7 @@ export default function Atendimentos(){
             setList({...list, consultas:[]})
         }else{
             setObjeto({...objeto, listandoAtendimentos: true})
-
+            console.log('objeto: ', aux)
             xfetch('/hpm/consulta/relatorio/atendimentos', aux, HttpVerbo.POST)
                 .then(response => {
                     if(response.status === "OK"){
