@@ -46,9 +46,9 @@ export default function MarcarConsultas() {
                 lista.medicos.map((medico, indice) => {
                     return({
                         'nome': medico.texto,
-                        'inicio': medico.celular,
-                        'termino': medico.celular,
-                        'vagas': medico.email,
+                        'inicio': medico.texto2,
+                        'termino': medico.texto3,
+                        'vagas': medico.texto4,
                         'acoes': <div>
                             <Botao cor={BOTAO.COR.PRIMARIO}>Ver Pacientes</Botao>
                             <Botao cor={BOTAO.COR.ALERTA}>Urgência</Botao>
