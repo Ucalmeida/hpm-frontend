@@ -159,6 +159,7 @@ export default function ListarDependentes() {
                             placeholder="Nome ou CPF aqui"
                             tamanho={6}
                             retorno={selecionarDependente}
+                            mensagem={'Pessoa não cadastrada no banco de dados'}
                         />
                     </div>
 
