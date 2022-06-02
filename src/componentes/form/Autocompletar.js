@@ -2,8 +2,9 @@ import React from "react";
 import * as $ from "jquery"
 import 'jquery-ui/themes/base/all.css'
 import 'jquery-ui/ui/widgets/autocomplete'
-import {xfetch} from "../../util";
+import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo} from "../../util/Constantes";
+import {msgErro} from "../../util/Msg";
 
 export class Autocompletar extends React.Component {
     constructor(props) {
@@ -24,6 +25,7 @@ export class Autocompletar extends React.Component {
     componentDidMount() {
         const url = this.props.url;
         let that = this;
+        let mensagem = this.props.mensagem;
         let idAuto = 'id' + this.props.name + 'Auto';
         $('#' + idAuto).autocomplete({
             source: function( request, response ) {
@@ -32,7 +34,7 @@ export class Autocompletar extends React.Component {
                 let requisicao = !isNaN(key) ? 'porCpf/' : 'porNome/';
                 xfetch(url + requisicao + key, {}, HttpVerbo.GET)
                     .then(res => res.json())
-                    .then(json => response(json.resultado) & that.setState({carregando: false}))
+                    .then(json => response(json.resultado) & that.setState({carregando: false}) & (json.resultado.length == 0 ? ExibirMensagem(mensagem) : ''))
                     .catch(e => that.setState({carregando: false}))
             },
             minLength: this.props.tamanho,
@@ -43,8 +45,6 @@ export class Autocompletar extends React.Component {
             }
         });
     }
-
-
 
     render() {
         const {busca, valor, carregando} = this.state
