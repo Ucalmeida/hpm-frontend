@@ -53,7 +53,6 @@ export class Autocompletar extends React.Component {
             spinner =
                 <span className="spinner-border spinner-border-sm text-success" role="status"/>
         }
-
         return (
             <>
                 <div>
