@@ -1,111 +1,24 @@
 import {
     Autocompletar,
-    Autocomplete, Botao,
-    BotaoImprimir,
-    BotaoPesquisar,
     Card,
     Pagina,
-    Select,
     Tabela
 } from "../../componentes";
-import React, {useEffect, useState, ReactDOM} from "react";
+import React, {useState} from "react";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {element} from "prop-types";
 
 export default function ListarDependentes() {
     const [objeto, setObjeto] = useState({
-        idDependente: null,
-        idPessoa: null,
-        idTipoDependencia: null,
-        pessoaDependentes: []
+        idPessoa: null
     })
 
     const [list, setList] = useState({
         dependentes: []
     })
 
-    let url = ''
-
     function limparCampoId(id){
         document.getElementById(id).value = "";
-    }
-
-    function gerarUrl( idDependente , idTitular, idTipoDependencia){
-        if(idDependente !== null && idTitular === null && idTipoDependencia === null){
-            url = '/hpm/dependente/dep/' + objeto.idDependente + '/opcoes'
-        }
-        if(idDependente === null && idTitular !== null && idTipoDependencia === null){
-            url = '/hpm/dependente/tit/' + objeto.idPessoa + '/opcoes'
-        }
-        if(idDependente === null && idTitular === null && idTipoDependencia !== null){
-            url = '/hpm/dependente/tipoDependencia/' + objeto.idTipoDependencia + '/opcoes'
-        }
-        if(idDependente === null && idTitular !== null && idTipoDependencia !== null){
-            url = '/hpm/dependente/titular/tipoDependencia/' + objeto.idPessoa + '/' + objeto.idTipoDependencia + '/opcoes'
-        }
-        if(idDependente !== null && idTitular !== null && idTipoDependencia === null){
-            url = '/hpm/dependente/depTit/' + objeto.idDependente + '/' + objeto.idPessoa + '/opcoes'
-        }
-        if(idDependente !== null && idTitular === null && idTipoDependencia !== null){
-            url = '/hpm/dependente/depTipoDep/' + objeto.idDependente + '/' + objeto.idTipoDependencia + '/opcoes'
-        }
-        if(idDependente === null && idTitular !== null && idTipoDependencia !== null){
-            url = '/hpm/dependente/titTipoDep/' + objeto.idPessoa + '/' + objeto.idTipoDependencia + '/opcoes'
-        }
-        if(idDependente !== null && idTitular !== null && idTipoDependencia !== null){
-            url = '/hpm/dependente/depTitTipoDep/' + objeto.idDependente + '/' +objeto.idPessoa + '/' + objeto.idTipoDependencia + '/opcoes'
-        }
-    }
-
-    let selecao = ''
-    const listarDependentes = () => {
-        gerarUrl(objeto.idDependente, objeto.idPessoa, objeto.idTipoDependencia)
-        xfetch(url, {objeto}, HttpVerbo.GET)
-            .then(res => res.json())
-            .then(lista => {
-                setList({...list, dependentes: lista.resultado});
-                if(lista.status === "OK") {
-
-                    if(objeto.idDependente !== null  && objeto.idPessoa === null && objeto.idTipoDependencia === null){
-                        limparCampoId("iddepAuto")
-                        limparCampoId('iddep')
-                        objeto.idDependente = null
-                        //setObjeto({...objeto, idDependente: null})
-                    }
-
-                    if(objeto.idDependente === null && objeto.idPessoa !== null && objeto.idTipoDependencia === null){
-                        limparCampoId("iddepAuto")
-                        limparCampoId('iddep')
-                        objeto.idDependente = null
-                        limparCampoId('idtitAuto')
-                        limparCampoId('idtit')
-                        objeto.idPessoa = null
-                    }
-
-                    if(objeto.idDependente === null && objeto.idPessoa === null && objeto.idTipoDependencia !== null){
-
-                        limparCampoId("iddepAuto")
-                        limparCampoId('iddep')
-                        objeto.idDependente = null
-                        limparCampoId('idtitAuto')
-                        limparCampoId('idtit')
-                        objeto.idPessoa = null
-
-                        selecao = document.getElementById('idTipoDependencia')
-
-                    }
-
-                    if(objeto.idDependente !== null && objeto.idPessoa !== null && objeto.idTipoDependencia !== null){
-                      console.log('Passei dentro das três')
-                    }
-
-                }else{
-                    limparCampoId('iddepAuto')
-                    limparCampoId('idtitAuto')
-                    ExibirMensagem('Não existem resultados para essa pesquisa!', MSG.ERRO)
-                }
-            })
     }
 
     const colunas = [
@@ -114,7 +27,6 @@ export default function ListarDependentes() {
         {text: "Nome do Titular"},
         {text: "CPF do Titular"},
         {text: "Tipo de Dependência"}
-
     ]
 
     const dados = () => {
@@ -132,17 +44,22 @@ export default function ListarDependentes() {
         )
     }
 
-    const selecionarDependente = (e) => {
-        objeto.idDependente = e;
+    const listarDependentes = () => {
+        xfetch('/hpm/dependente/tit/' + objeto.idPessoa + '/opcoes',{}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(lista => {
+                if(lista.status == 'OK'){
+                    setList({...list, dependentes: lista.resultado})
+                }else{
+                    setList({...list, dependentes: []})
+                    ExibirMensagem('Não existem resultados para essa pesquisa!', MSG.ALERTA)
+                }
+            })
     }
 
-    const selecionarTitular = (e) => {
-        objeto.idPessoa = e;
-    }
-
-    const handleTipoDependencia = (e) => {
-        const idTipoDependencia = e.value;
-        setObjeto({...objeto, idTipoDependencia: idTipoDependencia});
+    const selecionarPessoa = (e) => {
+        objeto.idPessoa = e
+        listarDependentes()
     }
 
     return (
@@ -150,44 +67,16 @@ export default function ListarDependentes() {
 
             <div id="form" className={"row"}>
                 <Card titulo="Listar">
-
                     <div>
                         <Autocompletar
-                            name="dep"
+                            name="pessoa"
                             url="/hpm/pessoa/"
-                            label="Por Dependente:"
+                            label="Nome ou CPF:"
                             placeholder="Nome ou CPF aqui"
                             tamanho={6}
-                            retorno={selecionarDependente}
-                            mensagem={'Pessoa não cadastrada no banco de dados'}
-                        />
+                            retorno={selecionarPessoa}
+                       />
                     </div>
-
-                    <Autocompletar
-                        name="tit"
-                        url="/hpm/pessoa/"
-                        label="Por Titular:"
-                        placeholder="Nome ou CPF aqui"
-                        tamanho={6}
-                        retorno={selecionarTitular}
-                    />
-
-                    { objeto.idDependente != null && (
-                        <div>
-                            <label>Por Tipo de Dependência</label>
-                            <Select
-                                url={"/hpm/tipo/opcoes/30" }
-                                nome={"idTipoDependencia"}
-                                funcao={handleTipoDependencia}
-                            />
-                        </div>
-                        )
-                    }
-
-                    <div className="col-lg-4 mt-4 mb-4">
-                        <BotaoImprimir onClick={listarDependentes}>Listar</BotaoImprimir>
-                    </div>
-
                 </Card>
             </div>
 
@@ -196,6 +85,7 @@ export default function ListarDependentes() {
                     <Tabela colunas={colunas} dados={dados()}/>
                 </Card>
             </div>
+
         </Pagina>
     );
 
