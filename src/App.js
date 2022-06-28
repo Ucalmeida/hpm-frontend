@@ -78,6 +78,7 @@ import AlterarSenha from "./paginas/AlterarSenha";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 import RecuperarSenha from "./paginas/RecuperarSenha";
 import {MenuLateral, Rodape, Topo} from "./componentes/pagina";
+import CadastrarSistemaExterno from "./paginas/cadastrar/CadastrarSistemaExterno";
 
 
 
@@ -137,6 +138,7 @@ class App extends Component {
                         <Route exact path="/cadastrar/consulta" component={Consulta} />
                         <Route exact path="/cadastrar/dependente" component={Dependente} />
                         <Route exact path="/cadastrar/cadastrarEscala" component={CadastrarEscala} />
+                        <Route exact path="/cadastrar/cadastrarSistemaExterno" component={CadastrarSistemaExterno}/>
 
                         <Route exact path="/editordeTexto" component={EditordeTexto} />
 

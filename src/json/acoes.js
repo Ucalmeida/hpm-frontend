@@ -171,6 +171,12 @@ export const acoes = [
         "descricao": "Cadastro de Escala",
         "url": "cadastrarEscala",
         "icone": "fas fa-stethoscope"
+      },
+      {
+        "nome": "Sistema externo",
+        "descricao": "Cadastro Sistema externo",
+        "url": "cadastrarSistemaExterno",
+        "icone": "fas fa-cubes"
       }
     ]
   },
