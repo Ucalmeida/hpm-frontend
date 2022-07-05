@@ -9,7 +9,8 @@ export default function CadastrarSistemaExterno() {
   const [nome, setNome] = useState('')
 
 
-  function buscarSistemas() {
+  const buscarSistemas = () => {
+    setSistemas([])
     xfetch('/hpm/sistema-externo', {}, HttpVerbo.GET)
       .then(res => res.json())
       .then(dados => setSistemas(dados.resultado))
@@ -21,14 +22,20 @@ export default function CadastrarSistemaExterno() {
 
   function toggle(id) {
     xfetch('/hpm/sistema-externo/'+id+ '/toggle', {}, HttpVerbo.POST)
-      .then(res => res.json())
-      .then(dados => { buscarSistemas()})
+      .then(dados => {buscarSistemas()})
   }
 
   function recriarToken(id) {
     xfetch('/hpm/sistema-externo/'+id+ '/recriar-token', {}, HttpVerbo.POST)
-      .then(res => res.json())
       .then(dados => { buscarSistemas()})
+  }
+
+  function cadastrar() {
+    if (nome) {
+      setSistemas([])
+      xfetch('/hpm/sistema-externo', {nome: nome}, HttpVerbo.POST)
+        .then(json => setNome('') & buscarSistemas())
+    }
   }
 
   return (
@@ -44,7 +51,7 @@ export default function CadastrarSistemaExterno() {
             </div>
           </div>
           <div className="col-2 mt-3">
-            <Botao className='mt-3' cor='success'>Cadastrar</Botao>
+            <Botao className='mt-3' onClick={cadastrar} cor='success'>Cadastrar</Botao>
           </div>
         </div>
 
@@ -74,17 +81,18 @@ export default function CadastrarSistemaExterno() {
                     </td>
                     <td>
                       <b>{v.token}</b>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
                       <span title="recriar token" onClick={(e) => recriarToken(v.id)}>
-                        &nbsp;<i className="text-info fa fa-code-branch"/>
+                        <i className="text-info fa-2x fa fa-code-branch"/>
                       </span>
                     </td>
                     <td>
                       <span title="desligar" onClick={(e) => toggle(v.id)} className={v.isAtivo ? '' : 'd-none'}>
-                        <i className="text-danger fa fa-thumbs-down"/>
+                        <i className="text-danger fa-2x fa fa-thumbs-down"/>
                       </span>
                       &nbsp;
                       <span title="ligar" onClick={(e) => toggle(v.id)} className={v.isAtivo ? 'd-none' : ''}>
-                        <i className="text-success fa fa-thumbs-up"/>
+                        <i className="text-success fa-2x fa fa-thumbs-up"/>
                       </span>
                     </td>
                   </tr>
