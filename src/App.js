@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {xfetch} from "./util";
@@ -97,71 +97,73 @@ function verificaToken() {
 clearInterval(window.checaSeguranca)
 window.checaSeguranca = setInterval(function() {verificaToken();}, 1_000 * 60 * 2);
 
-class App extends Component {
+const App =  () =>  {
 
-    render() {
-        return (
-            <div className={"wrapper principal"}>
-                <Router >
-                    <Topo />
-                    <MenuLateral />
-                    <Switch>
-                        <Route exact path="/login" component={Login} />
-                        <Route exact path="/" component={Login} />
-                        <Route exact path="/principal" component={Principal}/>
-                        <Route exact path="/alterarSenha" component={AlterarSenha} />
+    const perfil = localStorage.getItem('perfis');
 
-                        <Route exact path="/agendadeConsultas" component={AgendadeConsultas} />
+    console.log("Perfil:", perfil);
 
-                        <Route exact path="/agendar/consulta" component={AgendarConsulta} />
-                        <Route exact path="/agendar/consultasAgendadas" component={ConsultasAgendadas} />
+    return (
+        <div className={"wrapper principal"}>
+            <Router >
+                <Topo />
+                <MenuLateral />
+                <Switch>
+                    <Route idPerfil={4}  exact path="/login" component={Login} />
+                    <Route idPerfil={4}  exact path="/" component={Login} />
+                    <Route idPerfil={4}  exact path="/principal" component={Principal}/>
+                    <Route idPerfil={4}  exact path="/alterarSenha" component={AlterarSenha} />
 
-                        <Route exact path="/cadastrar/objeto" component={Objeto} />
-                        <Route exact path="/cadastrar/sangue" component={Sangue} />
-                        <Route exact path="/cadastrar/especialidade" component={Especialidade} />
-                        <Route exact path="/cadastrar/pessoa" component={Pessoa} />
-                        <Route exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
-                        <Route exact path="/cadastrar/predio" component={Predio} />
-                        <Route exact path="/cadastrar/perfil" component={Perfil} />
-                        <Route exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
-                        <Route exact path="/cadastrar/tipo" component={Tipo} />
-                        <Route exact path="/cadastrar/setor" component={Setor} />
-                        <Route exact path="/cadastrar/funcao" component={Funcao} />
-                        <Route exact path="/cadastrar/piso" component={Piso} />
-                        <Route exact path="/cadastrar/menu" component={Menu} />
-                        <Route exact path="/cadastrar/sala" component={Sala} />
-                        <Route exact path="/cadastrar/medicamento" component={Medicamento} />
-                        <Route exact path="/cadastrar/status" component={Status} />
-                        <Route exact path="/cadastrar/exame" component={Exame} />
-                        <Route exact path="/cadastrar/instituicaoConvenio" component={InstituicaoConvenio} />
-                        <Route exact path="/cadastrar/consultorioBloco" component={ConsultorioBloco} />
-                        <Route exact path="/cadastrar/consulta" component={Consulta} />
-                        <Route exact path="/cadastrar/dependente" component={Dependente} />
-                        <Route exact path="/cadastrar/cadastrarEscala" component={CadastrarEscala} />
-                        <Route exact path="/cadastrar/cadastrarSistemaExterno" component={CadastrarSistemaExterno}/>
+                    <Route idPerfil={4}  exact path="/agendadeConsultas" component={AgendadeConsultas} />
 
-                        <Route exact path="/editordeTexto" component={EditordeTexto} />
+                    <Route idPerfil={4}  exact path="/agendar/consulta" component={AgendarConsulta} />
+                    <Route idPerfil={4}  exact path="/agendar/consultasAgendadas" component={ConsultasAgendadas} />
 
-                        <Route exact path="/listar/listarDependentes" component={ListarDependentes} />
-                        <Route exact path="/listar/listarEscalas" component={ListarEscalas} />
-                        <Route exact path="/listar/listarEspecialidadePorProfissionalSaude" component={ListarEspecialidadePorProfissionalSaude} />
-                        <Route exact path="/listar/listarProfissionaisSaude" component={ListarProfissionaisSaude} />
+                    <Route idPerfil={4}  exact path="/cadastrar/objeto" component={Objeto} />
+                    <Route idPerfil={4}  exact path="/cadastrar/sangue" component={Sangue} />
+                    <Route idPerfil={4}  exact path="/cadastrar/especialidade" component={Especialidade} />
+                    <Route idPerfil={4}  exact path="/cadastrar/pessoa" component={Pessoa} />
+                    <Route idPerfil={4}  exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
+                    <Route idPerfil={4}  exact path="/cadastrar/predio" component={Predio} />
+                    <Route idPerfil={4}  exact path="/cadastrar/perfil" component={Perfil} />
+                    <Route idPerfil={4}  exact path="/recuperarSenha/:hash" component={RecuperarSenha}/>
+                    <Route idPerfil={4}  exact path="/cadastrar/tipo" component={Tipo} />
+                    <Route idPerfil={4}  exact path="/cadastrar/setor" component={Setor} />
+                    <Route idPerfil={4}  exact path="/cadastrar/funcao" component={Funcao} />
+                    <Route idPerfil={4}  exact path="/cadastrar/piso" component={Piso} />
+                    <Route idPerfil={2}  exact path="/cadastrar/menu" component={Menu} />
+                    <Route idPerfil={4}  exact path="/cadastrar/sala" component={Sala} />
+                    <Route idPerfil={4}  exact path="/cadastrar/medicamento" component={Medicamento} />
+                    <Route idPerfil={4}  exact path="/cadastrar/status" component={Status} />
+                    <Route idPerfil={4}  exact path="/cadastrar/exame" component={Exame} />
+                    <Route idPerfil={4}  exact path="/cadastrar/instituicaoConvenio" component={InstituicaoConvenio} />
+                    <Route idPerfil={4}  exact path="/cadastrar/consultorioBloco" component={ConsultorioBloco} />
+                    <Route idPerfil={4}  exact path="/cadastrar/consulta" component={Consulta} />
+                    <Route idPerfil={4}  exact path="/cadastrar/dependente" component={Dependente} />
+                    <Route idPerfil={4}  exact path="/cadastrar/cadastrarEscala" component={CadastrarEscala} />
+                    <Route idPerfil={4}  exact path="/cadastrar/cadastrarSistemaExterno" component={CadastrarSistemaExterno}/>
 
-                        <Route exact path="/recepcao/listarPacientes" component={ListarPacientes} />
-                        <Route exact path="/recepcao/marcarConsultas" component={MarcarConsultas} />
+                    <Route idPerfil={4}  exact path="/editordeTexto" component={EditordeTexto} />
 
-                        <Route exact path="/relatorio/atendimentos" component={Atendimentos} />
+                    <Route idPerfil={4}  exact path="/listar/listarDependentes" component={ListarDependentes} />
+                    <Route idPerfil={4}  exact path="/listar/listarEscalas" component={ListarEscalas} />
+                    <Route idPerfil={4}  exact path="/listar/listarEspecialidadePorProfissionalSaude" component={ListarEspecialidadePorProfissionalSaude} />
+                    <Route idPerfil={4}  exact path="/listar/listarProfissionaisSaude" component={ListarProfissionaisSaude} />
 
-                        <Route exact path="/vincular/setorFuncao" component={SetorFuncao} />
-                        <Route exact path="/vincular/setorFuncaoAcoes" component={SetorFuncaoAcoes} />
-                        <Route exact path="/vincular/setorSubSetor" component={SubSetor} />
-                        <Route exact path="/vincular/perfilAcoes" component={PerfilAcoes} />
-                    </Switch>
-                    <Rodape />
-                </Router>
-            </div>
-        );
-    }
+                    <Route idPerfil={4}  exact path="/recepcao/listarPacientes" component={ListarPacientes} />
+                    <Route idPerfil={4}  exact path="/recepcao/marcarConsultas" component={MarcarConsultas} />
+
+                    <Route idPerfil={4}  exact path="/relatorio/atendimentos" component={Atendimentos} />
+
+                    <Route idPerfil={4}  exact path="/vincular/setorFuncao" component={SetorFuncao} />
+                    <Route idPerfil={4}  exact path="/vincular/setorFuncaoAcoes" component={SetorFuncaoAcoes} />
+                    <Route idPerfil={4}  exact path="/vincular/setorSubSetor" component={SubSetor} />
+                    <Route idPerfil={4}  exact path="/vincular/perfilAcoes" component={PerfilAcoes} />
+                </Switch>
+                <Rodape />
+            </Router>
+        </div>
+    );
 }
 
 export default App;

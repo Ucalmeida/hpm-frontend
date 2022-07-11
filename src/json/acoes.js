@@ -16,6 +16,7 @@ export const acoes = [
     "depencias": []
   },
   {
+    "perfil": ["1", "4"],
     "nome": "Agendar",
     "descricao": "Menu de Agendamento",
     "url": "agendar",
@@ -43,6 +44,7 @@ export const acoes = [
     "depencias": []
   },
   {
+    "perfil": ["4"],
     "nome": "Cadastrar",
     "descricao": "Menu de Cadastro",
     "url": "cadastrar",
@@ -181,6 +183,7 @@ export const acoes = [
     ]
   },
   {
+    "perfil": ["4"],
     "nome": "Listar",
     "descricao": "Menu de Listas",
     "url": "listar",
@@ -213,6 +216,7 @@ export const acoes = [
     ]
   },
   {
+    "perfil": ["4"],
     "nome": "Vincular",
     "descricao": "Página Principal",
     "url": "vincular",
@@ -245,6 +249,7 @@ export const acoes = [
     ]
   },
   {
+    "perfil": ["4", "7"],
     "nome": "Recepção",
     "descricao": "Página Recepção",
     "url": "recepcao",
@@ -265,6 +270,7 @@ export const acoes = [
     ]
   },
   {
+    "perfil": ["4"],
     "nome": "Relatório",
     "descricao": "Menu de Relatorio",
     "url": "relatorio",
