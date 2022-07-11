@@ -4,9 +4,13 @@ import logoHPM from "../../img/brasoes/brasao_hpm.png";
 import {Icone} from "../Icone";
 import {CompararArrayObjetos, Logado} from "../../util";
 import {acoes} from "../../json/acoes.js"
+import {forEach} from "react-bootstrap/ElementChildren";
 
 export default function () {
     if (!Logado()) return "";
+
+    let perfil = [];
+    perfil = localStorage.getItem('perfis');
 
     const menu = acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
         if (!acao.acoes) {
@@ -39,31 +43,49 @@ export default function () {
         else a.classList.add("active")
     }
     function submenu(subAcoes) {
-        return (
-            <li className='nav-item' key={subAcoes.url}>
-                <a onClick={ativarMenuSelecionado} className={"nav-link"}>
-                    <Icone icone={subAcoes.icone} className={"nav-icon"} margem={false}/>
-                    <p>
-                        {subAcoes.nome}
-                        <Icone icone={"fas fa-angle-down"} className={"right"} margem={true}/>
-                    </p>
-                </a>
-                <ul className='nav nav-treeview'>
-                    {subAcoes.acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
-                        if (!acao.acoes) {
-                            return (<li className="nav-item" key={acao.url}>
-                                <NavLink to={"/" + subAcoes.url + "/" + acao.url} exact className="nav-link">
-                                    <Icone icone={acao.icone} className={"nav-icon"} margem={false}/>
-                                    <p>{acao.nome}</p>
-                                </NavLink>
-                            </li>)
-                        } else {
-                            return submenu(acao)
-                        }
-                    })}
-                </ul>
-            </li>
-        )
+        let perfilAcao = false;
+        function perfilSubAcoes() {
+            for (let i=0; i < subAcoes.perfil.length; i++) {
+                console.log("SubAcoes:", subAcoes.perfil[i]);
+                console.log("Perfil Completo:", perfil);
+                for (let j=0; j < perfil.length; j++) {
+                    console.log("Perfil:", perfil[j]);
+                    if(perfil[j].indexOf(subAcoes.perfil[i]) === 0) {
+                        perfilAcao = true;
+                        return perfilAcao;
+                    }
+                }
+            }
+        }
+        if (perfilSubAcoes()) {
+            return (
+                <li className='nav-item' key={subAcoes.url}>
+                    <a onClick={ativarMenuSelecionado} className={"nav-link"}>
+                        <Icone icone={subAcoes.icone} className={"nav-icon"} margem={false}/>
+                        <p>
+                            {subAcoes.nome}
+                            <Icone icone={"fas fa-angle-down"} className={"right"} margem={true}/>
+                        </p>
+                    </a>
+                    <ul className='nav nav-treeview'>
+                        {subAcoes.acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
+                            if (!acao.acoes) {
+                                if(perfilSubAcoes()) {
+                                    return (<li className="nav-item" key={acao.url}>
+                                        <NavLink to={"/" + subAcoes.url + "/" + acao.url} exact className="nav-link">
+                                            <Icone icone={acao.icone} className={"nav-icon"} margem={false}/>
+                                            <p>{acao.nome}</p>
+                                        </NavLink>
+                                    </li>)
+                                } else {
+                                    return submenu(acao)
+                                }
+                            }
+                        })}
+                    </ul>
+                </li>
+            )
+        }
     }
 
     return (

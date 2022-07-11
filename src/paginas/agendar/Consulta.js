@@ -19,9 +19,8 @@ export default function Consulta() {
     )
 
     const selecionarEspecialidade = (e) => {
-        objeto.idEspecialidade = e.value
+        setObjeto({...objeto, idEspecialidade: e.value});
         listarProfissionalPorEspecialidade()
-        // objeto.idPessoa = localStorage.getItem('id')
 
     }
 

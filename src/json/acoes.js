@@ -16,6 +16,7 @@ export const acoes = [
     "depencias": []
   },
   {
+    "perfil": ["1", "4"],
     "nome": "Agendar",
     "descricao": "Menu de Agendamento",
     "url": "agendar",
@@ -43,6 +44,7 @@ export const acoes = [
     "depencias": []
   },
   {
+    "perfil": ["4"],
     "nome": "Cadastrar",
     "descricao": "Menu de Cadastro",
     "url": "cadastrar",
@@ -171,10 +173,17 @@ export const acoes = [
         "descricao": "Cadastro de Escala",
         "url": "cadastrarEscala",
         "icone": "fas fa-stethoscope"
+      },
+      {
+        "nome": "Sistema externo",
+        "descricao": "Cadastro Sistema externo",
+        "url": "cadastrarSistemaExterno",
+        "icone": "fas fa-cubes"
       }
     ]
   },
   {
+    "perfil": ["4"],
     "nome": "Listar",
     "descricao": "Menu de Listas",
     "url": "listar",
@@ -207,11 +216,18 @@ export const acoes = [
     ]
   },
   {
+    "perfil": ["4"],
     "nome": "Vincular",
     "descricao": "Página Principal",
     "url": "vincular",
     "icone": "fas fa-retweet",
     "acoes": [
+      {
+        "nome": "Pessoa Perfis",
+        "descricao": "Vincula perfis por pessoa",
+        "url": "pessoaPerfis",
+        "icone": "fas fa-people-arrows"
+      },
       {
         "nome": "Perfil Ações",
         "descricao": "Vincula ações por perfil",
@@ -239,6 +255,7 @@ export const acoes = [
     ]
   },
   {
+    "perfil": ["4", "7"],
     "nome": "Recepção",
     "descricao": "Página Recepção",
     "url": "recepcao",
@@ -259,6 +276,7 @@ export const acoes = [
     ]
   },
   {
+    "perfil": ["4"],
     "nome": "Relatório",
     "descricao": "Menu de Relatorio",
     "url": "relatorio",
