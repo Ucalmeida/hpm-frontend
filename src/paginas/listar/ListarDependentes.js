@@ -4,22 +4,23 @@ import {
     Pagina,
     Tabela
 } from "../../componentes";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 import {ExibirMensagem, xfetch} from "../../util";
+import {tab} from "@testing-library/user-event/dist/tab";
 
 export default function ListarDependentes() {
     const [objeto, setObjeto] = useState({
         idPessoa: null
     })
 
+    let [result, setResult] = useState({
+        prm: ''
+    })
+
     const [list, setList] = useState({
         dependentes: []
     })
-
-    function limparCampoId(id){
-        document.getElementById(id).value = "";
-    }
 
     const colunas = [
         {text: "Nome do Dependente"},
@@ -29,7 +30,7 @@ export default function ListarDependentes() {
         {text: "Tipo de Dependência"}
     ]
 
-    const dados = () => {
+    let dados = () => {
         return (
             typeof list.dependentes != 'undefined' ? list.dependentes.map((dependente, indice) => {
                     return ({
@@ -44,27 +45,37 @@ export default function ListarDependentes() {
         )
     }
 
+    useEffect(() => {
+        setList({...list,dependentes: []})
+    }, [result.prm])
+
     const listarDependentes = () => {
-        xfetch('/hpm/dependente/tit/' + objeto.idPessoa + '/opcoes',{}, HttpVerbo.GET)
-            .then(res => res.json())
-            .then(lista => {
-                if(lista.status == 'OK'){
-                    setList({...list, dependentes: lista.resultado})
-                }else{
-                    setList({...list, dependentes: []})
-                    ExibirMensagem('Não existem resultados para essa pesquisa!', MSG.ALERTA)
-                }
-            })
-    }
+                xfetch('/hpm/dependente/tit/' + objeto.idPessoa + '/opcoes',{}, HttpVerbo.GET)
+                    .then(res => res.json())
+                    .then(lista => {
+                        if(lista.status == 'OK' && result.prm > 0){
+                            setList({...list, dependentes: lista.resultado})
+                        }
+                        if(lista.status == 'SEM_RESULTADOS' && result.prm > 0){
+                            setList({...list, dependentes: []})
+                            ExibirMensagem('Não existem resultados para essa pesquisa!', MSG.ALERTA)
+                        }
+                    })
+     }
 
     const selecionarPessoa = (e) => {
-        objeto.idPessoa = e
-        listarDependentes()
+         objeto.idPessoa = e
+         listarDependentes()
     }
+
+    const minhaFuncao = (parametro) =>{
+         setResult({...result, prm: parametro})
+    }
+
+
 
     return (
         <Pagina titulo="Listar Dependentes">
-
             <div id="form" className={"row"}>
                 <Card titulo="Listar">
                     <div>
@@ -75,18 +86,16 @@ export default function ListarDependentes() {
                             placeholder="Nome ou CPF aqui"
                             tamanho={6}
                             retorno={selecionarPessoa}
-                       />
+                            changeResultado={minhaFuncao}
+                        />
                     </div>
                 </Card>
             </div>
-
             <div id="tab" className={"row"}>
                 <Card titulo="Lista de dependentes">
                     <Tabela colunas={colunas} dados={dados()}/>
                 </Card>
             </div>
-
         </Pagina>
     );
-
 }

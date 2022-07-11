@@ -3,7 +3,7 @@ import * as $ from "jquery"
 import 'jquery-ui/themes/base/all.css'
 import 'jquery-ui/ui/widgets/autocomplete'
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo} from "../../util/Constantes";
+import {HttpVerbo, MSG} from "../../util/Constantes";
 import {msgErro} from "../../util/Msg";
 
 export class Autocompletar extends React.Component {
@@ -20,13 +20,16 @@ export class Autocompletar extends React.Component {
     handle = (e) => {
         e.preventDefault()
         this.setState({[e.target.name]: e.target.value})
+        if(e.target.value == ''){
+          this.props.changeResultado(e.target.value)
+        }
     }
 
     componentDidMount() {
         const url = this.props.url;
         let that = this;
-        let mensagem = this.props.mensagem;
         let idAuto = 'id' + this.props.name + 'Auto';
+
         $('#' + idAuto).autocomplete({
             source: function( request, response ) {
                 that.setState({carregando: true})
@@ -34,7 +37,7 @@ export class Autocompletar extends React.Component {
                 let requisicao = !isNaN(key) ? 'porCpf/' : 'porNome/';
                 xfetch(url + requisicao + key, {}, HttpVerbo.GET)
                     .then(res => res.json())
-                    .then(json => response(json.resultado) & that.setState({carregando: false}) & (json.resultado.length == 0 ? ExibirMensagem(mensagem) : ''))
+                    .then(json => response(json.resultado) & that.setState({carregando: false}) & (that.props.changeResultado(json.resultado.length)) & ((json.resultado.length == 0) ? ExibirMensagem("Não Encontrado", MSG.ALERTA) : ''))
                     .catch(e => that.setState({carregando: false}))
             },
             minLength: this.props.tamanho,
