@@ -9,7 +9,8 @@ import {forEach} from "react-bootstrap/ElementChildren";
 export default function () {
     if (!Logado()) return "";
 
-    const perfil = [localStorage.getItem('perfis')];
+    let perfil = [];
+    perfil = localStorage.getItem('perfis');
 
     const menu = acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
         if (!acao.acoes) {
@@ -45,7 +46,10 @@ export default function () {
         let perfilAcao = false;
         function perfilSubAcoes() {
             for (let i=0; i < subAcoes.perfil.length; i++) {
+                console.log("SubAcoes:", subAcoes.perfil[i]);
+                console.log("Perfil Completo:", perfil);
                 for (let j=0; j < perfil.length; j++) {
+                    console.log("Perfil:", perfil[j]);
                     if(perfil[j].indexOf(subAcoes.perfil[i]) === 0) {
                         perfilAcao = true;
                         return perfilAcao;
