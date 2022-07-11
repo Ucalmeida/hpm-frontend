@@ -223,6 +223,12 @@ export const acoes = [
     "icone": "fas fa-retweet",
     "acoes": [
       {
+        "nome": "Pessoa Perfis",
+        "descricao": "Vincula perfis por pessoa",
+        "url": "pessoaPerfis",
+        "icone": "fas fa-people-arrows"
+      },
+      {
         "nome": "Perfil Ações",
         "descricao": "Vincula ações por perfil",
         "url": "perfilAcoes",

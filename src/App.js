@@ -79,6 +79,7 @@ import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 import RecuperarSenha from "./paginas/RecuperarSenha";
 import {MenuLateral, Rodape, Topo} from "./componentes/pagina";
 import CadastrarSistemaExterno from "./paginas/cadastrar/CadastrarSistemaExterno";
+import PessoaPerfis from "./paginas/vincular/PessoaPerfis";
 
 
 
@@ -159,6 +160,7 @@ const App =  () =>  {
                     <Route idPerfil={4}  exact path="/vincular/setorFuncaoAcoes" component={SetorFuncaoAcoes} />
                     <Route idPerfil={4}  exact path="/vincular/setorSubSetor" component={SubSetor} />
                     <Route idPerfil={4}  exact path="/vincular/perfilAcoes" component={PerfilAcoes} />
+                    <Route exact path="/vincular/pessoaPerfis" component={PessoaPerfis} />
                 </Switch>
                 <Rodape />
             </Router>

@@ -66,14 +66,16 @@ export default function () {
                     <ul className='nav nav-treeview'>
                         {subAcoes.acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
                             if (!acao.acoes) {
-                                return (<li className="nav-item" key={acao.url}>
-                                    <NavLink to={"/" + subAcoes.url + "/" + acao.url} exact className="nav-link">
-                                        <Icone icone={acao.icone} className={"nav-icon"} margem={false}/>
-                                        <p>{acao.nome}</p>
-                                    </NavLink>
-                                </li>)
-                            } else {
-                                return submenu(acao)
+                                if(perfilSubAcoes()) {
+                                    return (<li className="nav-item" key={acao.url}>
+                                        <NavLink to={"/" + subAcoes.url + "/" + acao.url} exact className="nav-link">
+                                            <Icone icone={acao.icone} className={"nav-icon"} margem={false}/>
+                                            <p>{acao.nome}</p>
+                                        </NavLink>
+                                    </li>)
+                                } else {
+                                    return submenu(acao)
+                                }
                             }
                         })}
                     </ul>
