@@ -10,10 +10,8 @@ export default function () {
 
     let perfis = localStorage.getItem('perfis');
 
-    if (perfis != null) {
-        let perfilList = perfis.split(',');
-        let subAcoesList = perfis.split('/', ((perfilList.length * 2) + 1));
-    }
+    let perfilList = perfis.split(',');
+    let subAcoesList = perfis.split('/', ((perfilList.length * 2) + 1));
 
     const menu = acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
         if (!acao.acoes) {
