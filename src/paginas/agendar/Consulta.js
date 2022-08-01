@@ -1,16 +1,14 @@
-import React, {useEffect, useState} from "react";
-import Input, {Botao, BotaoSalvar, Card, Pagina, Select} from "../../componentes";
+import React, {useState} from "react";
+import {Botao, Card, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
-import Pessoa from "../cadastrar/Pessoa";
-import * as Util from "util";
 
 export default function Consulta() {
     const [objeto, setObjeto] = useState(
         {
             idPessoa: null,
-            idConsultorioBloco: null,
-            idProfissional: null,
+            idConsultorioBloco: '',
+            idProfissional: '',
             idEspecialidade: null,
             profissionais: [],
             consultoriosBloco: [],
@@ -19,7 +17,7 @@ export default function Consulta() {
     )
 
     const selecionarEspecialidade = (e) => {
-        setObjeto({...objeto, idEspecialidade: e.value});
+        objeto.idEspecialidade = e.value;
         listarProfissionalPorEspecialidade()
 
     }
@@ -54,20 +52,14 @@ export default function Consulta() {
             )
     }
 
-    useEffect(() => {
-        xfetch('/hpm/pessoa/opcoes', {}, HttpVerbo.GET)
-            .then(response => response.json())
-            .then(pessoas => setObjeto({...objeto, pessoas: pessoas.resultado}))
-    },[])
-
-    const enviar = (e) => {
+    const enviar = () => {
         xfetch('/hpm/consulta/cadastrarComPessoaLogada', objeto, HttpVerbo.POST)
-            .then( json =>{
-                    if(json.status === "OK"){
-                        ExibirMensagem('Consulta Agendada com Sucesso!', MSG.SUCESSO)
+            .then(json => {
+                    if (typeof json !== 'undefined' ? json.status === "OK" : false){
+                        ExibirMensagem('Consulta Agendada com Sucesso!', MSG.SUCESSO);
                         window.location.reload();
-                    }else{
-                        ExibirMensagem(json.message, MSG.ERRO)
+                    } else {
+                        ExibirMensagem('Não foi possível cadastrar a consulta!', MSG.ERRO);
                     }
                 }
             )
