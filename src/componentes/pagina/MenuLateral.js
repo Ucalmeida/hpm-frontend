@@ -4,13 +4,14 @@ import logoHPM from "../../img/brasoes/brasao_hpm.png";
 import {Icone} from "../Icone";
 import {CompararArrayObjetos, Logado} from "../../util";
 import {acoes} from "../../json/acoes.js"
-import {forEach} from "react-bootstrap/ElementChildren";
 
 export default function () {
     if (!Logado()) return "";
 
-    let perfil = [];
-    perfil = localStorage.getItem('perfis');
+    let perfis = localStorage.getItem('perfis');
+
+    let perfilList = perfis.split(',');
+    let subAcoesList = perfis.split('/', ((perfis.length * 2) + 1));
 
     const menu = acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
         if (!acao.acoes) {
@@ -43,21 +44,14 @@ export default function () {
         else a.classList.add("active")
     }
     function submenu(subAcoes) {
-        let perfilAcao = false;
-        function perfilSubAcoes() {
-            for (let i=0; i < subAcoes.perfil.length; i++) {
-                console.log("SubAcoes:", subAcoes.perfil[i]);
-                console.log("Perfil Completo:", perfil);
-                for (let j=0; j < perfil.length; j++) {
-                    console.log("Perfil:", perfil[j]);
-                    if(perfil[j].indexOf(subAcoes.perfil[i]) === 0) {
-                        perfilAcao = true;
-                        return perfilAcao;
-                    }
-                }
+        function listarSubAcoes() {
+            let resultadoSubAcoesList = subAcoesList.filter(subAcao => subAcao === subAcoes.url);
+            if (resultadoSubAcoesList.length > 0) {
+                return true;
             }
+            return false;
         }
-        if (perfilSubAcoes()) {
+        if (listarSubAcoes()) {
             return (
                 <li className='nav-item' key={subAcoes.url}>
                     <a onClick={ativarMenuSelecionado} className={"nav-link"}>
@@ -68,9 +62,19 @@ export default function () {
                         </p>
                     </a>
                     <ul className='nav nav-treeview'>
-                        {subAcoes.acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
-                            if (!acao.acoes) {
-                                if(perfilSubAcoes()) {
+                        {subAcoes.acoes ? subAcoes.acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
+                            function listaPerfis(subAcoesUrl, acaoUrl) {
+                                let result = perfilList.filter(perfil =>
+                                    (perfil === "\"/" + subAcoesUrl + "/" + acaoUrl + "\"") ||
+                                    (perfil === "[\"/" + subAcoesUrl + "/" + acaoUrl + "\"") ||
+                                    (perfil === "\"/" + subAcoesUrl + "/" + acaoUrl + "\"]"));
+                                if(result.length > 0) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                            if (listaPerfis(subAcoes.url, acao.url)) {
+                                if (!acao.acoes) {
                                     return (<li className="nav-item" key={acao.url}>
                                         <NavLink to={"/" + subAcoes.url + "/" + acao.url} exact className="nav-link">
                                             <Icone icone={acao.icone} className={"nav-icon"} margem={false}/>
@@ -81,7 +85,7 @@ export default function () {
                                     return submenu(acao)
                                 }
                             }
-                        })}
+                        }) : null}
                     </ul>
                 </li>
             )
@@ -114,4 +118,4 @@ export default function () {
             </div>
         </aside>
     );
-};
+}
