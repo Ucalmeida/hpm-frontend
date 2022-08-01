@@ -11,7 +11,7 @@ export default function () {
     let perfis = localStorage.getItem('perfis');
 
     let perfilList = perfis.split(',');
-    let subAcoesList = perfis.split('/', ((perfis.length * 2) + 1));
+    let subAcoesList = perfis.split('/', ((perfilList.length * 2) + 1));
 
     const menu = acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
         if (!acao.acoes) {
@@ -64,10 +64,7 @@ export default function () {
                     <ul className='nav nav-treeview'>
                         {subAcoes.acoes ? subAcoes.acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
                             function listaPerfis(subAcoesUrl, acaoUrl) {
-                                let result = perfilList.filter(perfil =>
-                                    (perfil === "\"/" + subAcoesUrl + "/" + acaoUrl + "\"") ||
-                                    (perfil === "[\"/" + subAcoesUrl + "/" + acaoUrl + "\"") ||
-                                    (perfil === "\"/" + subAcoesUrl + "/" + acaoUrl + "\"]"));
+                                let result = perfilList.filter(perfil => perfil === "/" + subAcoesUrl + "/" + acaoUrl);
                                 if(result.length > 0) {
                                     return true;
                                 }
