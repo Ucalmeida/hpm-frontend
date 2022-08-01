@@ -59,7 +59,7 @@ export default function Consulta() {
                         ExibirMensagem('Consulta Agendada com Sucesso!', MSG.SUCESSO);
                         window.location.reload();
                     } else {
-                        ExibirMensagem('Não foi possível cadastrar a consulta!', MSG.ERRO);
+                        ExibirMensagem(json.json(), MSG.ERRO);
                     }
                 }
             )

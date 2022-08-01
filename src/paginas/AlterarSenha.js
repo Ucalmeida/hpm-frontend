@@ -1,7 +1,7 @@
 import React from 'react'
-import {ExibirMensagem} from "../util";
+import {ExibirMensagem, xfetch} from "../util";
 import {BotaoSalvar, Card, Input, Pagina} from "../componentes";
-import {MSG} from "../util/Constantes";
+import {HttpVerbo, MSG} from "../util/Constantes";
 
 export default class AlterarSenha extends React.Component {
     constructor() {
@@ -25,14 +25,26 @@ export default class AlterarSenha extends React.Component {
 
     enviar = (e) => {
         e.preventDefault()
-        const {senha, nova, renova} = this.state
+        const {senha, nova, renova} = this.state;
+        if (senha === '') {
+            ExibirMensagem("Senha não pode estar vazia", MSG.ERRO)
+            return;
+        }
         if (nova !== renova) {
             ExibirMensagem("Novas senhas inválidas", MSG.ERRO)
-            return
+            return;
         }
 
         //TODO fazer chamada para o backend
-        // xfetch('/alterarSenha', {}, HttpVerbo.POST)
+        xfetch('/hpm/redefinir/senha', this.state, HttpVerbo.POST)
+            .then(json => {
+                if (json.status === 'OK') {
+                    ExibirMensagem('Senha alterada com sucesso!');
+                }
+                else {
+                    ExibirMensagem(json.json(), MSG.ERRO);
+                }
+            })
 
     }
 

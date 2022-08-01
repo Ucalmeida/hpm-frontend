@@ -7,13 +7,13 @@ export const acoes = [
     "icone": "fas fa-unlock-alt",
     "depencias": []
   },
-  {
-    "nome": "Agenda de Consultas",
-    "descricao": "Componente Calendário",
-    "url": "agendaDeConsultas",
-    "icone": "far fa-calendar-alt",
-    "depencias": []
-  },
+  // {
+  //   "nome": "Agenda de Consultas",
+  //   "descricao": "Componente Calendário",
+  //   "url": "agendaDeConsultas",
+  //   "icone": "far fa-calendar-alt",
+  //   "depencias": []
+  // },
   {
     "nome": "Agendar",
     "descricao": "Menu de Agendamento",
@@ -34,13 +34,13 @@ export const acoes = [
       }
     ]
   },
-  {
-    "nome": "Editor de Texto",
-    "descricao": "Componente Editor de texto",
-    "url": "editorTexto",
-    "icone": "fas fa-edit",
-    "depencias": []
-  },
+  // {
+  //   "nome": "Editor de Texto",
+  //   "descricao": "Componente Editor de texto",
+  //   "url": "editorTexto",
+  //   "icone": "fas fa-edit",
+  //   "depencias": []
+  // },
   {
     "nome": "Cadastrar",
     "descricao": "Menu de Cadastro",
