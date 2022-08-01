@@ -41,7 +41,8 @@ export default function ConsultorioBloco(){
     }
 
     const selecionarEspecialidade = (e) => {
-        setObjeto({...objeto, idEspecialidade: e.value});
+        objeto.idEspecialidade = e.value
+        listarProfissionalPorEspecialidade();
     }
 
     const selecionarProfissionalSaude = (e) => {
@@ -53,7 +54,6 @@ export default function ConsultorioBloco(){
     }
 
     const listarProfissionalPorEspecialidade = () => {
-        console.log("Especialidade:", objeto.idEspecialidade);
         xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
@@ -74,10 +74,6 @@ export default function ConsultorioBloco(){
             )
 
     }
-
-    useEffect( () => {
-        listarProfissionalPorEspecialidade();
-    }, [objeto.idEspecialidade]);
 
     const selectEspecialista =  objeto.idEspecialidade ? <div className="col-lg-6">
      <label>Profissional</label>
