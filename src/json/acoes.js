@@ -1,4 +1,3 @@
-import CadastrarEscala from "../paginas/cadastrar/CadastrarEscala";
 
 export const acoes = [
     {
@@ -8,15 +7,14 @@ export const acoes = [
     "icone": "fas fa-unlock-alt",
     "depencias": []
   },
+  // {
+  //   "nome": "Agenda de Consultas",
+  //   "descricao": "Componente Calendário",
+  //   "url": "agendaDeConsultas",
+  //   "icone": "far fa-calendar-alt",
+  //   "depencias": []
+  // },
   {
-    "nome": "Agenda de Consultas",
-    "descricao": "Componente Calendário",
-    "url": "agendaDeConsultas",
-    "icone": "far fa-calendar-alt",
-    "depencias": []
-  },
-  {
-    "perfil": ["1", "4"],
     "nome": "Agendar",
     "descricao": "Menu de Agendamento",
     "url": "agendar",
@@ -36,15 +34,14 @@ export const acoes = [
       }
     ]
   },
+  // {
+  //   "nome": "Editor de Texto",
+  //   "descricao": "Componente Editor de texto",
+  //   "url": "editorTexto",
+  //   "icone": "fas fa-edit",
+  //   "depencias": []
+  // },
   {
-    "nome": "Editor de Texto",
-    "descricao": "Componente Editor de texto",
-    "url": "editorTexto",
-    "icone": "fas fa-edit",
-    "depencias": []
-  },
-  {
-    "perfil": ["4"],
     "nome": "Cadastrar",
     "descricao": "Menu de Cadastro",
     "url": "cadastrar",
@@ -183,7 +180,6 @@ export const acoes = [
     ]
   },
   {
-    "perfil": ["4"],
     "nome": "Listar",
     "descricao": "Menu de Listas",
     "url": "listar",
@@ -216,7 +212,6 @@ export const acoes = [
     ]
   },
   {
-    "perfil": ["4"],
     "nome": "Vincular",
     "descricao": "Página Principal",
     "url": "vincular",
@@ -255,7 +250,6 @@ export const acoes = [
     ]
   },
   {
-    "perfil": ["4", "7"],
     "nome": "Recepção",
     "descricao": "Página Recepção",
     "url": "recepcao",
@@ -276,7 +270,6 @@ export const acoes = [
     ]
   },
   {
-    "perfil": ["4"],
     "nome": "Relatório",
     "descricao": "Menu de Relatorio",
     "url": "relatorio",
