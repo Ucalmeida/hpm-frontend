@@ -57,7 +57,10 @@ export default class Sangue extends React.Component {
 
         function inativar(e) {
             const id = e.target.id
+
             //TODO fazer a chamada para remover
+
+            xfetch('/hpm/sangue/excluir/'+ id,{}, HttpVerbo.POST)
         }
 
         return (
@@ -81,22 +84,14 @@ export default class Sangue extends React.Component {
                     <div className="col-lg-12">
                         <Card titulo="Sangue cadastrados">
                             {spinner}
-                            <ul className={"list-unstyled"} style={{columns: 2}}>
+                            <ul className={"list-unstyled"} style={{columns: 4}}>
                                 {objetos.sort(CompararArrayObjetos("texto")).map((v, k) => {
-                                // ➕ ➖ 🅰️ 🆎 🅱️ 🅾️
+
                                     return (
                                         <li className={"text-lg"} key={k}>
-                                            {/*    {*/}
-                                            {/*    v.texto === "A+" ? "🅰️➕" :*/}
-                                            {/*    v.texto === "A-" ? "🅰️➖" :*/}
-                                            {/*    v.texto === "B+" ? "🅱️➕" :*/}
-                                            {/*    v.texto === "B-" ? "🅱️➖" :*/}
-                                            {/*    v.texto === "AB+" ? "🆎➕" :*/}
-                                            {/*    v.texto === "AB-" ? "🆎➖" :*/}
-                                            {/*    v.texto === "O+" ? "🅾️➕" : "🅾️➖"*/}
-                                            {/*} */}
                                             {v.texto}
-                                            <Icone id={v.id} onClick={inativar} icone={ICONE.EXCLUIR} cor={TEXTO.COR.PERIGO}/>
+                                            {' '}
+                                            <Icone id={v.valor} onClick={inativar} icone={ICONE.EXCLUIR} cor={TEXTO.COR.PERIGO}/>
                                         </li>
                                     )
                                 })}
