@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Botao, Card, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
@@ -6,15 +6,30 @@ import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
 export default function Consulta() {
     const [objeto, setObjeto] = useState(
         {
-            idPessoa: null,
+            idPessoa: localStorage.getItem('id'),
             idConsultorioBloco: '',
             idProfissional: '',
             idEspecialidade: null,
             profissionais: [],
             consultoriosBloco: [],
-            pessoas:[]
+            pessoas:[],
+            comDependentes: true
         }
     )
+
+    const selecionarDependente = (e) => {
+        setObjeto({...objeto, idPessoa: e.value});
+    }
+
+    const dependentesLista =
+        objeto.comDependentes ? <div className="col-lg-4">
+            <label>Dependente</label>
+            <Select
+                funcao={selecionarDependente}
+                nome="idDependente"
+                url={"/hpm/dependente/tit/" + objeto.idPessoa + "/opcoes"}
+            />
+        </div> : '';
 
     const selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = e.value;
@@ -34,12 +49,12 @@ export default function Consulta() {
     const selecionarProfissionalSaude = (e) => {
         e.preventDefault()
         objeto.idProfissional = e.target.value
-       listarConsultorioBlocoPorEspecialidadeProfissionalSaude()
+        listarConsultorioBlocoPorEspecialidadeProfissionalSaude()
     }
 
     const selecionarConsultorioBloco = (e) => {
         e.preventDefault()
-        setObjeto({...objeto, idConsultorioBloco: e.target.value, idPessoa: 0})
+        setObjeto({...objeto, idConsultorioBloco: e.target.value})
     }
 
     const listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
@@ -53,7 +68,8 @@ export default function Consulta() {
     }
 
     const enviar = () => {
-        xfetch('/hpm/consulta/cadastrarComPessoaLogada', objeto, HttpVerbo.POST)
+        console.log("Objeto:", objeto)
+        xfetch('/hpm/consulta/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                     if (typeof json !== 'undefined' ? json.status === "OK" : false){
                         ExibirMensagem('Consulta Agendada com Sucesso!', MSG.SUCESSO);
@@ -65,6 +81,14 @@ export default function Consulta() {
             )
     }
 
+    useEffect(() => {
+        xfetch("/hpm/dependente/tit/" + localStorage.getItem('id') + "/opcoes", {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(json => {
+                json.status === "SEM_RESULTADOS" ? setObjeto({...objeto, comDependentes: false}) : setObjeto({...objeto, comDependentes: true})
+            })
+    }, [])
+
     let prof = objeto.profissionais
     let consultaBloco = objeto.consultoriosBloco
 
@@ -74,6 +98,7 @@ export default function Consulta() {
                 <div className="col-lg-12">
                     <Card titulo="Agendar">
                         <div className="row">
+                            {dependentesLista}
                             <div className="col-lg-4">
                                 <label>Especialidade</label>
                                 <Select
@@ -83,7 +108,7 @@ export default function Consulta() {
                                 />
                             </div>
 
-                                <input type="hidden" name="idPessoa"/>
+                            <input type="hidden" name="idPessoa"/>
 
                             <div className="col-lg-4">
                                 <label>Médico</label>
