@@ -1,42 +1,46 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {ExibirMensagem, xfetch} from "../util";
 import {BotaoSalvar, Card, Input, Pagina} from "../componentes";
 import {HttpVerbo, MSG} from "../util/Constantes";
 
-export default class AlterarSenha extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            senha: '',
-            nova: '',
-            renova: ''
-        }
-    }
+export default function AlterarSenha() {
+    const [senha, setSenha] = useState({
+        senhaAtual: '',
+        novaSenha: '',
+        reNovaSenha: '',
+        confirmar: null
+    });
 
-    handleChange = (e) => {
+    const handleChange = (e) => {
         e.preventDefault();
-        let valor = e.target.value
-        this.setState({[e.target.name]: valor})
+        // let valor = e.target.value
+        setSenha({...senha, [e.target.name]: e.target.value})
+        console.log("Senhas atualizando:", senha);
     }
 
-    validaSenha(valor) {
-        return false;
-    }
+    // validaSenha(valor) {
+    //     return false;
+    // }
 
-    enviar = (e) => {
+    const enviar = (e) => {
         e.preventDefault()
-        const {senha, nova, renova} = this.state;
-        if (senha === '') {
+        console.log("Senha:", senha);
+        if (senha.senhaAtual === '') {
             ExibirMensagem("Senha não pode estar vazia", MSG.ERRO)
             return;
         }
-        if (nova !== renova) {
+        if (senha.novaSenha !== senha.reNovaSenha) {
             ExibirMensagem("Novas senhas inválidas", MSG.ERRO)
             return;
         }
 
+        if (senha.senhaAtual !== senha.novaSenha) {
+            setSenha({...senha, confirmar: true});
+        }
+
         //TODO fazer chamada para o backend
-        xfetch('/hpm/redefinir/senha', this.state, HttpVerbo.POST)
+        xfetch('/hpm/redefinir/senha', {}, HttpVerbo.POST)
+            .then(resp => resp.json())
             .then(json => {
                 if (json.status === 'OK') {
                     ExibirMensagem('Senha alterada com sucesso!');
@@ -48,46 +52,43 @@ export default class AlterarSenha extends React.Component {
 
     }
 
-    render() {
-        const {senha, nova, renova} = this.state
-        return (
-            <Pagina titulo={"Alterar Senha"}>
-                   <div className="row">
-                       <div className="col-lg-4"></div>
-                       <div className="col-lg-4">
-                        <Card>
-                           <Input
-                             type="password"
-                             onChange={this.handleChange}
-                             value={senha}
-                             name="senha"
-                             label="Senha atual"
-                             placeholder="Senha antual"/>
+    return (
+        <Pagina titulo={"Alterar Senha"}>
+               <div className="row">
+                   <div className="col-lg-4"></div>
+                   <div className="col-lg-4">
+                    <Card>
+                       <Input
+                         type="password"
+                         onChange={handleChange}
+                         value={senha.senhaAtual}
+                         name="senhaAtual"
+                         label="Senha atual"
+                         placeholder="Senha antual"/>
 
-                           <Input
-                             type="password"
-                             onChange={this.handleChange}
-                             value={nova}
-                             name="nova"
-                             label="Nova senha"
-                             placeholder="Nova senha"
-                             legenda="Ex. Dsfoma123"/>
+                       <Input
+                         type="password"
+                         onChange={handleChange}
+                         value={senha.novaSenha}
+                         name="novaSenha"
+                         label="Nova senha"
+                         placeholder="Nova senha"
+                         legenda="Ex. Dsfoma123"/>
 
-                           <Input
-                             type="password"
-                             onChange={this.handleChange}
-                             value={renova}
-                             name="renova"
-                             label="Repita nova senha"
-                             placeholder="Repita a nova"/>
-                           <div className="align-items-end text-center col-12">
-                               <BotaoSalvar onClick={this.enviar}> Alterar </BotaoSalvar>
-                           </div>
-                       </Card>
+                       <Input
+                         type="password"
+                         onChange={handleChange}
+                         value={senha.reNovaSenha}
+                         name="reNovaSenha"
+                         label="Repita nova senha"
+                         placeholder="Repita a nova"/>
+                       <div className="align-items-end text-center col-12">
+                           <BotaoSalvar onClick={enviar}> Alterar </BotaoSalvar>
                        </div>
-                       <div className="col-lg-4"></div>
+                   </Card>
                    </div>
-            </Pagina>
-        );
-    }
+                   <div className="col-lg-4"></div>
+               </div>
+        </Pagina>
+    );
 }
