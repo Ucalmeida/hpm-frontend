@@ -50,6 +50,7 @@ const Login = () => {
                 } else {
                     localStorage.setItem('id', dados.id);
                     localStorage.setItem('usuario', dados.usuario);
+                    localStorage.setItem('login', dados.login);
                     localStorage.setItem('token', dados.token);
                     localStorage.setItem('perfis', dados.perfis)
                     setUser({...user, logado: true})

@@ -5,27 +5,22 @@ import {BOTAO, HttpVerbo} from "../../util/Constantes";
 import {Botao, Card, Pagina, Tabela} from "../../componentes";
 
 export default function MarcarConsultas() {
-    const [objeto, setObjeto] = useState({
-        profissionais: []
-    })
+    const objeto = {};
 
     const [lista, setLista] = useState({
         medicos: []
-    })
+    });
 
     const handleEspecialidade = (e) => {
-        const idEspecialidade = e.value;
-        setObjeto({...objeto, idEspecialidade: idEspecialidade});
+        objeto.idEspecialidade = e.value;
+        console.log('idEspecialidade:', objeto.idEspecialidade);
+        console.log(localStorage.getItem('login'));
+        console.log(localStorage.getItem('usuario'));
+        listarPacientesPorEspecialidade();
     }
 
-    useEffect(() => {
-        if(typeof(objeto.idEspecialidade) !== undefined) {
-            listarProfissionalPorEspecialidade();
-        }
-    }, [objeto])
-
-    const listarProfissionalPorEspecialidade = () => {
-        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/opcoes', {objeto}, HttpVerbo.GET)
+    const listarPacientesPorEspecialidade = () => {
+        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(lista => {
                 setLista({...lista, medicos: lista.resultado})
@@ -43,7 +38,7 @@ export default function MarcarConsultas() {
     const dados = () => {
         if(typeof(lista.medicos) !== "undefined") {
             return(
-                lista.medicos.map((medico, indice) => {
+                lista.medicos.map((medico) => {
                     return({
                         'nome': medico.texto,
                         'inicio': medico.texto2,
