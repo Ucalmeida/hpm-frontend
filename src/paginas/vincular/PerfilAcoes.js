@@ -92,7 +92,7 @@ export function PerfilAcoes() {
 
         xfetch("/hpm/perfil/acao/vincular", dados, HttpVerbo.POST)
             .then(res => {
-                if (res.status === "OK") {
+                if (typeof res !== "undefined" ? res.status === "OK" : false) {
                     ExibirMensagem("Ação cadastrada com sucesso", MSG.SUCESSO)
                     setObjeto({...objeto, listaAcoesPerfil: res.resultado})
                 }

@@ -1,41 +1,30 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card, Pagina, Select, Tabela } from "../../componentes";
 import { xfetch } from "../../util";
 import { HttpVerbo } from "../../util/Constantes";
 
 export default function ListarEspecialidadePorProfissionalSaude() {
 
-    const [objeto, setObjeto] = useState({
-        profissionais: []
-    });
+    const objeto = {};
     
     const [lista, setLista] = useState({
         especialidades: []
     });
 
     const handleProfissionalSaude = (e) => {
-        const idProfissionalSaude = e.value;
-        setObjeto({...objeto, idProfissionalSaude: idProfissionalSaude});
+        objeto.idProfissionalSaude = e.value;
+        listarEspecialidadePorProfissionalSaude();
     }
 
-    useEffect(() => {
-        if(typeof(objeto.idProfissionalSaude) !== undefined) {
-            listarEspecialidadePorProfissionalSaude();
-        }
-    }, [objeto])
-
     const listarEspecialidadePorProfissionalSaude = () => {
-        console.log("Objeto", objeto);
         xfetch('/hpm/especialidade/' + objeto.idProfissionalSaude + '/opcoes', {objeto}, HttpVerbo.GET)
             .then(res => res.json())
             .then(lista => {
                 setLista({...lista, especialidades: lista.resultado})
-                console.log("Lista", lista);
             })
     }
 
     const colunas = [
-        {text: "ID"},
         {text: "Nome"}
     ]
 
@@ -44,7 +33,6 @@ export default function ListarEspecialidadePorProfissionalSaude() {
             return(
                 lista.especialidades.map((especialidade, indice) => {
                     return({
-                        'id': especialidade.valor,
                         'nome': especialidade.texto
                     })
                 })

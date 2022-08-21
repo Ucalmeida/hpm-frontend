@@ -13,9 +13,6 @@ export default function MarcarConsultas() {
 
     const handleEspecialidade = (e) => {
         objeto.idEspecialidade = e.value;
-        console.log('idEspecialidade:', objeto.idEspecialidade);
-        console.log(localStorage.getItem('login'));
-        console.log(localStorage.getItem('usuario'));
         listarPacientesPorEspecialidade();
     }
 
