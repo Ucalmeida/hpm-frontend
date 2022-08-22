@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {BotaoSalvar, Card, Icone, Input, Pagina, Select, Spinner} from "../../componentes";
+import {Botao, BotaoSalvar, Card, Icone, Input, Pagina, Select, Spinner, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, ICONE, MSG, TEXTO} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, ICONE, MSG, TEXTO} from "../../util/Constantes";
 
 export default function Sala() {
     const [objeto , setObjeto] = useState(
@@ -29,9 +29,22 @@ export default function Sala() {
             )
     }
 
-    let handleChange = (e) => {
+    const handleChange = (e) => {
         e.preventDefault()
-        setObjeto({...objeto, nome: e.target.value})
+        setObjeto({...objeto, [e.target.name]: e.target.value})
+    }
+
+    const handleBtnExcluir = async (e) => {
+        await xfetch('/hpm/sala/excluir/' + e.target.value, {}, HttpVerbo.PUT)
+            .then(json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Sala Excluída com Sucesso!', MSG.SUCESSO)
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        listarSalasPorPiso();
     }
 
     const enviar = (e) => {
@@ -51,14 +64,27 @@ export default function Sala() {
             )
     }
 
-    function inativar(e) {
-        const id = e.target.id
-        // TODO fazer a chamada para devolver
+    const colunas = [
+        {text: "Nome" },
+        {text: "Ações"}
+    ]
+
+    const dados = () => {
+        return(
+            objeto.salas.map((sala) => {
+                return({
+                    key: sala.id,
+                    'nome': sala.nome,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={handleBtnExcluir.bind(sala.id)} value={sala.id}>Excluir</Botao>
+                    </div>
+                })
+            })
+        )
     }
 
-   let spinner = objeto.carregandoSalas ? <Spinner/> : ''
-   let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
-   let salas = objeto.salas;
+    let spinner = objeto.carregandoSalas ? <Spinner/> : ''
+    let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
 
     return(
         <Pagina titulo = "Cadastrar Sala">
@@ -93,19 +119,11 @@ export default function Sala() {
                 </div>
                 <div className="col-lg-12">
                     <Card titulo="Salas cadastradas no piso selecionado">
+                        <Tabela colunas={colunas} dados={dados()} />
                         {spinner}
-                        <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {salas.map((v, k) => {
-                                return <li className="flex-fill" key={k}>
-                                    {v.nome}
-                                    <Icone id={v.id} onClick={inativar} icone={ICONE.EXCLUIR} cor={TEXTO.COR.PERIGO}/>
-                                </li>
-                            })}
-                        </ul>
                     </Card>
                 </div>
             </div>
         </Pagina>
     )
-
 }

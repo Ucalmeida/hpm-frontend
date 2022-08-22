@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {Autocompletar, Botao, BotaoExcluir, Card, Pagina, Select, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {acoes} from "../../json/acoes";
-import ReactSelect, {components} from "react-select";
+import {components} from "react-select";
 
 
 const LOG = console.log
@@ -70,7 +70,7 @@ export default function PessoaPerfis() {
 
         xfetch("/hpm/pessoa-perfil/cadastrar", dados, HttpVerbo.POST)
             .then(res => {
-                if (res.status === "OK") {
+                if (typeof res !== "undefined" ? res.status === "OK" : false) {
                     ExibirMensagem("Perfil atribuído com sucesso", MSG.SUCESSO)
                     setObjeto({...objeto, listarPessoasPerfil: res.resultado})
                 }

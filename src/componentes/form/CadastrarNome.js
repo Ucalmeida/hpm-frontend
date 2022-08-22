@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {Spinner} from "../Spinner";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {Pagina} from "../pagina/Pagina";
 import {Card} from "../card/Card";
 import {Input} from "./Input";
-import {BotaoSalvar} from "../Botao";
+import {Botao, BotaoSalvar} from "../Botao";
 import PropTypes from 'prop-types';
+import {Tabela} from "../tabela/Tabela";
 
-function CadastrarNome({label, labelListagem, url, urlListagem}) {
+function CadastrarNome({label, labelListagem, url, urlListagem, urlExcluir}) {
     const [objeto, setObjeto] = useState({
         nome: '',
         lista: [],
@@ -19,6 +20,19 @@ function CadastrarNome({label, labelListagem, url, urlListagem}) {
     function handleChange(e) {
         e.preventDefault()
         setObjeto({...objeto, [e.target.name]: e.target.value})
+    }
+
+    const handleBtnExcluir = async (e) => {
+        await xfetch(urlExcluir + e.target.value, {}, HttpVerbo.PUT)
+            .then(json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Exclusão Efetuada com Sucesso!', MSG.SUCESSO)
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        carregarSetores();
     }
 
     let spiner = objeto.carregando ? <Spinner/> : ''
@@ -44,15 +58,33 @@ function CadastrarNome({label, labelListagem, url, urlListagem}) {
         xfetch(url, objeto, HttpVerbo.POST)
             .then(res => {
                 if (res.status === "OK") {
-                    let lista = objeto.lista
-                    lista.push(res.resultado)
                     ExibirMensagem('Cadastro Efetuado Com Sucesso!', MSG.SUCESSO)
-                    setObjeto({...objeto, lista: lista, nome: ''})
+                    setObjeto({...objeto, nome: '', lista: []})
+                    carregarSetores();
                 } else {
                     ExibirMensagem(res.message, MSG.ERRO)
                     setObjeto({...objeto, carregandoSalvar: false})
                 }
             })
+    }
+
+    const colunas = [
+        {text: "Nome" },
+        {text: "Ações"}
+    ]
+
+    const dados = () => {
+        return(
+            objeto.lista.map((lista) => {
+                return({
+                    key: lista.valor,
+                    'nome': lista.texto,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={handleBtnExcluir.bind(lista.valor)} value={lista.valor}>Excluir</Botao>
+                    </div>
+                })
+            })
+        )
     }
 
     return (
@@ -76,11 +108,7 @@ function CadastrarNome({label, labelListagem, url, urlListagem}) {
                 <div className="col-lg-12">
                     <Card titulo={labelListagem}>
                         {spiner}
-                        <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {objeto.lista.map((v, k) => {
-                                return <li className="flex-fill" key={k}> {v.nome}</li>
-                            })}
-                        </ul>
+                        <Tabela colunas={colunas} dados={dados()} />
                     </Card>
                 </div>
             </div>
@@ -92,6 +120,7 @@ CadastrarNome.propTypes = {
     label: PropTypes.string,
     url: PropTypes.string,
     urlListagem: PropTypes.string,
+    urlExcluir: PropTypes.string,
     labelListagem: PropTypes.string
 }
 

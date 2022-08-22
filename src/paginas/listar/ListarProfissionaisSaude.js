@@ -1,28 +1,19 @@
 import {Card, Pagina, Select, Tabela} from "../../componentes";
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {HttpVerbo} from "../../util/Constantes";
 import {xfetch} from "../../util";
 
 export default function ListarProfissionaisSaude() {
-    const [objeto, setObjeto] = useState({
-        profissionais: []
-    });
+    const objeto = {};
 
     const [lista, setLista] = useState({
         medicos: []
     })
 
     const handleEspecialidade = (e) => {
-        const idEspecialidade = e.value;
-        setObjeto({...objeto, idEspecialidade: idEspecialidade});
+        objeto.idEspecialidade = e.value;
+        listarProfissionalPorEspecialidade();
     }
-
-    useEffect(() => {
-        if(typeof(objeto.idEspecialidade) !== undefined) {
-            listarProfissionalPorEspecialidade();
-        }
-        console.log("UseEffect", objeto)
-    }, [objeto])
 
     const listarProfissionalPorEspecialidade = () => {
         console.log("Objeto", objeto);
@@ -30,7 +21,6 @@ export default function ListarProfissionaisSaude() {
             .then(res => res.json())
             .then(lista => {
                 setLista({...lista, medicos: lista.resultado})
-                console.log("Lista", lista);
             })
     }
 

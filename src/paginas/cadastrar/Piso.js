@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../componentes";
+import {Botao, BotaoSalvar, Card, Input, Pagina, Select, Spinner, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
 
 export default function Piso(){
@@ -15,10 +15,9 @@ export default function Piso(){
         }
     )
 
-    let selecionarPredio = (e) => {
-        objeto.idPredio = e.value
-        listarPisosPorPredio()
-        console.log(objeto)
+    const selecionarPredio = (e) => {
+        objeto.idPredio = e.value;
+        listarPisosPorPredio();
     }
 
     const listarPisosPorPredio = () => {
@@ -31,12 +30,25 @@ export default function Piso(){
             )
     }
 
-    let handleChange = (e) => {
+    const handleChange = (e) => {
         e.preventDefault()
-        setObjeto({...objeto, nome: e.target.value})
+        setObjeto({...objeto, [e.target.name]: e.target.value})
     }
 
-    let enviar = (e) => {
+    const handleBtnExcluir = async (e) => {
+        await xfetch('/hpm/piso/excluir/' + e.target.value, {}, HttpVerbo.PUT)
+            .then(json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Piso Excluído com Sucesso!', MSG.SUCESSO)
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        listarPisosPorPredio();
+    }
+
+    const enviar = (e) => {
         e.preventDefault()
         setObjeto({...objeto, carregandoCadastrar: true})
         xfetch('/hpm/piso/cadastrar', objeto, HttpVerbo.POST)
@@ -44,7 +56,7 @@ export default function Piso(){
                 if(json.status === "OK"){
                     ExibirMensagem('Piso Cadastrado Com Sucesso!', MSG.SUCESSO)
                     setObjeto({ idPredio: '', pisos: []})
-                    listarPisosPorPredio()
+                    listarPisosPorPredio();
                 }else{
                     ExibirMensagem(json.message, MSG.ERRO)
                 }
@@ -53,9 +65,28 @@ export default function Piso(){
         )
     }
 
+    const colunas = [
+        {text: "Nome" },
+        {text: "Ações"}
+    ]
+
+    const dados = () => {
+        return(
+            objeto.pisos.map((piso) => {
+                console.log("Piso:", piso);
+                return({
+                    key: piso.id,
+                    'nome': piso.nome,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={handleBtnExcluir.bind(piso.id)} value={piso.id}>Excluir</Botao>
+                    </div>
+                })
+            })
+        )
+    }
+
     let spinner = objeto.carregandoPisos ? <Spinner/> : ''
     let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
-    let pisos = objeto.pisos
     return(
         <Pagina titulo = "Cadastrar Piso">
             <div className="row animated--fade-in">
@@ -87,12 +118,8 @@ export default function Piso(){
                 </div>
                 <div className="col-lg-12">
                     <Card titulo="Pisos cadastrados no prédio selecionado">
+                        <Tabela colunas={colunas} dados={dados()} />
                         {spinner}
-                        <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {pisos.map((v, k) => {
-                                return <li className="flex-fill" key={k}> {v.nome}</li>
-                            })}
-                        </ul>
                     </Card>
                 </div>
             </div>

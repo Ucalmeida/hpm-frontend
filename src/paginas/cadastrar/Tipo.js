@@ -1,30 +1,43 @@
 import React, {useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../componentes";
+import {Botao, BotaoSalvar, Card, Input, Pagina, Select, Spinner, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
 export default function Tipo(){
     const [objeto, setObjeto] = useState(
         {
             nome: "",
-            idObjeto:null,
+            idObjeto: null,
             tipos: [],
             carregandoTipos: false,
             carregandoCadastrar: false
         }
     )
 
-   let selecionarObjeto = (e) => {
+    const selecionarObjeto = (e) => {
        objeto.idObjeto = e.value
        listarTiposPorObjeto();
-   }
+    }
 
-   let handleChange = (e) => {
+    const handleChange = (e) => {
         e.preventDefault()
        setObjeto({...objeto, nome: e.target.value})
-   }
+    }
 
-  const listarTiposPorObjeto = () => {
+    const handleBtnExcluir = async (e) => {
+        await xfetch('/hpm/tipo/excluir/' + e.target.value, {}, HttpVerbo.PUT)
+            .then(json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Tipo Excluído com Sucesso!', MSG.SUCESSO)
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        listarTiposPorObjeto();
+    }
+
+    const listarTiposPorObjeto = () => {
         setObjeto({...objeto, carregandoTipos: true, tipos: []})
         xfetch('/hpm/tipo/' + objeto.idObjeto,{}, HttpVerbo.GET)
             .then(res => res.json())
@@ -32,8 +45,9 @@ export default function Tipo(){
                     setObjeto({...objeto, tipos: json.resultado, carregandoTipos: false})
             }
         )
-   }
-   const enviar = (e) => {
+    }
+
+    const enviar = (e) => {
         e.preventDefault()
        setObjeto({...objeto, carregandoCadastrar: true})
         xfetch('/hpm/tipo/cadastrar', objeto, HttpVerbo.POST)
@@ -48,15 +62,34 @@ export default function Tipo(){
                setObjeto({...objeto, carregandoCadastrar: false})
            }
        )
-   }
+    }
 
-   let spinner = objeto.carregandoTipos ? <Spinner/> : ''
+    const colunas = [
+        {text: "Nome" },
+        {text: "Ações"}
+    ]
+
+    const dados = () => {
+        return(
+            objeto.tipos.map((tipo) => {
+                console.log("Piso:", tipo);
+                return({
+                    key: tipo.id,
+                    'nome': tipo.nome,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={handleBtnExcluir.bind(tipo.id)} value={tipo.id}>Excluir</Botao>
+                    </div>
+                })
+            })
+        )
+    }
+
+    let spinner = objeto.carregandoTipos ? <Spinner/> : ''
     let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
-    let tipos = objeto.tipos
     return(
         <Pagina titulo="Cadastrar Tipo">
             <div className="row animated--fade-in">
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className="col-lg-12">
                             {spinnerCadastrar}
@@ -87,14 +120,10 @@ export default function Tipo(){
 
                     </Card>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Tipos no objeto selecionado">
+                        <Tabela colunas={colunas} dados={dados()} />
                         {spinner}
-                        <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {tipos.map((v, k) => {
-                                return <li className="flex-fill" key={k}> {v.nome}</li>
-                            })}
-                        </ul>
                     </Card>
                 </div>
             </div>
