@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../componentes";
+import {Botao, BotaoSalvar, Card, Input, Pagina, Spinner, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
 export default function Exame() {
     const [objeto, setObjeto] = useState(
@@ -14,23 +14,32 @@ export default function Exame() {
         }
     )
 
-    useEffect(() =>{
+    const handleChange = (e) => {
+        e.preventDefault()
+        setObjeto({...objeto, [e.target.name]: e.target.value})
+    }
+
+    const handleBtnExcluir = async (e) => {
+        console.log("ID:", e.target.value);
+        await xfetch('/hpm/exame/excluir/' + e.target.value, {}, HttpVerbo.PUT)
+            .then(json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Exame Excluído com Sucesso!', MSG.SUCESSO)
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        listarExames();
+    }
+
+    useEffect(() => {
         listarExames();
     }, [])
 
-    let handleChange = (e) => {
-        e.preventDefault()
-        setObjeto({...objeto, nome: e.target.value})
-    }
-
-    let handleChange1 = (e) => {
-        e.preventDefault()
-        setObjeto({...objeto, descricao: e.target.value})
-    }
-
     const listarExames = () => {
-        setObjeto({...objeto,exames: [], carregandoExames: true})
-        xfetch('/hpm/exame', {}, HttpVerbo.GET)
+        setObjeto({...objeto,  carregandoExames: true})
+        xfetch('/hpm/exame/naoExcluidas', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
                 setObjeto({...objeto, exames: json.resultado, carregandoExames: false})
@@ -44,7 +53,7 @@ export default function Exame() {
             .then(json => {
                     if(json.status === "OK"){
                         ExibirMensagem('Exame Cadastrado Com Sucesso!', MSG.SUCESSO)
-                        setObjeto({ nome: '', descricao: '', exames: []})
+                        setObjeto({...objeto, nome: '', descricao: '', exames: []})
                         listarExames()
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)
@@ -54,10 +63,30 @@ export default function Exame() {
             )
     }
 
+    const colunas = [
+        {text: "Nome" },
+        {text: "Descrição" },
+        {text: "Ações"}
+    ]
+
+    const dados = () => {
+        return(
+            objeto.exames.map((exame) => {
+                return({
+                    key: exame.valor,
+                    'nome': exame.texto,
+                    'descricao': exame.texto2,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={handleBtnExcluir.bind(exame.valor)} value={exame.valor}>Excluir</Botao>
+                    </div>
+                })
+            })
+        )
+    }
+
 
     let spinner = objeto.carregandoExames ? <Spinner/> : ''
     let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
-    let exames = objeto.exames;
     return(
         <Pagina titulo="Cadastrar Exame">
             <div className="row animated--fade-in">
@@ -68,7 +97,7 @@ export default function Exame() {
                         </div>
 
                         <div className="row">
-                            <div className="col-lg-6">
+                            <div className="col-lg-12">
                                 <Input
                                     type="text"
                                     label="Exame"
@@ -77,13 +106,13 @@ export default function Exame() {
                                     name="nome"
                                     placeholder="Exame"/>
                             </div>
-                            <div className="col-lg-6">
+                            <div className="col-lg-12">
                                 <label>Descrição</label>
                                 <textarea
                                     className={"form-control"}
                                     rows={"2"}
                                     value={objeto.descricao}
-                                    onChange={handleChange1}
+                                    onChange={handleChange}
                                     name="descricao"
                                     placeholder= "Descrição"
                                 />
@@ -91,6 +120,7 @@ export default function Exame() {
                         </div>
 
                         <div className="align-items-end col-12">
+                            <br />
                             <BotaoSalvar onClick={enviar} />
                         </div>
 
@@ -98,12 +128,8 @@ export default function Exame() {
                 </div>
                 <div className="col-lg-12">
                     <Card titulo="Exames cadastrados">
+                        <Tabela colunas={colunas} dados={dados()} />
                         {spinner}
-                        <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {exames.map((v, k) => {
-                                return <li className="flex-fill" key={k}> {v.nome}</li>
-                            })}
-                        </ul>
                     </Card>
                 </div>
             </div>

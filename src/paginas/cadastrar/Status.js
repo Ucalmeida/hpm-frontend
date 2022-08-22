@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select, Spinner} from "../../componentes";
+import {Botao, BotaoSalvar, Card, Input, Pagina, Select, Spinner, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
 export default function Status(){
     const [objeto, setObjeto] = useState(
@@ -31,7 +31,20 @@ export default function Status(){
 
     let handleChange = (e) => {
         e.preventDefault()
-        setObjeto({...objeto, nome: e.target.value})
+        setObjeto({...objeto, [e.target.name]: e.target.value})
+    }
+
+    const handleBtnExcluir = async (e) => {
+        await xfetch('/hpm/status/excluir/' + e.target.value, {}, HttpVerbo.PUT)
+            .then(json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Status Excluído com Sucesso!', MSG.SUCESSO)
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        listarStatusPorObjeto();
     }
 
     const enviar = (e) => {
@@ -40,24 +53,43 @@ export default function Status(){
         xfetch('/hpm/status/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                     if(json.status === "OK"){
-                        ExibirMensagem('Status Cadastrado Com Sucesso!', MSG.SUCESSO)
-                        setObjeto({ idObjeto: '', status: []})
-                        listarStatusPorObjeto()
+                        ExibirMensagem('Status Cadastrado Com Sucesso!', MSG.SUCESSO);
+                        setObjeto({ idObjeto: '', status: []});
+                        listarStatusPorObjeto();
                     }else{
-                        ExibirMensagem(json.message, MSG.ERRO)
+                        ExibirMensagem(json.message, MSG.ERRO);
                     }
-                    setObjeto({...objeto, carregandoCadastrar: false})
+                    setObjeto({...objeto, carregandoCadastrar: false});
                 }
             )
     }
 
+    const colunas = [
+        {text: "Nome" },
+        {text: "Ações"}
+    ]
+
+    const dados = () => {
+        return(
+            objeto.status.map((st) => {
+                console.log("Piso:", st);
+                return({
+                    key: st.id,
+                    'nome': st.nome,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={handleBtnExcluir.bind(st.id)} value={st.id}>Excluir</Botao>
+                    </div>
+                })
+            })
+        )
+    }
+
     let spinner = objeto.carregandoStatus ? <Spinner/> : ''
     let spinnerCadastrar = objeto.carregandoCadastrar ? <Spinner/> : ''
-    let status = objeto.status;
     return(
         <Pagina titulo="Cadastrar Status">
             <div className="row animated--fade-in">
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className="col-lg-12">
                             {spinnerCadastrar}
@@ -68,7 +100,7 @@ export default function Status(){
                                 <Select
                                     funcao={selecionarObjeto}
                                     nome="idObjeto"
-                                    url={"/hpm/objeto/opcoes"} />
+                                    url={"/hpm/objeto/naoExcluidas"} />
                             </div>
                             <div className="col-lg-6">
                                 <Input
@@ -85,14 +117,10 @@ export default function Status(){
                         </div>
                     </Card>
                 </div>
-                <div className="col-lg-6">
+                <div className="col-lg-12">
                     <Card titulo="Status cadastrados no objeto selecionado">
+                        <Tabela colunas={colunas} dados={dados()} />
                         {spinner}
-                        <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {status.map((v, k) => {
-                                return <li className="flex-fill" key={k}> {v.nome}</li>
-                            })}
-                        </ul>
                     </Card>
                 </div>
             </div>

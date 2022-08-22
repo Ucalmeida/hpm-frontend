@@ -6,8 +6,9 @@ export default function Perfil() {
     return (
         <CadastrarNome
             url="/hpm/perfil"
+            urlListagem="/hpm/perfil/naoExcluidas"
+            urlExcluir="/hpm/perfil/excluir/"
             label="Perfil"
-            labelListagem="Perfis criados"
-            urlListagem="/hpm/perfil"/>
+            labelListagem="Perfis criados" />
     );
 }

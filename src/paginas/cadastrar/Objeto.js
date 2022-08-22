@@ -1,90 +1,115 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {xfetch} from "../../util/Util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
-import {BotaoSalvar} from "../../componentes/Botao";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
+import {Botao, BotaoSalvar} from "../../componentes/Botao";
 import {ExibirMensagem} from "../../util";
-import {Card, Input, Pagina, Spinner} from "../../componentes";
+import {Card, Input, Pagina, Spinner, Tabela} from "../../componentes";
 
 
-export default class Objeto extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            nome: '',
-            atualizar: false,
-            objetos: []
-        }
+export default function Objeto() {
+    const [objeto, setObjeto] = useState({
+        nome: '',
+        objetos: [],
+        carregandoObjetos: false,
+        carregandoCadastrar: false
+    });
+
+    const handleChange = (e) => {
+        e.preventDefault()
+        setObjeto({...objeto, [e.target.name]: e.target.value})
     }
 
-    enviar = (e) => {
-        e.preventDefault()
-        let objeto = {nome: this.state.nome}
+    const handleBtnExcluir = async (e) => {
+        await xfetch('/hpm/objeto/excluir/' + e.target.value, {}, HttpVerbo.PUT)
+            .then(json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Objeto Excluído com Sucesso!', MSG.SUCESSO)
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        listarObjetos();
+    }
 
+    useEffect(() => {
+        listarObjetos();
+    }, [])
+
+    const listarObjetos = () => {
+        setObjeto({...objeto, carregandoObjetos: true})
+        xfetch('/hpm/objeto/naoExcluidas', {}, HttpVerbo.GET)
+            .then(resultado => resultado.json())
+            .then(json => setObjeto({...objeto, objetos: json.resultado, carregandoObjetos:false}))
+            .catch(e => setObjeto({...objeto, carregandoObjetos: false}))
+    }
+
+    const enviar = (e) => {
+        e.preventDefault()
+        setObjeto({...objeto, carregandoCadastrar: true})
         xfetch('/hpm/objeto', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    ExibirMensagem('Objeto Cadastrado com Sucesso',MSG.SUCESSO)
-                    this.listarObjetos()
+                    ExibirMensagem('Objeto Cadastrado com Sucesso',MSG.SUCESSO);
+                    setObjeto({...objeto, nome: '', objetos: []});
+                    listarObjetos();
                 } else {
-                    ExibirMensagem(json.message, MSG.ERRO)
+                    ExibirMensagem("Erro", MSG.ERRO);
                 }
+                setObjeto({...objeto, carregandoCadastrar: false});
+            }
+        )
+    }
+
+    const colunas = [
+        {text: "Nome"},
+        {text: "Ações"}
+    ]
+
+    const dados = () => {
+        return(
+            objeto.objetos.map((objeto) => {
+                return({
+                    key: objeto.valor,
+                    'nome': objeto.texto,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={handleBtnExcluir.bind(objeto.valor)} value={objeto.valor}>Excluir</Botao>
+                    </div>
+                })
             })
+        )
     }
 
-    listarObjetos = () => {
-        this.setState({carregando: true})
-        xfetch('/hpm/objeto', {}, HttpVerbo.GET)
-            .then(resultado => resultado.json())
-            .then(json => this.setState({objetos: json.resultado, carregando:false}))
-            .catch(e => this.setState({carregando: false}))
+    let spinner = '';
+    if (objeto.carregandoCadastrar) {
+        spinner =
+            <Spinner />
     }
+    return (
+        <Pagina titulo= "Cadastrar Objeto">
+            <div className="row animated--fade-in">
+                <div className="col-lg-12">
+                    <Card titulo="Cadastrar">
+                        <Input
+                            type="text"
+                            onChange={handleChange}
+                            value={objeto.nome}
+                            name="nome"
+                            label="Nome Objeto"
+                            placeholder="Nome Objeto"/>
 
-    handleChange = (e) => {
-        e.preventDefault()
-        this.setState({[e.target.name]: e.target.value})
-    }
-
-    componentDidMount() {
-        this.listarObjetos()
-    }
-
-    render() {
-        const {nome, carregando, objetos} = this.state
-        let spinner = '';
-        if (carregando) {
-            spinner =
-                <Spinner />
-        }
-        return (
-            <Pagina titulo= "Cadastrar Objeto">
-                <div className="row animated--fade-in">
-                    <div className="col-lg-12">
-                        <Card titulo="Cadastrar">
-                            <Input
-                                type="text"
-                                onChange={this.handleChange}
-                                value={nome}
-                                name="nome"
-                                label="Nome Objeto"
-                                placeholder="Nome Objeto"/>
-
-                            <div className="align-items-end col-12">
-                                <BotaoSalvar onClick={this.enviar}/>
-                            </div>
-                        </Card>
-                    </div>
-                    <div className="col-lg-12">
-                        <Card titulo="Objetos cadastrados">
-                            {spinner}
-                            <ul className={"list-unstyled"} style={{columns: 3}}>
-                                {objetos.map((v, k) => {
-                                    return <li key={k}>{v.nome}</li>
-                                })}
-                            </ul>
-                        </Card>
-                    </div>
+                        <div className="align-items-end col-12">
+                            <BotaoSalvar onClick={enviar}/>
+                        </div>
+                    </Card>
                 </div>
-            </Pagina>
-        );
-    }
+                <div className="col-lg-12">
+                    <Card titulo="Medicamentos cadastrados">
+                        <Tabela colunas={colunas} dados={dados()} />
+                        {spinner}
+                    </Card>
+                </div>
+            </div>
+        </Pagina>
+    );
 }

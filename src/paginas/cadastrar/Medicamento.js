@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Spinner} from "../../componentes";
+import {Botao, BotaoSalvar, Card, Input, Pagina, Spinner, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
 export default function Medicamento() {
     const [objeto, setObjeto] = useState(
@@ -14,29 +14,36 @@ export default function Medicamento() {
         }
     )
 
-    let handleChange = (e) => {
+    const handleChange = (e) => {
         e.preventDefault()
-        setObjeto({...objeto, nome: e.target.value})
+        setObjeto({...objeto, [e.target.name]: e.target.value})
     }
 
-    let handleChange1 = (e) => {
-        e.preventDefault()
-        setObjeto({...objeto, descricao: e.target.value})
-        console.log(objeto.descricao)
-    }
-
-    const listarMedicamentos = () => {
-        setObjeto({...objeto,medicamentos: [], carregandoMedicamentos: true})
-        xfetch('/hpm/medicamento', {}, HttpVerbo.GET)
-            .then(res => res.json())
+    const handleBtnExcluir = async (e) => {
+        await xfetch('/hpm/medicamento/excluir/' + e.target.value, {}, HttpVerbo.PUT)
             .then(json => {
-                setObjeto({...objeto, medicamentos: json.resultado, carregandoMedicamentos: false})
-            })
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Medicamento Excluído com Sucesso!', MSG.SUCESSO)
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        listarMedicamentos();
     }
 
     useEffect(() =>{
         listarMedicamentos();
     }, [])
+
+    const listarMedicamentos = () => {
+        setObjeto({...objeto,medicamentos: [], carregandoMedicamentos: true})
+        xfetch('/hpm/medicamento/naoExcluidas', {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(json => {
+                setObjeto({...objeto, medicamentos: json.resultado, carregandoMedicamentos: false})
+            })
+    }
 
     const enviar = (e) => {
         e.preventDefault()
@@ -44,15 +51,36 @@ export default function Medicamento() {
         xfetch('/hpm/medicamento/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                     if(json.status === "OK"){
-                        ExibirMensagem('Medicamento Cadastrado Com Sucesso!', MSG.SUCESSO)
-                        setObjeto({ nome: '', descricao: '', medicamentos: []})
-                        listarMedicamentos()
+                        ExibirMensagem('Medicamento Cadastrado Com Sucesso!', MSG.SUCESSO);
+                        setObjeto({...objeto, nome: '', descricao: '', medicamentos: []});
+                        listarMedicamentos();
                     }else{
-                        ExibirMensagem(json.message, MSG.ERRO)
+                        ExibirMensagem(json.message, MSG.ERRO);
                     }
-                    setObjeto({...objeto, carregandoCadastrar: false})
+                    setObjeto({...objeto, carregandoCadastrar: false});
                 }
             )
+    }
+
+    const colunas = [
+        {text: "Nome" },
+        {text: "Descrição" },
+        {text: "Ações"}
+    ]
+
+    const dados = () => {
+        return(
+            objeto.medicamentos.map((medicamento) => {
+                return({
+                    key: medicamento.valor,
+                    'nome': medicamento.texto,
+                    'descricao': medicamento.texto2,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={handleBtnExcluir.bind(medicamento.valor)} value={medicamento.valor}>Excluir</Botao>
+                    </div>
+                })
+            })
+        )
     }
 
     let spinner = objeto.carregandoMedicamentos ? <Spinner/> : ''
@@ -73,7 +101,7 @@ export default function Medicamento() {
 
                         <div className="row">
 
-                            <div className="col-lg-6">
+                            <div className="col-lg-12">
                                 <Input
                                     type="text"
                                     label="Medicamento"
@@ -83,13 +111,13 @@ export default function Medicamento() {
                                     placeholder="Medicamento"/>
                             </div>
 
-                            <div className="col-lg-6">
+                            <div className="col-lg-12">
                                 <label>Descrição</label>
                                 <textarea
                                     className={"form-control"}
                                     rows={"2"}
                                     value={objeto.descricao}
-                                    onChange={handleChange1}
+                                    onChange={handleChange}
                                     name="descricao"
                                     placeholder= "Descrição"
                                 />
@@ -98,6 +126,7 @@ export default function Medicamento() {
                         </div>
 
                         <div className="align-items-end col-12">
+                            <br />
                             <BotaoSalvar onClick={enviar} />
                         </div>
 
@@ -106,12 +135,8 @@ export default function Medicamento() {
 
                 <div className="col-lg-12">
                     <Card titulo="Medicamentos cadastrados">
+                        <Tabela colunas={colunas} dados={dados()} />
                         {spinner}
-                        <ul className={"list-unstyled"} style={{columns: 3}}>
-                            {medicamentos.map((v, k) => {
-                                return <li className="flex-fill" key={k}> {v.nome}</li>
-                            })}
-                        </ul>
                     </Card>
                 </div>
 

@@ -1,42 +1,61 @@
-import React from 'react'
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import React, {useEffect, useState} from 'react'
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {Botao, BotaoSalvar, Card, Input, Pagina, Spinner, Tabela} from "../../componentes";
 
 
-export default class Especialidade extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            nome: '',
-            carregando: false,
-            especialidades: []
-        }
+export default function Especialidade() {
+    const [objeto, setObjeto] = useState({
+        nome: '',
+        carregando: false,
+        especialidades: [{
+            id: '',
+            nmNome: ''
+        }]
+    });
+
+    const handleChange = (e) => {
+        e.preventDefault()
+        setObjeto({...objeto, [e.target.name]: e.target.value});
     }
 
-    componentDidMount() {
-        this.carregarEspecialidades();
+    const handleBtnExcluir = async (e) => {
+        console.log("ID:", e.target.value);
+        await xfetch('/hpm/especialidade/excluir/' + e.target.value, {}, HttpVerbo.PUT)
+            .then(json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Especialidade Excluída com Sucesso!', MSG.SUCESSO)
+                    } else {
+                        ExibirMensagem(json.message, MSG.ERRO)
+                    }
+                }
+            )
+        carregarEspecialidades();
     }
 
-    carregarEspecialidades = () => {
-        this.setState({carregando: true})
-        xfetch('/hpm/especialidade/opcoes', {}, HttpVerbo.GET)
+    useEffect(() => {
+        carregarEspecialidades();
+    },[])
+
+    const carregarEspecialidades = () => {
+        setObjeto({...objeto, carregando: true});
+        xfetch('/hpm/especialidade/naoExcluidas', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    this.setState({especialidades: json.resultado, carregando: false})
+                    setObjeto({...objeto, especialidades: json.resultado, carregando: false})
                 }
             )
     }
 
-    enviar = (e) => {
+    const enviar = (e) => {
         e.preventDefault()
-        let objeto = {nome: this.state.nome}
+        setObjeto({...objeto, nome: e.target.value});
         xfetch('/hpm/especialidade/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
                 if (json.status === "OK") {
-                    ExibirMensagem('Especialidade cadastrada', MSG.SUCESSO )
-                    this.setState({nome: ''})
-                    this.carregarEspecialidades()
+                    ExibirMensagem('Especialidade cadastrada', MSG.SUCESSO );
+                    setObjeto({...objeto, nome: e.target.value});
+                    carregarEspecialidades();
                 } else {
                     ExibirMensagem(json.message, MSG.ERRO)
                 }
@@ -44,54 +63,55 @@ export default class Especialidade extends React.Component {
         )
     }
 
-    handleChange = (e) => {
-        e.preventDefault()
-        this.setState({[e.target.name]: e.target.value})
+    const colunas = [
+        {text: "Nome" },
+        {text: "Ações"}
+    ]
+
+    const dados = () => {
+        return(
+            objeto.especialidades.map((especialidade) => {
+                return({
+                    key: especialidade.valor,
+                    'nome': especialidade.texto,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={handleBtnExcluir.bind(especialidade.valor)} value={especialidade.valor}>Excluir</Botao>
+                    </div>
+                })
+            })
+        )
     }
 
-    render() {
-        const {nome, especialidades, carregando} = this.state
-        let spinner = '';
-        if (carregando) {
-            spinner = <Spinner />
-        };
+    let spinner = '';
+    if (objeto.carregando) {
+        spinner = <Spinner />
+    };
 
-        return (
-            <Pagina titulo="Cadastrar Especialidade">
-                <div className="row animated--fade-in">
-                    <div className="col-lg-12">
-                        <Card titulo="Cadastrar">
-                            <Input
-                                type="text"
-                                onChange={this.handleChange}
-                                value={nome}
-                                name="nome"
-                                label="Especialidade"
-                                placeholder="Especialidade" required/>
+    return (
+        <Pagina titulo="Cadastrar Especialidade">
+            <div className="row animated--fade-in">
+                <div className="col-lg-12">
+                    <Card titulo="Cadastrar">
+                        <Input
+                            type="text"
+                            onChange={handleChange}
+                            value={objeto.nome}
+                            name="nome"
+                            label="Especialidade"
+                            placeholder="Especialidade" required/>
 
-                            <div className="align-items-end col-8">
-                                <BotaoSalvar onClick={this.enviar}/>
-                            </div>
-                        </Card>
-                    </div>
-                    <div className="col-lg-12">
-                        <Card titulo="Especialidades cadastradas">
-                            {spinner}
-                                {/*<Tabela colunas={colunas} dados={dados()} />*/}
-                            <ul className={"list-unstyled"} style={{columns: 3}}>
-                                {especialidades.map((v, k) => {
-                                    return <li className="flex-fill" key={k}> {v.texto}</li>
-                                })}
-                            </ul>
-                            {/*<ul className={"list-unstyled"} style={{columns: 3}}>*/}
-                            {/*    {especialidades.map((v, k) => {*/}
-                            {/*        return <li ><Botao className="flex-fill" key={k}> {v.texto}</Botao></li>*/}
-                            {/*    })}*/}
-                            {/*</ul>*/}
-                        </Card>
-                    </div>
+                        <div className="align-items-end col-8">
+                            <BotaoSalvar onClick={enviar}/>
+                        </div>
+                    </Card>
                 </div>
-            </Pagina>
-        );
-    }
+                <div className="col-lg-12">
+                    <Card titulo="Especialidades cadastradas">
+                        <Tabela colunas={colunas} dados={dados()} />
+                        {spinner}
+                    </Card>
+                </div>
+            </div>
+        </Pagina>
+    );
 }

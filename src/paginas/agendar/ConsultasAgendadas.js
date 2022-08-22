@@ -6,10 +6,6 @@ import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 export default function ConsultasAgendadas() {
     const [apagar, setApagar] = useState(false);
 
-    const handleBtnImprimir = () => {
-        alert('Conteúdo Impresso');
-    }
-
     const idPessoa = localStorage.getItem('id');
 
     const [lista, setLista] = useState({
@@ -28,6 +24,10 @@ export default function ConsultasAgendadas() {
             }
         ]
     })
+
+    const handleBtnImprimir = () => {
+        alert('Conteúdo Impresso');
+    }
 
     const handleBtnCancelar = async (e) => {
         await xfetch('/hpm/consulta/alterar/' + e.target.value, {}, HttpVerbo.PUT)
