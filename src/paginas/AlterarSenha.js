@@ -5,51 +5,52 @@ import {HttpVerbo, MSG} from "../util/Constantes";
 
 export default function AlterarSenha() {
     const [senha, setSenha] = useState({
+        login: localStorage.getItem('login'),
         senhaAtual: '',
         novaSenha: '',
-        reNovaSenha: '',
-        confirmar: null
+        reNovaSenha: ''
     });
 
     const handleChange = (e) => {
         e.preventDefault();
-        // let valor = e.target.value
         setSenha({...senha, [e.target.name]: e.target.value})
-        console.log("Senhas atualizando:", senha);
     }
-
-    // validaSenha(valor) {
-    //     return false;
-    // }
 
     const enviar = (e) => {
         e.preventDefault()
-        console.log("Senha:", senha);
-        if (senha.senhaAtual === '') {
-            ExibirMensagem("Senha não pode estar vazia", MSG.ERRO)
-            return;
-        }
-        if (senha.novaSenha !== senha.reNovaSenha) {
-            ExibirMensagem("Novas senhas inválidas", MSG.ERRO)
-            return;
-        }
 
-        if (senha.senhaAtual !== senha.novaSenha) {
-            setSenha({...senha, confirmar: true});
+        let senhaAtual = senha.senhaAtual
+        let novaSenha = senha.novaSenha
+        let reNovaSenha = senha.reNovaSenha
+
+        if(senhaAtual === '' && novaSenha === '' && reNovaSenha === ''){
+            ExibirMensagem("Informe os dados solicitados",MSG.ERRO)
+        }else if(senhaAtual !== '' && novaSenha === '' && reNovaSenha === ''){
+            ExibirMensagem("Informe e repita uma nova senha",MSG.ERRO)
+        }else if(senhaAtual !== '' && novaSenha !== '' && reNovaSenha === ''){
+            ExibirMensagem("Repita a nova senha",MSG.ERRO)
+        }else if(senhaAtual !== '' && novaSenha === '' && reNovaSenha !== ''){
+            ExibirMensagem("Informe uma nova senha",MSG.ERRO)
+        }else if(senhaAtual === '' && novaSenha !== '' && reNovaSenha !== ''){
+            ExibirMensagem("Informe a senha atual",MSG.ERRO)
+        }else if(senhaAtual === '' && novaSenha === '' && reNovaSenha !== ''){
+            ExibirMensagem("Informe a senha atual e uma nova senha",MSG.ERRO)
+        }else if(senhaAtual === '' && novaSenha !== '' && reNovaSenha === ''){
+            ExibirMensagem("Informe a senha atual e repita a nova senha",MSG.ERRO)
+        }else if(novaSenha !== reNovaSenha){
+            ExibirMensagem("Novas senhas incorretas/diferentes",MSG.ERRO)
+        }else if(senhaAtual === novaSenha){
+            ExibirMensagem("A nova senha deve ser diferente da senha atual",MSG.ERRO)
+        }else {
+            xfetch('/hpm/redefinir/senha', senha, HttpVerbo.POST)
+                .then(json => {
+                    if (typeof json !== "undefined" && json.status === 'OK') {
+                        ExibirMensagem('Senha alterada com sucesso!');
+                    }else {
+                        ExibirMensagem(json, MSG.ERRO);
+                    }
+                })
         }
-
-        //TODO fazer chamada para o backend
-        xfetch('/hpm/redefinir/senha', {}, HttpVerbo.POST)
-            .then(resp => resp.json())
-            .then(json => {
-                if (json.status === 'OK') {
-                    ExibirMensagem('Senha alterada com sucesso!');
-                }
-                else {
-                    ExibirMensagem(json.json(), MSG.ERRO);
-                }
-            })
-
     }
 
     return (
@@ -64,7 +65,7 @@ export default function AlterarSenha() {
                          value={senha.senhaAtual}
                          name="senhaAtual"
                          label="Senha atual"
-                         placeholder="Senha antual"/>
+                         placeholder="Senha atual"/>
 
                        <Input
                          type="password"
@@ -81,7 +82,7 @@ export default function AlterarSenha() {
                          value={senha.reNovaSenha}
                          name="reNovaSenha"
                          label="Repita nova senha"
-                         placeholder="Repita a nova"/>
+                         placeholder="Repita a nova senha"/>
                        <div className="align-items-end text-center col-12">
                            <BotaoSalvar onClick={enviar}> Alterar </BotaoSalvar>
                        </div>
