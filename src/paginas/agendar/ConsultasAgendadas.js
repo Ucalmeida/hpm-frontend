@@ -27,16 +27,17 @@ export default function ConsultasAgendadas() {
     })
 
     function handleBtnImprimir(consulta) {
-        {localStorage.setItem('pacienteConsulta', consulta.id)}
-        {localStorage.setItem('nmPaciente', consulta.nmPaciente)}
-        {localStorage.setItem('cpfPaciente', consulta.cpfPaciente)}
-        {localStorage.setItem('nmCelular', consulta.nmCelular)}
-        {localStorage.setItem('dtHora', consulta.dtHora)}
-        {localStorage.setItem('nmEspecialidade', consulta.nmEspecialidade)}
-        {localStorage.setItem('nmMedico', consulta.nmMedico)}
-        {localStorage.setItem('sala', consulta.sala)}
-        {localStorage.setItem('piso', consulta.piso)}
-        {localStorage.setItem('nmStatus', consulta.nmStatus)}
+        localStorage.setItem('pacienteConsulta', consulta.id);
+        localStorage.setItem('nmPaciente', consulta.nmPaciente);
+        localStorage.setItem('cpfPaciente', consulta.cpfPaciente);
+        localStorage.setItem('nmCelular', consulta.nmCelular);
+        localStorage.setItem('dtHora', consulta.dtHora);
+        localStorage.setItem('nmEspecialidade', consulta.nmEspecialidade);
+        localStorage.setItem('nmMedico', consulta.nmMedico);
+        localStorage.setItem('sala', consulta.sala);
+        localStorage.setItem('piso', consulta.piso);
+        localStorage.setItem('nmStatus', consulta.nmStatus);
+        window.open("/agendar/consultasAgendadasImprimir");
     }
 
     const handleBtnCancelar = async (e) => {
@@ -85,14 +86,7 @@ export default function ConsultasAgendadas() {
                         'piso': consulta.piso,
                         'status': consulta.nmStatus,
                         'acoes': <div>
-                                    <Botao onClick={() => handleBtnImprimir(consulta)}>
-                                        <Link to="/agendar/consultasAgendadasImprimir" color={"#FFFF"}>
-                                            <Icone icone={"fas fa-print-alt"}/>
-                                            <font color={"white"}>
-                                                Imprimir
-                                            </font>
-                                        </Link>
-                                    </Botao>
+                                    <Botao onClick={() => handleBtnImprimir(consulta)}>Imprimir</Botao>
                                     <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id}>Cancelar</Botao>
                                 </div>
                     })
