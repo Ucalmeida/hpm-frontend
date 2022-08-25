@@ -9,8 +9,11 @@ import Principal from './paginas/Principal';
 
 import AgendadeConsultas from "./paginas/AgendadeConsultas";
 
-import ConsultasAgendadas from "./paginas/agendar/ConsultasAgendadas";
 import AgendarConsulta from "./paginas/agendar/Consulta";
+import ConsultasAgendadas from "./paginas/agendar/ConsultasAgendadas";
+import ConsultasAgendadasImprimir from "./paginas/agendar/ConsultasAgendadasImprimir";
+
+import ListaPacientesParaAtendimento from "./paginas/atendimento/ListaPacientesParaAtendimento";
 
 import Objeto from "./paginas/cadastrar/Objeto";
 import Sangue from "./paginas/cadastrar/Sangue";
@@ -57,8 +60,6 @@ import {MenuLateral, Rodape, Topo} from "./componentes/pagina";
 import CadastrarSistemaExterno from "./paginas/cadastrar/CadastrarSistemaExterno";
 import PessoaPerfis from "./paginas/vincular/PessoaPerfis";
 
-
-
 function verificaToken() {
     xfetch('/validaToken', {token: localStorage.getItem('token')}, HttpVerbo.POST)
         .then(json => {
@@ -91,6 +92,9 @@ const App =  () =>  {
 
                     <Route exact path="/agendar/consulta" component={AgendarConsulta} />
                     <Route exact path="/agendar/consultasAgendadas" component={ConsultasAgendadas} />
+                    <Route exact path="/agendar/consultasAgendadasImprimir" component={ConsultasAgendadasImprimir} />
+
+                    <Route exact path="/atendimento/listaPacientesParaAtendimento" component={ListaPacientesParaAtendimento} />
 
                     <Route exact path="/cadastrar/objeto" component={Objeto} />
                     <Route exact path="/cadastrar/sangue" component={Sangue} />

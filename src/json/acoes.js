@@ -34,6 +34,20 @@ export const acoes = [
       }
     ]
   },
+  {
+    "nome": "Atendimento",
+    "descricao": "Menu de Agendamento",
+    "url": "atendimento",
+    "icone": "fa fa-medkit",
+    "acoes": [
+      {
+        "nome": "Lista Pacientes para Atendimento",
+        "descricao": "Lista para atendimento de pacientes",
+        "url": "listaPacientesParaAtendimento",
+        "icone": "fas fa-stethoscope"
+      }
+    ]
+  },
   // {
   //   "nome": "Editor de Texto",
   //   "descricao": "Componente Editor de texto",
@@ -183,31 +197,31 @@ export const acoes = [
     "nome": "Listar",
     "descricao": "Menu de Listas",
     "url": "listar",
-    "icone": "far fa-plus-square",
+    "icone": "fa fa-list-alt",
     "acoes": [
       {
         "nome": "Listar Dependentes",
         "descricao": "Listagem de Dependentes",
         "url": "listarDependentes",
-        "icone": "fas fa-stethoscope"
+        "icone": "fa fa-list"
       },
       {
         "nome": "Listar Profissionais Saúde",
         "descricao": "Listagem de Profissionais de Saúde",
         "url": "listarProfissionaisSaude",
-        "icone": "fas fa-stethoscope"
+        "icone": "fa fa-list"
       },
       {
         "nome": "Listar Especialidade Por Profissional Saúde",
         "descricao": "Listagem de Especialidade Por Profissional de Saúde",
         "url": "listarEspecialidadePorProfissionalSaude",
-        "icone": "fas fa-stethoscope"
+        "icone": "fa fa-list"
       },
       {
         "nome": "Listar Escalas",
         "descricao": "Listagem de Escalas por Status",
         "url": "listarEscalas",
-        "icone": "fas fa-stethoscope"
+        "icone": "fa fa-list"
       }
     ]
   },
@@ -259,7 +273,7 @@ export const acoes = [
         "nome": "Listar Pacientes",
         "descricao": "Lista Pacientes por especialidade, profissional de saúde e data",
         "url": "listarPacientes",
-        "icone": "fas fa-people-arrows"
+        "icone": "fa fa-list"
       },
       {
         "nome": "Marcar Consulta",

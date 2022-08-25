@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Pagina, Card, Botao, Tabela } from "../../componentes";
+import React, {useEffect, useState} from "react";
+import {Botao, Card, Icone, Pagina, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
+import {Link, Redirect} from "react-router-dom";
 
 export default function ConsultasAgendadas() {
     const [apagar, setApagar] = useState(false);
@@ -25,8 +26,17 @@ export default function ConsultasAgendadas() {
         ]
     })
 
-    const handleBtnImprimir = () => {
-        alert('Conteúdo Impresso');
+    function handleBtnImprimir(consulta) {
+        {localStorage.setItem('pacienteConsulta', consulta.id)}
+        {localStorage.setItem('nmPaciente', consulta.nmPaciente)}
+        {localStorage.setItem('cpfPaciente', consulta.cpfPaciente)}
+        {localStorage.setItem('nmCelular', consulta.nmCelular)}
+        {localStorage.setItem('dtHora', consulta.dtHora)}
+        {localStorage.setItem('nmEspecialidade', consulta.nmEspecialidade)}
+        {localStorage.setItem('nmMedico', consulta.nmMedico)}
+        {localStorage.setItem('sala', consulta.sala)}
+        {localStorage.setItem('piso', consulta.piso)}
+        {localStorage.setItem('nmStatus', consulta.nmStatus)}
     }
 
     const handleBtnCancelar = async (e) => {
@@ -75,7 +85,14 @@ export default function ConsultasAgendadas() {
                         'piso': consulta.piso,
                         'status': consulta.nmStatus,
                         'acoes': <div>
-                                    <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleBtnImprimir}>Imprimir</Botao>
+                                    <Botao onClick={() => handleBtnImprimir(consulta)}>
+                                        <Link to="/agendar/consultasAgendadasImprimir" color={"#FFFF"}>
+                                            <Icone icone={"fas fa-print-alt"}/>
+                                            <font color={"white"}>
+                                                Imprimir
+                                            </font>
+                                        </Link>
+                                    </Botao>
                                     <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id}>Cancelar</Botao>
                                 </div>
                     })
@@ -92,6 +109,7 @@ export default function ConsultasAgendadas() {
                     </Card>
                 </div>
             </div>
+            {/*<ModalImpressao />*/}
         </Pagina>
     );
 }

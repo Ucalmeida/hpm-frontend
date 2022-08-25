@@ -35,7 +35,8 @@
     "react-select": "^5.1.0",
     "tempusdominus-bootstrap-4": "^5.39.0",
     "tsutils": "^3.21.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "react-to-print": "^2.14.7"
   },
   "scripts": {
     "start": "react-scripts start",
