@@ -93,14 +93,22 @@ export default function ListarPacientes() {
     const dados = () => {
         return(
             typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta, indice) => {
+                let corBotao = BOTAO.COR.PRIMARIO;
+                let nomeBotao = 'Confirmar';
+                let isDesabilitado = false;
+                if (consulta.nmStatus === 'Confirmada') {
+                    corBotao = BOTAO.COR.SUCESSO;
+                    nomeBotao = 'Confirmada';
+                    isDesabilitado = true;
+                }
                 return ({
                     'id': consulta.id,
                     'paciente': consulta.nmPaciente,
                     'telefone': consulta.nmCelular,
                     'atendimento': consulta.nmStatus,
                     'acoes': <div>
-                                <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleBtnConfirmar.bind(consulta.id)} value={consulta.id}>Confirmar</Botao>
-                                <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id}>Cancelar</Botao>
+                                <Botao cor={corBotao} onClick={handleBtnConfirmar.bind(consulta.id)} value={consulta.id} disabled={isDesabilitado}>{nomeBotao}</Botao>
+                                <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id} disabled={isDesabilitado}>Cancelar</Botao>
                              </div>
                 })
             }) : ''

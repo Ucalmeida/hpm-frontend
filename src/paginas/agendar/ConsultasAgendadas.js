@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {Botao, Card, Icone, Pagina, Tabela} from "../../componentes";
+import {Botao, Card, Pagina, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
-import {Link, Redirect} from "react-router-dom";
 
 export default function ConsultasAgendadas() {
     const [apagar, setApagar] = useState(false);
@@ -103,7 +102,6 @@ export default function ConsultasAgendadas() {
                     </Card>
                 </div>
             </div>
-            {/*<ModalImpressao />*/}
         </Pagina>
     );
 }
