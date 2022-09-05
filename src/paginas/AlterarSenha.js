@@ -44,10 +44,9 @@ export default function AlterarSenha() {
         }else {
             xfetch('/hpm/redefinir/senha', senha, HttpVerbo.POST)
                 .then(json => {
-                    if (typeof json !== "undefined" && json.status === 'OK') {
-                        ExibirMensagem('Senha alterada com sucesso!');
-                    }else {
-                        ExibirMensagem(json, MSG.ERRO);
+                    console.log('Json recebido: ', json)
+                    if (typeof json !== "undefined" && json.resultado === 'true'){
+                         ExibirMensagem('Senha alterada com sucesso!');
                     }
                 })
         }
