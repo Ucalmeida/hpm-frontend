@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {ExibirMensagem, xfetch} from "../util";
 import {BotaoSalvar, Card, Input, Pagina} from "../componentes";
 import {HttpVerbo, MSG} from "../util/Constantes";
+import {msgErro} from "../util/Msg";
 
 export default function AlterarSenha() {
     const [senha, setSenha] = useState({
@@ -44,10 +45,11 @@ export default function AlterarSenha() {
         }else {
             xfetch('/hpm/redefinir/senha', senha, HttpVerbo.POST)
                 .then(json => {
-                    console.log('Json recebido: ', json)
-                    if (typeof json !== "undefined" && json.resultado === 'true'){
-                         ExibirMensagem('Senha alterada com sucesso!');
-                    }
+                        if (typeof json !== "undefined" && json.resultado === 'true'){
+                            ExibirMensagem('Senha alterada com sucesso!',MSG.SUCESSO);
+                        }else {
+                            ExibirMensagem('Verifique os dados informados!',MSG.ERRO);
+                        }
                 })
         }
     }
