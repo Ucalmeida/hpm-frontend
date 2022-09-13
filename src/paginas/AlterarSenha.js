@@ -9,7 +9,7 @@ export default function AlterarSenha() {
         login: localStorage.getItem('login'),
         senhaAtual: '',
         novaSenha: '',
-        reNovaSenha: ''
+        confirmar: ''
     });
 
     const handleChange = (e) => {
@@ -22,7 +22,7 @@ export default function AlterarSenha() {
 
         let senhaAtual = senha.senhaAtual
         let novaSenha = senha.novaSenha
-        let reNovaSenha = senha.reNovaSenha
+        let reNovaSenha = senha.confirmar
 
         if(senhaAtual === '' && novaSenha === '' && reNovaSenha === ''){
             ExibirMensagem("Informe os dados solicitados",MSG.ERRO)
@@ -45,7 +45,7 @@ export default function AlterarSenha() {
         }else {
             xfetch('/hpm/redefinir/senha', senha, HttpVerbo.POST)
                 .then(json => {
-                        if (typeof json !== "undefined" && json.resultado === 'true'){
+                        if (typeof json !== "undefined"){
                             ExibirMensagem('Senha alterada com sucesso!',MSG.SUCESSO);
                         }else {
                             ExibirMensagem('Verifique os dados informados!',MSG.ERRO);
@@ -80,8 +80,8 @@ export default function AlterarSenha() {
                        <Input
                          type="password"
                          onChange={handleChange}
-                         value={senha.reNovaSenha}
-                         name="reNovaSenha"
+                         value={senha.confirmar}
+                         name="confirmar"
                          label="Repita nova senha"
                          placeholder="Repita a nova senha"/>
                        <div className="align-items-end text-center col-12">
