@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Botao, Card, Pagina, Tabela} from "../../componentes";
+import {Botao, Card, Pagina, Select, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
@@ -7,6 +7,12 @@ export default function ListaPacientesParaAtendimento() {
     const [apagar, setApagar] = useState(false);
 
     const idPessoa = localStorage.getItem('id');
+
+    const [objeto, setObjeto] = useState({
+        idPessoa: localStorage.getItem('id'),
+        idEspecialidade: '',
+        especialidades: []
+    });
 
     const [lista, setLista] = useState({
         consultas: [
@@ -54,11 +60,38 @@ export default function ListaPacientesParaAtendimento() {
         setApagar(!apagar);
     }
 
-    useEffect(() => {
-        xfetch('/hpm/consulta/confirmadas/' + idPessoa, {}, HttpVerbo.GET)
+    const selecionarConsultorioBloco = (e) => {
+        objeto.idConsultorioBloco = e.target.value;
+        listarPacientesParaAtendimentoPorData();
+    }
+
+    const selecionarEspecialidade = (e) => {
+        setObjeto({...objeto, idEspecialidade: e.value});
+        listarDatasPorEspecialidadeProfissionalSaude();
+    }
+
+    const listarDatasPorEspecialidadeProfissionalSaude = () => {
+        setObjeto({...objeto, consultoriosBloco: []})
+        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idPessoa + '/opcoes', {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(json => {
+                    setObjeto({...objeto, consultoriosBloco: json.resultado})
+                }
+            )
+    }
+
+    const listarPacientesParaAtendimentoPorData = () => {
+        let consultorioBloco = objeto.idConsultorioBloco;
+        xfetch('/hpm/consulta/' + consultorioBloco + '/opcoes', {}, HttpVerbo.GET)
             .then(response => response.json())
-            .then(lista => setLista({...lista, consultas: lista.resultado}))
-    }, [apagar])
+            .then(json => {
+                    setObjeto({...objeto, consultas: json.resultado})
+                }
+            )
+    }
+
+    console.log("Especialidade:", objeto.idEspecialidade);
+    console.log("Pessoa:", objeto.idPessoa);
 
     const colunas = [
         {text: "ID"},
@@ -75,7 +108,7 @@ export default function ListaPacientesParaAtendimento() {
 
     const dados = () => {
         return(
-            lista.consultas.map((consulta) => {
+            typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
                 console.log(consulta);
                 if (consulta.idMedico === idPessoa) {
                     return ({
@@ -108,14 +141,42 @@ export default function ListaPacientesParaAtendimento() {
                         'acoes': ""
                     })
                 }
-            })
+            }) : ''
         )
     }
+
+    let consultaBloco = objeto.consultoriosBloco;
 
     return(
         <Pagina titulo="Consultas Agendadas">
             <div className="row">
                 <div className="col-lg-12">
+                    <Card>
+                        <div className={"row"}>
+                            <div className={"col-lg-4"}>
+                                <label>Selecionar Especialidade</label>
+                                <Select
+                                    url={"/hpm/especialidade/" + objeto.idPessoa + "/opcoes"}
+                                    nome={"idEspecialidade"}
+                                    funcao={selecionarEspecialidade}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <label>Data - Hora</label>
+                                <br/>
+                                <select
+                                    className="form-control"
+                                    name="idConsultorioBloco"
+                                    value={objeto.idConsultorioBloco}
+                                    onChange={selecionarConsultorioBloco}>
+                                    <option hidden>Selecione...</option>
+                                    {typeof(consultaBloco) !== 'undefined' ? consultaBloco.map((v, k) => {
+                                        return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
+                                    }) : ''}
+                                </select>
+                            </div>
+                        </div>
+                    </Card>
                     <Card titulo="Pacientes Confirmados">
                         <Tabela colunas={colunas} dados={dados()} />
                     </Card>
