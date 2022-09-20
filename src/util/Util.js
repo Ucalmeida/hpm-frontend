@@ -46,7 +46,7 @@ export const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     const myInit = { method: verbo,
         headers: myHeaders,
         mode: 'cors',
-        cache: 'default' };
+        cache: 'default'};
 
     if (verbo === HttpVerbo.POST || verbo === HttpVerbo.PUT) {
          return fetch(servidor+endpoint, {

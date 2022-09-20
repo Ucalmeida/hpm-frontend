@@ -121,12 +121,12 @@ export default function Atendimentos(){
             console.log('objeto: ', aux)
             xfetch('/hpm/consulta/relatorio/atendimentos', aux, HttpVerbo.POST)
                 .then(response => {
-                    if(response.status === "OK"){
-                        setList({...list, consultas: response.resultado})
-                    }else{
-                        setList({...list, consultas:[]})
-                        ExibirMensagem("Não existe resultados para essa pesquisa!", MSG.ALERTA)
-                    }
+                        if(response.status === "OK"){
+                            setList({...list, consultas: response.resultado})
+                        }else{
+                            setList({...list, consultas:[]})
+                            ExibirMensagem("Não existe resultados para essa pesquisa!", MSG.ALERTA)
+                        }
                     }
                 )
                setObjeto({...objeto, listandoAtendimentos: false})

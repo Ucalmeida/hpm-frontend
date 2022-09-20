@@ -6,33 +6,17 @@ import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 export default function ListaPacientesParaAtendimento() {
     const [apagar, setApagar] = useState(false);
 
-    const idPessoa = localStorage.getItem('id');
-
     const [objeto, setObjeto] = useState({
         idPessoa: localStorage.getItem('id'),
-        idEspecialidade: '',
         especialidades: []
     });
 
-    const [lista, setLista] = useState({
-        consultas: [
-            {
-                id: "",
-                nmPaciente: "",
-                cpfPaciente: "",
-                dtHora: "",
-                nmEspecialidade: "",
-                nmMedico: "",
-                idMedico: "",
-                sala: "",
-                piso: "",
-                status: "",
-                acoes: ""
-            }
-        ]
-    })
+    const [consultorio, setConsultorio] = useState({
+        "idConsultorioBloco": null,
+        "idStatus": parseInt("6")
+    });
 
-    function handleBtnImprimir(consulta) {
+    function handleBtnIniciarAtendimento(consulta) {
         localStorage.setItem('pacienteConsulta', consulta.id);
         localStorage.setItem('nmPaciente', consulta.nmPaciente);
         localStorage.setItem('cpfPaciente', consulta.cpfPaciente);
@@ -44,7 +28,7 @@ export default function ListaPacientesParaAtendimento() {
         localStorage.setItem('sala', consulta.sala);
         localStorage.setItem('piso', consulta.piso);
         localStorage.setItem('nmStatus', consulta.nmStatus);
-        // window.open("/agendar/consultasAgendadasImprimir");
+        window.open("/agendar/consultasAgendadasImprimir");
     }
 
     const handleBtnCancelar = async (e) => {
@@ -61,12 +45,12 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const selecionarConsultorioBloco = (e) => {
-        objeto.idConsultorioBloco = e.target.value;
+        consultorio.idConsultorioBloco = parseInt(e.target.value);
         listarPacientesParaAtendimentoPorData();
     }
 
     const selecionarEspecialidade = (e) => {
-        setObjeto({...objeto, idEspecialidade: e.value});
+        objeto.idEspecialidade = e.value;
         listarDatasPorEspecialidadeProfissionalSaude();
     }
 
@@ -81,13 +65,18 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const listarPacientesParaAtendimentoPorData = () => {
-        let consultorioBloco = objeto.idConsultorioBloco;
-        xfetch('/hpm/consulta/' + consultorioBloco + '/opcoes', {}, HttpVerbo.GET)
-            .then(response => response.json())
-            .then(json => {
-                    setObjeto({...objeto, consultas: json.resultado})
+        console.log("Consultorio:", consultorio);
+        xfetch('/hpm/consulta/pesquisar/consultorio-status', consultorio, HttpVerbo.POST)
+            .then(response => {
+                    if (response.status === "OK"){
+                        setObjeto({...objeto, consultas: response.resultado})
+                    } else{
+                        setObjeto({...objeto, consultas: []})
+                        ExibirMensagem("Não existe resultados para essa pesquisa!", MSG.ALERTA)
+                    }
                 }
             )
+            .catch(error => console.log(error))
     }
 
     console.log("Especialidade:", objeto.idEspecialidade);
@@ -110,37 +99,22 @@ export default function ListaPacientesParaAtendimento() {
         return(
             typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
                 console.log(consulta);
-                if (consulta.idMedico === idPessoa) {
-                    return ({
-                        'id': consulta.id,
-                        'paciente': consulta.nmPaciente,
-                        'cpf_do_paciente': consulta.cpfPaciente,
-                        'data__hora': consulta.dtHora,
-                        'especialidade': consulta.nmEspecialidade,
-                        'medico': consulta.nmMedico,
-                        'sala': consulta.sala,
-                        'piso': consulta.piso,
-                        'status': consulta.nmStatus,
-                        'acoes': <div>
-                            <Botao cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnImprimir(consulta)}>Atender</Botao>
-                            <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)}
-                                   value={consulta.id}>Cancelar</Botao>
-                        </div>
-                    })
-                } else {
-                    return ({
-                        'id': "",
-                        'paciente': "",
-                        'cpf_do_paciente': "",
-                        'data__hora': "",
-                        'especialidade': "",
-                        'medico': "",
-                        'sala': "",
-                        'piso': "",
-                        'status': "",
-                        'acoes': ""
-                    })
-                }
+                return ({
+                    'id': consulta.id,
+                    'paciente': consulta.nmPaciente,
+                    'cpf_do_paciente': consulta.cpfPaciente,
+                    'data__hora': consulta.dtHora,
+                    'especialidade': consulta.nmEspecialidade,
+                    'medico': consulta.nmMedico,
+                    'sala': consulta.sala,
+                    'piso': consulta.piso,
+                    'status': consulta.nmStatus,
+                    'acoes': <div>
+                        <Botao cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnIniciarAtendimento(consulta)}>Iniciar Atendimento</Botao>
+                        <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)}
+                               value={consulta.id}>Cancelar</Botao>
+                    </div>
+                })
             }) : ''
         )
     }
