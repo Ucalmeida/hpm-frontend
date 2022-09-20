@@ -74,8 +74,6 @@ export default function Consulta() {
                     if (typeof json !== 'undefined' ? json.status === "OK" : false){
                         ExibirMensagem('Consulta Agendada com Sucesso!', MSG.SUCESSO);
                         window.location.reload();
-                    } else {
-                        ExibirMensagem(json.json(), MSG.ERRO);
                     }
                 }
             )
