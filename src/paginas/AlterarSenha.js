@@ -47,10 +47,8 @@ export default function AlterarSenha() {
                 .then(json => {
                         if (typeof json !== "undefined"){
                             ExibirMensagem('Senha alterada com sucesso!',MSG.SUCESSO);
-                        }else {
-                            ExibirMensagem('Verifique os dados informados!',MSG.ERRO);
                         }
-                })
+                      })
         }
     }
 
