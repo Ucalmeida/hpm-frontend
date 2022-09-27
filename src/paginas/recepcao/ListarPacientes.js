@@ -3,14 +3,21 @@ import {Select} from "../../componentes/form";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {Botao, Card, Pagina, Tabela} from "../../componentes";
+import {forEach} from "react-bootstrap/ElementChildren";
+import {number} from "prop-types";
 
 export default function ListarPacientes() {
     const [objeto, setObjeto] = useState({});
 
-    let statusConsulta = '';
+    let consultaSelecionada = {
+        idConsulta: '',
+        idStatus: ''
+    }
 
-    const handleBtnConfirmar = async (e) => {
-        await xfetch('/hpm/consulta/alterarConfirmacao/' + e.target.value, {}, HttpVerbo.PUT)
+    const handleBtnConfirmar = async (consultaId, statusId) => {
+        consultaSelecionada.idConsulta = consultaId;
+        consultaSelecionada.idStatus = statusId;
+        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then( json =>{
                     if(json.status){
                         ExibirMensagem('Consulta Alterada!', MSG.SUCESSO, '', '', '', '', listarPacientesPorData())
@@ -21,8 +28,10 @@ export default function ListarPacientes() {
             )
     }
 
-    const handleBtnCancelar = async (e) => {
-        await xfetch('/hpm/consulta/alterar/' + e.target.value, {}, HttpVerbo.PUT)
+    const handleBtnCancelar = async (consultaId, statusId) => {
+        consultaSelecionada.idConsulta = consultaId;
+        consultaSelecionada.idStatus = statusId;
+        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
                         ExibirMensagem('Consulta Cancelada!', MSG.SUCESSO, '', '', '', '', listarPacientesPorData())
@@ -85,7 +94,7 @@ export default function ListarPacientes() {
     const colunas = [
         {text: "Paciente"},
         {text: "Telefone"},
-        {text: "Atendimento" },
+        {text: "Atendimento"},
         {text: "Ordem"},
         {text: "Ações" }
     ]
@@ -106,9 +115,10 @@ export default function ListarPacientes() {
                     'paciente': consulta.nmPaciente,
                     'telefone': consulta.nmCelular,
                     'atendimento': consulta.nmStatus,
+                    'ordem': consulta.numOrdem,
                     'acoes': <div>
-                                <Botao cor={corBotao} onClick={handleBtnConfirmar.bind(consulta.id)} value={consulta.id} disabled={isDesabilitado}>{nomeBotao}</Botao>
-                                <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id} disabled={isDesabilitado}>Cancelar</Botao>
+                                <Botao cor={corBotao} onClick={() => handleBtnConfirmar(consulta.id, Number("6"))} value={consulta.id} disabled={isDesabilitado}>{nomeBotao}</Botao>
+                                <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnCancelar(consulta.id, Number("8"))} value={consulta.id} disabled={isDesabilitado}>Cancelar</Botao>
                              </div>
                 })
             }) : ''
