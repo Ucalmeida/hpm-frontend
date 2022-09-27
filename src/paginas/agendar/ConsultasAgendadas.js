@@ -24,6 +24,10 @@ export default function ConsultasAgendadas() {
             }
         ]
     })
+    let consultaSelecionada = {
+        idConsulta: '',
+        idStatus: ''
+    }
 
     function handleBtnImprimir(consulta) {
         localStorage.setItem('pacienteConsulta', consulta.id);
@@ -39,8 +43,10 @@ export default function ConsultasAgendadas() {
         window.open("/agendar/consultasAgendadasImprimir");
     }
 
-    const handleBtnCancelar = async (e) => {
-        await xfetch('/hpm/consulta/alterar/' + e.target.value, {}, HttpVerbo.PUT)
+    const handleBtnCancelar = async (consultaId, statusId) => {
+        consultaSelecionada.idConsulta = consultaId;
+        consultaSelecionada.idStatus = statusId;
+        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then( json =>{
                 if(json.status === "OK"){
                     ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
@@ -86,7 +92,7 @@ export default function ConsultasAgendadas() {
                         'status': consulta.nmStatus,
                         'acoes': <div>
                                     <Botao onClick={() => handleBtnImprimir(consulta)}>Imprimir</Botao>
-                                    <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id}>Cancelar</Botao>
+                                    <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnCancelar(consulta.id, Number("8"))} value={consulta.id}>Cancelar</Botao>
                                 </div>
                     })
                 })
