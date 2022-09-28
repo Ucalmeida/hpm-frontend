@@ -13,6 +13,7 @@ export default function Consulta() {
             profissionais: [],
             consultoriosBloco: [],
             pessoas:[],
+            emergencia: false,
             comDependentes: true
         }
     )
@@ -57,6 +58,12 @@ export default function Consulta() {
         setObjeto({...objeto, idConsultorioBloco: e.target.value})
     }
 
+    const handleEmergencia = (e) => {
+        e.preventDefault();
+        setObjeto({...objeto, emergencia: !objeto.emergencia});
+        console.log(objeto);
+    }
+
     const listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
         setObjeto({...objeto, consultoriosBloco: []})
         xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
@@ -97,7 +104,7 @@ export default function Consulta() {
                     <Card titulo="Agendar">
                         <div className="row">
                             {dependentesLista}
-                            <div className="col-lg-4">
+                            <div className="col-lg-3">
                                 <label>Especialidade</label>
                                 <Select
                                     funcao={selecionarEspecialidade}
@@ -123,7 +130,7 @@ export default function Consulta() {
                                 </select>
                             </div>
 
-                            <div className="col-lg-4">
+                            <div className="col-lg-3">
                                 <label>Data - Hora</label>
                                 <br/>
                                 <select
@@ -136,6 +143,16 @@ export default function Consulta() {
                                         return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
                                     })}
                                 </select>
+                            </div>
+                            <div className={"col-lg-2"}>
+                                <label>É Emergência?</label>
+                                <br/>
+                                <input
+                                    id="emergenciaCheck"
+                                    type="checkbox"
+                                    onClick={handleEmergencia}
+                                    name="emergencia"
+                                    checked={objeto.emergencia}/>
                             </div>
                             <div className="col-lg-12 text-lg-right mt-4 mb-4">
 

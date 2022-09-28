@@ -16,6 +16,11 @@ export default function ListaPacientesParaAtendimento() {
         "idStatus": parseInt("6")
     });
 
+    let consultaSelecionada = {
+        idConsulta: '',
+        idStatus: ''
+    }
+
     function handleBtnIniciarAtendimento(consulta) {
         localStorage.setItem('pacienteConsulta', consulta.id);
         localStorage.setItem('nmPaciente', consulta.nmPaciente);
@@ -31,8 +36,10 @@ export default function ListaPacientesParaAtendimento() {
         window.open("/agendar/consultasAgendadasImprimir");
     }
 
-    const handleBtnCancelar = async (e) => {
-        await xfetch('/hpm/consulta/alterar/' + e.target.value, {}, HttpVerbo.PUT)
+    const handleBtnCancelar = async (consultaId, statusId) => {
+        consultaSelecionada.idConsulta = consultaId;
+        consultaSelecionada.idStatus = statusId;
+        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.PUT)
             .then( json =>{
                     if(json.status === "OK"){
                         ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
@@ -111,7 +118,7 @@ export default function ListaPacientesParaAtendimento() {
                     'status': consulta.nmStatus,
                     'acoes': <div>
                         <Botao cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnIniciarAtendimento(consulta)}>Iniciar Atendimento</Botao>
-                        <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)}
+                        <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnCancelar(consulta.id, Number("8"))}
                                value={consulta.id}>Cancelar</Botao>
                     </div>
                 })

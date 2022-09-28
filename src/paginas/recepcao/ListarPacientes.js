@@ -3,11 +3,14 @@ import {Select} from "../../componentes/form";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {Botao, Card, Pagina, Tabela} from "../../componentes";
-import {forEach} from "react-bootstrap/ElementChildren";
-import {number} from "prop-types";
 
 export default function ListarPacientes() {
     const [objeto, setObjeto] = useState({});
+
+    const [consultorio, setConsultorio] = useState({
+        "idConsultorioBloco": null,
+        "idStatus": null
+    });
 
     let consultaSelecionada = {
         idConsulta: '',
@@ -52,8 +55,16 @@ export default function ListarPacientes() {
     }
 
     const selecionarConsultorioBloco = (e) => {
-        objeto.idConsultorioBloco = e.target.value;
-        listarPacientesPorData();
+        consultorio.idConsultorioBloco = Number(e.target.value);
+    }
+
+    const selecionarStatus = (e) => {
+        consultorio.idStatus = Number(e.value);
+        if (consultorio.idConsultorioBloco !== null) {
+            listarPacientesPorData();
+        } else {
+            ExibirMensagem("Selecione uma Data", MSG.ALERTA);
+        }
     }
 
     const listarProfissionalPorEspecialidade = () => {
@@ -78,13 +89,17 @@ export default function ListarPacientes() {
     }
 
     const listarPacientesPorData = () => {
-        let dataConsulta = objeto.idConsultorioBloco;
-        xfetch('/hpm/consulta/' + dataConsulta + '/opcoes', {}, HttpVerbo.GET)
-            .then(response => response.json())
-            .then(json => {
-                    setObjeto({...objeto, consultas: json.resultado})
+        xfetch('/hpm/consulta/pesquisar/consultorio-status', consultorio, HttpVerbo.POST)
+            .then(response => {
+                    if (response.status === "OK"){
+                        setObjeto({...objeto, consultas: response.resultado})
+                    } else{
+                        setObjeto({...objeto, consultas: []})
+                        ExibirMensagem("Não existe resultados para essa pesquisa!", MSG.ALERTA)
+                    }
                 }
             )
+            .catch(error => console.log(error))
     }
 
     useEffect( () => {
@@ -133,7 +148,7 @@ export default function ListarPacientes() {
                 <div className={"col-lg-12"}>
                     <Card titulo="Especialidade Médico">
                         <div className={"row"}>
-                            <div className={"col-lg-4"}>
+                            <div className={"col-lg-3"}>
                                 <label>Selecionar Especialidade</label>
                                 <Select
                                     url={"/hpm/especialidade/opcoes"}
@@ -141,7 +156,7 @@ export default function ListarPacientes() {
                                     funcao={selecionarEspecialidade}
                                 />
                             </div>
-                            <div className={"col-lg-4"}>
+                            <div className={"col-lg-3"}>
                                 <label>Profissional</label>
                                 <select
                                     className="form-control"
@@ -153,7 +168,7 @@ export default function ListarPacientes() {
                                     }) : ''}
                                 </select>
                             </div>
-                            <div className="col-lg-4">
+                            <div className="col-lg-3">
                                 <label>Data - Hora</label>
                                 <br/>
                                 <select
@@ -166,6 +181,15 @@ export default function ListarPacientes() {
                                         return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
                                     }) : ''}
                                 </select>
+                            </div>
+                            <div className="col-lg-3">
+                                <label>Status</label>
+                                <br/>
+                                <Select
+                                    url={"/hpm/status/objeto-opcoes/" + 20}
+                                    nome={"idStatus"}
+                                    funcao={selecionarStatus}
+                                />
                             </div>
                         </div>
                     </Card>

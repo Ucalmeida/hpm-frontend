@@ -24,6 +24,7 @@ export default function ConsultasAgendadas() {
             }
         ]
     })
+
     let consultaSelecionada = {
         idConsulta: '',
         idStatus: ''
