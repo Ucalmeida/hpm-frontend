@@ -11,7 +11,7 @@ function Accordion (props) {
       <div className={"card card-primary"+getClasse(props.className)+getAberto()} id={props.id}>
         <div className="card-header p-1 pt-2 px-3">
             <h3 className="card-title">
-                <a className="d-block cursor-pointer" data-card-widget="collapse"> {props.titulo}</a>
+                <a href={props.titulo} className="d-block cursor-pointer" data-card-widget="collapse"> {props.titulo}</a>
             </h3>
             <div className="card-tools">
                 <button type="button" className="btn btn-tool" data-card-widget="collapse"> <i className="fas fa-plus"></i> </button>

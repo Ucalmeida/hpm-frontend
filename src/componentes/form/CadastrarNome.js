@@ -38,7 +38,6 @@ function CadastrarNome({label, labelListagem, url, urlListagem, urlExcluir}) {
     let spiner = objeto.carregando ? <Spinner/> : ''
     let spinnerSalvar = objeto.carregandoSalvar ? <Spinner/> : ''
 
-
     function carregarSetores() {
         console.log('Aqui')
         setObjeto({...objeto, carregando: true})
