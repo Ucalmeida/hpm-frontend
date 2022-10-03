@@ -45,6 +45,7 @@ import ListarProfissionaisSaude from "./paginas/listar/ListarProfissionaisSaude"
 
 import ListarPacientes from "./paginas/recepcao/ListarPacientes";
 import MarcarConsultas from "./paginas/recepcao/MarcarConsultas";
+import VerPacientesConsultaAgendada from "./paginas/recepcao/VerPacientesConsultaAgendada";
 
 import Atendimentos from "./paginas/relatorio/Atendimentos";
 
@@ -129,6 +130,7 @@ const App =  () =>  {
 
                     <Route exact path="/recepcao/listarPacientes" component={ListarPacientes} />
                     <Route exact path="/recepcao/marcarConsultas" component={MarcarConsultas} />
+                    <Route exact path="/recepcao/verPacientesConsultaAgendada" component={VerPacientesConsultaAgendada} />
 
                     <Route exact path="/relatorio/atendimentos" component={Atendimentos} />
 
