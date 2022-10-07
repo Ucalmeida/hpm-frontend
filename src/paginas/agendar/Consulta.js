@@ -13,7 +13,6 @@ export default function Consulta() {
             profissionais: [],
             consultoriosBloco: [],
             pessoas:[],
-            emergencia: false,
             comDependentes: true
         }
     )
@@ -58,12 +57,6 @@ export default function Consulta() {
         setObjeto({...objeto, idConsultorioBloco: e.target.value})
     }
 
-    const handleEmergencia = (e) => {
-        e.preventDefault();
-        setObjeto({...objeto, emergencia: !objeto.emergencia});
-        console.log(objeto);
-    }
-
     const listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
         setObjeto({...objeto, consultoriosBloco: []})
         xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
@@ -90,6 +83,7 @@ export default function Consulta() {
         xfetch("/hpm/dependente/tit/" + localStorage.getItem('id') + "/opcoes", {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
+                console.log("Resultado json:", json.status);
                 json.status === "SEM_RESULTADOS" ? setObjeto({...objeto, comDependentes: false}) : setObjeto({...objeto, comDependentes: true})
             })
     }, [])
@@ -144,22 +138,9 @@ export default function Consulta() {
                                     })}
                                 </select>
                             </div>
-                            <div className={"col-lg-2"}>
-                                <label>É Emergência?</label>
-                                <br/>
-                                <input
-                                    id="emergenciaCheck"
-                                    type="checkbox"
-                                    onClick={handleEmergencia}
-                                    name="emergencia"
-                                    checked={objeto.emergencia}/>
-                            </div>
                             <div className="col-lg-12 text-lg-right mt-4 mb-4">
-
                                 <Botao cor={BOTAO.COR.SUCESSO} icone={ICONE.SALVAR} onClick={enviar}>Agendar</Botao>
-
                             </div>
-
                         </div>
                     </Card>
                 </div>

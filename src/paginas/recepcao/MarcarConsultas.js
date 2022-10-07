@@ -17,22 +17,15 @@ export default function MarcarConsultas() {
         window.open("/recepcao/verPacientesConsultaAgendada");
     }
 
-    const handleBtnUrgencia = async (consultorioBlocoId) => {
-        // consultaSelecionada.idConsulta = consultaId;
-        // consultaSelecionada.idStatus = statusId;
-        // await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
-        //     .then( json =>{
-        //             if(json.status === "OK"){
-        //                 ExibirMensagem('Consulta Cancelada!', MSG.SUCESSO, '', '', '', '', listarPacientesPorData())
-        //             }else{
-        //                 ExibirMensagem(json.message, MSG.ERRO)
-        //             }
-        //         }
-        //     )
-        alert("Urgente!!!");
-        objeto.idConsultorioBloco = consultorioBlocoId;
-        console.log("Lista:", lista);
-        console.log("Objeto:", objeto);
+    const handleBtnUrgencia = async (medico) => {
+        localStorage.setItem('emergencia', true);
+        localStorage.setItem('medicoConsulta', medico.valor);
+        localStorage.setItem('nmProfissionalSaude', medico.texto);
+        localStorage.setItem('nmEspecialidade', medico.texto2);
+        localStorage.setItem('idEspecialidade', medico.valor3);
+        localStorage.setItem('idProfissionalSaude', medico.valor2);
+        localStorage.setItem('dataHora', medico.texto3 + " - " + medico.texto4);
+        window.open("/recepcao/consultaEmergencia");
     }
 
     const handleEspecialidade = (e) => {
@@ -66,8 +59,8 @@ export default function MarcarConsultas() {
                         'termino': medico.texto3,
                         'vagas': medico.texto4,
                         'acoes': <div>
-                                    <Botao cor={BOTAO.COR.INFO} onClick={() => handleBtnVerPacientes(medico.valor)} value={medico.valor}>Ver Pacientes</Botao>
-                                    <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico.valor)} value={medico.valor}>Urgência</Botao>
+                                    <Botao onClick={() => handleBtnVerPacientes(medico.valor)} value={medico.valor}>Ver Pacientes</Botao>
+                                    <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Urgência</Botao>
                                 </div>
                     })
                 })

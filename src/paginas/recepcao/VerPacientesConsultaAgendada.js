@@ -76,7 +76,7 @@ export default function VerPacientesConsultaAgendada() {
                         'telefone': paciente.nmCelular,
                         'atendimento': paciente.nmStatus,
                         'acoes': <div>
-                            <Botao cor={BOTAO.COR.INFO} onClick={() => handleBtnImprimir(paciente)}>Imprimir</Botao>
+                            <Botao onClick={() => handleBtnImprimir(paciente)}>Imprimir</Botao>
                             <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnCancelar(paciente.id, Number("8"), paciente.idStatus)} value={paciente.id}>Cancelar</Botao>
                         </div>
                     })

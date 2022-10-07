@@ -83,11 +83,8 @@ export default function Consulta() {
             .then( json =>{
                     if(json.status === "OK"){
                         ExibirMensagem('Consulta Cadastrada Com Sucesso!', MSG.SUCESSO)
-                        window.location.reload();
-                    }else{
-                        ExibirMensagem(json.message, MSG.ALERTA)
+                        // window.location.reload();
                     }
-
                 }
             )
     }

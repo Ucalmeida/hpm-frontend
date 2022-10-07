@@ -4,7 +4,6 @@ import 'jquery-ui/themes/base/all.css'
 import 'jquery-ui/ui/widgets/autocomplete'
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
-import {msgErro} from "../../util/Msg";
 
 export class Autocompletar extends React.Component {
     constructor(props) {
@@ -19,7 +18,7 @@ export class Autocompletar extends React.Component {
 
     handle = (e) => {
         e.preventDefault()
-        this.setState({[e.target.name]: e.target.value})
+        this.setState({[e.target.name]: e.target.value.toUpperCase()})
         if(e.target.value == ''){
           this.props.changeResultado(e.target.value)
         }
@@ -37,7 +36,7 @@ export class Autocompletar extends React.Component {
                 let requisicao = !isNaN(key) ? 'porCpf/' : 'porNome/';
                 xfetch(url + requisicao + key, {}, HttpVerbo.GET)
                     .then(res => res.json())
-                    .then(json => response(json.resultado) & that.setState({carregando: false}) & (that.props.changeResultado(json.resultado.length)) & ((json.resultado.length == 0) ? ExibirMensagem("Não Encontrado", MSG.ALERTA) : ''))
+                    .then(json => response(json.resultado) && that.setState({carregando: false}) && (that.props.changeResultado(json.resultado.length)) && ((json.resultado.length === 0) ? ExibirMensagem("Não Encontrado", MSG.ALERTA) : ''))
                     .catch(e => that.setState({carregando: false}))
             },
             minLength: this.props.tamanho,

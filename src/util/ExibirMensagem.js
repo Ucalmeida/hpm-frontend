@@ -51,8 +51,9 @@ function ExibirMensagem (mensagem, tipo, objeto, titulo, icone, tamanho, funcao)
             ok: {
                 label: "<span id='icone2'></span>OK",
                 className: corBotao,
-                callback:
-                    funcao
+                callback: {
+                    onclick(funcao) {}
+                }
             }
         }
 
