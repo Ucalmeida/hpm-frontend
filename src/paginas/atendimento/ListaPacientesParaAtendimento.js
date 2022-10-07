@@ -29,11 +29,10 @@ export default function ListaPacientesParaAtendimento() {
         localStorage.setItem('dtHora', consulta.dtHora);
         localStorage.setItem('nmEspecialidade', consulta.nmEspecialidade);
         localStorage.setItem('nmMedico', consulta.nmMedico);
-        // localStorage.setItem('idMedico', consulta.idMedico);
         localStorage.setItem('sala', consulta.sala);
         localStorage.setItem('piso', consulta.piso);
         localStorage.setItem('nmStatus', consulta.nmStatus);
-        window.open("/agendar/consultasAgendadasImprimir");
+        window.open("/atendimento/pacienteEmAtendimento");
     }
 
     const handleBtnCancelar = async (consultaId, statusId) => {
@@ -72,7 +71,6 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const listarPacientesParaAtendimentoPorData = () => {
-        console.log("Consultorio:", consultorio);
         xfetch('/hpm/consulta/pesquisar/consultorio-status', consultorio, HttpVerbo.POST)
             .then(response => {
                     if (response.status === "OK"){
@@ -85,9 +83,6 @@ export default function ListaPacientesParaAtendimento() {
             )
             .catch(error => console.log(error))
     }
-
-    console.log("Especialidade:", objeto.idEspecialidade);
-    console.log("Pessoa:", objeto.idPessoa);
 
     const colunas = [
         {text: "ID"},
@@ -105,7 +100,6 @@ export default function ListaPacientesParaAtendimento() {
     const dados = () => {
         return(
             typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
-                console.log(consulta);
                 return ({
                     'id': consulta.id,
                     'paciente': consulta.nmPaciente,

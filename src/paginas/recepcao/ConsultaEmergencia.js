@@ -41,13 +41,10 @@ export default function ConsultaEmergencia() {
                             <div className="col-lg-4">
                                 <label>Especialidade: {objeto.nmEspecialidade}</label>
                             </div>
-
                             <input type="hidden" name="idPessoa"/>
-
                             <div className="col-lg-4">
                                 <label>Médico: {objeto.nmProfissionalSaude}</label>
                             </div>
-
                             <div className="col-lg-4">
                                 <label>Data - Hora: {objeto.dataHora}</label>
                             </div>

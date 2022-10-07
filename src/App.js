@@ -14,6 +14,7 @@ import ConsultasAgendadas from "./paginas/agendar/ConsultasAgendadas";
 import ConsultasAgendadasImprimir from "./paginas/agendar/ConsultasAgendadasImprimir";
 
 import ListaPacientesParaAtendimento from "./paginas/atendimento/ListaPacientesParaAtendimento";
+import PacienteEmAtendimento from "./paginas/atendimento/PacienteEmAtendimento";
 
 import Objeto from "./paginas/cadastrar/Objeto";
 import Sangue from "./paginas/cadastrar/Sangue";
@@ -97,6 +98,7 @@ const App =  () =>  {
                     <Route exact path="/agendar/consultasAgendadasImprimir" component={ConsultasAgendadasImprimir} />
 
                     <Route exact path="/atendimento/listaPacientesParaAtendimento" component={ListaPacientesParaAtendimento} />
+                    <Route exact path="/atendimento/pacienteEmAtendimento" component={PacienteEmAtendimento} />
 
                     <Route exact path="/cadastrar/objeto" component={Objeto} />
                     <Route exact path="/cadastrar/sangue" component={Sangue} />
