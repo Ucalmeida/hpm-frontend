@@ -1,85 +1,94 @@
-import React from 'react'
-import Pagina from '../componentes/pagina/Pagina'
-import Input from "../componentes/form/Input";
-import Card from "../componentes/Card";
+import React, {useState} from 'react'
+import {ExibirMensagem, xfetch} from "../util";
+import {BotaoSalvar, Card, Input, Pagina} from "../componentes";
+import {HttpVerbo, MSG} from "../util/Constantes";
+import {msgErro} from "../util/Msg";
 
+export default function AlterarSenha() {
+    const [senha, setSenha] = useState({
+        login: localStorage.getItem('login'),
+        senhaAtual: '',
+        novaSenha: '',
+        confirmar: ''
+    });
 
-export default class AlterarSenha extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            senha: '',
-            nova: '',
-            renova: ''
-        }
-    }
-
-    handleChange = (e) => {
+    const handleChange = (e) => {
         e.preventDefault();
-        let valor = e.target.value
-        this.setState({[e.target.name]: valor})
-
+        setSenha({...senha, [e.target.name]: e.target.value})
     }
 
-    validaSenha(valor) {
-        return false;
-    }
-
-    enviar = (e) => {
+    const enviar = (e) => {
         e.preventDefault()
-        const {senha, nova, renova} = this.state
-        if (nova !== renova) {
-            window.alert("Novas senhas inválidas")
-            return
+
+        let senhaAtual = senha.senhaAtual
+        let novaSenha = senha.novaSenha
+        let reNovaSenha = senha.confirmar
+
+        if(senhaAtual === '' && novaSenha === '' && reNovaSenha === ''){
+            ExibirMensagem("Informe os dados solicitados",MSG.ERRO)
+        }else if(senhaAtual !== '' && novaSenha === '' && reNovaSenha === ''){
+            ExibirMensagem("Informe e repita uma nova senha",MSG.ERRO)
+        }else if(senhaAtual !== '' && novaSenha !== '' && reNovaSenha === ''){
+            ExibirMensagem("Repita a nova senha",MSG.ERRO)
+        }else if(senhaAtual !== '' && novaSenha === '' && reNovaSenha !== ''){
+            ExibirMensagem("Informe uma nova senha",MSG.ERRO)
+        }else if(senhaAtual === '' && novaSenha !== '' && reNovaSenha !== ''){
+            ExibirMensagem("Informe a senha atual",MSG.ERRO)
+        }else if(senhaAtual === '' && novaSenha === '' && reNovaSenha !== ''){
+            ExibirMensagem("Informe a senha atual e uma nova senha",MSG.ERRO)
+        }else if(senhaAtual === '' && novaSenha !== '' && reNovaSenha === ''){
+            ExibirMensagem("Informe a senha atual e repita a nova senha",MSG.ERRO)
+        }else if(novaSenha !== reNovaSenha){
+            ExibirMensagem("Novas senhas incorretas/diferentes",MSG.ERRO)
+        }else if(senhaAtual === novaSenha){
+            ExibirMensagem("A nova senha deve ser diferente da senha atual",MSG.ERRO)
+        }else {
+            xfetch('/hpm/redefinir/senha', senha, HttpVerbo.POST)
+                .then(json => {
+                        if (typeof json !== "undefined"){
+                            ExibirMensagem('Senha alterada com sucesso!',MSG.SUCESSO);
+                        }
+                      })
         }
-
-        //TODO fazer chamada para o backend
-        // xfetch('/alterarSenha', {}, HttpVerbo.POST)
-
-
-
     }
 
-    render() {
-        const {senha, nova, renova} = this.state
-        return (
-            <Pagina titulo={"Alterar Senha"}>
-                   <div className="row">
-                       <div className="col-lg-4"></div>
-                       <div className="col-lg-4">
-                        <Card>
-                           <Input
-                             type="password"
-                             onChange={this.handleChange}
-                             value={senha}
-                             name="senha"
-                             label="Senha atual"
-                             placeholder="Senha antual"/>
+    return (
+        <Pagina titulo={"Alterar Senha"}>
+               <div className="row">
+                   <div className="col-lg-4"></div>
+                   <div className="col-lg-4">
+                    <Card>
+                       <Input
+                         type="password"
+                         onChange={handleChange}
+                         value={senha.senhaAtual}
+                         name="senhaAtual"
+                         label="Senha atual"
+                         placeholder="Senha atual"/>
 
-                           <Input
-                             type="password"
-                             onChange={this.handleChange}
-                             value={nova}
-                             name="nova"
-                             label="Nova senha"
-                             placeholder="Nova senha"
-                             legenda="Ex. Dsfoma123"/>
+                       <Input
+                         type="password"
+                         onChange={handleChange}
+                         value={senha.novaSenha}
+                         name="novaSenha"
+                         label="Nova senha"
+                         placeholder="Nova senha"
+                         legenda="Ex. Dsfoma123"/>
 
-                           <Input
-                             type="password"
-                             onChange={this.handleChange}
-                             value={renova}
-                             name="renova"
-                             label="Repita nova senha"
-                             placeholder="Repita a nova"/>
-                           <div className="align-items-end col-12">
-                               <button className="btn btn-success pull-right" onClick={this.enviar}> Alterar </button>
-                           </div>
-                       </Card>
+                       <Input
+                         type="password"
+                         onChange={handleChange}
+                         value={senha.confirmar}
+                         name="confirmar"
+                         label="Repita nova senha"
+                         placeholder="Repita a nova senha"/>
+                       <div className="align-items-end text-center col-12">
+                           <BotaoSalvar onClick={enviar}> Alterar </BotaoSalvar>
                        </div>
-                       <div className="col-lg-4"></div>
+                   </Card>
                    </div>
-            </Pagina>
-        );
-    }
+                   <div className="col-lg-4"></div>
+               </div>
+        </Pagina>
+    );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Input extends React.Component {
+export class Input extends React.Component {
 
     render() {
         const {legenda} = this.props
@@ -17,3 +17,5 @@ export default class Input extends React.Component {
         );
     }
 }
+
+export default Input;

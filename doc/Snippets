@@ -1,0 +1,16 @@
+RCC + Tab Key	create a react component class with ES6 module system
+RCCP + Tab Key	create a react component class with proptypes and ES6 module system
+Rcfc	Tab key — create a react component class with proptypes, all lifecycle methods, and ES6 module system
+Rcjc	reate a react component class with ES6 module system (no export)
+RDP + Tab Key	generate defaultprops quickly
+RPC + Tab Key	create a react pure component class with proptypes and ES6 moudle system
+RRC + Tab Key	create a react component class connected to Redux
+RRDC + Tab Key	create a react component class connected to Redux through dispatch
+RSC + Tab key	create stateless react component without proptypes and ES6 module system
+
+RSCP + Tab key	create stateless react component with proptypes and ES6 module system
+
+RSF + Tab key	creates stateless react components in the form of named functions, without proptypes
+Rsfp + Tab key	use proptypes to create stateless react components as named functions
+RSI + Tab key	create stateless react component, not using proptypes and ES6 module system, but using implicit return and props
+Rwwd + Tab key	create a react component class with constructor, null state, proptypes and export in the ES6 module system without import. (proptype is provided by webpack plug-in when it is mainly used for react)
