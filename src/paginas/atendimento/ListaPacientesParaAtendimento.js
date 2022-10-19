@@ -85,7 +85,6 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const colunas = [
-        {text: "ID"},
         {text: "Paciente"},
         {text: "CPF do Paciente"},
         {text: "Data - Hora"},
@@ -101,7 +100,6 @@ export default function ListaPacientesParaAtendimento() {
         return(
             typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
                 return ({
-                    'id': consulta.id,
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,
                     'data__hora': consulta.dtHora,

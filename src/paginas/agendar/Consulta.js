@@ -13,7 +13,7 @@ export default function Consulta() {
             profissionais: [],
             consultoriosBloco: [],
             pessoas:[],
-            comDependentes: true
+            comDependentes: false
         }
     )
 

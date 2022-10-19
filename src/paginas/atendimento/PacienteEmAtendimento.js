@@ -1,7 +1,9 @@
-import {Card, EditorTexto, Pagina, Tabela} from "../../componentes";
+import {Botao, Card, EditorTexto, Pagina, Tabela} from "../../componentes";
 import React, {useEffect, useState} from "react";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
+import {Modal} from "react-bootstrap";
+import BotaoMedico from "../../componentes/BotaoMedico";
 
 export default function PacienteEmAtendimento() {
     const [pessoa, setPessoa] = useState({
@@ -18,8 +20,6 @@ export default function PacienteEmAtendimento() {
             )
             .catch(err => ExibirMensagem(err.message, MSG.ERRO))
     }, [])
-
-    console.log("Pessoa Selecionada Campos:", pessoa.pessoas);
 
     return (
         <Pagina titulo="Paciente em Atendimento">
@@ -70,13 +70,18 @@ export default function PacienteEmAtendimento() {
                     </Card>
                     <Card titulo="CID">
                         <div className={"row"}>
-                            <div className="col-lg-12">
-                                <select>
-                                    <option>Selecione...</option>
-                                    <option>CID1</option>
-                                    <option>CID2</option>
-                                    <option>CID3</option>
-                                </select>
+                            <select className={"form-control col-lg-12"}>
+                                <option>Selecione...</option>
+                                <option>CID1</option>
+                                <option>CID2</option>
+                                <option>CID3</option>
+                            </select>
+                            <br />
+                            <br />
+                            <div className={"form-group"}>
+                                <BotaoMedico corDoBotao={BOTAO.COR.SUCESSO} icone={ICONE.PDF} titulo={"Atestado"} nome={"Atestado"} />
+                                <BotaoMedico corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />
+                                <BotaoMedico corDoBotao={BOTAO.COR.ALERTA} icone={ICONE.PDF} titulo={"Requisição de Exames"} nome={"Requisição de Exames"} />
                             </div>
                         </div>
                     </Card>

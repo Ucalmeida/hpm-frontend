@@ -94,6 +94,28 @@ export default function ConsultorioBloco(){
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className="row">
+                            <div className="col-lg-6">
+                                <label>Escala</label>
+                                <Select
+                                    funcao={selecionarEscala}
+                                    nome="idEscala"
+                                    url={"/hpm/escala/opcoes"} />
+                            </div>
+                            <div className="col-lg-6">
+                                <label>Especialidade</label>
+                                <Select
+                                    funcao={selecionarEspecialidade}
+                                    nome="idEspecialidade"
+                                    url={"/hpm/especialidade/opcoes"} />
+                            </div>
+                            {selectEspecialista}
+                            <div className="col-lg-6">
+                                <label>Prédio - Piso - Sala</label>
+                                <Select
+                                    funcao={selecionarSala}
+                                    nome="idSala"
+                                    url={"/hpm/sala/opcoes"} />
+                            </div>
                             <div className="col-lg-3">
                                 <Input
                                     type="datetime-local"
@@ -131,28 +153,6 @@ export default function ConsultorioBloco(){
                                     name="qtdEmergencias"
                                     label="Quantidade de Emergencias"
                                     placeholder="Qtd emergencias"/>
-                            </div>
-                            <div className="col-lg-6">
-                                <label>Escala</label>
-                                <Select
-                                    funcao={selecionarEscala}
-                                    nome="idEscala"
-                                    url={"/hpm/escala/opcoes"} />
-                            </div>
-                            <div className="col-lg-6">
-                                <label>Especialidade</label>
-                                <Select
-                                    funcao={selecionarEspecialidade}
-                                    nome="idEspecialidade"
-                                    url={"/hpm/especialidade/opcoes"} />
-                            </div>
-                            {selectEspecialista}
-                            <div className="col-lg-6">
-                                <label>Prédio - Piso - Sala</label>
-                                <Select
-                                    funcao={selecionarSala}
-                                    nome="idSala"
-                                    url={"/hpm/sala/opcoes"} />
                             </div>
                         </div>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
