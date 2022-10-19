@@ -61,10 +61,22 @@ export default function PacienteEmAtendimento() {
                             </div>
                         </div>
                     </Card>
-                    <Card titulo="Anaminese">
+                    <Card titulo="Evolução">
                         <div className={"row"}>
                             <div className="col-lg-12">
                                 <EditorTexto />
+                            </div>
+                        </div>
+                    </Card>
+                    <Card titulo="CID">
+                        <div className={"row"}>
+                            <div className="col-lg-12">
+                                <select>
+                                    <option>Selecione...</option>
+                                    <option>CID1</option>
+                                    <option>CID2</option>
+                                    <option>CID3</option>
+                                </select>
                             </div>
                         </div>
                     </Card>
