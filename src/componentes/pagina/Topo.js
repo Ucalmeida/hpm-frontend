@@ -134,7 +134,7 @@ export default class Topo extends React.Component {
                                     <Botao> Manual </Botao>
                                 </div>
                                 <div className='col-4 text-center'>
-                                    <Botao href='alterarSenha'> Alterar Senha </Botao>
+                                    <Botao href='/alterarSenha'> Alterar Senha </Botao>
                                 </div>
                             </div>
                             </li>

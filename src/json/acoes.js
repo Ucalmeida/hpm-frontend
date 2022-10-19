@@ -1,12 +1,12 @@
 
 export const acoes = [
-    {
-    "nome": "Alterar Senha",
-    "descricao": "Página Principal",
-    "url": "alterarSenha",
-    "icone": "fas fa-unlock-alt",
-    "depencias": []
-  },
+  //   {
+  //   "nome": "Alterar Senha",
+  //   "descricao": "Página Principal",
+  //   "url": "alterarSenha",
+  //   "icone": "fas fa-unlock-alt",
+  //   "depencias": []
+  // },
   // {
   //   "nome": "Agenda de Consultas",
   //   "descricao": "Componente Calendário",
@@ -61,12 +61,12 @@ export const acoes = [
     "url": "cadastrar",
     "icone": "far fa-plus-square",
     "acoes": [
-      {
-        "nome": "Consulta",
-        "descricao": "Consulta",
-        "url": "consulta",
-        "icone": "fas fa-stethoscope"
-      },
+      // {
+      //   "nome": "Consulta",
+      //   "descricao": "Consulta",
+      //   "url": "consulta",
+      //   "icone": "fas fa-stethoscope"
+      // },
       {
         "nome": "Consultorio Bloco",
         "descricao": "Criando Consultorio Bloco ",

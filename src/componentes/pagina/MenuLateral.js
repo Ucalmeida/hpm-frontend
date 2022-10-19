@@ -50,10 +50,7 @@ export default function () {
     function submenu(subAcoes) {
         function listarSubAcoes() {
             let resultadoSubAcoesList = typeof subAcoesList !== 'undefined' ? subAcoesList.filter(subAcao => subAcao === subAcoes.url) : 'undefined';
-            if (resultadoSubAcoesList.length > 0 && resultadoSubAcoesList !== 'undefined') {
-                return true;
-            }
-            return false;
+            return !!(resultadoSubAcoesList.length > 0 && resultadoSubAcoesList !== 'undefined');
         }
         if (listarSubAcoes()) {
             return (
@@ -69,10 +66,7 @@ export default function () {
                         {subAcoes.acoes ? subAcoes.acoes.sort(CompararArrayObjetos("nome")).map((acao) => {
                             function listaPerfis(subAcoesUrl, acaoUrl) {
                                 let result = perfilList.filter(perfil => perfil === "/" + subAcoesUrl + "/" + acaoUrl);
-                                if(result.length > 0) {
-                                    return true;
-                                }
-                                return false;
+                                return result.length > 0;
                             }
                             if (listaPerfis(subAcoes.url, acao.url)) {
                                 if (!acao.acoes) {
