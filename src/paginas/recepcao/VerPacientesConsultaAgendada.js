@@ -89,6 +89,28 @@ export default function VerPacientesConsultaAgendada() {
         <Pagina titulo="Listar Pacientes por Médico">
             <div className={"row"}>
                 <div className={"col-lg-12"}>
+                    <Card>
+                        <div className={"info-box"}>
+                            <div className="info-box-content">
+                                <span className="info-box-text" _msthash="2400268"
+                                      _msttexthash="134784">Especialidade</span>
+                                <span className="info-box-number" _msthash="2400424"
+                                      _msttexthash="28353">{localStorage.getItem("nmEspecialidade")}</span>
+                            </div>
+                            <div className="info-box-content">
+                                <span className="info-box-text" _msthash="2400268"
+                                      _msttexthash="134784">Médico</span>
+                                <span className="info-box-number" _msthash="2400424"
+                                      _msttexthash="28353">{localStorage.getItem("nmMedico")}</span>
+                            </div>
+                            <div className="info-box-content">
+                                <span className="info-box-text" _msthash="2400268"
+                                      _msttexthash="134784">Data - Hora</span>
+                                <span className="info-box-number" _msthash="2400424"
+                                      _msttexthash="28353">{localStorage.getItem("dtHora")}</span>
+                            </div>
+                        </div>
+                    </Card>
                     <Card titulo="Lista de pacientes por médico">
                         <Tabela colunas={colunas} dados={dados()} />
                     </Card>

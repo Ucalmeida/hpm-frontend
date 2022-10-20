@@ -81,7 +81,7 @@ export default function MarcarConsultas() {
     }
 
     return(
-        <Pagina titulo="Listar Médicos">
+        <Pagina titulo="Marcar Consultas">
             <div className={"row"}>
                 <div className={"col-lg-12"}>
                     <Card titulo="Listar">

@@ -25,7 +25,6 @@ export default function ListarProfissionaisSaude() {
     }
 
     const colunas = [
-        {text: "ID"},
         {text: "Nome"},
         {text: "Celular"},
         {text: "Email"},
@@ -45,7 +44,6 @@ export default function ListarProfissionaisSaude() {
                     console.log("Conselhos", conselhos);
                     console.log("Indice", indice);
                     return({
-                        'id': medico.valor,
                         'nome': medico.texto,
                         'celular': medico.celular,
                         'email': medico.email,
