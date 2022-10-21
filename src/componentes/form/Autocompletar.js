@@ -69,7 +69,7 @@ export class Autocompletar extends React.Component {
                        value={busca}
                        placeholder={this.props.placeholder}
                     />
-                    {spinner}
+                    {/*{spinner}*/}
                 </div>
                 <div className="col-lg-1">
                     <input

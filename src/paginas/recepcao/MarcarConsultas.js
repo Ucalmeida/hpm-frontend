@@ -17,6 +17,17 @@ export default function MarcarConsultas() {
         window.open("/recepcao/verPacientesConsultaAgendada");
     }
 
+    const handleBtnConsulta = async (medico) => {
+        localStorage.setItem('emergencia', false);
+        localStorage.setItem('medicoConsulta', medico.valor);
+        localStorage.setItem('nmProfissionalSaude', medico.texto);
+        localStorage.setItem('nmEspecialidade', medico.texto2);
+        localStorage.setItem('idEspecialidade', medico.valor3);
+        localStorage.setItem('idProfissionalSaude', medico.valor2);
+        localStorage.setItem('dataHora', medico.texto3 + " - " + medico.texto4);
+        window.open("/recepcao/consulta");
+    }
+
     const handleBtnUrgencia = async (medico) => {
         localStorage.setItem('emergencia', true);
         localStorage.setItem('medicoConsulta', medico.valor);
@@ -55,11 +66,12 @@ export default function MarcarConsultas() {
                 lista.medicos.map((medico) => {
                     return({
                         'nome': medico.texto,
-                        'inicio': medico.texto2,
-                        'termino': medico.texto3,
-                        'vagas': medico.texto4,
+                        'inicio': medico.texto3,
+                        'termino': medico.texto4,
+                        'vagas': medico.texto5,
                         'acoes': <div>
                                     <Botao onClick={() => handleBtnVerPacientes(medico.valor)} value={medico.valor}>Ver Pacientes</Botao>
+                                    <Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>
                                     <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Urgência</Botao>
                                 </div>
                     })
@@ -69,7 +81,7 @@ export default function MarcarConsultas() {
     }
 
     return(
-        <Pagina titulo="Listar Médicos">
+        <Pagina titulo="Marcar Consultas">
             <div className={"row"}>
                 <div className={"col-lg-12"}>
                     <Card titulo="Listar">

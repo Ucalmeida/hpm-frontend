@@ -1,12 +1,12 @@
 
 export const acoes = [
-    {
-    "nome": "Alterar Senha",
-    "descricao": "Página Principal",
-    "url": "alterarSenha",
-    "icone": "fas fa-unlock-alt",
-    "depencias": []
-  },
+  //   {
+  //   "nome": "Alterar Senha",
+  //   "descricao": "Página Principal",
+  //   "url": "alterarSenha",
+  //   "icone": "fas fa-unlock-alt",
+  //   "depencias": []
+  // },
   // {
   //   "nome": "Agenda de Consultas",
   //   "descricao": "Componente Calendário",
@@ -61,12 +61,12 @@ export const acoes = [
     "url": "cadastrar",
     "icone": "far fa-plus-square",
     "acoes": [
-      {
-        "nome": "Consulta",
-        "descricao": "Consulta",
-        "url": "consulta",
-        "icone": "fas fa-stethoscope"
-      },
+      // {
+      //   "nome": "Consulta",
+      //   "descricao": "Consulta",
+      //   "url": "consulta",
+      //   "icone": "fas fa-stethoscope"
+      // },
       {
         "nome": "Consultorio Bloco",
         "descricao": "Criando Consultorio Bloco ",
@@ -200,25 +200,25 @@ export const acoes = [
     "icone": "fa fa-list-alt",
     "acoes": [
       {
-        "nome": "Listar Dependentes",
+        "nome": "Dependentes",
         "descricao": "Listagem de Dependentes",
         "url": "listarDependentes",
         "icone": "fa fa-list"
       },
       {
-        "nome": "Listar Profissionais Saúde",
+        "nome": "Profissionais Saúde",
         "descricao": "Listagem de Profissionais de Saúde",
         "url": "listarProfissionaisSaude",
         "icone": "fa fa-list"
       },
       {
-        "nome": "Listar Especialidade Por Profissional Saúde",
+        "nome": "Especialidade Por Profissional Saúde",
         "descricao": "Listagem de Especialidade Por Profissional de Saúde",
         "url": "listarEspecialidadePorProfissionalSaude",
         "icone": "fa fa-list"
       },
       {
-        "nome": "Listar Escalas",
+        "nome": "Escalas",
         "descricao": "Listagem de Escalas por Status",
         "url": "listarEscalas",
         "icone": "fa fa-list"

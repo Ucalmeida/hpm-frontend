@@ -41,7 +41,6 @@ export default function ListarEscalas() {
     }, [])
 
     const colunas = [
-        {text: "ID"},
         {text: "Nome"},
         {text: "Data Início"},
         {text: "Data Término"},
@@ -55,7 +54,6 @@ export default function ListarEscalas() {
                 escala.escalas.map((escala) => {
                     console.log("Escala: " + escala.nome + " - Data Início: " + escala.dtInicio + " | Data Término: " + escala.dtTermino + " | " + escala.status);
                     return({
-                        'id': escala.valor,
                         'nome': escala.nome,
                         'data_inicio': escala.dtInicio,
                         'data_termino': escala.dtTermino,

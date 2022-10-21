@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import {ExibirMensagem, xfetch} from "../util";
 import {BotaoSalvar, Card, Input, Pagina} from "../componentes";
 import {HttpVerbo, MSG} from "../util/Constantes";
-import {msgErro} from "../util/Msg";
 
 export default function AlterarSenha() {
     const [senha, setSenha] = useState({

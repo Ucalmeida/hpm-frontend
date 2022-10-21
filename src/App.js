@@ -34,7 +34,6 @@ import Exame from "./paginas/cadastrar/Exame";
 import InstituicaoConvenio from "./paginas/cadastrar/InstituicaoConvenio";
 import ConsultorioBloco from "./paginas/cadastrar/ConsultorioBloco";
 import Dependente from "./paginas/cadastrar/Dependente";
-import Consulta from "./paginas/cadastrar/Consulta";
 import CadastrarEscala from "./paginas/cadastrar/CadastrarEscala";
 
 import EditordeTexto from "./paginas/EditordeTexto";
@@ -48,6 +47,7 @@ import ListarPacientes from "./paginas/recepcao/ListarPacientes";
 import MarcarConsultas from "./paginas/recepcao/MarcarConsultas";
 import VerPacientesConsultaAgendada from "./paginas/recepcao/VerPacientesConsultaAgendada";
 import ConsultaEmergencia from "./paginas/recepcao/ConsultaEmergencia";
+import Consulta from "./paginas/recepcao/Consulta";
 
 import Atendimentos from "./paginas/relatorio/Atendimentos";
 
@@ -119,7 +119,6 @@ const App =  () =>  {
                     <Route exact path="/cadastrar/exame" component={Exame} />
                     <Route exact path="/cadastrar/instituicaoConvenio" component={InstituicaoConvenio} />
                     <Route exact path="/cadastrar/consultorioBloco" component={ConsultorioBloco} />
-                    <Route exact path="/cadastrar/consulta" component={Consulta} />
                     <Route exact path="/cadastrar/dependente" component={Dependente} />
                     <Route exact path="/cadastrar/cadastrarEscala" component={CadastrarEscala} />
                     <Route exact path="/cadastrar/cadastrarSistemaExterno" component={CadastrarSistemaExterno}/>
@@ -135,6 +134,7 @@ const App =  () =>  {
                     <Route exact path="/recepcao/marcarConsultas" component={MarcarConsultas} />
                     <Route exact path="/recepcao/verPacientesConsultaAgendada" component={VerPacientesConsultaAgendada} />
                     <Route exact path="/recepcao/consultaEmergencia" component={ConsultaEmergencia} />
+                    <Route exact path="/recepcao/consulta" component={Consulta} />
 
                     <Route exact path="/relatorio/atendimentos" component={Atendimentos} />
 
