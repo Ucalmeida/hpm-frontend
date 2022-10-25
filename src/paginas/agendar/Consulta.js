@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Botao, Card, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
+import ConsultasAgendadasCard from "../../componentes/card/ConsultasAgendadasCard";
 
 export default function Consulta() {
     const [objeto, setObjeto] = useState(
@@ -143,6 +144,7 @@ export default function Consulta() {
                             </div>
                         </div>
                     </Card>
+                    <ConsultasAgendadasCard />
                 </div>
             </div>
         </Pagina>
