@@ -14,8 +14,8 @@ const log = console.log;
 
 const Login = () => {
     const [user, setUser] = useState({
-        login: '04856149520',
-        senha: 'didijudoca',
+        login: '',
+        senha: '',
         logado: false,
         carregando: false
     })
