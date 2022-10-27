@@ -55,7 +55,9 @@ export default function Consulta() {
 
     const selecionarConsultorioBloco = (e) => {
         e.preventDefault()
-        setObjeto({...objeto, idConsultorioBloco: e.target.value})
+        // setObjeto({...objeto, idConsultorioBloco: e.target.value})
+        objeto.idConsultorioBloco = e.target.value;
+        console.log("idConsultorioBloco", objeto.idConsultorioBloco);
     }
 
     const listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
@@ -144,7 +146,7 @@ export default function Consulta() {
                             </div>
                         </div>
                     </Card>
-                    <ConsultasAgendadasCard />
+                    <ConsultasAgendadasCard url={'/hpm/consulta/agendadas/' + objeto.idPessoa} objeto={objeto.idPessoa}/>
                 </div>
             </div>
         </Pagina>

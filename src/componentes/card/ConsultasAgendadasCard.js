@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Botao, Card, Tabela} from "../index";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
+import PropTypes from "prop-types";
 
-export default function ConsultasAgendadasCard() {
+export default function ConsultasAgendadasCard(props) {
     const [apagar, setApagar] = useState(false);
-
-    const idPessoa = localStorage.getItem('id');
 
     const [lista, setLista] = useState({
         consultas: [
@@ -60,9 +59,12 @@ export default function ConsultasAgendadasCard() {
     }
 
     useEffect(() => {
-        xfetch('/hpm/consulta/agendadas/' + idPessoa, {}, HttpVerbo.GET)
-            .then(response => response.json())
-            .then(lista => setLista({...lista, consultas: lista.resultado}))
+        console.log("idConsultorioBloco", props.objeto);
+        if (props.objeto !== null) {
+            xfetch(props.url, {}, HttpVerbo.GET)
+                .then(response => response.json())
+                .then(lista => setLista({...lista, consultas: lista.resultado}))
+        }
     }, [apagar])
 
     const colunas = [
@@ -80,6 +82,7 @@ export default function ConsultasAgendadasCard() {
     const dados = () => {
         return(
             lista.consultas.map((consulta) => {
+                console.log("Lista:", consulta);
                 return({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,
@@ -103,4 +106,9 @@ export default function ConsultasAgendadasCard() {
             <Tabela colunas={colunas} dados={dados()} />
         </Card>
     );
+}
+
+ConsultasAgendadasCard.propTypes = {
+    objeto: PropTypes.string,
+    url: PropTypes.string
 }
