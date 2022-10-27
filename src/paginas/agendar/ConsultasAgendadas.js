@@ -66,7 +66,6 @@ export default function ConsultasAgendadas() {
     }, [apagar])
 
     const colunas = [
-        {text: "ID"},
         {text: "Paciente"},
         {text: "CPF do Paciente"},
         {text: "Data - Hora"},
@@ -82,7 +81,6 @@ export default function ConsultasAgendadas() {
         return(
         lista.consultas.map((consulta) => {
             return({
-                        'id': consulta.id,
                         'paciente': consulta.nmPaciente,
                         'cpf_do_paciente': consulta.cpfPaciente,
                         'data__hora': consulta.dtHora,

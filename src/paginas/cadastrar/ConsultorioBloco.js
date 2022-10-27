@@ -2,8 +2,11 @@ import React, {useEffect, useState} from "react";
 import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
+import ConsultoriosBlocoCard from "../../componentes/card/ConsultoriosBlocoCard";
 
 export default function ConsultorioBloco(){
+    const [apagar, setApagar] = useState(false);
+
     const [objeto, setObjeto] = useState(
         {
             dataInicio : null,
@@ -72,7 +75,7 @@ export default function ConsultorioBloco(){
                     }
                 }
             )
-
+        setApagar(!apagar);
     }
 
     const selectEspecialista =  objeto.idEspecialidade ? <div className="col-lg-6">
@@ -159,6 +162,7 @@ export default function ConsultorioBloco(){
                             <BotaoSalvar onClick={enviar} />
                         </div>
                     </Card>
+                    <ConsultoriosBlocoCard idEspecialidade={objeto.idEspecialidade} apagarBloco={apagar}/>
                 </div>
             </div>
         </Pagina>

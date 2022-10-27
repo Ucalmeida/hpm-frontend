@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import {Botao} from "./Botao";
+import {Botao} from "../Botao";
 import PropTypes from "prop-types";
-import {BOTAO} from "../util/Constantes";
+import {BOTAO} from "../../util/Constantes";
 import {Form, Modal} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import logoHPM from "../img/brasoes/brasao_hpm.png";
+import logoHPM from "../../img/brasoes/brasao_hpm.png";
 
-export default function BotaoMedico(props) {
+export default function ModalFormMedico(props) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -56,7 +56,7 @@ export default function BotaoMedico(props) {
     )
 }
 
-BotaoMedico.propTypes = {
+ModalFormMedico.propTypes = {
     corDoBotao: PropTypes.string,
     icone: PropTypes.string,
     titulo: PropTypes.string,

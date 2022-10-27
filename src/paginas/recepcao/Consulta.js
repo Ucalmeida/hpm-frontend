@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Autocompletar, Botao, Card, Pagina} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
+import ConsultasAgendadasCard from "../../componentes/card/ConsultasAgendadasCard";
 
 
 export default function Consulta() {
@@ -18,8 +19,11 @@ export default function Consulta() {
         }
     )
 
+    let idpessoa = "";
+
     const selecionarPessoa = (e) => {
-        let idpessoa = document.getElementById('idpessoa').value;
+        idpessoa = document.getElementById('idpessoa').value;
+        localStorage.setItem("idPessoa", idpessoa);
         setObjeto({...objeto, idPessoa: idpessoa});
     }
 
@@ -76,6 +80,7 @@ export default function Consulta() {
                             </div>
                         </div>
                     </Card>
+                    <ConsultasAgendadasCard url={'/hpm/consulta/' + objeto.idConsultorioBloco + '/opcoes'} objeto={objeto.idConsultorioBloco}/>
                 </div>
             </div>
         </Pagina>
