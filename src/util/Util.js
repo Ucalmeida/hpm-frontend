@@ -32,7 +32,10 @@ function ExcecaoNegocio(message) {
 }
 
 export const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
-    const servidor = process.env.NODE_ENV === 'development'? 'http://localhost:8080' : 'http://172.23.7.47:8081'
+
+    console.log(process.env.NODE_ENV)
+
+    let servidor = process.env.REACT_APP_BACKEND
 
     let myHeaders = new Headers();
     let idTransacao = uuid();
