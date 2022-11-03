@@ -1,4 +1,4 @@
-import {Card, EditorTexto, Pagina} from "../../componentes";
+import {Botao, Card, EditorTexto, Pagina} from "../../componentes";
 import React, {useEffect, useState} from "react";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
@@ -6,12 +6,40 @@ import ModalFormMedico from "../../componentes/modal/ModalFormMedico";
 
 export default function PacienteEmAtendimento() {
     const [pessoa, setPessoa] = useState({
-        id: localStorage.getItem("pacienteConsulta"),
+        idConsulta: localStorage.getItem("pacienteConsulta"),
         pessoas: []
     })
 
+    let consultaSelecionada = {
+        idConsulta: pessoa.idConsulta,
+        idStatus: Number("20")
+    }
+
+    const handleBtnFinalizarConsulta = async (consultaId, statusId) => {
+        consultaSelecionada.idConsulta = consultaId;
+        consultaSelecionada.idStatus = statusId;
+        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
+            .then( json => {
+                    // if (typeof json.status !== 'undefined' ? "OK" : false) {
+                        ExibirMensagem('Consulta Finalizada com Sucesso!', MSG.SUCESSO);
+                        window.close();
+                    // }
+                }
+            )
+    }
+
     useEffect(() => {
-        xfetch('/hpm/pessoa/porId/' + pessoa.id, {}, HttpVerbo.GET)
+        xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
+            .then( json => {
+                    // if (typeof json.status !== 'undefined' ? "OK" : false) {
+                    //     ExibirMensagem('Consulta iniciada.', MSG.SUCESSO)
+                    // }
+                }
+            )
+    }, [])
+
+    useEffect(() => {
+        xfetch('/hpm/pessoa/porId/' + pessoa.idConsulta, {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
                     setPessoa({...pessoa, pessoas: json.resultado})
@@ -71,6 +99,7 @@ export default function PacienteEmAtendimento() {
                                 <ModalFormMedico corDoBotao={BOTAO.COR.SUCESSO} icone={ICONE.PDF} titulo={"Atestado"} nome={"Atestado"} />
                                 <ModalFormMedico corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />
                                 <ModalFormMedico corDoBotao={BOTAO.COR.ALERTA} icone={ICONE.PDF} titulo={"Requisição de Exames"} nome={"Requisição de Exames"} />
+                                <Botao cor={BOTAO.COR.PERIGO} icone={ICONE.SALVAR} onClick={() => handleBtnFinalizarConsulta(pessoa.idConsulta, Number("20"))}>Finalizar Consulta</Botao>
                             </div>
                         </div>
                     </Card>

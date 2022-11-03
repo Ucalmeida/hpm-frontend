@@ -13,7 +13,7 @@ export default function ListaPacientesParaAtendimento() {
 
     const [consultorio, setConsultorio] = useState({
         "idConsultorioBloco": null,
-        "idStatus": parseInt("6")
+        "idStatus": Number("6")
     });
 
     let consultaSelecionada = {
@@ -32,13 +32,14 @@ export default function ListaPacientesParaAtendimento() {
         localStorage.setItem('sala', consulta.sala);
         localStorage.setItem('piso', consulta.piso);
         localStorage.setItem('nmStatus', consulta.nmStatus);
+        localStorage.setItem('idStatus', consulta.idStatus)
         window.open("/atendimento/pacienteEmAtendimento");
     }
 
     const handleBtnCancelar = async (consultaId, statusId) => {
         consultaSelecionada.idConsulta = consultaId;
         consultaSelecionada.idStatus = statusId;
-        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.PUT)
+        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
                         ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
@@ -51,7 +52,7 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const selecionarConsultorioBloco = (e) => {
-        consultorio.idConsultorioBloco = parseInt(e.target.value);
+        consultorio.idConsultorioBloco = Number(e.target.value);
         listarPacientesParaAtendimentoPorData();
     }
 

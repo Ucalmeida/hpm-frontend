@@ -59,7 +59,6 @@ export default function ConsultasAgendadasCard(props) {
     }
 
     useEffect(() => {
-        console.log("idConsultorioBloco", props.objeto);
         if (props.objeto !== null) {
             xfetch(props.url, {}, HttpVerbo.GET)
                 .then(response => response.json())
@@ -82,7 +81,7 @@ export default function ConsultasAgendadasCard(props) {
     const dados = () => {
         return(
             lista.consultas.map((consulta) => {
-                console.log("Lista:", consulta);
+                console.log("Lista uso:", consulta);
                 return({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,
