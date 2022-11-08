@@ -58,7 +58,7 @@ export default function ConsultasAgendadas() {
     }
 
     useEffect(() => {
-        xfetch('/hpm/consulta/agendadas/' + idPessoa, {}, HttpVerbo.GET)
+        xfetch('/titular-dependentes/agendadas/' + idPessoa, {}, HttpVerbo.GET)
             .then(response => response.json())
             .then(lista => setLista({...lista, consultas: lista.resultado}))
     }, [apagar])
