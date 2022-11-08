@@ -22,7 +22,10 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     function handleBtnIniciarAtendimento(consulta) {
+        consultaSelecionada.idConsulta = consulta.id;
+        consultaSelecionada.idStatus = Number("20");
         localStorage.setItem('pacienteConsulta', consulta.id);
+        localStorage.setItem("idPessoa", consulta.idPessoa);
         localStorage.setItem('nmPaciente', consulta.nmPaciente);
         localStorage.setItem('cpfPaciente', consulta.cpfPaciente);
         localStorage.setItem('nmCelular', consulta.nmCelular);
@@ -32,7 +35,11 @@ export default function ListaPacientesParaAtendimento() {
         localStorage.setItem('sala', consulta.sala);
         localStorage.setItem('piso', consulta.piso);
         localStorage.setItem('nmStatus', consulta.nmStatus);
-        localStorage.setItem('idStatus', consulta.idStatus)
+        localStorage.setItem('idStatus', consulta.idStatus);
+        localStorage.setItem("relato", consulta.relato);
+        console.log("ConsultaSelecionada:", consultaSelecionada);
+        xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
+            .then(json => {})
         window.open("/atendimento/pacienteEmAtendimento");
     }
 
@@ -100,6 +107,7 @@ export default function ListaPacientesParaAtendimento() {
     const dados = () => {
         return(
             typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
+                console.log("Exemplo:", consulta);
                 return ({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,

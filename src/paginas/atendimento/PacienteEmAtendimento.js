@@ -1,53 +1,33 @@
-import {Botao, Card, EditorTexto, Pagina} from "../../componentes";
+import {Botao, Card, EditorTexto, Pagina, Select} from "../../componentes";
 import React, {useEffect, useState} from "react";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
 import ModalFormMedico from "../../componentes/modal/ModalFormMedico";
+import {Tab, Tabs} from "react-bootstrap";
 
 export default function PacienteEmAtendimento() {
     const [pessoa, setPessoa] = useState({
         idConsulta: localStorage.getItem("pacienteConsulta"),
+        idPessoa: localStorage.getItem("idPessoa"),
+        nmPaciente: localStorage.getItem("nmPaciente"),
+        txtRelato: localStorage.getItem("relato"),
         pessoas: []
     })
 
-    let consultaSelecionada = {
-        idConsulta: pessoa.idConsulta,
-        idStatus: Number("20")
+    const selecionarCid = (e) => {
+        pessoa.idCid = e.value;
     }
 
-    const handleBtnFinalizarConsulta = async (consultaId, statusId) => {
-        consultaSelecionada.idConsulta = consultaId;
-        consultaSelecionada.idStatus = statusId;
-        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
-            .then( json => {
-                    // if (typeof json.status !== 'undefined' ? "OK" : false) {
-                        ExibirMensagem('Consulta Finalizada com Sucesso!', MSG.SUCESSO);
-                        window.close();
-                    // }
-                }
-            )
-    }
-
-    useEffect(() => {
-        xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
-            .then( json => {
-                    // if (typeof json.status !== 'undefined' ? "OK" : false) {
-                    //     ExibirMensagem('Consulta iniciada.', MSG.SUCESSO)
-                    // }
-                }
-            )
-    }, [])
-
-    useEffect(() => {
-        xfetch('/hpm/pessoa/porId/' + pessoa.idConsulta, {}, HttpVerbo.GET)
-            .then(res => res.json())
-            .then(json => {
-                    setPessoa({...pessoa, pessoas: json.resultado})
-                }
-            )
-            .catch(err => ExibirMensagem(err.message, MSG.ERRO))
-    }, [])
-
+    // useEffect(() => {
+    //     xfetch('/hpm/consulta/porId/' + pessoa.idConsulta, {}, HttpVerbo.GET)
+    //         .then(res => res.json())
+    //         .then(json => {
+    //                 setPessoa({...pessoa, pessoas: json.resultado})
+    //             }
+    //         )
+    //         .catch(err => ExibirMensagem(err.message, MSG.ERRO))
+    // }, [])
+    console.log("Pessoa:", pessoa);
     return (
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
@@ -57,7 +37,7 @@ export default function PacienteEmAtendimento() {
                             <div className={"info-box"}>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Nome do Paciente</span>
-                                    <span className="info-box-number">{pessoa.pessoas.nome}</span>
+                                    <span className="info-box-text">{pessoa.nmPaciente}</span>
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Idade do Paciente</span>
@@ -78,10 +58,17 @@ export default function PacienteEmAtendimento() {
                             </div>
                         </div>
                     </Card>
+                    <Card titulo={"Relato"}>
+                        <div className={"info-box"}>
+                            <div className={"info-box-content"}>
+                                <span className={"info-box-text"}>{pessoa.txtRelato}</span>
+                            </div>
+                        </div>
+                    </Card>
                     <Card titulo="Evolução">
                         <div className={"row"}>
                             <div className="col-lg-12">
-                                <EditorTexto />
+                                <EditorTexto corDoBotao={BOTAO.COR.PERIGO} icone={ICONE.SALVAR} idConsulta={pessoa.idConsulta} nome={"Finalizar Consulta"} onClick/>
                             </div>
                         </div>
                     </Card>
@@ -93,15 +80,32 @@ export default function PacienteEmAtendimento() {
                                 <option>CID2</option>
                                 <option>CID3</option>
                             </select>
+                            {/*<div className={"col-lg-4"}>*/}
+                            {/*    <Select*/}
+                            {/*        url={"/hpm/especialidade/" + objeto.idPessoa + "/opcoes"}*/}
+                            {/*        nome={"idEspecialidade"}*/}
+                            {/*        funcao={selecionarCid}*/}
+                            {/*    />*/}
+                            {/*</div>*/}
                             <br />
                             <br />
-                            <div className={"form-group"}>
-                                <ModalFormMedico corDoBotao={BOTAO.COR.SUCESSO} icone={ICONE.PDF} titulo={"Atestado"} nome={"Atestado"} />
-                                <ModalFormMedico corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />
-                                <ModalFormMedico corDoBotao={BOTAO.COR.ALERTA} icone={ICONE.PDF} titulo={"Requisição de Exames"} nome={"Requisição de Exames"} />
-                                <Botao cor={BOTAO.COR.PERIGO} icone={ICONE.SALVAR} onClick={() => handleBtnFinalizarConsulta(pessoa.idConsulta, Number("20"))}>Finalizar Consulta</Botao>
-                            </div>
                         </div>
+                    </Card>
+                    <Card titulo={"Formulários"}>
+                        <Tabs>
+                            <Tab title="Atestado" eventKey="aba1">
+                                <br />
+                                <ModalFormMedico corDoBotao={BOTAO.COR.SUCESSO} icone={ICONE.PDF} titulo={"Atestado"} nome={"Atestado"} />
+                            </Tab>
+                            <Tab title="Receita" eventKey="aba2">
+                                <br />
+                                <ModalFormMedico corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />
+                            </Tab>
+                            <Tab title="Requisição de Exames" eventKey="aba3">
+                                <br />
+                                <ModalFormMedico corDoBotao={BOTAO.COR.ALERTA} icone={ICONE.PDF} titulo={"Requisição de Exames"} nome={"Requisição de Exames"} />
+                            </Tab>
+                        </Tabs>
                     </Card>
                 </div>
             </div>
