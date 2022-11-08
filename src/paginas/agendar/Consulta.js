@@ -134,7 +134,7 @@ export default function Consulta() {
                             </div>
                         </div>
                     </Card>
-                    <ConsultasAgendadasCard url={'/titular-dependentes/agendadas/' + objeto.idPessoa} objeto={objeto.idPessoa}/>
+                    <ConsultasAgendadasCard url={'/hpm/consulta/titular-dependentes/agendadas/' + objeto.idPessoa} objeto={objeto.idPessoa}/>
                 </div>
             </div>
         </Pagina>
