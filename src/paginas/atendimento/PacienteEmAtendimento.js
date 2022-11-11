@@ -1,4 +1,4 @@
-import {Botao, Card, EditorTexto, Pagina, Select} from "../../componentes";
+import {Autocompletar, Botao, Card, EditorTexto, Input, Pagina, Select} from "../../componentes";
 import React, {useEffect, useState} from "react";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
@@ -6,28 +6,32 @@ import ModalFormMedico from "../../componentes/modal/ModalFormMedico";
 import {Tab, Tabs} from "react-bootstrap";
 
 export default function PacienteEmAtendimento() {
-    const [pessoa, setPessoa] = useState({
-        idConsulta: localStorage.getItem("pacienteConsulta"),
+    const [consulta, setConsulta] = useState({
+        id: localStorage.getItem("pacienteConsulta"),
         idPessoa: localStorage.getItem("idPessoa"),
         nmPaciente: localStorage.getItem("nmPaciente"),
         txtRelato: localStorage.getItem("relato"),
-        pessoas: []
+        pessoas: [],
+        cid: null
     })
 
-    const selecionarCid = (e) => {
-        pessoa.idCid = e.value;
+    // const handleCID = (e) => {
+    //     const idCid = document.getElementById("idcid").value;
+    //     consulta.cid = idCid;
+    // }
+
+    // const handleCID = (e) => {
+    //     const cids = e.map((item) => { return item.value });
+    //     console.log("CIDs:", cids);
+    //     setCid({...cid, cids : cids});
+    // }
+
+    const handleCID = (e) => {
+        const idCid = e.value;
+        setConsulta({...consulta, cid : idCid});
     }
 
-    // useEffect(() => {
-    //     xfetch('/hpm/consulta/porId/' + pessoa.idConsulta, {}, HttpVerbo.GET)
-    //         .then(res => res.json())
-    //         .then(json => {
-    //                 setPessoa({...pessoa, pessoas: json.resultado})
-    //             }
-    //         )
-    //         .catch(err => ExibirMensagem(err.message, MSG.ERRO))
-    // }, [])
-    console.log("Pessoa:", pessoa);
+    console.log("Consulta:", consulta);
     return (
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
@@ -37,7 +41,7 @@ export default function PacienteEmAtendimento() {
                             <div className={"info-box"}>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Nome do Paciente</span>
-                                    <span className="info-box-text">{pessoa.nmPaciente}</span>
+                                    <span className="info-box-text">{consulta.nmPaciente}</span>
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Idade do Paciente</span>
@@ -61,32 +65,45 @@ export default function PacienteEmAtendimento() {
                     <Card titulo={"Relato"}>
                         <div className={"info-box"}>
                             <div className={"info-box-content"}>
-                                <span className={"info-box-text"}>{pessoa.txtRelato}</span>
+                                <span className={"info-box-text"}>{consulta.txtRelato}</span>
                             </div>
                         </div>
                     </Card>
                     <Card titulo="Evolução">
                         <div className={"row"}>
                             <div className="col-lg-12">
-                                <EditorTexto corDoBotao={BOTAO.COR.PERIGO} icone={ICONE.SALVAR} idConsulta={pessoa.idConsulta} nome={"Finalizar Consulta"} onClick/>
+                                <EditorTexto
+                                    corDoBotao={BOTAO.COR.PERIGO}
+                                    icone={ICONE.SALVAR}
+                                    idConsulta={consulta.id}
+                                    idCid={consulta.cid}
+                                    nome={"Finalizar Consulta"}
+                                />
                             </div>
                         </div>
                     </Card>
                     <Card titulo="CID">
                         <div className={"row"}>
-                            <select className={"form-control col-lg-12"}>
-                                <option>Selecione...</option>
-                                <option>CID1</option>
-                                <option>CID2</option>
-                                <option>CID3</option>
-                            </select>
-                            {/*<div className={"col-lg-4"}>*/}
-                            {/*    <Select*/}
-                            {/*        url={"/hpm/especialidade/" + objeto.idPessoa + "/opcoes"}*/}
-                            {/*        nome={"idEspecialidade"}*/}
-                            {/*        funcao={selecionarCid}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
+                            <div className="col-lg-12">
+                                {/*<Autocompletar*/}
+                                {/*    name="cid"*/}
+                                {/*    url={"/hpm/cid/por-nome/"}*/}
+                                {/*    label="Digite o CID:"*/}
+                                {/*    placeholder="Nome ou código aqui"*/}
+                                {/*    tamanho={6}*/}
+                                {/*    retorno={handleCID} />*/}
+                                {/*<Select*/}
+                                {/*    placeholder={"CID"}*/}
+                                {/*    funcao={handleCID}*/}
+                                {/*    nome={"cids"}*/}
+                                {/*    multiplo={true}*/}
+                                {/*    url={"/hpm/cid/"}/>*/}
+                                <Select
+                                    placeholder={"CID"}
+                                    funcao={handleCID}
+                                    nome={"cid"}
+                                    url={"/hpm/cid"}/>
+                            </div>
                             <br />
                             <br />
                         </div>

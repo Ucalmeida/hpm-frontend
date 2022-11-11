@@ -11,15 +11,17 @@ function EditorTexto(props) {
     let consultaSelecionada = {
         idConsulta: '',
         idStatus: '',
-        relato: ''
+        relato: '',
+        cid: null
     }
 
-    const handleBtnFinalizarConsulta = async (consultaId, statusId) => {
+    const handleBtnFinalizarConsulta = async (consultaId, statusId, cidId) => {
         consultaSelecionada.idConsulta = consultaId;
         consultaSelecionada.idStatus = statusId;
         if (editorRef.current) {
             consultaSelecionada.relato = editorRef.current.getContent();
         }
+        consultaSelecionada.cid = cidId;
         await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then(json => {
                 if(typeof json !== 'undefined' ? json.status === "OK" : false) {
@@ -50,7 +52,7 @@ function EditorTexto(props) {
                 }}
             />
             <br />
-            <Botao cor={props.corDoBotao} icone={props.icone} onClick={() => handleBtnFinalizarConsulta(props.idConsulta, Number("7"))}>{props.nome}</Botao>
+            <Botao cor={props.corDoBotao} icone={props.icone} onClick={() => handleBtnFinalizarConsulta(props.idConsulta, Number("7"), props.idCid)}>{props.nome}</Botao>
         </>
     )
 };
@@ -64,6 +66,7 @@ EditorTexto.propTypes = {
     icone: PropTypes.string,
     nome: PropTypes.string,
     idConsulta: PropTypes.string,
+    idCid: PropTypes.string,
     funcao: PropTypes.func,
 };
 
