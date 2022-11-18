@@ -10,26 +10,52 @@ export default function PacienteEmAtendimento() {
         id: localStorage.getItem("pacienteConsulta"),
         idPessoa: localStorage.getItem("idPessoa"),
         nmPaciente: localStorage.getItem("nmPaciente"),
+        dtNascimento: localStorage.getItem('dtNascimento'),
+        altura: localStorage.getItem('altura'),
+        peso: localStorage.getItem('peso'),
         txtRelato: localStorage.getItem("relato"),
+        idade: null,
+        imc: null,
         pessoas: [],
         cid: null
     })
 
-    // const handleCID = (e) => {
-    //     const idCid = document.getElementById("idcid").value;
-    //     consulta.cid = idCid;
-    // }
-
-    // const handleCID = (e) => {
-    //     const cids = e.map((item) => { return item.value });
-    //     console.log("CIDs:", cids);
-    //     setCid({...cid, cids : cids});
-    // }
+    let medida = {
+        medidaAltura: "m",
+        medidaPeso: "Kg"
+    };
 
     const handleCID = (e) => {
-        const idCid = e.value;
-        setConsulta({...consulta, cid : idCid});
+        const idCid = document.getElementById("idcid").value;
+        consulta.cid = idCid;
     }
+
+    let calcIdade = (data) => {
+        const atual = new Date();
+        const dataNascimento = new Date(data);
+        let idade = atual.getFullYear() - dataNascimento.getFullYear();
+        const m = atual.getMonth() - dataNascimento.getMonth();
+        if (m < 0 || (m === 0 && atual.getDate() < dataNascimento.getDate())) {
+            idade--;
+        }
+        return idade;
+    }
+
+    let calcImc = (peso, altura) => {
+        Number(peso);
+        Number(altura);
+        let imc = peso / (altura * altura);
+        return imc;
+    }
+
+    consulta.idade = calcIdade(consulta.dtNascimento);
+    consulta.imc = calcImc(consulta.peso, consulta.altura);
+
+    console.log("Data nascimento:", consulta.dtNascimento);
+    console.log("Altura:", consulta.altura);
+    console.log("Peso:", consulta.peso);
+    console.log("Idade:", consulta.idade);
+    console.log("IMC:", consulta.imc);
 
     console.log("Consulta:", consulta);
     return (
@@ -45,19 +71,19 @@ export default function PacienteEmAtendimento() {
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Idade do Paciente</span>
-                                    <span className="info-box-number">{42}</span>
+                                    <span className="info-box-number">{consulta.idade}</span>
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Altura do Paciente</span>
-                                    <span className="info-box-number">{1.75}</span>
+                                    <span className="info-box-number">{consulta.altura + medida.medidaAltura}</span>
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Peso do Paciente</span>
-                                    <span className="info-box-number">{"90kg"}</span>
+                                    <span className="info-box-number">{consulta.peso + medida.medidaPeso}</span>
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">IMC do Paciente</span>
-                                    <span className="info-box-number">{25}</span>
+                                    <span className="info-box-number">{consulta.imc}</span>
                                 </div>
                             </div>
                         </div>
@@ -85,24 +111,13 @@ export default function PacienteEmAtendimento() {
                     <Card titulo="CID">
                         <div className={"row"}>
                             <div className="col-lg-12">
-                                {/*<Autocompletar*/}
-                                {/*    name="cid"*/}
-                                {/*    url={"/hpm/cid/por-nome/"}*/}
-                                {/*    label="Digite o CID:"*/}
-                                {/*    placeholder="Nome ou código aqui"*/}
-                                {/*    tamanho={6}*/}
-                                {/*    retorno={handleCID} />*/}
-                                {/*<Select*/}
-                                {/*    placeholder={"CID"}*/}
-                                {/*    funcao={handleCID}*/}
-                                {/*    nome={"cids"}*/}
-                                {/*    multiplo={true}*/}
-                                {/*    url={"/hpm/cid/"}/>*/}
-                                <Select
-                                    placeholder={"CID"}
-                                    funcao={handleCID}
-                                    nome={"cid"}
-                                    url={"/hpm/cid"}/>
+                                <Autocompletar
+                                    name="cid"
+                                    url={"/hpm/cid/por-nome/"}
+                                    label="Digite o CID:"
+                                    placeholder="Nome ou código aqui"
+                                    tamanho={6}
+                                    retorno={handleCID} />
                             </div>
                             <br />
                             <br />
