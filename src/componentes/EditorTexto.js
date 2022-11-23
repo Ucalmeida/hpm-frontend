@@ -8,27 +8,31 @@ import {HttpVerbo, MSG} from "../util/Constantes";
 function EditorTexto(props) {
     const editorRef = useRef(null);
 
+    let listaCids = [];
+    listaCids = localStorage.getItem("arrayCids");
+
     let consultaSelecionada = {
         idConsulta: '',
         idStatus: '',
         relato: '',
-        cid: null
+        CIDs: []
     }
 
-    const handleBtnFinalizarConsulta = async (consultaId, statusId, cidId) => {
+    const handleBtnFinalizarConsulta = async (consultaId, statusId, cidsId) => {
         consultaSelecionada.idConsulta = consultaId;
         consultaSelecionada.idStatus = statusId;
+        consultaSelecionada.CIDs = cidsId;
         if (editorRef.current) {
             consultaSelecionada.relato = editorRef.current.getContent();
         }
-        consultaSelecionada.cid = cidId;
+        console.log("Lista:", consultaSelecionada);
         await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then(json => {
                 if(typeof json !== 'undefined' ? json.status === "OK" : false) {
                     ExibirMensagem('Consulta Salva Com Sucesso!', MSG.SUCESSO)
                 }
             })
-        window.close();
+        // window.close();
     }
 
     return (
@@ -52,7 +56,7 @@ function EditorTexto(props) {
                 }}
             />
             <br />
-            <Botao cor={props.corDoBotao} icone={props.icone} onClick={() => handleBtnFinalizarConsulta(props.idConsulta, Number("7"), props.idCid)}>{props.nome}</Botao>
+            <Botao cor={props.corDoBotao} icone={props.icone} onClick={() => handleBtnFinalizarConsulta(props.idConsulta, Number("7"), props.cids)}>{props.nome}</Botao>
         </>
     )
 };
@@ -66,7 +70,7 @@ EditorTexto.propTypes = {
     icone: PropTypes.string,
     nome: PropTypes.string,
     idConsulta: PropTypes.string,
-    idCid: PropTypes.string,
+    cids: PropTypes.array,
     funcao: PropTypes.func,
 };
 

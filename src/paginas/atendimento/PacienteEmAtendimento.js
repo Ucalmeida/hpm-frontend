@@ -1,9 +1,9 @@
-import {Autocompletar, Botao, Card, EditorTexto, Input, Pagina, Select} from "../../componentes";
-import React, {useEffect, useState} from "react";
-import {ExibirMensagem, xfetch} from "../../util";
-import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
-import ModalFormMedico from "../../componentes/modal/ModalFormMedico";
-import {Tab, Tabs} from "react-bootstrap";
+import {Autocompletar, Botao, Card, EditorTexto, Input, Pagina} from "../../componentes";
+import React, {useState} from "react";
+import {BOTAO, ICONE} from "../../util/Constantes";
+import ModalFormMedico from "../../componentes/modal/ModalFormMedicoAtestado";
+import {FormGroup, Tab, Tabs} from "react-bootstrap";
+import ModalFormMedicoAtestado from "../../componentes/modal/ModalFormMedicoAtestado";
 
 export default function PacienteEmAtendimento() {
     const [consulta, setConsulta] = useState({
@@ -17,46 +17,51 @@ export default function PacienteEmAtendimento() {
         idade: null,
         imc: null,
         pessoas: [],
-        cid: null
-    })
+        idCids: [],
+        diasAfastado: null
+    });
+
+    const [cids, setCids] = useState([]);
 
     let medida = {
         medidaAltura: "m",
         medidaPeso: "Kg"
     };
 
-    const handleCID = (e) => {
+    const handleCID = () => {
         const idCid = document.getElementById("idcid").value;
-        consulta.cid = idCid;
+        const idCidNome = document.getElementById("idcidAuto").value;
+        let codigoCid = idCidNome.split(" - ");
+        setConsulta({...consulta, idCids: [...consulta.idCids, Number(idCid)]});
+        setCids([...cids, codigoCid[0]]);
     }
 
     let calcIdade = (data) => {
         const atual = new Date();
-        const dataNascimento = new Date(data);
-        let idade = atual.getFullYear() - dataNascimento.getFullYear();
-        const m = atual.getMonth() - dataNascimento.getMonth();
-        if (m < 0 || (m === 0 && atual.getDate() < dataNascimento.getDate())) {
+        const dataNascimento = data.split('/');
+        const anoNascimento = dataNascimento[2].split("-");
+        let idade = atual.getFullYear() - anoNascimento[0];
+        const m = atual.getMonth() - dataNascimento[1];
+        if (m < 0 || (m === 0 && atual.getDate() < dataNascimento[0])) {
             idade--;
         }
         return idade;
     }
 
-    let calcImc = (peso, altura) => {
-        Number(peso);
-        Number(altura);
+    let calcImc = () => {
+        let peso = Number(consulta.peso);
+        let altura = Number(consulta.altura.replace(",", "."));
         let imc = peso / (altura * altura);
-        return imc;
+        return imc.toFixed(2);
     }
 
     consulta.idade = calcIdade(consulta.dtNascimento);
-    consulta.imc = calcImc(consulta.peso, consulta.altura);
+    consulta.imc = calcImc();
 
-    console.log("Data nascimento:", consulta.dtNascimento);
-    console.log("Altura:", consulta.altura);
-    console.log("Peso:", consulta.peso);
-    console.log("Idade:", consulta.idade);
-    console.log("IMC:", consulta.imc);
-
+    localStorage.setItem("arrayCids", consulta.idCids);
+    localStorage.setItem("arrayCodigosCids", cids);
+    console.log("CIDs:", cids);
+    console.log("Consulta CIDs:", consulta.idCids);
     console.log("Consulta:", consulta);
     return (
         <Pagina titulo="Paciente em Atendimento">
@@ -102,7 +107,7 @@ export default function PacienteEmAtendimento() {
                                     corDoBotao={BOTAO.COR.PERIGO}
                                     icone={ICONE.SALVAR}
                                     idConsulta={consulta.id}
-                                    idCid={consulta.cid}
+                                    cids={consulta.idCids}
                                     nome={"Finalizar Consulta"}
                                 />
                             </div>
@@ -122,12 +127,29 @@ export default function PacienteEmAtendimento() {
                             <br />
                             <br />
                         </div>
+                        <br />
+                        <FormGroup>
+                            <div className={"col-lg-12"}>
+                                {cids.map((cid, index) => (
+                                    <div className={"info-box col-lg-2"}>
+                                        <div key={index} className="info-box-content">
+                                            <span className="info-box-text">CID</span>
+                                            <span className="info-box-text">{cid}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </FormGroup>
                     </Card>
                     <Card titulo={"Formulários"}>
                         <Tabs>
                             <Tab title="Atestado" eventKey="aba1">
                                 <br />
-                                <ModalFormMedico corDoBotao={BOTAO.COR.SUCESSO} icone={ICONE.PDF} titulo={"Atestado"} nome={"Atestado"} />
+                                <ModalFormMedicoAtestado
+                                    corDoBotao={BOTAO.COR.SUCESSO}
+                                    icone={ICONE.PDF}
+                                    titulo={"Atestado"}
+                                    nome={"Atestado"}/>
                             </Tab>
                             <Tab title="Receita" eventKey="aba2">
                                 <br />
