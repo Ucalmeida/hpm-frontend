@@ -8,20 +8,17 @@ import {HttpVerbo, MSG} from "../util/Constantes";
 function EditorTexto(props) {
     const editorRef = useRef(null);
 
-    let listaCids = [];
-    listaCids = localStorage.getItem("arrayCids");
-
     let consultaSelecionada = {
         idConsulta: '',
         idStatus: '',
         relato: '',
-        CIDs: []
+        idCIDs: []
     }
 
     const handleBtnFinalizarConsulta = async (consultaId, statusId, cidsId) => {
         consultaSelecionada.idConsulta = consultaId;
         consultaSelecionada.idStatus = statusId;
-        consultaSelecionada.CIDs = cidsId;
+        consultaSelecionada.idCIDs = cidsId;
         if (editorRef.current) {
             consultaSelecionada.relato = editorRef.current.getContent();
         }
@@ -32,7 +29,7 @@ function EditorTexto(props) {
                     ExibirMensagem('Consulta Salva Com Sucesso!', MSG.SUCESSO)
                 }
             })
-        window.close();
+        // window.close();
     }
 
     return (
