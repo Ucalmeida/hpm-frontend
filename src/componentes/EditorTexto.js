@@ -29,7 +29,7 @@ function EditorTexto(props) {
                     ExibirMensagem('Consulta Salva Com Sucesso!', MSG.SUCESSO)
                 }
             })
-        // window.close();
+        window.close();
     }
 
     return (
