@@ -1,7 +1,7 @@
 import {Botao, Card, Pagina, Select, Tabela} from "../../componentes";
 import React, {useState, useEffect} from "react";
-import {BOTAO, HttpVerbo} from "../../util/Constantes";
-import {xfetch} from "../../util";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
+import {ExibirMensagem, xfetch} from "../../util";
 
 export default function ListarEscalas() {
     const [escala, setEscala] = useState({
@@ -12,24 +12,26 @@ export default function ListarEscalas() {
         listaStatus: []
     });
 
-    const handleBtnImprimir = () => {
-        alert('Conteúdo Impresso');
-    }
-
-    const handleBtnCancelar = () => {
-        alert('Conteúdo Cancelado');
+    const handleBtnCancelar = async (escalaId) => {
+        await xfetch('/hpm/escala/excluir/' + escalaId, {}, HttpVerbo.PUT)
+            .then( json =>{
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Escala Cancelada!', MSG.SUCESSO, '', '', '', '', listarEscalasPorStatus());
+                        window.location.reload();
+                    }
+                }
+            )
     }
 
     let escalaObjeto = 31;
 
     const handleStatus = (e) => {
-        escala.status = e.target.value;
+        localStorage.setItem("idStatus", e.target.value);
         listarEscalasPorStatus();
     }
 
     const listarEscalasPorStatus = () => {
-        console.log("Status:", escala.status);
-        xfetch('/hpm/escala/' + escala.status + '/opcoes', {}, HttpVerbo.GET)
+        xfetch('/hpm/escala/' + localStorage.getItem("idStatus") + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(escala => setEscala({...escala, escalas: escala.resultado}))
     }
@@ -59,9 +61,7 @@ export default function ListarEscalas() {
                         'data_termino': escala.dtTermino,
                         'situacao': escala.status,
                         'acoes': <div>
-                                    <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleBtnImprimir}>Imprimir</Botao>
-                                    <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar}>Cancelar</Botao>
-                                    {/*<Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id}>Cancelar</Botao>*/}
+                                    <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnCancelar(escala.valor)} value={escala.valor}>Cancelar</Botao>
                                 </div>
                     })
                 })

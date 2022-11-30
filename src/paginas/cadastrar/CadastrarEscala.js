@@ -42,8 +42,8 @@ export default function CadastrarEscala() {
         console.log("Objeto", objeto);
         xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
-                    if (typeof json.status != 'undefined' ? json.status === "OK" : null) {
-                        ExibirMensagem('Escala Cadastrada Com Sucesso!', MSG.SUCESSO)
+                    if (typeof json !== "undefined" ? json.status === "OK" : null) {
+                        ExibirMensagem('Escala Cadastrada Com Sucesso!', MSG.SUCESSO);
                     }
                 }
             )
