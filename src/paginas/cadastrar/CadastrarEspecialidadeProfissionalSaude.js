@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Autocomplete} from "../../componentes/form";
+import {Autocompletar} from "../../componentes/form";
 import {Card, Pagina, Tabela} from "../../componentes";
 import {xfetch} from "../../util";
 import {HttpVerbo} from "../../util/Constantes";
@@ -53,12 +53,9 @@ export default function CadastrarEspecialidadeProfissionalSaude() {
             <div className={"row"}>
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
-                        <Autocomplete
+                        <Autocompletar
                             tamanho="6"
                             url="/hpm/pessoa/"
-
-
-
                             name="idPessoa"
                             label="Digite os Dados:"
                             placeholder="Digite os dados aqui"
