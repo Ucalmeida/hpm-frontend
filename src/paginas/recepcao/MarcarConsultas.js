@@ -11,9 +11,12 @@ export default function MarcarConsultas() {
         medicos: []
     });
 
-    const handleBtnVerPacientes = async (consultorioBlocoId) => {
+    const handleBtnVerPacientes = async (consultorioBlocoId, medico) => {
         objeto.idConsultorioBloco = consultorioBlocoId;
         localStorage.setItem('consultorioBloco', objeto.idConsultorioBloco);
+        localStorage.setItem('dtHora', medico.texto3 + " - " + medico.texto4);
+        localStorage.setItem('nmEspecialidade', medico.texto2);
+        localStorage.setItem('nmMedico', medico.texto);
         window.open("/recepcao/verPacientesConsultaAgendada");
     }
 
@@ -70,7 +73,7 @@ export default function MarcarConsultas() {
                         'termino': medico.texto4,
                         'vagas': medico.texto5,
                         'acoes': <div>
-                                    <Botao onClick={() => handleBtnVerPacientes(medico.valor)} value={medico.valor}>Ver Pacientes</Botao>
+                                    <Botao onClick={() => handleBtnVerPacientes(medico.valor, medico)} value={medico.valor}>Ver Pacientes</Botao>
                                     <Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>
                                     <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Urgência</Botao>
                                 </div>
