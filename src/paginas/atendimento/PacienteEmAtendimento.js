@@ -1,9 +1,10 @@
-import {Autocompletar, Botao, Card, EditorTexto, Input, Pagina} from "../../componentes";
+import {Card, EditorTexto, Pagina} from "../../componentes";
 import React, {useState} from "react";
 import {BOTAO, ICONE} from "../../util/Constantes";
 import ModalFormMedico from "../../componentes/modal/ModalFormMedicoAtestado";
-import {FormGroup, Tab, Tabs} from "react-bootstrap";
 import ModalFormMedicoAtestado from "../../componentes/modal/ModalFormMedicoAtestado";
+import {FormGroup, Tab, Tabs} from "react-bootstrap";
+import {AutocompletarCid} from "../../componentes/form/AutocompletarCid";
 
 export default function PacienteEmAtendimento() {
     const [consulta, setConsulta] = useState({
@@ -28,6 +29,8 @@ export default function PacienteEmAtendimento() {
         medidaPeso: "Kg"
     };
 
+    consulta.altura /= 100;
+
     const handleCID = () => {
         const idCid = document.getElementById("idcid").value;
         const idCidNome = document.getElementById("idcidAuto").value;
@@ -50,7 +53,7 @@ export default function PacienteEmAtendimento() {
 
     let calcImc = () => {
         let peso = Number(consulta.peso);
-        let altura = Number(consulta.altura.replace(",", "."));
+        let altura = Number(consulta.altura);
         let imc = peso / (altura * altura);
         return imc.toFixed(2);
     }
@@ -93,13 +96,6 @@ export default function PacienteEmAtendimento() {
                             </div>
                         </div>
                     </Card>
-                    <Card titulo={"Relato"}>
-                        <div className={"info-box"}>
-                            <div className={"info-box-content"}>
-                                <span className={"info-box-text"}>{consulta.txtRelato}</span>
-                            </div>
-                        </div>
-                    </Card>
                     <Card titulo="Evolução">
                         <div className={"row"}>
                             <div className="col-lg-12">
@@ -116,7 +112,7 @@ export default function PacienteEmAtendimento() {
                     <Card titulo="CID">
                         <div className={"row"}>
                             <div className="col-lg-12">
-                                <Autocompletar
+                                <AutocompletarCid
                                     name="cid"
                                     url={"/hpm/cid/por-nome/"}
                                     label="Digite o CID:"
