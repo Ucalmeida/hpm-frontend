@@ -35,7 +35,12 @@ export default function ModalFormMedicoAtestado(props) {
                     ExibirMensagem('Atestado Salvo Com Sucesso!', MSG.SUCESSO)
                 }
             })
-        setShow(false);
+        handleImprimir(atestado)
+    }
+
+    function handleImprimir(atestado) {
+        localStorage.setItem('texto', atestado.texto);
+        window.open("/atendimento/atestadoImprimir");
     }
 
     const handleClose = () => setShow(false);
