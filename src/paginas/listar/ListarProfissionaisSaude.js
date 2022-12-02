@@ -1,7 +1,7 @@
 import {Card, Pagina, Select, Tabela} from "../../componentes";
 import React, {useState} from "react";
-import {HttpVerbo} from "../../util/Constantes";
-import {xfetch} from "../../util";
+import {HttpVerbo, MSG} from "../../util/Constantes";
+import {ExibirMensagem, xfetch} from "../../util";
 
 export default function ListarProfissionaisSaude() {
     const objeto = {};
@@ -16,11 +16,16 @@ export default function ListarProfissionaisSaude() {
     }
 
     const listarProfissionalPorEspecialidade = () => {
-        console.log("Objeto", objeto);
         xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes', {objeto}, HttpVerbo.GET)
             .then(res => res.json())
             .then(lista => {
                 setLista({...lista, medicos: lista.resultado})
+                if (lista.resultado.length === 0) {
+                    ExibirMensagem("Sem Resultados. Escolha outra especialidade.", MSG.ERRO);
+                }
+            })
+            .catch(error => {
+                console.log(error);
             })
     }
 
@@ -41,8 +46,6 @@ export default function ListarProfissionaisSaude() {
                         medico.crefito != null ? medico.crefito : '',
                         medico.conter != null ? medico.conter : ''
                     ];
-                    console.log("Conselhos", conselhos);
-                    console.log("Indice", indice);
                     return({
                         'nome': medico.texto,
                         'celular': medico.celular,

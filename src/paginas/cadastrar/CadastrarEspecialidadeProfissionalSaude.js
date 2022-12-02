@@ -9,28 +9,54 @@ export default function CadastrarEspecialidadeProfissionalSaude() {
 
     const [lista, setLista] = useState({
         especialidades: []
-    })
+    });
+
+    const [psf, setPsf] = useState({
+        especialidades: [],
+        nmRegistroConselho: null,
+        nmCoren: null,
+        nmCrefito: null,
+        nmConter: null
+    });
+
+    let idpessoa = "";
+
+    const handleEspecialidade = (e) => {
+        const especialidades = e.map((item) => { return item.value });
+        setPsf({...psf, especialidades : especialidades});
+    }
+
+    useEffect( () => {
+        setObjeto({...objeto, profissionalSaudeCmd : {
+                especialidades : psf.especialidades,
+                nmRegistroConselho : psf.nmRegistroConselho,
+                nmCoren: psf.nmCoren,
+                nmCrefito: psf.nmCrefito,
+                nmConter: psf.nmConter
+            }});
+    }, [psf]);
 
     const handleSelecionarPessoa = (e) => {
-        const idPessoa = e.value;
-        setObjeto({...objeto, idPessoa: idPessoa})
+        idpessoa = document.getElementById('idpessoa').value;
+        localStorage.setItem("idPessoa", idpessoa);
+        setObjeto({...objeto, idPessoa: idpessoa});
     }
 
-    useEffect(() => {
-        if(typeof(objeto.idEspecialidade) !== undefined) {
-            listarEspecialidadePorProfissional();
-        }
-        console.log("UseEffect", objeto)
-    }, [objeto])
-
-    const listarEspecialidadePorProfissional = () => {
-        console.log("Objeto", objeto);
-        xfetch('/hpm/profissionalSaude/' + objeto.idPessoa + '/opcoes', {objeto}, HttpVerbo.GET)
-            .then(res => res.json())
-            .then(lista => {
-                setLista({...lista, especialidades: lista.resultado})
-            })
-    }
+    // useEffect(() => {
+    //     if(typeof(objeto.idEspecialidade) !== undefined) {
+    //         listarEspecialidadePorProfissional();
+    //     }
+    //     console.log("UseEffect", objeto)
+    // }, [objeto])
+    //
+    // const listarEspecialidadePorProfissional = () => {
+    //     console.log("Objeto", objeto);
+    //     xfetch('/hpm/profissionalSaude/' + objeto.idPessoa + '/opcoes', {objeto}, HttpVerbo.GET)
+    //         .then(res => res.json())
+    //         .then(lista => {
+    //             setLista({...lista, especialidades: lista.resultado})
+    //         })
+    // }
 
     const colunas = [
         {text: "Especialidade"}
@@ -54,11 +80,11 @@ export default function CadastrarEspecialidadeProfissionalSaude() {
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <Autocompletar
-                            tamanho="6"
+                            name="pessoa"
                             url="/hpm/pessoa/"
-                            name="idPessoa"
                             label="Digite os Dados:"
-                            placeholder="Digite os dados aqui"
+                            placeholder="Nome ou CPF aqui"
+                            tamanho={6}
                             onSelect={handleSelecionarPessoa} />
                     </Card>
                     <Card titulo="Lista de especialidades por profissional de saúde">

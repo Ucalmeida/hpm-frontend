@@ -15,16 +15,14 @@ export default function ListarEscalas() {
     });
 
     const handleAlterarEscala = (escala) => {
-        console.log("Escala:", escala);
-        console.log("Objeto Escala:", objeto);
         xfetch('/hpm/escala/alterar/' + escala.valor, objeto, HttpVerbo.PUT)
             .then( json => {
-                console.log("JSON:", json);
                     if (typeof json !== "undefined" ? json.status === "OK" : false) {
                         ExibirMensagem("Escala " + msg, MSG.SUCESSO, '', '', '', '', listarEscalasPorStatus());
                     }
                 }
             )
+            .catch(error => ExibirMensagem(error, MSG.ERRO))
     }
     const handleBtnAlterarStatus = (escala, statusId) => {
         objeto.nome = escala.nome;
@@ -36,7 +34,6 @@ export default function ListarEscalas() {
     const handleBtnExcluir = (escalaId) => {
         xfetch('/hpm/escala/excluir/' + escalaId, objeto, HttpVerbo.PUT)
             .then( json => {
-                console.log("JSON:", json);
                     if (typeof json !== "undefined" ? json.status === "OK" : false) {
                         ExibirMensagem("Escala Excluída!", MSG.SUCESSO, '', '', '', '', listarEscalasPorStatus());
                     }
@@ -76,7 +73,6 @@ export default function ListarEscalas() {
         if(typeof(escala.escalas) !== "undefined") {
             return(
                 escala.escalas.map((escala) => {
-                    console.log("Escala: " + escala.nome + " - Data Início: " + escala.dtInicio + " | Data Término: " + escala.dtTermino + " | " + escala.status);
                     let statusId = "";
                     let btnAlteracaoStatus = "";
                     if (escala.idStatus === 13) {
