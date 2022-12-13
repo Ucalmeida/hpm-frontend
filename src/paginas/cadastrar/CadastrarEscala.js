@@ -12,6 +12,11 @@ export default function CadastrarEscala() {
         idStatus: null
     });
 
+    const [nomeEscala, setNomeEscala] = useState({
+        mes: '',
+        ano: ''
+    });
+
     const [status, setStatus] = useState({
         listaStatus: []
     });
@@ -29,8 +34,19 @@ export default function CadastrarEscala() {
     }
     
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setObjeto({...objeto, [name]: value});
+        objeto.nome = nomeEscala.mes + " - " + nomeEscala.ano;
+        console.log("Objeto:", objeto);
+        console.log("NomeEscala:", nomeEscala);
+    }
+
+    const handleMes = (e) => {
+        nomeEscala.mes = e.target.value;
+        handleChange();
+    }
+
+    const handleAno = (e) => {
+        nomeEscala.ano = e.target.value;
+        handleChange();
     }
 
     const handleStatus = (e) => {
@@ -61,13 +77,24 @@ export default function CadastrarEscala() {
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className="col-lg-6">
-                            <Input
-                                type="text"
-                                value={objeto.nome}
-                                onChange={handleChange}
-                                name="nome"
-                                label="Nome"
-                                placeholder="Nome" required/>
+                            {/*<Input*/}
+                            {/*    type="text"*/}
+                            {/*    value={objeto.nome}*/}
+                            {/*    onChange={handleChange}*/}
+                            {/*    name="nome"*/}
+                            {/*    label="Nome"*/}
+                            {/*    placeholder="Nome" required/>*/}
+                            <label>Nome</label>
+                            <select className={"form-control col-lg-12"} name="mes" onChange={handleMes}>
+                                <option>Selecione...</option>
+                                <option value={"Janeiro"}>Janeiro</option>
+                                <option value={"Fevereiro"}>Fevereiro</option>
+                            </select>
+                            <select className={"form-control col-lg-12"} name="ano" onChange={handleAno}>
+                                <option>Selecione...</option>
+                                <option value={"2022"}>2022</option>
+                                <option value={"2023"}>2023</option>
+                            </select>
                         </div>
                         <div className="col-lg-6">
                             <Input
