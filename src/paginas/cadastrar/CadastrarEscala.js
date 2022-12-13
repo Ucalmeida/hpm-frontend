@@ -80,17 +80,26 @@ export default function CadastrarEscala() {
                             <div className="col-lg-6">
                                 <label>Mês</label>
                                 <select className={"form-control col-lg-12"} name="mes" onChange={handleMes}>
-                                    <option>Selecione...</option>
+                                    <option>Selecione o mês...</option>
                                     <option value={"Janeiro"}>Janeiro</option>
                                     <option value={"Fevereiro"}>Fevereiro</option>
+                                    <option value={"Março"}>Março</option>
+                                    <option value={"Abril"}>Abril</option>
+                                    <option value={"Maio"}>Maio</option>
+                                    <option value={"Junho"}>Junho</option>
+                                    <option value={"Julho"}>Julho</option>
+                                    <option value={"Agosto"}>Agosto</option>
+                                    <option value={"Setembro"}>Setembro</option>
+                                    <option value={"Outubro"}>Outubro</option>
+                                    <option value={"Novembro"}>Novembro</option>
+                                    <option value={"Dezembro"}>Dezembro</option>
                                 </select>
                             </div>
                             <div className={"col-lg-6"}>
                                 <label>Ano</label>
                                 <select className={"form-control col-lg-12"} name="ano" onChange={handleAno}>
-                                    <option>Selecione...</option>
+                                    <option>Selecione o ano...</option>
                                     <option value={"2022"}>2022</option>
-                                    <option value={"2023"}>2023</option>
                                 </select>
                             </div>
                             <div className="col-lg-6">
