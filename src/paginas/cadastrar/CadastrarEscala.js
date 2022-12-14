@@ -12,16 +12,26 @@ export default function CadastrarEscala() {
         idStatus: null
     });
 
-    const [nomeEscala, setNomeEscala] = useState({
-        mes: '',
-        ano: ''
-    });
-
     const [status, setStatus] = useState({
         listaStatus: []
     });
 
     let escalaObjeto = 31;
+
+    const meses = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ];
 
     const handleDtHrInicio = (e) => {
         let dt = e.target.value;
@@ -34,19 +44,11 @@ export default function CadastrarEscala() {
     }
     
     const handleChange = (e) => {
-        objeto.nome = nomeEscala.mes + " - " + nomeEscala.ano;
+        const myDate = e.target.value;
+        let [ano, mes] = myDate.split("-");
+        mes = meses[mes - 1];
+        objeto.nome = mes + " - " + ano;
         console.log("Objeto:", objeto);
-        console.log("NomeEscala:", nomeEscala);
-    }
-
-    const handleMes = (e) => {
-        nomeEscala.mes = e.target.value;
-        handleChange();
-    }
-
-    const handleAno = (e) => {
-        nomeEscala.ano = e.target.value;
-        handleChange();
     }
 
     const handleStatus = (e) => {
@@ -77,30 +79,36 @@ export default function CadastrarEscala() {
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className={"row"}>
-                            <div className="col-lg-6">
-                                <label>Mês</label>
-                                <select className={"form-control col-lg-12"} name="mes" onChange={handleMes}>
-                                    <option>Selecione o mês...</option>
-                                    <option value={"Janeiro"}>Janeiro</option>
-                                    <option value={"Fevereiro"}>Fevereiro</option>
-                                    <option value={"Março"}>Março</option>
-                                    <option value={"Abril"}>Abril</option>
-                                    <option value={"Maio"}>Maio</option>
-                                    <option value={"Junho"}>Junho</option>
-                                    <option value={"Julho"}>Julho</option>
-                                    <option value={"Agosto"}>Agosto</option>
-                                    <option value={"Setembro"}>Setembro</option>
-                                    <option value={"Outubro"}>Outubro</option>
-                                    <option value={"Novembro"}>Novembro</option>
-                                    <option value={"Dezembro"}>Dezembro</option>
-                                </select>
-                            </div>
+                            {/*<div className="col-lg-6">*/}
+                                {/*<label>Mês</label>*/}
+                                {/*<select className={"form-control col-lg-12"} name="mes" onChange={handleMes}>*/}
+                                {/*    <option>Selecione o mês...</option>*/}
+                                {/*    <option value={"Janeiro"}>Janeiro</option>*/}
+                                {/*    <option value={"Fevereiro"}>Fevereiro</option>*/}
+                                {/*    <option value={"Março"}>Março</option>*/}
+                                {/*    <option value={"Abril"}>Abril</option>*/}
+                                {/*    <option value={"Maio"}>Maio</option>*/}
+                                {/*    <option value={"Junho"}>Junho</option>*/}
+                                {/*    <option value={"Julho"}>Julho</option>*/}
+                                {/*    <option value={"Agosto"}>Agosto</option>*/}
+                                {/*    <option value={"Setembro"}>Setembro</option>*/}
+                                {/*    <option value={"Outubro"}>Outubro</option>*/}
+                                {/*    <option value={"Novembro"}>Novembro</option>*/}
+                                {/*    <option value={"Dezembro"}>Dezembro</option>*/}
+                                {/*</select>*/}
+                            {/*</div>*/}
                             <div className={"col-lg-6"}>
-                                <label>Ano</label>
-                                <select className={"form-control col-lg-12"} name="ano" required={true} onChange={handleAno}>
-                                    <option>Selecione o ano...</option>
-                                    <option value={"2022"}>2022</option>
-                                </select>
+                                {/*<label>Ano</label>*/}
+                                {/*<select className={"form-control col-lg-12"} name="ano" required={true} onChange={handleAno}>*/}
+                                {/*    <option>Selecione o ano...</option>*/}
+                                {/*    <option value={"2022"}>2022</option>*/}
+                                {/*</select>*/}
+                                <Input
+                                    id={"date-input"}
+                                    type="Month"
+                                    onChange={handleChange}
+                                    name="nome"
+                                    label="Nome da Escala"/>
                             </div>
                             <div className="col-lg-6">
                                 <Input
@@ -120,7 +128,7 @@ export default function CadastrarEscala() {
                                     label="Data e hora término"
                                     placeholder="Data e hora"/>
                             </div>
-                            <div className="col-lg-2">
+                            <div className="col-lg-6">
                                 <label>Tipo Escala</label>
                                 <select
                                     className="form-control"
