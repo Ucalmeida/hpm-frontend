@@ -97,7 +97,7 @@ export default function CadastrarEscala() {
                             </div>
                             <div className={"col-lg-6"}>
                                 <label>Ano</label>
-                                <select className={"form-control col-lg-12"} name="ano" onChange={handleAno}>
+                                <select className={"form-control col-lg-12"} name="ano" required={true} onChange={handleAno}>
                                     <option>Selecione o ano...</option>
                                     <option value={"2022"}>2022</option>
                                 </select>
@@ -108,7 +108,6 @@ export default function CadastrarEscala() {
                                     value={objeto.dataInicio}
                                     onChange={handleDtHrInicio}
                                     name="dataInicio"
-                                    step="1"
                                     label="Data e hora início"
                                     placeholder="Data e hora"/>
                             </div>
@@ -118,7 +117,6 @@ export default function CadastrarEscala() {
                                     value={objeto.dataTermino}
                                     onChange={handleDtHrTermino}
                                     name="dataTermino"
-                                    step="1"
                                     label="Data e hora término"
                                     placeholder="Data e hora"/>
                             </div>
