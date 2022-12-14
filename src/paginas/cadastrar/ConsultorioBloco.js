@@ -125,7 +125,6 @@ export default function ConsultorioBloco(){
                                     value={objeto.dataInicio}
                                     onChange={handleDtHrInicio}
                                     name="dataInicio"
-                                    step="1"
                                     label="Data e hora início"
                                     placeholder="Data e hora"/>
                             </div>
@@ -135,7 +134,6 @@ export default function ConsultorioBloco(){
                                     value={objeto.dataTermino}
                                     onChange={handleDtHrTermino}
                                     name="dataTermino"
-                                    step="1"
                                     label="Data e hora término"
                                     placeholder="Data e hora"/>
                             </div>
