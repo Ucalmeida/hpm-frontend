@@ -15,10 +15,12 @@ import ConsultasAgendadasImprimir from "./paginas/agendar/ConsultasAgendadasImpr
 
 import ListaPacientesParaAtendimento from "./paginas/atendimento/ListaPacientesParaAtendimento";
 import PacienteEmAtendimento from "./paginas/atendimento/PacienteEmAtendimento";
+import AtestadoImprimir from "./paginas/atendimento/AtestadoImprimir";
 
 import Objeto from "./paginas/cadastrar/Objeto";
 import Sangue from "./paginas/cadastrar/Sangue";
 import Especialidade from "./paginas/cadastrar/Especialidade";
+import CadastrarEspecialidadeProfissionalSaude from "./paginas/cadastrar/CadastrarEspecialidadeProfissionalSaude";
 import Pessoa from "./paginas/cadastrar/Pessoa";
 import Predio from "./paginas/cadastrar/Predio";
 import Perfil from "./paginas/cadastrar/Perfil";
@@ -99,10 +101,12 @@ const App =  () =>  {
 
                     <Route exact path="/atendimento/listaPacientesParaAtendimento" component={ListaPacientesParaAtendimento} />
                     <Route exact path="/atendimento/pacienteEmAtendimento" component={PacienteEmAtendimento} />
+                    <Route exact path="/atendimento/atestadoImprimir" component={AtestadoImprimir} />
 
                     <Route exact path="/cadastrar/objeto" component={Objeto} />
                     <Route exact path="/cadastrar/sangue" component={Sangue} />
                     <Route exact path="/cadastrar/especialidade" component={Especialidade} />
+                    <Route exact path="/cadastrar/cadastrarEspecialidadeProfissionalSaude" component={CadastrarEspecialidadeProfissionalSaude} />
                     <Route exact path="/cadastrar/pessoa" component={Pessoa} />
                     <Route exact path="/esqueciMinhaSenha" component={EsqueciMinhaSenha}/>
                     <Route exact path="/cadastrar/predio" component={Predio} />

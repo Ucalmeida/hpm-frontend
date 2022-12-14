@@ -49,10 +49,8 @@ export default function ConsultasAgendadas() {
         consultaSelecionada.idStatus = statusId;
         await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then( json =>{
-                if(json.status === "OK"){
+                if(typeof json !== 'undefined' ? json.status === "OK" : false) {
                     ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
-                }else{
-                    ExibirMensagem(json.message, MSG.ERRO)
                 }
             }
         )
@@ -60,7 +58,7 @@ export default function ConsultasAgendadas() {
     }
 
     useEffect(() => {
-        xfetch('/hpm/consulta/agendadas/' + idPessoa, {}, HttpVerbo.GET)
+        xfetch('/hpm/consulta/titular-dependentes/agendadas/' + idPessoa, {}, HttpVerbo.GET)
             .then(response => response.json())
             .then(lista => setLista({...lista, consultas: lista.resultado}))
     }, [apagar])

@@ -13,7 +13,7 @@ export default function ListaPacientesParaAtendimento() {
 
     const [consultorio, setConsultorio] = useState({
         "idConsultorioBloco": null,
-        "idStatus": parseInt("6")
+        "idStatus": Number("6")
     });
 
     let consultaSelecionada = {
@@ -22,23 +22,34 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     function handleBtnIniciarAtendimento(consulta) {
+        consultaSelecionada.idConsulta = consulta.id;
+        consultaSelecionada.idStatus = Number("20");
         localStorage.setItem('pacienteConsulta', consulta.id);
+        localStorage.setItem("idPessoa", consulta.idPessoa);
         localStorage.setItem('nmPaciente', consulta.nmPaciente);
         localStorage.setItem('cpfPaciente', consulta.cpfPaciente);
         localStorage.setItem('nmCelular', consulta.nmCelular);
+        localStorage.setItem('dtNascimento', consulta.dtNascimento);
+        localStorage.setItem('altura', consulta.altura);
+        localStorage.setItem('peso', consulta.peso);
         localStorage.setItem('dtHora', consulta.dtHora);
         localStorage.setItem('nmEspecialidade', consulta.nmEspecialidade);
         localStorage.setItem('nmMedico', consulta.nmMedico);
         localStorage.setItem('sala', consulta.sala);
         localStorage.setItem('piso', consulta.piso);
         localStorage.setItem('nmStatus', consulta.nmStatus);
+        localStorage.setItem('idStatus', consulta.idStatus);
+        localStorage.setItem("relato", consulta.relato);
+        console.log("ConsultaSelecionada:", consultaSelecionada);
+        xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
+            .then(json => {})
         window.open("/atendimento/pacienteEmAtendimento");
     }
 
     const handleBtnCancelar = async (consultaId, statusId) => {
         consultaSelecionada.idConsulta = consultaId;
         consultaSelecionada.idStatus = statusId;
-        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.PUT)
+        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then( json =>{
                     if(json.status === "OK"){
                         ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
@@ -51,7 +62,7 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const selecionarConsultorioBloco = (e) => {
-        consultorio.idConsultorioBloco = parseInt(e.target.value);
+        consultorio.idConsultorioBloco = Number(e.target.value);
         listarPacientesParaAtendimentoPorData();
     }
 
@@ -99,6 +110,7 @@ export default function ListaPacientesParaAtendimento() {
     const dados = () => {
         return(
             typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
+                console.log("Exemplo:", consulta);
                 return ({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,

@@ -1,9 +1,11 @@
 import {Botao, Card, Pagina, Select, Tabela} from "../../componentes";
 import React, {useState, useEffect} from "react";
-import {BOTAO, HttpVerbo} from "../../util/Constantes";
-import {xfetch} from "../../util";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
+import {ExibirMensagem, xfetch} from "../../util";
 
 export default function ListarEscalas() {
+    const [objeto, setObjeto] = useState({});
+
     const [escala, setEscala] = useState({
         escalas: []
     });
@@ -12,24 +14,43 @@ export default function ListarEscalas() {
         listaStatus: []
     });
 
-    const handleBtnImprimir = () => {
-        alert('Conteúdo Impresso');
+    const handleAlterarEscala = (escala) => {
+        xfetch('/hpm/escala/alterar/' + escala.valor, objeto, HttpVerbo.PUT)
+            .then( json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem("Escala " + msg, MSG.SUCESSO, '', '', '', '', listarEscalasPorStatus());
+                    }
+                }
+            )
+            .catch(error => ExibirMensagem(error, MSG.ERRO))
     }
-
-    const handleBtnCancelar = () => {
-        alert('Conteúdo Cancelado');
+    const handleBtnAlterarStatus = (escala, statusId) => {
+        objeto.nome = escala.nome;
+        objeto.dataInicio = escala.dataInicio;
+        objeto.dataTermino = escala.dataTermino;
+        objeto.idStatus = statusId;
+        handleAlterarEscala(escala);
+    }
+    const handleBtnExcluir = (escalaId) => {
+        xfetch('/hpm/escala/excluir/' + escalaId, objeto, HttpVerbo.PUT)
+            .then( json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem("Escala Excluída!", MSG.SUCESSO, '', '', '', '', listarEscalasPorStatus());
+                    }
+                }
+            )
     }
 
     let escalaObjeto = 31;
+    let msg = "";
 
     const handleStatus = (e) => {
-        escala.status = e.target.value;
+        localStorage.setItem("idStatus", e.target.value);
         listarEscalasPorStatus();
     }
 
     const listarEscalasPorStatus = () => {
-        console.log("Status:", escala.status);
-        xfetch('/hpm/escala/' + escala.status + '/opcoes', {}, HttpVerbo.GET)
+        xfetch('/hpm/escala/' + localStorage.getItem("idStatus") + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(escala => setEscala({...escala, escalas: escala.resultado}))
     }
@@ -52,16 +73,35 @@ export default function ListarEscalas() {
         if(typeof(escala.escalas) !== "undefined") {
             return(
                 escala.escalas.map((escala) => {
-                    console.log("Escala: " + escala.nome + " - Data Início: " + escala.dtInicio + " | Data Término: " + escala.dtTermino + " | " + escala.status);
+                    let statusId = "";
+                    let btnAlteracaoStatus = "";
+                    if (escala.idStatus === 13) {
+                        statusId = 14;
+                        msg = "Inativada!";
+                        btnAlteracaoStatus = <div id={"btnAlteracao"}>
+                            <Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnAlterarStatus(escala, statusId)} value={escala.valor}>Inativar</Botao>
+                        </div>;
+                    }
+                    if (escala.idStatus === 14) {
+                        statusId = 15;
+                        msg = "Finalizada!";
+                        btnAlteracaoStatus = <div id={"btnAlteracao"}>
+                            <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnAlterarStatus(escala, statusId)} value={escala.valor}>Finalizar</Botao>
+                        </div>;
+                    }
+                    if (escala.idStatus === 15) {
+                        btnAlteracaoStatus = "";
+                    }
                     return({
                         'nome': escala.nome,
                         'data_inicio': escala.dtInicio,
                         'data_termino': escala.dtTermino,
                         'situacao': escala.status,
-                        'acoes': <div>
-                                    <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleBtnImprimir}>Imprimir</Botao>
-                                    <Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar}>Cancelar</Botao>
-                                    {/*<Botao cor={BOTAO.COR.ALERTA} onClick={handleBtnCancelar.bind(consulta.id)} value={consulta.id}>Cancelar</Botao>*/}
+                        'acoes':<div className={"row"}>
+                                    {btnAlteracaoStatus}
+                                    <div>
+                                        <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(escala.valor)} value={escala.valor} icone={""}>Excluir</Botao>
+                                    </div>
                                 </div>
                     })
                 })

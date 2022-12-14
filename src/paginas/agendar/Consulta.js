@@ -18,24 +18,13 @@ export default function Consulta() {
         }
     )
 
-    const selecionarDependente = (e) => {
-        setObjeto({...objeto, idPessoa: e.value});
-    }
-
-    const dependentesLista =
-        objeto.comDependentes ? <div className="col-lg-4">
-            <label>Dependente</label>
-            <Select
-                funcao={selecionarDependente}
-                nome="idDependente"
-                url={"/hpm/dependente/tit/" + objeto.idPessoa + "/opcoes"}
-            />
-        </div> : '';
-
     const selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = e.value;
-        listarProfissionalPorEspecialidade()
+        listarProfissionalPorEspecialidade();
+    }
 
+    const selecionarPaciente = (e) => {
+        objeto.idPessoa = e.value;
     }
 
     const listarProfissionalPorEspecialidade = () => {
@@ -55,8 +44,7 @@ export default function Consulta() {
 
     const selecionarConsultorioBloco = (e) => {
         e.preventDefault()
-        // setObjeto({...objeto, idConsultorioBloco: e.target.value})
-        objeto.idConsultorioBloco = e.target.value;
+        setObjeto({...objeto, idConsultorioBloco: e.target.value})
         console.log("idConsultorioBloco", objeto.idConsultorioBloco);
     }
 
@@ -82,17 +70,10 @@ export default function Consulta() {
             )
     }
 
-    useEffect(() => {
-        xfetch("/hpm/dependente/tit/" + localStorage.getItem('id') + "/opcoes", {}, HttpVerbo.GET)
-            .then(res => res.json())
-            .then(json => {
-                console.log("Resultado json:", json.status);
-                json.status === "SEM_RESULTADOS" ? setObjeto({...objeto, comDependentes: false}) : setObjeto({...objeto, comDependentes: true})
-            })
-    }, [])
-
     let prof = objeto.profissionais
     let consultaBloco = objeto.consultoriosBloco
+
+    console.log("Pessoa:", objeto.idPessoa);
 
     return(
         <Pagina titulo="Agendar Consulta">
@@ -100,7 +81,14 @@ export default function Consulta() {
                 <div className="col-lg-12">
                     <Card titulo="Agendar">
                         <div className="row">
-                            {dependentesLista}
+                            <div className="col-lg-3">
+                                <label>Paciente</label>
+                                <Select
+                                    funcao={selecionarPaciente}
+                                    nome="idPaciente"
+                                    url={"/hpm/dependente/titular/" + localStorage.getItem('id') + "/opcoes"}
+                                />
+                            </div>
                             <div className="col-lg-3">
                                 <label>Especialidade</label>
                                 <Select
@@ -112,7 +100,7 @@ export default function Consulta() {
 
                             <input type="hidden" name="idPessoa"/>
 
-                            <div className="col-lg-4">
+                            <div className="col-lg-3">
                                 <label>Médico</label>
                                 <br/>
                                 <select
@@ -146,7 +134,7 @@ export default function Consulta() {
                             </div>
                         </div>
                     </Card>
-                    <ConsultasAgendadasCard url={'/hpm/consulta/agendadas/' + objeto.idPessoa} objeto={objeto.idPessoa}/>
+                    <ConsultasAgendadasCard url={'/hpm/consulta/titular-dependentes/agendadas/' + objeto.idPessoa} objeto={objeto.idPessoa}/>
                 </div>
             </div>
         </Pagina>

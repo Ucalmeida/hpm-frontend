@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import {
     Autocompletar,
-    Autocomplete,
-    Botao,
     BotaoPesquisar,
     BotaoSalvar,
     Card,
@@ -13,7 +11,6 @@ import {
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 import MaskedInput from "../../componentes/form/MaskedInput";
-import {object} from "prop-types";
 
 export default function Dependente(){
     const [objeto, setObjeto] = useState(
@@ -43,16 +40,16 @@ export default function Dependente(){
         }
     )
 
-    const [dependencia, setDependencia] = useState(
+    const dependencia = useState(
         {
-            idTitular:null,
-            cpfDependente:null,
-            idTipoDependencia:null
+            idTitular: null,
+            cpfDependente: null,
+            idTipoDependencia: null
         }
     )
 
     function salvarDependencia(){
-        xfetch('/hpm/pessoaDependente/cadastrar', dependencia, HttpVerbo.POST)
+        xfetch('/hpm/pessoaDependente/cadastrar', dependencia, HttpVerbo.POST).then(r => {})
     }
 
     function selecionarPessoa(idPessoa){

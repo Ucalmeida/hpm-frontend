@@ -1,5 +1,5 @@
 import {Accordion} from './card/Accordion'
-import {Autocompletar, Input, Select} from './form'
+import {Autocompletar, AutocompletarCid, Input, Select} from './form'
 import {Botao, BotaoAlterar, BotaoEnviar, BotaoExcluir, BotaoImprimir, BotaoPesquisar, BotaoSalvar} from './Botao'
 import {Card} from "./card/Card";
 import {Icone} from "./Icone";
@@ -17,6 +17,7 @@ export function getClasse(classe) {
 export {
     Accordion,
     Autocompletar,
+    AutocompletarCid,
     CadastrarNome,
     Botao,
     BotaoEnviar,

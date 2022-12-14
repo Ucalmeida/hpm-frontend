@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Autocompletar, Botao, Card, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
+import ConsultasAgendadasCard from "../../componentes/card/ConsultasAgendadasCard";
 
 export default function ConsultaEmergencia() {
     const [objeto, setObjeto] = useState(
@@ -64,6 +65,7 @@ export default function ConsultaEmergencia() {
                             </div>
                         </div>
                     </Card>
+                    <ConsultasAgendadasCard url={'/hpm/consulta/' + objeto.idConsultorioBloco + '/opcoes'} objeto={objeto.idConsultorioBloco}/>
                 </div>
             </div>
         </Pagina>

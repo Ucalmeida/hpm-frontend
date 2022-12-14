@@ -56,7 +56,7 @@ export default function ConsultoriosBlocoCard(props) {
     }
 
     return(
-        <Card titulo="Consultas Agendadas">
+        <Card titulo="Consultórios Cadastrados">
             <Tabela colunas={colunas} dados={dados()} />
         </Card>
     );

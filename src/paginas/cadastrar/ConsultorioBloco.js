@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
@@ -16,27 +16,28 @@ export default function ConsultorioBloco(){
             idProfissionalSaude: null,
             idSala: null,
             qtdConsultas: null,
-            qtdEmergencias: null,
-            profissionais: []
+            qtdEmergencias: null
         }
     )
+
+    const [profissionais, setProfissionais] = useState({});
 
     const handleDtHrInicio = (e) => {
         setObjeto({...objeto, dataInicio: e.target.value});
     }
 
     const handleDtHrTermino = (e) => {
-       setObjeto({...objeto, dataTermino: e.target.value});
+        setObjeto({...objeto, dataTermino: e.target.value});
     }
 
     const handleQtdConsulta = (e) => {
         e.preventDefault()
-       setObjeto({...objeto, qtdConsultas: e.target.value})
+        setObjeto({...objeto, qtdConsultas: Number(e.target.value)})
     }
 
     const handleQtdEmergencia = (e) => {
         e.preventDefault()
-        setObjeto({...objeto, qtdEmergencias: e.target.value})
+        setObjeto({...objeto, qtdEmergencias: Number(e.target.value)})
     }
 
     const selecionarEscala = (e) => {
@@ -44,12 +45,12 @@ export default function ConsultorioBloco(){
     }
 
     const selecionarEspecialidade = (e) => {
-        objeto.idEspecialidade = e.value
+        objeto.idEspecialidade = Number(e.value)
         listarProfissionalPorEspecialidade();
     }
 
     const selecionarProfissionalSaude = (e) => {
-        objeto.idProfissionalSaude = e.target.value;
+        objeto.idProfissionalSaude = Number(e.target.value);
     }
 
     const selecionarSala = (e) => {
@@ -60,18 +61,17 @@ export default function ConsultorioBloco(){
         xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setObjeto({...objeto, profissionais: json.resultado});
+                    setProfissionais({...profissionais, profissionais: json.resultado});
                 }
             )
     }
 
     const enviar = (e) => {
+        console.log("Lista Objeto:", objeto);
         xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
-                    if(json.status === "OK"){
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
                         ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
-                    }else{
-                        ExibirMensagem(json.message, MSG.ERRO);
                     }
                 }
             )
@@ -79,16 +79,16 @@ export default function ConsultorioBloco(){
     }
 
     const selectEspecialista =  objeto.idEspecialidade ? <div className="col-lg-6">
-     <label>Profissional</label>
-     <select
-         className="form-control"
-         onChange={selecionarProfissionalSaude}
-         name="idProfissionalSaude">
-         <option hidden>Selecione...</option>
-         {typeof objeto.profissionais != 'undefined' ? objeto.profissionais.map((v, k) => {
-             return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
-         }) : ''}
-     </select>
+        <label>Profissional</label>
+        <select
+            className="form-control"
+            onChange={selecionarProfissionalSaude}
+            name="idProfissionalSaude">
+            <option hidden>Selecione...</option>
+            {typeof profissionais.profissionais !== "undefined" ? profissionais.profissionais.map((v, k) => {
+                return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
+            }) : ''}
+        </select>
     </div> : ''
 
     return(
@@ -123,9 +123,8 @@ export default function ConsultorioBloco(){
                                 <Input
                                     type="datetime-local"
                                     value={objeto.dataInicio}
-                                   onChange={handleDtHrInicio}
+                                    onChange={handleDtHrInicio}
                                     name="dataInicio"
-                                    step="1"
                                     label="Data e hora início"
                                     placeholder="Data e hora"/>
                             </div>
@@ -135,7 +134,6 @@ export default function ConsultorioBloco(){
                                     value={objeto.dataTermino}
                                     onChange={handleDtHrTermino}
                                     name="dataTermino"
-                                    step="1"
                                     label="Data e hora término"
                                     placeholder="Data e hora"/>
                             </div>

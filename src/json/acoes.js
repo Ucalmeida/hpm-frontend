@@ -87,6 +87,12 @@ export const acoes = [
         "icone": "fas fa-user-nurse"
       },
       {
+        "nome": "Cadastrar Profissional de Saude",
+        "descricao": "Cadastrando Profissional de Saúde",
+        "url": "cadastrarEspecialidadeProfissionalSaude",
+        "icone": "fas fa-user-nurse"
+      },
+      {
         "nome": "Exame",
         "descricao": "Criando Exame",
         "url": "exame",

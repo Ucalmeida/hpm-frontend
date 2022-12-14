@@ -34,6 +34,9 @@ export class Autocompletar extends React.Component {
                 that.setState({carregando: true})
                 let key = request.term;
                 let requisicao = !isNaN(key) ? 'porCpf/' : 'porNome/';
+                // if (idAuto !== 'idcidAuto') {
+                //     url = url + requisicao;
+                // }
                 xfetch(url + requisicao + key, {}, HttpVerbo.GET)
                     .then(res => res.json())
                     .then(json => response(json.resultado) && that.setState({carregando: false}) && (that.props.changeResultado(json.resultado.length)) && ((json.resultado.length === 0) ? ExibirMensagem("Não Encontrado", MSG.ALERTA) : ''))

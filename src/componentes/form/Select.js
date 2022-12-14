@@ -16,7 +16,6 @@ function Select(props) {
 
     useEffect(() => {
         loadBloods();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     let options = lists.map((item) => {
