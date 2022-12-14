@@ -17,13 +17,29 @@ const uuid = () => {
     });
 }
 
-const erro = (e, idTransacao) => {
-    console.log(e.message)
-    if (e.message === 'Could not connect to the server.') {
-        ExibirMensagem('O servidor está desconectado <br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO);
-        return;
+const erro = (e) => {
+    switch (e.status) {
+        case 500: {
+            Promise.resolve(e.json()).then(dados => ExibirMensagem(dados.message, MSG.ERRO))
+            return
+        }
+
+        case 400: {
+            Promise.resolve(e.json()).then(dados => ExibirMensagem(dados.message, MSG.ALERTA))
+            return
+        }
+
+        case 404: {
+            ExibirMensagem("Página não encontrada", MSG.ALERTA)
+            return
+        }
+
+        case 403: {
+            ExibirMensagem("Você não possui acesso a esse recurso", MSG.ERRO)
+            return
+        }
+        default: return e.json()
     }
-    ExibirMensagem(e.message + '<br/> idTransacao = <b>'+ idTransacao + '</b>', MSG.ERRO);
 }
 
 function ExcecaoNegocio(message) {
@@ -57,14 +73,8 @@ export const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
             method: verbo,
             body: JSON.stringify(dados)
         })
-             .then((res, obj) => {
-                 if (res.message === 'Could not connect to the server.') {
-                     throw new ExcecaoNegocio("Servidor não encontrado.")
-                 }
-                 console.log(obj)
-                 return res.json();
-             })
-             .catch(e => erro(e, idTransacao));
+             .then(erro)
+             .catch((e) => erro(e, idTransacao));
     } else {
         return fetch(servidor+endpoint, myInit)
             .catch(e => erro(e, idTransacao));
