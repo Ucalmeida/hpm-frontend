@@ -20,13 +20,21 @@ export default function ConsultoriosBlocoCard(props) {
         ]
     })
 
-    useEffect(() => {
+    const handleChange = async () => {
         if (props.idEspecialidade !== null) {
-            xfetch('/hpm/consultorioBloco/' + props.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
+            await xfetch('/hpm/consultorioBloco/' + props.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
                 .then(response => response.json())
                 .then(lista => setLista({...lista, blocos: lista.resultado}))
         }
-    }, [props.idEspecialidade])
+    }
+
+    useEffect(() => {
+        handleChange();
+    }, [props.apagarBloco])
+
+    useEffect(() => {
+        handleChange();
+    }, [props.apagarBloco])
 
     const colunas = [
         {text: "Escala"},
@@ -39,10 +47,9 @@ export default function ConsultoriosBlocoCard(props) {
     ]
 
     const dados = () => {
-        return(
+        return (
             lista.blocos.map((bloco) => {
-                console.log("Bloco:", bloco);
-                return({
+                return ({
                     'escala': bloco.texto8,
                     'especialidade': bloco.texto2,
                     'sala': bloco.texto7,
@@ -55,9 +62,9 @@ export default function ConsultoriosBlocoCard(props) {
         )
     }
 
-    return(
+    return (
         <Card titulo="Consultórios Cadastrados">
-            <Tabela colunas={colunas} dados={dados()} />
+            <Tabela colunas={colunas} dados={dados()}/>
         </Card>
     );
 }

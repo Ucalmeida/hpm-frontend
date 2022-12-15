@@ -67,7 +67,6 @@ export default function ConsultorioBloco(){
     }
 
     const enviar = (e) => {
-        console.log("Lista Objeto:", objeto);
         xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
                     if (typeof json !== "undefined" ? json.status === "OK" : false) {

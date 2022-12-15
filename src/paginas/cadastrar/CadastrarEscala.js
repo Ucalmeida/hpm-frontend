@@ -48,7 +48,6 @@ export default function CadastrarEscala() {
         let [ano, mes] = myDate.split("-");
         mes = meses[mes - 1];
         objeto.nome = mes + " - " + ano;
-        console.log("Objeto:", objeto);
     }
 
     const handleStatus = (e) => {
@@ -57,7 +56,6 @@ export default function CadastrarEscala() {
     }
 
     const enviar = (e) => {
-        console.log("Objeto", objeto);
         xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
                     if (typeof json !== "undefined" ? json.status === "OK" : null) {
@@ -79,30 +77,7 @@ export default function CadastrarEscala() {
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className={"row"}>
-                            {/*<div className="col-lg-6">*/}
-                                {/*<label>Mês</label>*/}
-                                {/*<select className={"form-control col-lg-12"} name="mes" onChange={handleMes}>*/}
-                                {/*    <option>Selecione o mês...</option>*/}
-                                {/*    <option value={"Janeiro"}>Janeiro</option>*/}
-                                {/*    <option value={"Fevereiro"}>Fevereiro</option>*/}
-                                {/*    <option value={"Março"}>Março</option>*/}
-                                {/*    <option value={"Abril"}>Abril</option>*/}
-                                {/*    <option value={"Maio"}>Maio</option>*/}
-                                {/*    <option value={"Junho"}>Junho</option>*/}
-                                {/*    <option value={"Julho"}>Julho</option>*/}
-                                {/*    <option value={"Agosto"}>Agosto</option>*/}
-                                {/*    <option value={"Setembro"}>Setembro</option>*/}
-                                {/*    <option value={"Outubro"}>Outubro</option>*/}
-                                {/*    <option value={"Novembro"}>Novembro</option>*/}
-                                {/*    <option value={"Dezembro"}>Dezembro</option>*/}
-                                {/*</select>*/}
-                            {/*</div>*/}
                             <div className={"col-lg-6"}>
-                                {/*<label>Ano</label>*/}
-                                {/*<select className={"form-control col-lg-12"} name="ano" required={true} onChange={handleAno}>*/}
-                                {/*    <option>Selecione o ano...</option>*/}
-                                {/*    <option value={"2022"}>2022</option>*/}
-                                {/*</select>*/}
                                 <Input
                                     id={"date-input"}
                                     type="Month"
