@@ -25,16 +25,17 @@ export default function ModalFormMedicoAtestado(props) {
     const handleCadastrar = () => {
         atestado.texto = "Atesto, para os devidos fins, a pedido do interessado, que " + localStorage.getItem("nmPaciente") + ", " +
                 "portador(a) do CPF: " + localStorage.getItem("cpfPaciente") + ", foi submetido a consulta médica nesta data, " +
-                "no horário de " + new Date().toLocaleTimeString() + " sendo portador da affecção: " + localStorage.getItem("arrayCodigosCids") + "." +
+                "no horário de " + new Date().toLocaleTimeString() + " sendo portador da afecção: " + localStorage.getItem("arrayCodigosCids") + "." +
                 "Em decorrência, deverá permanecer afastado de suas atividades laborativas por um período de " + consulta.diasAfastado + " dia(s), " +
                 "a partir desta data. Aracaju, " + new Date().toLocaleDateString();
 
         xfetch('/hpm/consulta/atestado/cadastrar', atestado, HttpVerbo.POST)
             .then(json => {
-                if(typeof json !== 'undefined' ? json.status === "OK" : false) {
+                if(typeof json !== "undefined" ? json.status === 200 : false) {
                     ExibirMensagem('Atestado Salvo Com Sucesso!', MSG.SUCESSO)
                 }
             })
+            .catch(e => console.log(e))
         handleImprimir(atestado)
     }
 
@@ -86,7 +87,7 @@ export default function ModalFormMedicoAtestado(props) {
                         <p>
                             Atesto, para os devidos fins, a pedido do interessado, que <b>{localStorage.getItem("nmPaciente")}</b>,
                             portador(a) do CPF: <b>{localStorage.getItem("cpfPaciente")}</b>, foi submetido a consulta médica nesta data,
-                            no horário de <b>{new Date().toLocaleTimeString()}</b> sendo portador da affecção: <span id={"codigosCid"}><b>{localStorage.getItem("arrayCodigosCids")}</b></span>.
+                            no horário de <b>{new Date().toLocaleTimeString()}</b> sendo portador da afecção: <span id={"codigosCid"}><b>{localStorage.getItem("arrayCodigosCids")}</b></span>.
                             Em decorrência, deverá permanecer afastado de suas atividades laborativas por um período de <b>{consulta.diasAfastado}</b> dias,
                             a partir desta data. Aracaju, <b>{new Date().toLocaleDateString()}</b>
                         </p>

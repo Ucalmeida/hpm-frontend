@@ -1,4 +1,4 @@
-import {Card, EditorTexto, Pagina} from "../../componentes";
+import {BotaoExcluir, Card, EditorTexto, Pagina} from "../../componentes";
 import React, {useState} from "react";
 import {BOTAO, ICONE} from "../../util/Constantes";
 import ModalFormMedico from "../../componentes/modal/ModalFormMedicoAtestado";
@@ -18,8 +18,7 @@ export default function PacienteEmAtendimento() {
         idade: null,
         imc: null,
         pessoas: [],
-        idCids: [],
-        diasAfastado: null
+        idCids: []
     });
 
     const [cids, setCids] = useState([]);
@@ -29,7 +28,7 @@ export default function PacienteEmAtendimento() {
         medidaPeso: "Kg"
     };
 
-    consulta.altura /= 100;
+    const altura = consulta.altura / 100;
 
     const handleCID = () => {
         const idCid = document.getElementById("idcid").value;
@@ -37,6 +36,11 @@ export default function PacienteEmAtendimento() {
         let codigoCid = idCidNome.split(" - ");
         setConsulta({...consulta, idCids: [...consulta.idCids, Number(idCid)]});
         setCids([...cids, codigoCid[0]]);
+    }
+
+    const handleRemoveCid = (position) => {
+        setConsulta({...consulta, idCids: [...consulta.idCids.filter((_, index) => index !== position)]});
+        setCids([...cids.filter((_, index) => index !== position)]);
     }
 
     let calcIdade = (data) => {
@@ -53,7 +57,6 @@ export default function PacienteEmAtendimento() {
 
     let calcImc = () => {
         let peso = Number(consulta.peso);
-        let altura = Number(consulta.altura);
         let imc = peso / (altura * altura);
         return imc.toFixed(2);
     }
@@ -83,7 +86,7 @@ export default function PacienteEmAtendimento() {
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Altura do Paciente</span>
-                                    <span className="info-box-number">{consulta.altura + medida.medidaAltura}</span>
+                                    <span className="info-box-number">{altura + medida.medidaAltura}</span>
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Peso do Paciente</span>
@@ -127,12 +130,18 @@ export default function PacienteEmAtendimento() {
                         <FormGroup>
                             <div className={"col-lg-12"}>
                                 {cids.map((cid, index) => (
-                                    <div className={"info-box col-lg-2"}>
-                                        <div key={index} className="info-box-content">
-                                            <span className="info-box-text">CID</span>
-                                            <span className="info-box-text">{cid}</span>
+                                    <FormGroup>
+                                        <div className={"info-box col-lg-2"} style={{display: "flex"}}>
+                                            <div key={index} className="info-box-content">
+                                                <span className="info-box-text">CID</span>
+                                                <span className="info-box-text">{cid}</span>
+                                            </div>
+                                            <BotaoExcluir
+                                                style={{marginLeft: "1em"}}
+                                                onClick={() => {handleRemoveCid(index)}}
+                                            />
                                         </div>
-                                    </div>
+                                    </FormGroup>
                                 ))}
                             </div>
                         </FormGroup>
