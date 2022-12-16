@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { BotaoSalvar, Card, Input, Pagina, Select } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
 import { HttpVerbo, MSG } from "../../util/Constantes";
+import EscalasCadastradasCard from "../../componentes/card/EscalasCadastradasCard";
 
 export default function CadastrarEscala() {
+    const [cadastrar, setCadastrar] = useState(false);
 
     const [objeto, setObjeto] = useState({
         nome: '',
@@ -58,11 +60,12 @@ export default function CadastrarEscala() {
     const enviar = (e) => {
         xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
             .then( json =>{
-                    if (typeof json !== "undefined" ? json.status === 200 : null) {
+                    if (typeof json !== "undefined" ? json.status === "OK" : null) {
                         ExibirMensagem('Escala Cadastrada Com Sucesso!', MSG.SUCESSO);
                     }
                 }
             )
+        setCadastrar(!cadastrar);
     }
 
     useEffect(() => {
@@ -121,6 +124,7 @@ export default function CadastrarEscala() {
                             <BotaoSalvar onClick={enviar} />
                         </div>
                     </Card>
+                    <EscalasCadastradasCard idStatus={Number(objeto.idStatus)} cadastrarEscala={cadastrar}/>
                 </div>
             </div>
         </Pagina>

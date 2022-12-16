@@ -31,7 +31,7 @@ export default function ModalFormMedicoAtestado(props) {
 
         xfetch('/hpm/consulta/atestado/cadastrar', atestado, HttpVerbo.POST)
             .then(json => {
-                if(typeof json !== "undefined" ? json.status === 200 : false) {
+                if(typeof json !== "undefined" ? json.status === "OK" : false) {
                     ExibirMensagem('Atestado Salvo Com Sucesso!', MSG.SUCESSO)
                 }
             })
