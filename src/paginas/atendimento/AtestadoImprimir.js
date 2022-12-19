@@ -27,7 +27,7 @@ const AtestadoImprimir = () => {
                                 </div>
                                 <h4 style={{textAlign: 'center'}}><b>HOSPITAL DA POLÍCIA MILITAR DO ESTADO DE SERGIPE<br />
                                     SISTEMA DE AGENDAMENTO DE CONSULTA MÉDICA <br />
-                                    COMPROVANTE DE AGENDAMENTO</b></h4><br />
+                                    ATESTADO</b></h4><br />
                                 <br/>
                                 <br/>
                                 <p style={{textAlign: 'justify', marginLeft: '2em', marginRight: '2em'}}>{atestadoTexto.texto}</p>

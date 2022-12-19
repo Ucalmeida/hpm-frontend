@@ -98,7 +98,7 @@ export default function ModalFormMedicoAtestado(props) {
                         Fechar
                     </Botao>
                     <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleCadastrar}>
-                        Salvar Mudanças
+                        Imprimir
                     </Botao>
                 </Modal.Footer>
             </Modal>
