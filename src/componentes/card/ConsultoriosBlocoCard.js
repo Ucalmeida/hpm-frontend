@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {Card, Tabela} from "../index";
-import {xfetch} from "../../util";
-import {HttpVerbo} from "../../util/Constantes";
+import {Botao, BotaoExcluir, Card, Tabela} from "../index";
+import {ExibirMensagem, xfetch} from "../../util";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import PropTypes from "prop-types";
+import {UseHandleExcluir} from "../../hooks/UseHandleExcluir";
 
 export default function ConsultoriosBlocoCard(props) {
     const [lista, setLista] = useState({
@@ -19,8 +20,18 @@ export default function ConsultoriosBlocoCard(props) {
             }
         ]
     })
+    const handleBtnExcluir = (blocoId) => {
+        xfetch('/hpm/consultorioBloco/excluir/' + blocoId, {}, HttpVerbo.PUT)
+            .then( json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem("Bloco Excluído!", MSG.SUCESSO, '', '', '', '', handleChange());
+                    }
+                }
+            )
+    }
 
     const handleChange = async () => {
+        console.log("Valor: Cheguei!");
         if (props.idEspecialidade !== null) {
             await xfetch('/hpm/consultorioBloco/' + props.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
                 .then(response => response.json())
@@ -43,7 +54,8 @@ export default function ConsultoriosBlocoCard(props) {
         {text: "Data Início"},
         {text: "Data Término"},
         {text: "Consultas"},
-        {text: "Emergências"}
+        {text: "Emergências"},
+        {text: "Ação"}
     ]
 
     const dados = () => {
@@ -57,6 +69,10 @@ export default function ConsultoriosBlocoCard(props) {
                     'data_termino': bloco.texto4,
                     'consultas': bloco.texto5,
                     'emergencias': bloco.texto6,
+                    'acao': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(bloco.valor)} value={bloco.valor} icone={""}>Excluir</Botao>
+                        {/*<BotaoExcluir onClick={() => UseHandleExcluir("/hpm/consultorioBloco/excluir/" + bloco.valor, {}, "Bloco Excluído!", handleChange())} />*/}
+                    </div>
                 })
             })
         )

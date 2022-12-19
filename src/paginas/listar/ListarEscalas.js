@@ -1,7 +1,8 @@
-import {Botao, Card, Pagina, Select, Tabela} from "../../componentes";
+import {Botao, BotaoExcluir, Card, Pagina, Select, Tabela} from "../../componentes";
 import React, {useState, useEffect} from "react";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {ExibirMensagem, xfetch} from "../../util";
+import {UseHandleExcluir} from "../../hooks/UseHandleExcluir";
 
 export default function ListarEscalas() {
     const [objeto, setObjeto] = useState({});
@@ -50,6 +51,7 @@ export default function ListarEscalas() {
     }
 
     const listarEscalasPorStatus = () => {
+        console.log("Chegou???")
         xfetch('/hpm/escala/' + localStorage.getItem("idStatus") + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(escala => setEscala({...escala, escalas: escala.resultado}))
@@ -101,6 +103,7 @@ export default function ListarEscalas() {
                                     {btnAlteracaoStatus}
                                     <div>
                                         <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(escala.valor)} value={escala.valor} icone={""}>Excluir</Botao>
+                                        {/*<BotaoExcluir onClick={() => UseHandleExcluir("/hpm/escala/excluir/" + escala.valor, objeto, "Escala Excluída!", listarEscalasPorStatus())} value={escala.valor} />*/}
                                     </div>
                                 </div>
                     })

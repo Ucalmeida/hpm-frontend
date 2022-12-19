@@ -159,7 +159,7 @@ export default function ConsultorioBloco(){
                             <BotaoSalvar onClick={enviar} />
                         </div>
                     </Card>
-                    <ConsultoriosBlocoCard idEspecialidade={objeto.idEspecialidade} apagarBloco={apagar}/>
+                    <ConsultoriosBlocoCard idEspecialidade={Number(objeto.idEspecialidade)} apagarBloco={apagar}/>
                 </div>
             </div>
         </Pagina>
