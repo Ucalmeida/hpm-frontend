@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
@@ -22,6 +22,14 @@ export default function ConsultorioBloco(){
 
     const [profissionais, setProfissionais] = useState({});
 
+    const [escala, setEscala] = useState({});
+
+    const [status, setStatus] = useState({
+        listaStatus: []
+    });
+
+    const escalaObjeto = 31;
+
     const handleDtHrInicio = (e) => {
         setObjeto({...objeto, dataInicio: e.target.value});
     }
@@ -40,8 +48,24 @@ export default function ConsultorioBloco(){
         setObjeto({...objeto, qtdEmergencias: Number(e.target.value)})
     }
 
+    const handleStatus = (e) => {
+        const statusId = e.target.value;
+        status.idStatus = Number(statusId);
+        listarEscalaPorStatus();
+    }
+
+    const listarEscalaPorStatus = (e) => {
+        xfetch('/hpm/escala/' + status.idStatus + '/opcoes',{}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(json => {
+                    setEscala({...escala, escalas: json.resultado});
+                }
+            )
+    }
+
     const selecionarEscala = (e) => {
-        objeto.idEscala = e.value;
+        objeto.idEscala = Number(e.target.value);
+        console.log("Escala", objeto);
     }
 
     const selecionarEspecialidade = (e) => {
@@ -77,6 +101,12 @@ export default function ConsultorioBloco(){
         setApagar(!apagar);
     }
 
+    useEffect(() => {
+        xfetch('/hpm/status/' + escalaObjeto, {}, HttpVerbo.GET)
+            .then( res => res.json())
+            .then(status => setStatus({...status, listaStatus: status.resultado}))
+    }, [])
+
     const selectEspecialista =  objeto.idEspecialidade ? <div className="col-lg-6">
         <label>Profissional</label>
         <select
@@ -96,12 +126,32 @@ export default function ConsultorioBloco(){
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className="row">
-                            <div className="col-lg-6">
+                            <div className="col-lg-3">
+                                <label>Tipo Escala</label>
+                                <select
+                                    className="form-control"
+                                    name="idStatus"
+                                    value={status.idStatus}
+                                    onChange={handleStatus}>
+                                    <option hidden>Selecione...</option>
+                                    {status.listaStatus.map((v, k) => {
+                                        if (v.id !== 15) {
+                                            return <option className="flex-fill" value={v.id} key={k}> {v.nome}</option>
+                                        }
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col-lg-3">
                                 <label>Escala</label>
-                                <Select
-                                    funcao={selecionarEscala}
-                                    nome="idEscala"
-                                    url={"/hpm/escala/opcoes"} />
+                                <select
+                                    className="form-control"
+                                    onChange={selecionarEscala}
+                                    nome="idEscala">
+                                    <option hidden>Selecione...</option>
+                                    {typeof escala.escalas !== "undefined" ? escala.escalas.map((v, k) => {
+                                        return <option className="flex-fill" value={v.valor} key={k}> {v.nome}</option>
+                                    }) : ''}
+                                </select>
                             </div>
                             <div className="col-lg-6">
                                 <label>Especialidade</label>

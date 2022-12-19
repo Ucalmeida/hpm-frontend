@@ -31,7 +31,6 @@ export default function ConsultoriosBlocoCard(props) {
     }
 
     const handleChange = async () => {
-        console.log("Valor: Cheguei!");
         if (props.idEspecialidade !== null) {
             await xfetch('/hpm/consultorioBloco/' + props.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
                 .then(response => response.json())

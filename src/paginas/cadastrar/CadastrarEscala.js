@@ -18,7 +18,7 @@ export default function CadastrarEscala() {
         listaStatus: []
     });
 
-    let escalaObjeto = 31;
+    const escalaObjeto = 31;
 
     const meses = [
         "Janeiro",
