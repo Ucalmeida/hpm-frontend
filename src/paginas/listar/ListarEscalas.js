@@ -17,7 +17,7 @@ export default function ListarEscalas() {
 
     const handleAlterarEscala = (escala) => {
         if (objeto.idStatus === 13) {
-            msg = "Reativada!";
+            msg = "Ativada!";
         }
         xfetch('/hpm/escala/alterar/' + escala.valor, objeto, HttpVerbo.PUT)
             .then( json => {
