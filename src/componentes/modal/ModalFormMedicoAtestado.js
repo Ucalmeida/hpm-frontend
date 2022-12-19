@@ -11,6 +11,10 @@ import {ExibirMensagem, xfetch} from "../../util";
 export default function ModalFormMedicoAtestado(props) {
     const [show, setShow] = useState(false);
 
+    const [exibe, setExibe] = useState(false);
+
+    const [textoCid, setTextoCid] = useState("");
+
     const [atestado, setAtestado] = useState({
         idConsulta: localStorage.getItem("pacienteConsulta"),
         texto: null,
@@ -25,7 +29,7 @@ export default function ModalFormMedicoAtestado(props) {
     const handleCadastrar = () => {
         atestado.texto = "Atesto, para os devidos fins, a pedido do interessado, que " + localStorage.getItem("nmPaciente") + ", " +
                 "portador(a) do CPF: " + localStorage.getItem("cpfPaciente") + ", foi submetido a consulta médica nesta data, " +
-                "no horário de " + new Date().toLocaleTimeString() + " sendo portador da afecção: " + localStorage.getItem("arrayCodigosCids") + "." +
+                "no horário de " + new Date().toLocaleTimeString() + textoCid + ". " +
                 "Em decorrência, deverá permanecer afastado de suas atividades laborativas por um período de " + consulta.diasAfastado + " dia(s), " +
                 "a partir desta data. Aracaju, " + new Date().toLocaleDateString();
 
@@ -42,6 +46,21 @@ export default function ModalFormMedicoAtestado(props) {
     function handleImprimir(atestado) {
         localStorage.setItem('texto', atestado.texto);
         window.open("/atendimento/atestadoImprimir");
+    }
+
+    const togglerCidCheck = (e) => {
+        setExibe(!exibe);
+        handleTexto();
+    }
+
+    const handleTexto = (e) => {
+        if (exibe) {
+            setTextoCid("");
+        }
+        if (!exibe) {
+            setTextoCid(" sendo portador da afecção: " + localStorage.getItem("arrayCodigosCids"));
+        }
+        console.log("Exibe:", exibe);
     }
 
     const handleClose = () => setShow(false);
@@ -66,28 +85,27 @@ export default function ModalFormMedicoAtestado(props) {
                         </Link>
                     </div>
                     <Form>
-                        <div className={"col-lg-12"}>
-                            <Input
-                                type="number"
-                                value={consulta.diasAfastado}
-                                onChange={handleChange}
-                                name="diasAfastado"
-                                label="Dias afastamento"
-                            />
-                        </div>
-                        <div className={"col-lg-12"}>
-                            <Input
-                                type="checkbox"
-                                value={consulta.mostraCid}
-                                onChange={handleChange}
-                                name="mostraCid"
-                                label="Deve mostrar o Cid?"
-                            />
+                        <div className={"row col-lg-12"}>
+                                <Input
+                                    type="number"
+                                    value={consulta.diasAfastado}
+                                    onChange={handleChange}
+                                    name="diasAfastado"
+                                    label="Dias afastamento"
+                                />
+                                <input
+                                    id="cidCheck"
+                                    type="checkbox"
+                                    style={{height: "10px", marginTop: "2.7em", marginLeft:"0.5em"}}
+                                    onClick={togglerCidCheck}
+                                    name="exibirCid"
+                                    checked={exibe}/>
+                                <label className="form-check-label" htmlFor="cidCheck" style={{height: "20px", marginTop: "2.2em", marginLeft:"0.1em"}}><b>Deve mostrar o CID?</b></label>
                         </div>
                         <p>
                             Atesto, para os devidos fins, a pedido do interessado, que <b>{localStorage.getItem("nmPaciente")}</b>,
                             portador(a) do CPF: <b>{localStorage.getItem("cpfPaciente")}</b>, foi submetido a consulta médica nesta data,
-                            no horário de <b>{new Date().toLocaleTimeString()}</b> sendo portador da afecção: <span id={"codigosCid"}><b>{localStorage.getItem("arrayCodigosCids")}</b></span>.
+                            no horário de <b>{new Date().toLocaleTimeString()}</b> <span>{textoCid}</span>.<p> </p>
                             Em decorrência, deverá permanecer afastado de suas atividades laborativas por um período de <b>{consulta.diasAfastado}</b> dias,
                             a partir desta data. Aracaju, <b>{new Date().toLocaleDateString()}</b>
                         </p>

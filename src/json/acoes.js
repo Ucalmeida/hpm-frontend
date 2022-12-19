@@ -41,7 +41,7 @@ export const acoes = [
     "icone": "fa fa-medkit",
     "acoes": [
       {
-        "nome": "Lista Pacientes para Atendimento",
+        "nome": "Listar Pacientes para Atendimento",
         "descricao": "Lista para atendimento de pacientes",
         "url": "listaPacientesParaAtendimento",
         "icone": "fas fa-stethoscope"

@@ -26,7 +26,6 @@ const AtestadoImprimir = () => {
                                     </Link>
                                 </div>
                                 <h4 style={{textAlign: 'center'}}><b>HOSPITAL DA POLÍCIA MILITAR DO ESTADO DE SERGIPE<br />
-                                    SISTEMA DE AGENDAMENTO DE CONSULTA MÉDICA <br />
                                     ATESTADO</b></h4><br />
                                 <br/>
                                 <br/>

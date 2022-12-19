@@ -36,6 +36,7 @@ export default function PacienteEmAtendimento() {
         let codigoCid = idCidNome.split(" - ");
         setConsulta({...consulta, idCids: [...consulta.idCids, Number(idCid)]});
         setCids([...cids, codigoCid[0]]);
+        document.getElementById("idcidAuto").value = "";
     }
 
     const handleRemoveCid = (position) => {
@@ -120,7 +121,7 @@ export default function PacienteEmAtendimento() {
                                     url={"/hpm/cid/por-nome/"}
                                     label="Digite o CID:"
                                     placeholder="Nome ou código aqui"
-                                    tamanho={6}
+                                    tamanho={4}
                                     retorno={handleCID} />
                             </div>
                             <br />
