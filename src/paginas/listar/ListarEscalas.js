@@ -16,6 +16,9 @@ export default function ListarEscalas() {
     });
 
     const handleAlterarEscala = (escala) => {
+        if (objeto.idStatus === 13) {
+            msg = "Reativada!";
+        }
         xfetch('/hpm/escala/alterar/' + escala.valor, objeto, HttpVerbo.PUT)
             .then( json => {
                     if (typeof json !== "undefined" ? json.status === "OK" : false) {
@@ -51,7 +54,6 @@ export default function ListarEscalas() {
     }
 
     const listarEscalasPorStatus = () => {
-        console.log("Chegou???")
         xfetch('/hpm/escala/' + localStorage.getItem("idStatus") + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(escala => setEscala({...escala, escalas: escala.resultado}))
@@ -86,8 +88,10 @@ export default function ListarEscalas() {
                     }
                     if (escala.idStatus === 14) {
                         statusId = 15;
+                        let statusAtivar = 13;
                         msg = "Finalizada!";
                         btnAlteracaoStatus = <div id={"btnAlteracao"}>
+                            <Botao cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnAlterarStatus(escala, statusAtivar)} value={escala.valor}>Ativar</Botao>
                             <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnAlterarStatus(escala, statusId)} value={escala.valor}>Finalizar</Botao>
                         </div>;
                     }
