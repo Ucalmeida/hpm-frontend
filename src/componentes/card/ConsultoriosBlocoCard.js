@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Botao, BotaoExcluir, Card, Tabela} from "../index";
+import {Botao, Card, Tabela} from "../index";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import PropTypes from "prop-types";
-import {UseHandleExcluir} from "../../hooks/UseHandleExcluir";
 
 export default function ConsultoriosBlocoCard(props) {
     const [lista, setLista] = useState({
@@ -39,12 +38,8 @@ export default function ConsultoriosBlocoCard(props) {
     }
 
     useEffect(() => {
-        handleChange();
-    }, [props.apagarBloco])
-
-    useEffect(() => {
-        handleChange();
-    }, [props.apagarBloco])
+        handleChange().then();
+    }, [props.apagarBloco]);
 
     const colunas = [
         {text: "Escala"},

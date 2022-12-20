@@ -67,9 +67,10 @@ export default function PacienteEmAtendimento() {
 
     localStorage.setItem("arrayCids", consulta.idCids);
     localStorage.setItem("arrayCodigosCids", cids);
-    console.log("CIDs:", cids);
-    console.log("Consulta CIDs:", consulta.idCids);
-    console.log("Consulta:", consulta);
+    // console.log("CIDs:", cids);
+    // console.log("Consulta CIDs:", consulta.idCids);
+    // console.log("Consulta:", consulta);
+
     return (
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
@@ -100,7 +101,7 @@ export default function PacienteEmAtendimento() {
                             </div>
                         </div>
                     </Card>
-                    <Card titulo="Evolução">
+                    <Card className={"collapsed-card"} titulo="Evolução" botaoMin>
                         <div className={"row"}>
                             <div className="col-lg-12">
                                 <EditorTexto
@@ -113,7 +114,7 @@ export default function PacienteEmAtendimento() {
                             </div>
                         </div>
                     </Card>
-                    <Card titulo="CID">
+                    <Card className={"collapsed-card"} titulo="CID" botaoMin>
                         <div className={"row"}>
                             <div className="col-lg-12">
                                 <AutocompletarCid
@@ -147,7 +148,7 @@ export default function PacienteEmAtendimento() {
                             </div>
                         </FormGroup>
                     </Card>
-                    <Card titulo={"Formulários"}>
+                    <Card className={"collapsed-card"} titulo={"Formulários"} botaoMin>
                         <Tabs>
                             <Tab title="Atestado" eventKey="aba1">
                                 <br />
