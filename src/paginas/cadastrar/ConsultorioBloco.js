@@ -201,7 +201,7 @@ export default function ConsultorioBloco(){
                                     onChange={handleQtdEmergencia}
                                     value={objeto.qtdEmergencias}
                                     name="qtdEmergencias"
-                                    label="Quantidade de Emergencias"
+                                    label="Quantidade de Encaixes"
                                     placeholder="Qtd emergencias"/>
                             </div>
                         </div>

@@ -11,6 +11,11 @@ export default function MarcarConsultas() {
         medicos: []
     });
 
+    const [total, setTotal] = useState({
+        id: [],
+        qtConsultas: []
+    });
+
     const handleBtnVerPacientes = async (consultorioBlocoId, medico) => {
         objeto.idConsultorioBloco = consultorioBlocoId;
         localStorage.setItem('consultorioBloco', objeto.idConsultorioBloco);
@@ -45,6 +50,7 @@ export default function MarcarConsultas() {
     const handleEspecialidade = (e) => {
         objeto.idEspecialidade = e.value;
         listarConsultoriosBlocoPorEspecialidade();
+        // totalConsultaDisponivel();
     }
 
     const listarConsultoriosBlocoPorEspecialidade = () => {
@@ -54,6 +60,19 @@ export default function MarcarConsultas() {
                 setLista({...lista, medicos: lista.resultado})
             })
     }
+
+    // const totalConsultaDisponivel = () => {
+    //     lista.medicos.map((medico, index) => {
+    //         xfetch('/hpm/consultorioBloco/consulta/disponiveis/' + medico.valor, {}, HttpVerbo.GET)
+    //             .then(res => res.json())
+    //             .then(total => {
+    //                 setTotal({...total, qtdConsultas: total.resultado});
+    //             })
+    //     })
+    // }
+
+    // console.log("Total", lista);
+    console.log("Total", total);
 
     const colunas =[
         {text: "Nome"},
@@ -66,7 +85,7 @@ export default function MarcarConsultas() {
     const dados = () => {
         if(typeof(lista.medicos) !== "undefined") {
             return(
-                lista.medicos.map((medico) => {
+                lista.medicos.map((medico, index) => {
                     return({
                         'nome': medico.texto,
                         'inicio': medico.texto3,
@@ -75,7 +94,7 @@ export default function MarcarConsultas() {
                         'acoes': <div>
                                     <Botao onClick={() => handleBtnVerPacientes(medico.valor, medico)} value={medico.valor}>Ver Pacientes</Botao>
                                     <Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>
-                                    <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Urgência</Botao>
+                                    <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Encaixes</Botao>
                                 </div>
                     })
                 })
