@@ -1,10 +1,12 @@
 import {BotaoExcluir, Card, EditorTexto, Pagina} from "../../componentes";
 import React, {useState} from "react";
-import {BOTAO, ICONE} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
 import ModalFormMedico from "../../componentes/modal/ModalFormMedicoAtestado";
 import ModalFormMedicoAtestado from "../../componentes/modal/ModalFormMedicoAtestado";
 import {FormGroup, Tab, Tabs} from "react-bootstrap";
 import {AutocompletarCid} from "../../componentes/form/AutocompletarCid";
+import ModalFormMedicoReceita from "../../componentes/modal/ModalFormMedicoReceita";
+import {ExibirMensagem, xfetch} from "../../util";
 
 export default function PacienteEmAtendimento() {
     const [consulta, setConsulta] = useState({
@@ -28,7 +30,17 @@ export default function PacienteEmAtendimento() {
         medidaPeso: "Kg"
     };
 
-    const altura = consulta.altura / 100;
+    const altura = Number(consulta.altura / 100);
+
+    const [receita, setReceita] = useState({
+        idConsulta: Number(localStorage.getItem("pacienteConsulta")),
+        texto: null,
+        idMedicamentos: []
+    });
+
+    const [medicamentos, setMedicamentos] = useState([]);
+
+    const [discriminacao, setDiscriminacao] = useState([{}]);
 
     const handleCID = () => {
         const idCid = document.getElementById("idcid").value;
@@ -42,6 +54,46 @@ export default function PacienteEmAtendimento() {
     const handleRemoveCid = (position) => {
         setConsulta({...consulta, idCids: [...consulta.idCids.filter((_, index) => index !== position)]});
         setCids([...cids.filter((_, index) => index !== position)]);
+    }
+
+    const handleReceitaCadastrar = () => {
+        console.log("Receita:", receita);
+        xfetch('/hpm/consulta/receita/cadastrar', receita, HttpVerbo.POST)
+            .then(json => {
+                if(typeof json !== 'undefined' ? json.status === "OK" : false) {
+                    ExibirMensagem('Receita Salva Com Sucesso!', MSG.SUCESSO)
+                }
+            })
+        handleReceitaImprimir(receita)
+    }
+
+    function handleReceitaImprimir(receita) {
+        localStorage.setItem('texto', receita.texto);
+        window.open("/atendimento/receitaImprimir");
+    }
+
+    const handleMedicamento = () => {
+        const idMedicamento = document.getElementById("idmedicamento").value;
+        const idMedicamentoNome = document.getElementById("idmedicamentoAuto").value;
+        setMedicamentos([...medicamentos, idMedicamentoNome]);
+        setReceita({...receita, idMedicamentos: [...receita.idMedicamentos, Number(idMedicamento)], texto: document.getElementById("discriminacao").innerText});
+    }
+
+    const handleReceitaChange = (e) => {
+        let {name, value} = e.target;
+        let texto = document.getElementById("discriminacao").innerText.split("\n");
+        texto.map((novoTexto, index) => {
+            console.log("NovoTextoTag:", novoTexto);
+            console.log("NovoTextoIndex:", index);
+            if (index === 0 || index % 2 === 0) {
+                discriminacao.texto += novoTexto;
+            } else {
+                discriminacao.texto += " ";
+            }
+        });
+        console.log("DiscriminacaoTextoTag:", discriminacao.texto);
+        setDiscriminacao([...discriminacao, {[name]: value, texto: document.getElementById("discriminacao").innerText}]);
+        console.log("Discriminacao:", discriminacao);
     }
 
     let calcIdade = (data) => {
@@ -70,7 +122,8 @@ export default function PacienteEmAtendimento() {
     // console.log("CIDs:", cids);
     // console.log("Consulta CIDs:", consulta.idCids);
     // console.log("Consulta:", consulta);
-
+    // console.log("Receita:", receita);
+    // console.log("Medicamentos:", medicamentos);
     return (
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
@@ -126,7 +179,6 @@ export default function PacienteEmAtendimento() {
                                     retorno={handleCID} />
                             </div>
                             <br />
-                            <br />
                         </div>
                         <br />
                         <FormGroup>
@@ -160,7 +212,66 @@ export default function PacienteEmAtendimento() {
                             </Tab>
                             <Tab title="Receita" eventKey="aba2">
                                 <br />
-                                <ModalFormMedico corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />
+                                <div className={"row"}>
+                                    <div className="col-lg-12">
+                                        <AutocompletarCid
+                                            name="medicamento"
+                                            url={"/hpm/medicamento/por-nome/"}
+                                            label="Digite o nome do medicamento:"
+                                            placeholder="Nome do medicamento aqui"
+                                            tamanho={6}
+                                            retorno={handleMedicamento} />
+                                    </div>
+                                </div>
+                                <br />
+                                <div className={"col-lg-12"}>
+
+                                </div>
+                                <div className={"col-lg-12"}>
+
+                                </div>
+                                <FormGroup className={"form-inline"}>
+                                    <div className={"col-lg-12"}>
+                                        {medicamentos.map((medicamento, index) => (
+                                            <div className={"col-lg-12"}>
+                                                <div key={index} className="control">
+                                                    <div id={"discriminacao"} className={"form-group mb-4"}>
+                                                        {index + 1})
+                                                        <Input
+                                                            type="number"
+                                                            onChange={handleReceitaChange}
+                                                            name={index + "quantidade"}
+                                                            label={"Quantidade: "}
+                                                        />
+                                                        <pre />
+                                                        {medicamento}
+                                                        <pre />
+                                                        <div className={"m-1"}>
+                                                            <Input
+                                                                type="number"
+                                                                onChange={handleReceitaChange}
+                                                                name={index + "posologia"}
+                                                            />
+                                                        </div>
+                                                        <p> em </p>
+                                                        <div className={"m-1"}>
+                                                            <Input
+                                                                type="number"
+                                                                onChange={handleReceitaChange}
+                                                                name={index + "posologia"}
+                                                            />
+                                                        </div>
+                                                        <p> horas.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <br />
+                                    <br />
+                                </FormGroup>
+                                <Botao cor={BOTAO.COR.INFO} icone={ICONE.PDF} onClick={() => handleReceitaCadastrar()}>Cadastrar Receita</Botao>
+                                {/*<ModalFormMedicoReceita corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />*/}
                             </Tab>
                             <Tab title="Requisição de Exames" eventKey="aba3">
                                 <br />
