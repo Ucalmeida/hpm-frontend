@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Botao, Card, Pagina, Select, Tabela} from "../../componentes";
+import {Botao, Card, Input, Pagina, Select, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 
@@ -8,18 +8,31 @@ export default function ListaPacientesParaAtendimento() {
 
     const [objeto, setObjeto] = useState({
         idPessoa: localStorage.getItem('id'),
-        especialidades: []
+        especialidades: [],
+        consultoriosBloco: []
     });
 
     const [consultorio, setConsultorio] = useState({
-        "idConsultorioBloco": null,
-        "idStatus": Number("6")
+        idConsultorioBloco: null,
+        idStatus: Number("6")
+    });
+
+    const [consultorioBloco, setConsultorioBloco] = useState({
+        idEspecialidade: null,
+        data: ""
     });
 
     let consultaSelecionada = {
         idConsulta: '',
         idStatus: ''
     }
+
+    const handleDtBloco = (e) => {
+        consultorioBloco.data = e.target.value;
+        listarDatasPorEspecialidadeProfissionalSaude();
+    }
+
+    console.log("Bloco:", consultorioBloco);
 
     function handleBtnIniciarAtendimento(consulta) {
         consultaSelecionada.idConsulta = consulta.id;
@@ -61,27 +74,36 @@ export default function ListaPacientesParaAtendimento() {
         setApagar(!apagar);
     }
 
-    const selecionarConsultorioBloco = (e) => {
-        consultorio.idConsultorioBloco = Number(e.target.value);
-        listarPacientesParaAtendimentoPorData();
-    }
-
     const selecionarEspecialidade = (e) => {
-        objeto.idEspecialidade = e.value;
+        consultorioBloco.idEspecialidade = e.value;
         listarDatasPorEspecialidadeProfissionalSaude();
     }
 
     const listarDatasPorEspecialidadeProfissionalSaude = () => {
+        console.log("Aqui!!", consultorioBloco);
         setObjeto({...objeto, consultoriosBloco: []})
-        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idPessoa + '/opcoes', {}, HttpVerbo.GET)
-            .then(res => res.json())
+        xfetch('/hpm/consultorioBloco/data/especialidade/opcoes', consultorioBloco, HttpVerbo.POST)
             .then(json => {
-                    setObjeto({...objeto, consultoriosBloco: json.resultado})
+                    setObjeto({...objeto, consultoriosBloco: json.resultado});
+                    objeto.consultoriosBloco = json.resultado;
                 }
             )
+        listaDeConsultorios();
     }
 
+    const listaDeConsultorios = () => {
+        objeto.consultoriosBloco.map((bloco) => {
+            consultorio.idConsultorioBloco = bloco.valor;
+            console.log("idBloco", bloco.valor);
+            listarPacientesParaAtendimentoPorData();
+        });
+        console.log("Objeto", objeto);
+    }
+
+    console.log("Blocos de Consultorio:", objeto.consultoriosBloco);
+
     const listarPacientesParaAtendimentoPorData = () => {
+        console.log("Consultorio", consultorio);
         xfetch('/hpm/consulta/pesquisar/consultorio-status', consultorio, HttpVerbo.POST)
             .then(response => {
                     if (response.status === "OK"){
@@ -138,7 +160,16 @@ export default function ListaPacientesParaAtendimento() {
                 <div className="col-lg-12">
                     <Card>
                         <div className={"row"}>
-                            <div className={"col-lg-4"}>
+                            <div className="col-lg-6">
+                                <Input
+                                    type="datetime-local"
+                                    value={consultorioBloco.data}
+                                    onChange={handleDtBloco}
+                                    name="dataBloco"
+                                    label="Data"
+                                    placeholder="Data e hora"/>
+                            </div>
+                            <div className={"col-lg-6"}>
                                 <label>Selecionar Especialidade</label>
                                 <Select
                                     url={"/hpm/especialidade/" + objeto.idPessoa + "/opcoes"}
@@ -146,20 +177,20 @@ export default function ListaPacientesParaAtendimento() {
                                     funcao={selecionarEspecialidade}
                                 />
                             </div>
-                            <div className="col-lg-4">
-                                <label>Data - Hora</label>
-                                <br/>
-                                <select
-                                    className="form-control"
-                                    name="idConsultorioBloco"
-                                    value={objeto.idConsultorioBloco}
-                                    onChange={selecionarConsultorioBloco}>
-                                    <option hidden>Selecione...</option>
-                                    {typeof(consultaBloco) !== 'undefined' ? consultaBloco.map((v, k) => {
-                                        return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
-                                    }) : ''}
-                                </select>
-                            </div>
+                            {/*<div className="col-lg-4">*/}
+                            {/*    <label>Data - Hora</label>*/}
+                            {/*    <br/>*/}
+                            {/*    <select*/}
+                            {/*        className="form-control"*/}
+                            {/*        name="idConsultorioBloco"*/}
+                            {/*        value={objeto.idConsultorioBloco}*/}
+                            {/*        onChange={selecionarConsultorioBloco}>*/}
+                            {/*        <option hidden>Selecione...</option>*/}
+                            {/*        {typeof(consultaBloco) !== 'undefined' ? consultaBloco.map((v, k) => {*/}
+                            {/*            return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>*/}
+                            {/*        }) : ''}*/}
+                            {/*    </select>*/}
+                            {/*</div>*/}
                         </div>
                     </Card>
                     <Card titulo="Pacientes Confirmados">

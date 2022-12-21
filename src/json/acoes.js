@@ -25,12 +25,6 @@ export const acoes = [
         "descricao": "Consulta",
         "url": "consulta",
         "icone": "fas fa-stethoscope"
-      },
-      {
-        "nome": "Consultas Agendadas",
-        "descricao": "Consultas Agendadas",
-        "url": "consultasAgendadas",
-        "icone": "fas fa-stethoscope"
       }
     ]
   },

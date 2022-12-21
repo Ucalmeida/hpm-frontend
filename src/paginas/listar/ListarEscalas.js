@@ -84,6 +84,7 @@ export default function ListarEscalas() {
                         msg = "Inativada!";
                         btnAlteracaoStatus = <div id={"btnAlteracao"}>
                             <Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnAlterarStatus(escala, statusId)} value={escala.valor}>Inativar</Botao>
+                            <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(escala.valor)} value={escala.valor} icone={""}>Excluir</Botao>
                         </div>;
                     }
                     if (escala.idStatus === 14) {
@@ -93,6 +94,7 @@ export default function ListarEscalas() {
                         btnAlteracaoStatus = <div id={"btnAlteracao"}>
                             <Botao cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnAlterarStatus(escala, statusAtivar)} value={escala.valor}>Ativar</Botao>
                             <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnAlterarStatus(escala, statusId)} value={escala.valor}>Finalizar</Botao>
+                            <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(escala.valor)} value={escala.valor} icone={""}>Excluir</Botao>
                         </div>;
                     }
                     if (escala.idStatus === 15) {
@@ -105,10 +107,9 @@ export default function ListarEscalas() {
                         'situacao': escala.status,
                         'acoes':<div className={"row"}>
                                     {btnAlteracaoStatus}
-                                    <div>
-                                        <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(escala.valor)} value={escala.valor} icone={""}>Excluir</Botao>
-                                        {/*<BotaoExcluir onClick={() => UseHandleExcluir("/hpm/escala/excluir/" + escala.valor, objeto, "Escala Excluída!", listarEscalasPorStatus())} value={escala.valor} />*/}
-                                    </div>
+                                    {/*<div>*/}
+                                    {/*    <BotaoExcluir onClick={() => UseHandleExcluir("/hpm/escala/excluir/" + escala.valor, objeto, "Escala Excluída!", listarEscalasPorStatus())} value={escala.valor} />*/}
+                                    {/*</div>*/}
                                 </div>
                     })
                 })

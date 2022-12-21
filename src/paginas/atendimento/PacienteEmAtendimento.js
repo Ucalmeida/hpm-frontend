@@ -1,11 +1,10 @@
-import {BotaoExcluir, Card, EditorTexto, Pagina} from "../../componentes";
+import {Botao, BotaoExcluir, Card, EditorTexto, Input, Pagina} from "../../componentes";
 import React, {useState} from "react";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
 import ModalFormMedico from "../../componentes/modal/ModalFormMedicoAtestado";
 import ModalFormMedicoAtestado from "../../componentes/modal/ModalFormMedicoAtestado";
 import {FormGroup, Tab, Tabs} from "react-bootstrap";
 import {AutocompletarCid} from "../../componentes/form/AutocompletarCid";
-import ModalFormMedicoReceita from "../../componentes/modal/ModalFormMedicoReceita";
 import {ExibirMensagem, xfetch} from "../../util";
 
 export default function PacienteEmAtendimento() {

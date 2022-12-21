@@ -1,13 +1,7 @@
-import {
-    Autocompletar,
-    Card,
-    Pagina,
-    Tabela
-} from "../../componentes";
+import {Autocompletar, Card, Pagina, Tabela} from "../../componentes";
 import React, {useEffect, useState} from "react";
-import {HttpVerbo, MSG} from "../../util/Constantes";
-import {ExibirMensagem, xfetch} from "../../util";
-import {tab} from "@testing-library/user-event/dist/tab";
+import {HttpVerbo} from "../../util/Constantes";
+import {xfetch} from "../../util";
 
 export default function ListarDependentes() {
     const [objeto, setObjeto] = useState({
@@ -22,6 +16,15 @@ export default function ListarDependentes() {
         dependentes: []
     })
 
+    const selecionarPessoa = (idpessoa) => {
+        objeto.idPessoa = idpessoa;
+        listarDependentes();
+    }
+
+    const minhaFuncao = (parametro) => {
+        setResult({...result, prm: parametro});
+    }
+
     const colunas = [
         {text: "Nome do Dependente"},
         {text: "CPF do Dependente"},
@@ -32,7 +35,7 @@ export default function ListarDependentes() {
 
     let dados = () => {
         return (
-            typeof list.dependentes != 'undefined' ? list.dependentes.map((dependente, indice) => {
+            typeof list.dependentes !== 'undefined' ? list.dependentes.map((dependente, indice) => {
                     return ({
                         'nome_do_dependente': dependente.texto,
                         'cpf_do_dependente': dependente.texto2,
@@ -45,34 +48,19 @@ export default function ListarDependentes() {
         )
     }
 
-    useEffect(() => {
-        setList({...list,dependentes: []})
-    }, [result.prm])
-
     const listarDependentes = () => {
-                xfetch('/hpm/dependente/tit/' + objeto.idPessoa + '/opcoes',{}, HttpVerbo.GET)
-                    .then(res => res.json())
-                    .then(lista => {
-                        if(lista.status == 'OK' && result.prm > 0){
-                            setList({...list, dependentes: lista.resultado})
-                        }
-                        if(lista.status == 'SEM_RESULTADOS' && result.prm > 0){
-                            setList({...list, dependentes: []})
-                            ExibirMensagem('Não existem resultados para essa pesquisa!', MSG.ALERTA)
-                        }
-                    })
-     }
-
-    const selecionarPessoa = (e) => {
-         objeto.idPessoa = e
-         listarDependentes()
+        xfetch('/hpm/dependente/tit/' + objeto.idPessoa + '/opcoes', {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(lista => {
+                if (typeof lista.status !== "undefined" ? lista.status === 'OK' : false) {
+                    setList({...list, dependentes: lista.resultado})
+                }
+            })
     }
 
-    const minhaFuncao = (parametro) =>{
-         setResult({...result, prm: parametro})
-    }
-
-
+    useEffect(() => {
+        setList({...list, dependentes: []})
+    }, [result.prm])
 
     return (
         <Pagina titulo="Listar Dependentes">
