@@ -20,18 +20,20 @@ const Login = () => {
         carregando: false
     })
 
+    const md5 = require("md5");
+
     useEffect(() => {
         jaLogado();
     }, [])
 
     const handleLogin = (e) => {
         e.preventDefault();
-        setUser({...user, [e.target.name]: e.target.value})
+        setUser({...user, login: e.target.value});
     }
 
     const handleSenha = (e) => {
         e.preventDefault();
-        setUser({...user, senha: e.target.value})
+        setUser({...user, senha: e.target.value});
     }
 
     const jaLogado = () => {
@@ -40,7 +42,8 @@ const Login = () => {
 
     const enviar = (e) => {
         e.preventDefault()
-        setUser({...user, carregando: true})
+        user.senha = md5(user.senha);
+        setUser({...user, carregando: true});
         xfetch('/login', user, HttpVerbo.POST)
             .then(dados => {
                 setUser({...user, carregando: false});
