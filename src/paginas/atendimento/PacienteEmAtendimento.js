@@ -76,6 +76,12 @@ export default function PacienteEmAtendimento() {
         const idMedicamentoNome = document.getElementById("idmedicamentoAuto").value;
         setMedicamentos([...medicamentos, idMedicamentoNome]);
         setReceita({...receita, idMedicamentos: [...receita.idMedicamentos, Number(idMedicamento)], texto: document.getElementById("discriminacao").innerText});
+        document.getElementById("idmedicamentoAuto").value = "";
+    }
+
+    const handleRemoveMedicamento = (position) => {
+        setReceita({...receita, idMedicamentos: [...receita.idMedicamentos.filter((_, index) => index !== position)]});
+        setMedicamentos([...medicamentos.filter((_, index) => index !== position)]);
     }
 
     const handleReceitaChange = (e) => {
@@ -218,7 +224,7 @@ export default function PacienteEmAtendimento() {
                                             url={"/hpm/medicamento/por-nome/"}
                                             label="Digite o nome do medicamento:"
                                             placeholder="Nome do medicamento aqui"
-                                            tamanho={6}
+                                            tamanho={4}
                                             retorno={handleMedicamento} />
                                     </div>
                                 </div>
@@ -232,44 +238,57 @@ export default function PacienteEmAtendimento() {
                                 <FormGroup className={"form-inline"}>
                                     <div className={"col-lg-12"}>
                                         {medicamentos.map((medicamento, index) => (
-                                            <div className={"col-lg-12"}>
-                                                <div key={index} className="control">
-                                                    <div id={"discriminacao"} className={"form-group mb-4"}>
-                                                        {index + 1})
-                                                        <Input
-                                                            type="number"
-                                                            onChange={handleReceitaChange}
-                                                            name={index + "quantidade"}
-                                                            label={"Quantidade: "}
-                                                        />
-                                                        <pre />
-                                                        {medicamento}
-                                                        <pre />
-                                                        <div className={"m-1"}>
-                                                            <Input
-                                                                type="number"
-                                                                onChange={handleReceitaChange}
-                                                                name={index + "posologia"}
-                                                            />
+                                            <FormGroup>
+                                                <div className={"info-box col-lg-12"} style={{display: "flex"}}>
+                                                    <div key={index} className="control">
+                                                        <div id={"discriminacao"} className={"form-group mb-2"}>
+                                                            {index + 1})
+                                                            <div className={"m-1"}>
+                                                                <Input
+                                                                    style={{marginLeft: "1em", width: "100px"}}
+                                                                    type="number"
+                                                                    onChange={handleReceitaChange}
+                                                                    name={index + "quantidade"}
+                                                                    label={"Qtd: "}
+                                                                />
+                                                            </div>
+                                                            <pre />
+                                                            <div style={{width: "200px", textAlign: "justify"}}>
+                                                                {medicamento}
+                                                            </div>
+                                                            <pre />
+                                                            <div className={"m-1"}>
+                                                                <Input
+                                                                    style={{width: "100px"}}
+                                                                    type="number"
+                                                                    onChange={handleReceitaChange}
+                                                                    name={index + "posologia"}
+                                                                />
+                                                            </div>
+                                                            <p style={{marginTop: "1em", marginLeft: "1em", marginRight: "1em"}}> em </p>
+                                                            <div className={"m-1"}>
+                                                                <Input
+                                                                    style={{width: "100px"}}
+                                                                    type="number"
+                                                                    onChange={handleReceitaChange}
+                                                                    name={index + "posologia"}
+                                                                />
+                                                            </div>
+                                                            <p style={{marginTop: "1em", marginLeft: "1em", marginRight: "1em"}}> horas.</p>
                                                         </div>
-                                                        <p> em </p>
-                                                        <div className={"m-1"}>
-                                                            <Input
-                                                                type="number"
-                                                                onChange={handleReceitaChange}
-                                                                name={index + "posologia"}
-                                                            />
-                                                        </div>
-                                                        <p> horas.</p>
                                                     </div>
+                                                    <BotaoExcluir
+                                                        style={{marginLeft: "15em"}}
+                                                        onClick={() => {handleRemoveMedicamento(index)}}
+                                                    />
                                                 </div>
-                                            </div>
+                                            </FormGroup>
                                         ))}
                                     </div>
                                     <br />
                                     <br />
                                 </FormGroup>
-                                <Botao cor={BOTAO.COR.INFO} icone={ICONE.PDF} onClick={() => handleReceitaCadastrar()}>Cadastrar Receita</Botao>
+                                <Botao cor={BOTAO.COR.INFO} icone={ICONE.PDF} onClick={() => handleReceitaCadastrar()}>Imprimir Receita</Botao>
                                 {/*<ModalFormMedicoReceita corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />*/}
                             </Tab>
                             <Tab title="Requisição de Exames" eventKey="aba3">
