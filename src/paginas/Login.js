@@ -41,7 +41,7 @@ const Login = () => {
     }
 
     const enviar = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         user.senha = md5(user.senha);
         setUser({...user, carregando: true});
         xfetch('/login', user, HttpVerbo.POST)
@@ -116,9 +116,11 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <div className="col-12 text-center">
-                <Botao icone={'fas fa-sign-in-alt'} onClick={enviar}> Acessar </Botao>
-            </div>
+            <form onSubmit={enviar}>
+                <div className="col-12 text-center">
+                    <button type="submit" className="btn btn-primary"><Icone icone={"fas fa-sign-in-alt"}/>Acessar</button>
+                </div>
+            </form>
 
             <div className="social-auth-links text-center mt-2 mb-3">
             </div>
