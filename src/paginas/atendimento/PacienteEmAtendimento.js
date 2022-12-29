@@ -189,7 +189,7 @@ export default function PacienteEmAtendimento() {
                         <FormGroup>
                             <div className={"col-lg-12"}>
                                 {cids.map((cid, index) => (
-                                    <FormGroup>
+                                    <FormGroup key={index}>
                                         <div className={"info-box col-lg-2"} style={{display: "flex"}}>
                                             <div key={index} className="info-box-content">
                                                 <span className="info-box-text">CID</span>
@@ -238,7 +238,7 @@ export default function PacienteEmAtendimento() {
                                 <FormGroup className={"form-inline"}>
                                     <div className={"col-lg-12"}>
                                         {medicamentos.map((medicamento, index) => (
-                                            <FormGroup>
+                                            <FormGroup key={index}>
                                                 <div className={"info-box col-lg-12"} style={{display: "flex"}}>
                                                     <div key={index} className="control">
                                                         <div id={"discriminacao"} className={"form-group mb-2"}>

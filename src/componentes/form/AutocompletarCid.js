@@ -19,7 +19,7 @@ export class AutocompletarCid extends React.Component {
     handle = (e) => {
         e.preventDefault()
         this.setState({[e.target.name]: e.target.value.toUpperCase()})
-        if(e.target.value == ''){
+        if(e.target.value === ''){
             this.props.changeResultado(e.target.value)
         }
     }
@@ -74,7 +74,7 @@ export class AutocompletarCid extends React.Component {
                         value={busca}
                         placeholder={this.props.placeholder}
                     />
-                    {/*{spinner}*/}
+                    {spinner}
                 </div>
                 <div className="col-lg-1">
                     <input
