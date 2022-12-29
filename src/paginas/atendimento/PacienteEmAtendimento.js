@@ -177,7 +177,7 @@ export default function PacienteEmAtendimento() {
                             <div className="col-lg-12">
                                 <AutocompletarCid
                                     name="cid"
-                                    url={"/hpm/cid/por-nome/"}
+                                    url={"/hpm/cid/"}
                                     label="Digite o CID:"
                                     placeholder="Nome ou código aqui"
                                     tamanho={4}
