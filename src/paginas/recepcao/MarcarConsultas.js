@@ -79,6 +79,7 @@ export default function MarcarConsultas() {
         {text: "Início"},
         {text: "Término"},
         {text: "Vagas"},
+        {text: "Encaixes"},
         {text: "Ações"}
     ]
 
@@ -91,6 +92,7 @@ export default function MarcarConsultas() {
                         'inicio': medico.texto3,
                         'termino': medico.texto4,
                         'vagas': medico.texto5,
+                        'encaixes': medico.texto6,
                         'acoes': <div>
                                     <Botao onClick={() => handleBtnVerPacientes(medico.valor, medico)} value={medico.valor}>Ver Pacientes</Botao>
                                     <Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>
