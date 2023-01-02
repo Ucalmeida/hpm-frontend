@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
-import {Botao, Card, Input, Pagina, Select, Tabela} from "../../componentes";
-import {ExibirMensagem, xfetch} from "../../util";
-import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
+import React, { useEffect, useState } from "react";
+import { Botao, Card, Input, Pagina, Select, Tabela } from "../../componentes";
+import { ExibirMensagem, xfetch } from "../../util";
+import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
 
 export default function ListaPacientesParaAtendimento() {
     const [apagar, setApagar] = useState(false);
@@ -25,8 +25,11 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const handleDtBloco = (e) => {
-        consultorioBloco.data = e.target.value;
-        listarDatasPorEspecialidadeProfissionalSaude();
+        setConsultorioBloco({...consultorioBloco, data: e.target.value});
+    }
+
+    const selecionarEspecialidade = (e) => {
+        setConsultorioBloco({...consultorioBloco, idEspecialidade: e.value});
     }
 
     function handleBtnIniciarAtendimento(consulta) {
@@ -68,41 +71,30 @@ export default function ListaPacientesParaAtendimento() {
         setApagar(!apagar);
     }
 
-    const selecionarEspecialidade = (e) => {
-        consultorioBloco.idEspecialidade = e.value;
-        listarDatasPorEspecialidadeProfissionalSaude();
-    }
-
-    const listarDatasPorEspecialidadeProfissionalSaude = () => {
-        setObjeto({...objeto, consultoriosBloco: []})
-        console.log("Consultorio Bloco", consultorioBloco);
-        if (consultorioBloco.data !== "") {
-            xfetch('/hpm/consultorioBloco/data/especialidade/opcoes', consultorioBloco, HttpVerbo.POST)
-                .then(json => {
-                        if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                            setObjeto({...objeto, consultoriosBloco: json.resultado});
-                        }
-                    }
-                )
-                .catch(error => console.log(error))
-            listaDeConsultorios();
-        }
-    }
-
     const listaDeConsultorios = () => {
         idConsultorioBlocos = [];
-        objeto.consultoriosBloco.map((bloco, index) => {
-            idConsultorioBlocos[index] = (Number(bloco.valor));
-        });
-        objeto.consultoriosBloco = [];
-        objeto.consultas = [];
+        if (typeof objeto.consultoriosBloco !== "undefined") {
+            console.log("ConsultoriosBloco:", objeto.consultoriosBloco);
+            objeto.consultoriosBloco.map((bloco, index) => {
+                idConsultorioBlocos[index] = (Number(bloco.valor));
+                return idConsultorioBlocos;
+            });
+            console.log("Ponto Cego");
+        }
+        console.log("Ponto 1");
+        objeto.consultoriosBloco = undefined;
+        objeto.consultas = undefined;
         listarPacientesParaAtendimentoPorData();
     }
 
     const listarPacientesParaAtendimentoPorData = () => {
+        console.log("Dentro de ListarPacientesParaAtendimentoPorData");
+        console.log("Tamanho:", idConsultorioBlocos.length);
         if (idConsultorioBlocos.length > 0) {
+            console.log("idConsultorioBloco maior que Zero");
             xfetch('/hpm/consulta/consultorios/opcoes', {idConsultorioBlocos}, HttpVerbo.POST)
                 .then(response => {
+                        console.log(idConsultorioBlocos.length);
                         if (typeof response !== "undefined" ? response.status === "OK" : false) {
                             setObjeto({...objeto, consultas: response.resultado});
                         }
@@ -112,7 +104,24 @@ export default function ListaPacientesParaAtendimento() {
         }
     }
 
-    let consultas = objeto.consultas;
+    useEffect(() => {
+        setObjeto({...objeto, consultoriosBloco: []})
+        console.log("Ponto A", consultorioBloco.data);
+        if (consultorioBloco.data !== "") {
+            console.log("Ponto B");
+            xfetch('/hpm/consultorioBloco/data/especialidade/opcoes', consultorioBloco, HttpVerbo.POST)
+                .then(json => {
+                        if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                            setObjeto({...objeto, consultoriosBloco: json.resultado});
+                        }
+                    }
+                )
+                .catch(error => console.log(error))
+        }
+        listaDeConsultorios();
+    }, [consultorioBloco])
+
+    console.log("Consultas", objeto.consultas);
 
     const colunas = [
         {text: "Paciente"},
@@ -128,7 +137,7 @@ export default function ListaPacientesParaAtendimento() {
 
     const dados = () => {
         return(
-            typeof consultas !== 'undefined' ? consultas.map((consulta) => {
+            typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
                 return ({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,

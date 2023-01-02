@@ -33,13 +33,17 @@ export default function PacienteEmAtendimento() {
 
     const [receita, setReceita] = useState({
         idConsulta: Number(localStorage.getItem("pacienteConsulta")),
-        texto: null,
-        idMedicamentos: []
+        idMedicamentos: [],
+        texto: []
     });
 
     const [medicamentos, setMedicamentos] = useState([]);
 
-    const [discriminacao, setDiscriminacao] = useState([{}]);
+    const [discriminacao, setDiscriminacao] = useState([{
+        quantidade: 0,
+        posologia: 0,
+        texto: ""
+    }]);
 
     const handleCID = () => {
         const idCid = document.getElementById("idcid").value;
@@ -75,8 +79,10 @@ export default function PacienteEmAtendimento() {
         const idMedicamento = document.getElementById("idmedicamento").value;
         const idMedicamentoNome = document.getElementById("idmedicamentoAuto").value;
         setMedicamentos([...medicamentos, idMedicamentoNome]);
-        setReceita({...receita, idMedicamentos: [...receita.idMedicamentos, Number(idMedicamento)], texto: document.getElementById("discriminacao").innerText});
+        setReceita({...receita, idMedicamentos: [...receita.idMedicamentos, Number(idMedicamento)], texto: [...receita.texto, idMedicamentoNome]});
         document.getElementById("idmedicamentoAuto").value = "";
+        console.log("Receita", receita);
+        console.log("Medicamentos", medicamentos);
     }
 
     const handleRemoveMedicamento = (position) => {
@@ -84,20 +90,32 @@ export default function PacienteEmAtendimento() {
         setMedicamentos([...medicamentos.filter((_, index) => index !== position)]);
     }
 
-    const handleReceitaChange = (e) => {
-        let {name, value} = e.target;
-        let texto = document.getElementById("discriminacao").innerText.split("\n");
-        texto.map((novoTexto, index) => {
-            console.log("NovoTextoTag:", novoTexto);
-            console.log("NovoTextoIndex:", index);
-            if (index === 0 || index % 2 === 0) {
-                discriminacao.texto += novoTexto;
-            } else {
-                discriminacao.texto += " ";
+    const handleReceitaChange = (indice) => {
+        let quantidade = document.getElementById(indice + "quantidade").value;
+        let posologia = document.getElementById(indice + "posologia").value;
+        console.log("Quantidade:", quantidade);
+        console.log("Posologia:", posologia);
+        medicamentos.map((desc, index) => {
+            if (index === indice) {
+                if (discriminacao[indice].quantidade !== quantidade) {
+                    setDiscriminacao([
+                        ...discriminacao, {quantidade: quantidade}
+                    ])
+                }
+                if (discriminacao[indice].posologia !== posologia) {
+                    setDiscriminacao([
+                        ...discriminacao, {posologia: posologia}
+                    ])
+                }
+                if (discriminacao[indice].texto !== desc) {
+                    setDiscriminacao([
+                        ...discriminacao, {texto: desc}
+                    ])
+                }
             }
-        });
-        console.log("DiscriminacaoTextoTag:", discriminacao.texto);
-        setDiscriminacao([...discriminacao, {[name]: value, texto: document.getElementById("discriminacao").innerText}]);
+            return discriminacao.texto;
+        })
+        /// medicamentos.filter((_, index) => index === indice)
         console.log("Discriminacao:", discriminacao);
     }
 
@@ -221,7 +239,7 @@ export default function PacienteEmAtendimento() {
                                     <div className="col-lg-12">
                                         <AutocompletarCid
                                             name="medicamento"
-                                            url={"/hpm/medicamento/por-nome/"}
+                                            url={"/hpm/medicamento/"}
                                             label="Digite o nome do medicamento:"
                                             placeholder="Nome do medicamento aqui"
                                             tamanho={4}
@@ -245,10 +263,11 @@ export default function PacienteEmAtendimento() {
                                                             {index + 1})
                                                             <div className={"m-1"}>
                                                                 <Input
+                                                                    id={index + "quantidade"}
                                                                     style={{marginLeft: "1em", width: "100px"}}
                                                                     type="number"
-                                                                    onChange={handleReceitaChange}
-                                                                    name={index + "quantidade"}
+                                                                    onChange={() => {handleReceitaChange(index)}}
+                                                                    name={"quantidade"}
                                                                     label={"Qtd: "}
                                                                 />
                                                             </div>
@@ -259,19 +278,21 @@ export default function PacienteEmAtendimento() {
                                                             <pre />
                                                             <div className={"m-1"}>
                                                                 <Input
+                                                                    id={index + "posologia"}
                                                                     style={{width: "100px"}}
                                                                     type="number"
-                                                                    onChange={handleReceitaChange}
-                                                                    name={index + "posologia"}
+                                                                    onChange={() => {handleReceitaChange(index)}}
+                                                                    name={"posologia"}
                                                                 />
                                                             </div>
                                                             <p style={{marginTop: "1em", marginLeft: "1em", marginRight: "1em"}}> em </p>
                                                             <div className={"m-1"}>
                                                                 <Input
+                                                                    id={index + "posologia"}
                                                                     style={{width: "100px"}}
                                                                     type="number"
-                                                                    onChange={handleReceitaChange}
-                                                                    name={index + "posologia"}
+                                                                    onChange={() => {handleReceitaChange(index)}}
+                                                                    name={"posologia"}
                                                                 />
                                                             </div>
                                                             <p style={{marginTop: "1em", marginLeft: "1em", marginRight: "1em"}}> horas.</p>

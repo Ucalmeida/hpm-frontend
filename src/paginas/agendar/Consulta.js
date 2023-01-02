@@ -29,7 +29,7 @@ export default function Consulta() {
 
     const listarProfissionalPorEspecialidade = () => {
         setObjeto({...objeto, profissionais: []})
-        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
+        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/escalas-ativas/opcoes',{}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
                     setObjeto({...objeto, profissionais: json.resultado})
@@ -94,7 +94,7 @@ export default function Consulta() {
                                 <Select
                                     funcao={selecionarEspecialidade}
                                     nome="idEspecialidade"
-                                    url={"/hpm/especialidade/opcoes"}
+                                    url={"/hpm/especialidade/escalas-ativas/opcoes"}
                                 />
                             </div>
 
