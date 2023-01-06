@@ -1,11 +1,10 @@
-import {Botao, BotaoExcluir, Card, EditorTexto, Input, Pagina} from "../../componentes";
-import React, {useState} from "react";
-import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
-import ModalFormMedico from "../../componentes/modal/ModalFormMedicoAtestado";
-import ModalFormMedicoAtestado from "../../componentes/modal/ModalFormMedicoAtestado";
-import {FormGroup, Tab, Tabs} from "react-bootstrap";
-import {AutocompletarCid} from "../../componentes/form/AutocompletarCid";
-import {ExibirMensagem, xfetch} from "../../util";
+import React, { useState } from "react";
+import { FormGroup, Tab, Tabs } from "react-bootstrap";
+import { Botao, BotaoExcluir, Card, EditorTexto, Input, Pagina } from "../../componentes";
+import { AutocompletarCid } from "../../componentes/form/AutocompletarCid";
+import { default as ModalFormMedico, default as ModalFormMedicoAtestado } from "../../componentes/modal/ModalFormMedicoAtestado";
+import { ExibirMensagem, xfetch } from "../../util";
+import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
 
 export default function PacienteEmAtendimento() {
     const [consulta, setConsulta] = useState({
@@ -34,12 +33,13 @@ export default function PacienteEmAtendimento() {
     const [receita, setReceita] = useState({
         idConsulta: Number(localStorage.getItem("pacienteConsulta")),
         idMedicamentos: [],
-        texto: []
+        texto: ""
     });
 
     const [medicamentos, setMedicamentos] = useState([]);
 
     const [discriminacao, setDiscriminacao] = useState([{
+        idMedicamento: null,
         quantidade: 0,
         posologia: 0,
         texto: ""
@@ -61,28 +61,31 @@ export default function PacienteEmAtendimento() {
 
     const handleReceitaCadastrar = () => {
         console.log("Receita:", receita);
+        let texto = "";
+        discriminacao.map((disc) => texto += disc.texto + " ");
+        receita.texto = texto;
         xfetch('/hpm/consulta/receita/cadastrar', receita, HttpVerbo.POST)
             .then(json => {
                 if(typeof json !== 'undefined' ? json.status === "OK" : false) {
                     ExibirMensagem('Receita Salva Com Sucesso!', MSG.SUCESSO)
                 }
             })
-        handleReceitaImprimir(receita)
+        handleReceitaImprimir(discriminacao)
     }
 
-    function handleReceitaImprimir(receita) {
-        localStorage.setItem('texto', receita.texto);
+    function handleReceitaImprimir(discriminacao) {
+        localStorage.setItem('texto', discriminacao.map((disc) => disc.texto));
+        localStorage.setItem('qtd', discriminacao.map((disc) => disc.quantidade));
+        localStorage.setItem('posologia', discriminacao.map((disc) => disc.posologia));
         window.open("/atendimento/receitaImprimir");
     }
 
     const handleMedicamento = () => {
         const idMedicamento = document.getElementById("idmedicamento").value;
-        const idMedicamentoNome = document.getElementById("idmedicamentoAuto").value;
-        setMedicamentos([...medicamentos, idMedicamentoNome]);
-        setReceita({...receita, idMedicamentos: [...receita.idMedicamentos, Number(idMedicamento)], texto: [...receita.texto, idMedicamentoNome]});
+        const medicamentoNome = document.getElementById("idmedicamentoAuto").value;
+        setMedicamentos([...medicamentos, medicamentoNome]);
+        setReceita({...receita, idMedicamentos: [...receita.idMedicamentos, Number(idMedicamento)], texto: medicamentoNome});
         document.getElementById("idmedicamentoAuto").value = "";
-        console.log("Receita", receita);
-        console.log("Medicamentos", medicamentos);
     }
 
     const handleRemoveMedicamento = (position) => {
@@ -93,31 +96,30 @@ export default function PacienteEmAtendimento() {
     const handleReceitaChange = (indice) => {
         let quantidade = document.getElementById(indice + "quantidade").value;
         let posologia = document.getElementById(indice + "posologia").value;
-        console.log("Quantidade:", quantidade);
-        console.log("Posologia:", posologia);
         medicamentos.map((desc, index) => {
             if (index === indice) {
-                if (discriminacao[indice].quantidade !== quantidade) {
-                    setDiscriminacao([
-                        ...discriminacao, {quantidade: quantidade}
-                    ])
+                const idMedicamento = index;
+                const texto = desc;
+                if (typeof discriminacao[index] === "undefined") {
+                    discriminacao.push({idMedicamento, quantidade, posologia, texto});
                 }
-                if (discriminacao[indice].posologia !== posologia) {
-                    setDiscriminacao([
-                        ...discriminacao, {posologia: posologia}
-                    ])
-                }
-                if (discriminacao[indice].texto !== desc) {
-                    setDiscriminacao([
-                        ...discriminacao, {texto: desc}
-                    ])
+                if (typeof discriminacao[index] !== "undefined" && discriminacao[index].idMedicamento === null) {
+                    discriminacao[indice].idMedicamento = index;
+                    discriminacao[indice].quantidade = quantidade;
+                    discriminacao[indice].posologia = posologia;
+                    discriminacao[indice].texto = texto;
+                } 
+                if (discriminacao[indice].idMedicamento === indice) {
+                    discriminacao[indice].quantidade = quantidade;
+                    discriminacao[indice].posologia = posologia;
                 }
             }
             return discriminacao.texto;
         })
-        /// medicamentos.filter((_, index) => index === indice)
-        console.log("Discriminacao:", discriminacao);
     }
+
+    console.log("Receita:", receita);
+    console.log("Discriminacao:", discriminacao);
 
     let calcIdade = (data) => {
         const atual = new Date();
@@ -142,11 +144,6 @@ export default function PacienteEmAtendimento() {
 
     localStorage.setItem("arrayCids", consulta.idCids);
     localStorage.setItem("arrayCodigosCids", cids);
-    // console.log("CIDs:", cids);
-    // console.log("Consulta CIDs:", consulta.idCids);
-    // console.log("Consulta:", consulta);
-    // console.log("Receita:", receita);
-    // console.log("Medicamentos:", medicamentos);
     return (
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
