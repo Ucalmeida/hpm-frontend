@@ -21,105 +21,12 @@ export default function PacienteEmAtendimento() {
         idCids: []
     });
 
-    const [cids, setCids] = useState([]);
-
     let medida = {
         medidaAltura: "m",
         medidaPeso: "Kg"
     };
 
     const altura = Number(consulta.altura / 100);
-
-    const [receita, setReceita] = useState({
-        idConsulta: Number(localStorage.getItem("pacienteConsulta")),
-        idMedicamentos: [],
-        texto: ""
-    });
-
-    const [medicamentos, setMedicamentos] = useState([]);
-
-    const [discriminacao, setDiscriminacao] = useState([{
-        idMedicamento: null,
-        quantidade: 0,
-        posologia: 0,
-        texto: ""
-    }]);
-
-    const handleCID = () => {
-        const idCid = document.getElementById("idcid").value;
-        const idCidNome = document.getElementById("idcidAuto").value;
-        let codigoCid = idCidNome.split(" - ");
-        setConsulta({...consulta, idCids: [...consulta.idCids, Number(idCid)]});
-        setCids([...cids, codigoCid[0]]);
-        document.getElementById("idcidAuto").value = "";
-    }
-
-    const handleRemoveCid = (position) => {
-        setConsulta({...consulta, idCids: [...consulta.idCids.filter((_, index) => index !== position)]});
-        setCids([...cids.filter((_, index) => index !== position)]);
-    }
-
-    const handleReceitaCadastrar = () => {
-        console.log("Receita:", receita);
-        let texto = "";
-        discriminacao.map((disc) => texto += disc.texto + " ");
-        receita.texto = texto;
-        xfetch('/hpm/consulta/receita/cadastrar', receita, HttpVerbo.POST)
-            .then(json => {
-                if(typeof json !== 'undefined' ? json.status === "OK" : false) {
-                    ExibirMensagem('Receita Salva Com Sucesso!', MSG.SUCESSO)
-                }
-            })
-        handleReceitaImprimir(discriminacao)
-    }
-
-    function handleReceitaImprimir(discriminacao) {
-        localStorage.setItem('texto', discriminacao.map((disc) => disc.texto));
-        localStorage.setItem('qtd', discriminacao.map((disc) => disc.quantidade));
-        localStorage.setItem('posologia', discriminacao.map((disc) => disc.posologia));
-        window.open("/atendimento/receitaImprimir");
-    }
-
-    const handleMedicamento = () => {
-        const idMedicamento = document.getElementById("idmedicamento").value;
-        const medicamentoNome = document.getElementById("idmedicamentoAuto").value;
-        setMedicamentos([...medicamentos, medicamentoNome]);
-        setReceita({...receita, idMedicamentos: [...receita.idMedicamentos, Number(idMedicamento)], texto: medicamentoNome});
-        document.getElementById("idmedicamentoAuto").value = "";
-    }
-
-    const handleRemoveMedicamento = (position) => {
-        setReceita({...receita, idMedicamentos: [...receita.idMedicamentos.filter((_, index) => index !== position)]});
-        setMedicamentos([...medicamentos.filter((_, index) => index !== position)]);
-    }
-
-    const handleReceitaChange = (indice) => {
-        let quantidade = document.getElementById(indice + "quantidade").value;
-        let posologia = document.getElementById(indice + "posologia").value;
-        medicamentos.map((desc, index) => {
-            if (index === indice) {
-                const idMedicamento = index;
-                const texto = desc;
-                if (typeof discriminacao[index] === "undefined") {
-                    discriminacao.push({idMedicamento, quantidade, posologia, texto});
-                }
-                if (typeof discriminacao[index] !== "undefined" && discriminacao[index].idMedicamento === null) {
-                    discriminacao[indice].idMedicamento = index;
-                    discriminacao[indice].quantidade = quantidade;
-                    discriminacao[indice].posologia = posologia;
-                    discriminacao[indice].texto = texto;
-                } 
-                if (discriminacao[indice].idMedicamento === indice) {
-                    discriminacao[indice].quantidade = quantidade;
-                    discriminacao[indice].posologia = posologia;
-                }
-            }
-            return discriminacao.texto;
-        })
-    }
-
-    console.log("Receita:", receita);
-    console.log("Discriminacao:", discriminacao);
 
     let calcIdade = (data) => {
         const atual = new Date();
@@ -142,8 +49,6 @@ export default function PacienteEmAtendimento() {
     consulta.idade = calcIdade(consulta.dtNascimento);
     consulta.imc = calcImc();
 
-    localStorage.setItem("arrayCids", consulta.idCids);
-    localStorage.setItem("arrayCodigosCids", cids);
     return (
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
@@ -186,134 +91,6 @@ export default function PacienteEmAtendimento() {
                                 />
                             </div>
                         </div>
-                    </Card>
-                    <Card className={"collapsed-card"} titulo="CID" botaoMin>
-                        <div className={"row"}>
-                            <div className="col-lg-12">
-                                <AutocompletarCid
-                                    name="cid"
-                                    url={"/hpm/cid/"}
-                                    label="Digite o CID:"
-                                    placeholder="Nome ou código aqui"
-                                    tamanho={4}
-                                    retorno={handleCID} />
-                            </div>
-                            <br />
-                        </div>
-                        <br />
-                        <FormGroup>
-                            <div className={"col-lg-12"}>
-                                {cids.map((cid, index) => (
-                                    <FormGroup key={index}>
-                                        <div className={"info-box col-lg-2"} style={{display: "flex"}}>
-                                            <div key={index} className="info-box-content">
-                                                <span className="info-box-text">CID</span>
-                                                <span className="info-box-text">{cid}</span>
-                                            </div>
-                                            <BotaoExcluir
-                                                style={{marginLeft: "1em"}}
-                                                onClick={() => {handleRemoveCid(index)}}
-                                            />
-                                        </div>
-                                    </FormGroup>
-                                ))}
-                            </div>
-                        </FormGroup>
-                    </Card>
-                    <Card className={"collapsed-card"} titulo={"Formulários"} botaoMin>
-                        <Tabs>
-                            <Tab title="Atestado" eventKey="aba1">
-                                <br />
-                                <ModalFormMedicoAtestado
-                                    corDoBotao={BOTAO.COR.SUCESSO}
-                                    icone={ICONE.PDF}
-                                    titulo={"Atestado"}
-                                    nome={"Atestado"}/>
-                            </Tab>
-                            <Tab title="Receita" eventKey="aba2">
-                                <br />
-                                <div className={"row"}>
-                                    <div className="col-lg-12">
-                                        <AutocompletarCid
-                                            name="medicamento"
-                                            url={"/hpm/medicamento/"}
-                                            label="Digite o nome do medicamento:"
-                                            placeholder="Nome do medicamento aqui"
-                                            tamanho={4}
-                                            retorno={handleMedicamento} />
-                                    </div>
-                                </div>
-                                <br />
-                                <div className={"col-lg-12"}>
-
-                                </div>
-                                <div className={"col-lg-12"}>
-
-                                </div>
-                                <FormGroup className={"form-inline"}>
-                                    <div className={"col-lg-12"}>
-                                        {medicamentos.map((medicamento, index) => (
-                                            <FormGroup key={index}>
-                                                <div className={"info-box col-lg-12"} style={{display: "flex"}}>
-                                                    <div key={index} className="control">
-                                                        <div id={"discriminacao"} className={"form-group mb-2"}>
-                                                            {index + 1})
-                                                            <div className={"m-1"}>
-                                                                <Input
-                                                                    id={index + "quantidade"}
-                                                                    style={{marginLeft: "1em", width: "100px"}}
-                                                                    type="number"
-                                                                    onChange={() => {handleReceitaChange(index)}}
-                                                                    name={"quantidade"}
-                                                                    label={"Qtd: "}
-                                                                />
-                                                            </div>
-                                                            <pre />
-                                                            <div style={{width: "200px", textAlign: "justify"}}>
-                                                                {medicamento}
-                                                            </div>
-                                                            <pre />
-                                                            <div className={"m-1"}>
-                                                                <Input
-                                                                    id={index + "posologia"}
-                                                                    style={{width: "100px"}}
-                                                                    type="number"
-                                                                    onChange={() => {handleReceitaChange(index)}}
-                                                                    name={"posologia"}
-                                                                />
-                                                            </div>
-                                                            <p style={{marginTop: "1em", marginLeft: "1em", marginRight: "1em"}}> em </p>
-                                                            <div className={"m-1"}>
-                                                                <Input
-                                                                    id={index + "posologia"}
-                                                                    style={{width: "100px"}}
-                                                                    type="number"
-                                                                    onChange={() => {handleReceitaChange(index)}}
-                                                                    name={"posologia"}
-                                                                />
-                                                            </div>
-                                                            <p style={{marginTop: "1em", marginLeft: "1em", marginRight: "1em"}}> horas.</p>
-                                                        </div>
-                                                    </div>
-                                                    <BotaoExcluir
-                                                        style={{marginLeft: "15em"}}
-                                                        onClick={() => {handleRemoveMedicamento(index)}}
-                                                    />
-                                                </div>
-                                            </FormGroup>
-                                        ))}
-                                    </div>
-                                    <br />
-                                    <br />
-                                </FormGroup>
-                                <Botao cor={BOTAO.COR.INFO} icone={ICONE.PDF} onClick={() => handleReceitaCadastrar()}>Imprimir Receita</Botao>
-                                {/*<ModalFormMedicoReceita corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />*/}
-                            </Tab>
-                            <Tab title="Requisição de Exames" eventKey="aba3">
-                                <br />
-                                <ModalFormMedico corDoBotao={BOTAO.COR.ALERTA} icone={ICONE.PDF} titulo={"Requisição de Exames"} nome={"Requisição de Exames"} />
-                            </Tab>
-                        </Tabs>
                     </Card>
                 </div>
             </div>
