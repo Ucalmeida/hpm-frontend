@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
 import { BotaoImprimir, Card, Pagina } from "../../componentes";
