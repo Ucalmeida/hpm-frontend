@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { FormGroup, Tab, Tabs } from "react-bootstrap";
-import { Botao, BotaoExcluir, Card, EditorTexto, Input, Pagina } from "../../componentes";
-import { AutocompletarCid } from "../../componentes/form/AutocompletarCid";
-import { default as ModalFormMedico, default as ModalFormMedicoAtestado } from "../../componentes/modal/ModalFormMedicoAtestado";
-import { ExibirMensagem, xfetch } from "../../util";
-import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
+import { Card, Pagina } from "../../componentes";
+import { PacienteEmAtendimentoEditor } from '../../componentes/form/PacienteEmAtendimentoEditor';
+import { BOTAO, ICONE } from "../../util/Constantes";
 
 export default function PacienteEmAtendimento() {
     const [consulta, setConsulta] = useState({
@@ -82,7 +79,7 @@ export default function PacienteEmAtendimento() {
                     <Card className={"collapsed-card"} titulo="Evolução" botaoMin>
                         <div className={"row"}>
                             <div className="col-lg-12">
-                                <EditorTexto
+                                <PacienteEmAtendimentoEditor
                                     corDoBotao={BOTAO.COR.PERIGO}
                                     icone={ICONE.SALVAR}
                                     idConsulta={consulta.id}
