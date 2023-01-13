@@ -871,3 +871,7 @@ a.btn, a.nav-link, span.btn {
 /*.input-group-append > button {*/
 /*	border: none;*/
 /*}*/
+
+.tox-notifications-container {
+    display: none !important;
+}
