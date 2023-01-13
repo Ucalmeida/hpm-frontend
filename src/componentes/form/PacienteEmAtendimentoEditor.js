@@ -134,11 +134,10 @@ function PacienteEmAtendimentoEditor(props) {
         consultaSelecionada.idStatus = statusId;
         consultaSelecionada.idCIDs = cidsId;
         if (editorRef.current || editorExFisico.current || editorConduta.current) {
-            consultaSelecionada.anamnese = editorRef.current.getContent();
-            consultaSelecionada.exameFisico = editorExFisico.current.getContent();
-            consultaSelecionada.conduta = editorConduta.current.getContent();
+            consultaSelecionada.anamnese = editorRef.current.getContent({format: "text"});
+            consultaSelecionada.exameFisico = editorExFisico.current.getContent({format: "text"});
+            consultaSelecionada.conduta = editorConduta.current.getContent({format: "text"});
         }
-        console.log("Lista:", consultaSelecionada);
         await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then(json => {
                 if(typeof json !== 'undefined' ? json.status === "OK" : false) {
@@ -327,7 +326,6 @@ function PacienteEmAtendimentoEditor(props) {
                                 </div>
                             </FormGroup>
                             <Botao cor={BOTAO.COR.INFO} icone={ICONE.PDF} onClick={() => handleReceitaCadastrar()}>Imprimir Receita</Botao>
-                            {/*<ModalFormMedicoReceita corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />*/}
                         </Tab>
                         {/* <Tab title="Requisição de Exames" eventKey="aba3"> */}
                             {/* <br /> */}
