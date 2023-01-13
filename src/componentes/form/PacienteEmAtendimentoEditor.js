@@ -335,7 +335,7 @@ function PacienteEmAtendimentoEditor(props) {
                         {/* </Tab> */}
                     </Tabs>
                 </Card>
-                <Botao style={{marginLeft: '1037px'}} cor={props.corDoBotao} icone={props.icone} onClick={() => handleBtnFinalizarConsulta(props.idConsulta, Number("7"), props.cids)}>{props.nome}</Botao>
+                <Botao style={{marginLeft: '518.5px'}} cor={props.corDoBotao} icone={props.icone} onClick={() => handleBtnFinalizarConsulta(props.idConsulta, Number("7"), props.cids)}>{props.nome}</Botao>
             </div>
         </div>
     )
