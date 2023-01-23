@@ -187,6 +187,16 @@ export default function PacienteEmAtendimento() {
                                                     <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
                                                     <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
                                                 </tr>
+                                                <tr>
+                                                    <td>22/01/2023 09:30</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
+                                                    <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>21/01/2023 09:30</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
+                                                    <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                         {/* <div className="col-lg-6">
@@ -232,6 +242,18 @@ export default function PacienteEmAtendimento() {
                                             <tbody>
                                                 <tr>
                                                     <td>23/01/2023</td>
+                                                    <td>Z23.0, M43.6, M22.4</td>
+                                                    <td>3</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>22/01/2023</td>
+                                                    <td>Z23.0, M43.6, M22.4</td>
+                                                    <td>3</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>21/01/2023</td>
                                                     <td>Z23.0, M43.6, M22.4</td>
                                                     <td>3</td>
                                                     <td>DRa ADRIANA MOTA CARNAUBA</td>
