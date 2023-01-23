@@ -882,3 +882,26 @@ a.btn, a.nav-link, span.btn {
     margin: 0;
     text-align: center;
 }
+
+#imagemPaciente {
+    appearance: none;
+    width: 30%;
+    height: 240px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: block;
+}
+
+#nomePaciente, #matriculaPaciente, #cpfPaciente, #instituicaoPaciente {
+    display: inline-block;
+}
+
+#dadosPaciente {
+    margin: auto;
+    display: inline-block;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
