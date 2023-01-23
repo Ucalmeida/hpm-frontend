@@ -173,30 +173,46 @@ export default function PacienteEmAtendimento() {
                                 <br />
                                 <div className="col-lg-12">
                                     <div className="row">
-                                        <div className="col-lg-6">
+                                        <table className={"col-lg-12"} border="1">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Data/Hora Atendimento</b></td>
+                                                    <td><b>Responsável Atendimento/Especialidade</b></td>
+                                                    <td><b>Descrição Atendimento</b></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>23/01/2023 09:30</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
+                                                    <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        {/* <div className="col-lg-6">
                                             <Input
                                                 type="text"
                                                 value={"23/01/2023 09:30"}
                                                 name="nome"
                                                 label="Data/Hora Atendimento"
                                                 placeholder="Nome" disabled required />
-                                        </div>
-                                        <div className="col-lg-6">
+                                        </div> */}
+                                        {/* <div className="col-lg-6">
                                             <Input
                                                 type="text"
                                                 value={"DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL"}
                                                 name="profissionalSaude"
                                                 label="Responsável Atendimento/Especialidade"
                                                 placeholder={"profissionalSaude"} disabled />
-                                        </div>
-                                        <div className="col-lg-12">
+                                        </div> */}
+                                        {/* <div className="col-lg-12">
                                             <Input
                                                 type="textarea"
                                                 value={"Aqui temos um exemplo de descrição do atendimento realizado."}
                                                 name="atendimento"
                                                 label="Descrição Atendimento"
                                                 placeholder="Descrição atendimento" disabled />
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </Tab>
@@ -204,7 +220,25 @@ export default function PacienteEmAtendimento() {
                                 <br />
                                 <div className="col-lg-12">
                                     <div className="row">
-                                        <div className="col-lg-6">
+                                        <table className={"col-lg-12"} border="1">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Data Atendimento</b></td>
+                                                    <td><b>CIDs</b></td>
+                                                    <td><b>Quantidade de Dias Concedidos</b></td>
+                                                    <td><b>Responsável pela Concessão</b></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>23/01/2023</td>
+                                                    <td>Z23.0, M43.6, M22.4</td>
+                                                    <td>3</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        {/* <div className="col-lg-6">
                                             <Input
                                                 type="text"
                                                 value={"23/01/2023 09:30"}
@@ -235,7 +269,7 @@ export default function PacienteEmAtendimento() {
                                                 name="profissionalSaude"
                                                 label="Responsável pela Concessão"
                                                 placeholder={"profissionalSaude"} disabled />
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </Tab>
