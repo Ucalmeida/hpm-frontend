@@ -20,6 +20,12 @@ export default function CadastrarEscala() {
 
     const escalaObjeto = 31;
 
+    const [verificador, setVerificador] = useState({
+        mesInicio: 0,
+        mesTermino: 0,
+        mesEscala: 0
+    });
+
     const meses = [
         "Janeiro",
         "Fevereiro",
@@ -37,40 +43,48 @@ export default function CadastrarEscala() {
 
     const handleDtHrInicio = (e) => {
         let dt = e.target.value;
+        let mesVerificador = dt.split("-");
         setObjeto({...objeto, dataInicio: dt});
+        verificador.mesInicio = Number(mesVerificador[1]);
     }
 
     const handleDtHrTermino = (e) => {
        let dt = e.target.value;
+       let mesVerificador = dt.split("-");
+       verificador.mesTermino = Number(mesVerificador[1]);
        setObjeto({...objeto, dataTermino: dt});
     }
     
     const handleChange = (e) => {
         const myDate = e.target.value;
         let [ano, mes] = myDate.split("-");
+        verificador.mesEscala = Number(mes);
         mes = meses[mes - 1];
         objeto.nome = mes + " - " + ano;
     }
 
     const handleStatus = (e) => {
-        const status = e.target.value;
-        setObjeto({...objeto, idStatus : status});
+        objeto.idStatus = e.target.value;
     }
 
     const enviar = (e) => {
-        xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
-            .then( json =>{
-                    if (typeof json !== "undefined" ? json.status === "OK" : null) {
-                        ExibirMensagem('Escala Cadastrada Com Sucesso!', MSG.SUCESSO);
+        if (verificador.mesInicio === verificador.mesEscala && verificador.mesTermino === verificador.mesEscala) {
+            xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
+                .then( json =>{
+                        if (typeof json !== "undefined" ? json.status === "OK" : null) {
+                            ExibirMensagem('Escala Cadastrada Com Sucesso!', MSG.SUCESSO);
+                        }
                     }
-                }
-            )
-        setCadastrar(!cadastrar);
+                )
+            setCadastrar(!cadastrar);
+        } else {
+            ExibirMensagem("Mês selecionado para nome da escala não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
+        }
     }
 
     useEffect(() => {
         xfetch('/hpm/status/' + escalaObjeto, {}, HttpVerbo.GET)
-        .then( res => res.json())
+        .then(res => res.json())
         .then(status => setStatus({...status, listaStatus: status.resultado}))
     }, [])
     

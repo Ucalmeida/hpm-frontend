@@ -39,7 +39,6 @@ export default function EscalasCadastradasCard(props) {
     ]
 
     const dados = () => {
-        console.log("Lista", lista);
         return (
             typeof lista.escalas !== "undefined" ? lista.escalas.map((escala) => {
                 return ({
