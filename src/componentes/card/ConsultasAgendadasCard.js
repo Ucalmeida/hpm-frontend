@@ -105,7 +105,7 @@ export default function ConsultasAgendadasCard(props) {
 
     return(
         <Card titulo="Consultas Agendadas">
-            <Tabela colunas={colunas} dados={dados()} />
+            <Tabela colunas={colunas} dados={dados()} pageSize={5}/>
         </Card>
     );
 }

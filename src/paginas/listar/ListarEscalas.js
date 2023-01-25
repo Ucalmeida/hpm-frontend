@@ -138,7 +138,7 @@ export default function ListarEscalas() {
                         </div>
                     </Card>
                     <Card titulo="Lista de Escalas">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

@@ -81,7 +81,7 @@ export default function ListarDependentes() {
             </div>
             <div id="tab" className={"row"}>
                 <Card titulo="Lista de dependentes">
-                    <Tabela colunas={colunas} dados={dados()}/>
+                    <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                 </Card>
             </div>
         </Pagina>

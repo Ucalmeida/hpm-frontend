@@ -55,7 +55,7 @@ export default function ListarEspecialidadePorProfissionalSaude() {
                 </div>
             </Card>
             <Card titulo="Lista de especialidades por profissional de saúde">
-                <Tabela colunas={colunas} dados={dados()}></Tabela>
+                <Tabela colunas={colunas} dados={dados()} pageSize={5} />
             </Card>
         </Pagina>
     );

@@ -105,7 +105,7 @@ export default function Objeto() {
                 </div>
                 <div className="col-lg-12">
                     <Card titulo="Objetos cadastrados">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                         {spinner}
                     </Card>
                 </div>

@@ -53,7 +53,7 @@ export default function EscalasCadastradasCard(props) {
 
     return (
         <Card titulo="Escalas Cadastradas">
-            <Tabela colunas={colunas} dados={dados()}/>
+            <Tabela colunas={colunas} dados={dados()} pageSize={5} />
         </Card>
     );
 }

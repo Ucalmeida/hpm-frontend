@@ -182,7 +182,7 @@ export default function ListaPacientesParaAtendimento() {
                         </div>
                     </Card>
                     <Card titulo="Pacientes Confirmados">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

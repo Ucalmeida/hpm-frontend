@@ -194,7 +194,7 @@ export default function ListarPacientes() {
                         </div>
                     </Card>
                     <Card titulo="Lista de Pacientes">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

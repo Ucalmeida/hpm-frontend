@@ -108,7 +108,7 @@ export default function MarcarConsultas() {
                         </div>
                     </Card>
                     <Card titulo="Lista de médicos por especialidade">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

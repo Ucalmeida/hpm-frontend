@@ -153,7 +153,7 @@ export function PerfilAcoes() {
                 <div className="col-lg-12 mt-2 ">
                     <div className="col-lg-6 form-group">
                     </div>
-                    <Tabela colunas={colunas} dados={dados()} />
+                    <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                 </div>
             </Card>
         </Pagina>

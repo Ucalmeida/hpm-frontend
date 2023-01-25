@@ -112,7 +112,7 @@ export default function VerPacientesConsultaAgendada() {
                         </div>
                     </Card>
                     <Card titulo="Lista de pacientes por médico">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

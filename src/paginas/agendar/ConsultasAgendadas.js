@@ -101,7 +101,7 @@ export default function ConsultasAgendadas() {
             <div className="row">
                 <div className="col-lg-12">
                     <Card titulo="Consultas Agendadas">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

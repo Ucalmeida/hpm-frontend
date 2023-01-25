@@ -108,7 +108,7 @@ export function SubSetor() {
                     </Card>
                 </div>
                 <Card>
-                    <Tabela dados={dados()} colunas={colunas} />
+                    <Tabela dados={dados()} colunas={colunas} pageSize={5} />
                 </Card>
             </div>
         </Pagina>

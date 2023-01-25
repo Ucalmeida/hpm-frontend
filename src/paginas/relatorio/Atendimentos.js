@@ -235,7 +235,7 @@ export default function Atendimentos(){
                     </div>
                     <div className="col-lg-12">
                         <Card titulo="Lista de Consultas">
-                            <Tabela colunas={colunas} dados={dados()} />
+                            <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                         </Card>
                     </div>
                 </div>

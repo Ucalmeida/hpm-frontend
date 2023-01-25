@@ -29,26 +29,31 @@ export default function ConsultoriosBlocoCard(props) {
             )
     }
 
-    const handleChange = async () => {
+    const handleChange = () => {
         if (props.idEspecialidade !== null) {
-            await xfetch('/hpm/consultorioBloco/' + props.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
+            xfetch('/hpm/consultorioBloco/' + props.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
                 .then(response => response.json())
                 .then(lista => setLista({...lista, blocos: lista.resultado}))
         }
     }
 
     useEffect(() => {
-        handleChange().then();
+        handleChange();
+    }, [props.apagarBloco]);
+    
+    useEffect(() => {
+        handleChange();
     }, [props.apagarBloco]);
 
     const colunas = [
         {text: "Escala"},
+        {text: "Nome"},
         {text: "Especialidade"},
         {text: "Sala"},
         {text: "Data Início"},
         {text: "Data Término"},
         {text: "Consultas"},
-        {text: "Emergências"},
+        {text: "Encaixes"},
         {text: "Ação"}
     ]
 
@@ -57,12 +62,13 @@ export default function ConsultoriosBlocoCard(props) {
             lista.blocos.map((bloco) => {
                 return ({
                     'escala': bloco.texto8,
+                    'nome': bloco.texto,
                     'especialidade': bloco.texto2,
                     'sala': bloco.texto7,
                     'data_inicio': bloco.texto3,
                     'data_termino': bloco.texto4,
                     'consultas': bloco.texto5,
-                    'emergencias': bloco.texto6,
+                    'encaixes': bloco.texto6,
                     'acao': <div>
                         <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(bloco.valor)} value={bloco.valor} icone={""}>Excluir</Botao>
                         {/*<BotaoExcluir onClick={() => UseHandleExcluir("/hpm/consultorioBloco/excluir/" + bloco.valor, {}, "Bloco Excluído!", handleChange())} />*/}
@@ -74,7 +80,7 @@ export default function ConsultoriosBlocoCard(props) {
 
     return (
         <Card titulo="Consultórios Cadastrados">
-            <Tabela colunas={colunas} dados={dados()}/>
+            <Tabela colunas={colunas} dados={dados()} pageSize={5}/>
         </Card>
     );
 }

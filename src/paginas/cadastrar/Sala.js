@@ -119,7 +119,7 @@ export default function Sala() {
                 </div>
                 <div className="col-lg-12">
                     <Card titulo="Salas cadastradas no piso selecionado">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                         {spinner}
                     </Card>
                 </div>
