@@ -30,12 +30,47 @@ export default function ConsultorioBloco(){
 
     const escalaObjeto = 31;
 
+    const [verificador, setVerificador] = useState({
+        ano: 0,
+        mesInicio: 0,
+        mesTermino: 0,
+        mesEscala: 0,
+        anoEscala: 0
+    });
+
+    const meses = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ];
+
+    let [mes, ano] = "";
+
+    let dt = "";
+
     const handleDtHrInicio = (e) => {
-        setObjeto({...objeto, dataInicio: e.target.value});
+        dt = e.target.value;
+        let mesVerificador = dt.split("-");
+        verificador.mesInicio = Number(mesVerificador[1]);
+        verificador.ano = Number(mesVerificador[0]);
+        setObjeto({...objeto, dataInicio: dt});
     }
 
     const handleDtHrTermino = (e) => {
-        setObjeto({...objeto, dataTermino: e.target.value});
+        dt = e.target.value;
+        let mesVerificador = dt.split("-");
+        verificador.mesTermino = Number(mesVerificador[1]);
+        verificador.ano = Number(mesVerificador[0]);
+        setObjeto({...objeto, dataTermino: dt});
     }
 
     const handleQtdConsulta = (e) => {
@@ -65,7 +100,10 @@ export default function ConsultorioBloco(){
 
     const selecionarEscala = (e) => {
         objeto.idEscala = Number(e.target.value);
-        console.log("Escala", objeto);
+        const nomeEscala = escala.escalas.filter(escala => escala.valor === objeto.idEscala);
+        [mes, ano] = nomeEscala[0].nome.split(" - ");
+        verificador.mesEscala = meses.indexOf(mes) + 1;
+        verificador.anoEscala = Number(ano);
     }
 
     const selecionarEspecialidade = (e) => {
@@ -91,14 +129,20 @@ export default function ConsultorioBloco(){
     }
 
     const enviar = (e) => {
-        xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
-            .then( json =>{
-                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                        ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
-                    }
-                }
-            )
-        setApagar(!apagar);
+        if (verificador.mesInicio === verificador.mesEscala && 
+            verificador.mesTermino === verificador.mesEscala &&
+            verificador.ano === verificador.anoEscala) {
+                xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
+                    .then( json =>{
+                            if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
+                            }
+                        }
+                    )
+                setApagar(!apagar);
+            } else {
+                ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
+            }
     }
 
     useEffect(() => {
@@ -202,7 +246,7 @@ export default function ConsultorioBloco(){
                                     value={objeto.qtdEmergencias}
                                     name="qtdEmergencias"
                                     label="Quantidade de Encaixes"
-                                    placeholder="Qtd emergencias"/>
+                                    placeholder="Qtd encaixes"/>
                             </div>
                         </div>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">

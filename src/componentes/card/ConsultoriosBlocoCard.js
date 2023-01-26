@@ -29,6 +29,10 @@ export default function ConsultoriosBlocoCard(props) {
             )
     }
 
+    useEffect(() => {
+        handleChange();
+    }, [props.apagarBloco]);
+
     const handleChange = () => {
         if (props.idEspecialidade !== null) {
             xfetch('/hpm/consultorioBloco/' + props.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
@@ -36,10 +40,6 @@ export default function ConsultoriosBlocoCard(props) {
                 .then(lista => setLista({...lista, blocos: lista.resultado}))
         }
     }
-
-    useEffect(() => {
-        handleChange();
-    }, [props.apagarBloco]);
     
     useEffect(() => {
         handleChange();

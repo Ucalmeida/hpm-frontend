@@ -21,9 +21,11 @@ export default function CadastrarEscala() {
     const escalaObjeto = 31;
 
     const [verificador, setVerificador] = useState({
+        ano: 0,
         mesInicio: 0,
         mesTermino: 0,
-        mesEscala: 0
+        mesEscala: 0,
+        anoEscala: 0
     });
 
     const meses = [
@@ -41,17 +43,21 @@ export default function CadastrarEscala() {
         "Dezembro"
     ];
 
+    let dt = "";
+
     const handleDtHrInicio = (e) => {
-        let dt = e.target.value;
+        dt = e.target.value;
         let mesVerificador = dt.split("-");
-        setObjeto({...objeto, dataInicio: dt});
         verificador.mesInicio = Number(mesVerificador[1]);
+        verificador.ano = Number(mesVerificador[0]);
+        setObjeto({...objeto, dataInicio: dt});
     }
 
     const handleDtHrTermino = (e) => {
-       let dt = e.target.value;
+       dt = e.target.value;
        let mesVerificador = dt.split("-");
        verificador.mesTermino = Number(mesVerificador[1]);
+       verificador.ano = Number(mesVerificador[0]);
        setObjeto({...objeto, dataTermino: dt});
     }
     
@@ -61,6 +67,7 @@ export default function CadastrarEscala() {
         verificador.mesEscala = Number(mes);
         mes = meses[mes - 1];
         objeto.nome = mes + " - " + ano;
+        verificador.anoEscala = Number(ano);
     }
 
     const handleStatus = (e) => {
@@ -68,7 +75,9 @@ export default function CadastrarEscala() {
     }
 
     const enviar = (e) => {
-        if (verificador.mesInicio === verificador.mesEscala && verificador.mesTermino === verificador.mesEscala) {
+        if (verificador.mesInicio === verificador.mesEscala && 
+            verificador.mesTermino === verificador.mesEscala &&
+            verificador.ano === verificador.anoEscala) {
             xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
                 .then( json =>{
                         if (typeof json !== "undefined" ? json.status === "OK" : null) {
@@ -119,7 +128,7 @@ export default function CadastrarEscala() {
                                     name="dataTermino"
                                     label="Data e hora término"
                                     placeholder="Data e hora"/>
-                            </div>
+                                </div>
                             <div className="col-lg-6">
                                 <label>Tipo Escala</label>
                                 <select
