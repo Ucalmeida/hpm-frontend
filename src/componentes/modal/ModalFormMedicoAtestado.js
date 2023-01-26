@@ -15,15 +15,16 @@ export default function ModalFormMedicoAtestado(props) {
 
     const [textoCid, setTextoCid] = useState("");
 
+    const [consulta, setConsulta] = useState({
+        diasAfastado: 0,
+        mostraCid: false
+    });
+
     const [atestado, setAtestado] = useState({
         idConsulta: localStorage.getItem("pacienteConsulta"),
         texto: null,
         blAcompanhante: false,
-    });
-
-    const [consulta, setConsulta] = useState({
-        diasAfastado: 0,
-        mostraCid: false
+        qtdDiasAfastamento: 0
     });
 
     const handleCadastrar = () => {
@@ -32,6 +33,7 @@ export default function ModalFormMedicoAtestado(props) {
                 "no horário de " + new Date().toLocaleTimeString() + textoCid + ". " +
                 "Em decorrência, deverá permanecer afastado de suas atividades laborativas por um período de " + consulta.diasAfastado + " dia(s), " +
                 "a partir desta data. Aracaju, " + new Date().toLocaleDateString();
+        atestado.qtdDiasAfastamento = consulta.diasAfastado;
 
         xfetch('/hpm/consulta/atestado/cadastrar', atestado, HttpVerbo.POST)
             .then(json => {
