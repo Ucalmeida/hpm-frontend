@@ -241,7 +241,7 @@ function PacienteEmAtendimentoEditor(props) {
                         </div>
                     </FormGroup>
                 </Card>
-                <Card className={"collapsed-card"} titulo={"Impressão"} botaoMin>
+                <Card className={"collapsed-card"} titulo={"Impressos"} botaoMin>
                     <Tabs>
                         <Tab title="Atestado" eventKey="aba1">
                             <br />
