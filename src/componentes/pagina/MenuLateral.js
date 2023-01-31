@@ -5,7 +5,7 @@ import {Icone} from "../Icone";
 import {CompararArrayObjetos, Logado} from "../../util";
 import {acoes} from "../../json/acoes.js"
 
-export default function () {
+export default function MenuLateral () {
     if (!Logado()) return "";
 
     let perfis = localStorage.getItem('perfis');
