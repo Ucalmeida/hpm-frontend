@@ -35,7 +35,7 @@ export default function Menu() {
         e.preventDefault()
 
         const acao = encontraAcao()
-        if (!acao || acao.length == 0) {
+        if (!acao || acao.length === 0) {
             ExibirMensagem("A ação não foi encontrada.", MSG.ERRO)
             return
         }

@@ -19,7 +19,7 @@ export class Autocompletar extends React.Component {
     handle = (e) => {
         e.preventDefault()
         this.setState({[e.target.name]: e.target.value.toUpperCase()})
-        if(e.target.value == ''){
+        if(e.target.value === ''){
           this.props.changeResultado(e.target.value)
         }
     }
