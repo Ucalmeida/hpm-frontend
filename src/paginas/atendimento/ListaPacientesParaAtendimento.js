@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Botao, Card, Input, Pagina, Select, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
 import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
@@ -7,9 +7,13 @@ export default function ListaPacientesParaAtendimento() {
     const [apagar, setApagar] = useState(false);
 
     const [objeto, setObjeto] = useState({
-        idPessoa: localStorage.getItem('id'),
-        especialidades: [],
-        consultoriosBloco: []
+        idPessoa: localStorage.getItem('id')
+    });
+
+    const [atendimentos] = useState({
+        dataConsulta: null,
+        idEspecialidade: null,
+        idProfissionalSaude: Number(localStorage.getItem('id'))
     });
 
     let idConsultorioBlocos = [];
@@ -19,17 +23,24 @@ export default function ListaPacientesParaAtendimento() {
         data: ""
     });
 
+    let data = "";
+    let idEspecialidade = null;
+
     let consultaSelecionada = {
         idConsulta: '',
         idStatus: ''
     }
 
     const handleDtBloco = (e) => {
-        setConsultorioBloco({...consultorioBloco, data: e.target.value});
+        data = e.target.value;
+        setConsultorioBloco({...consultorioBloco, data: data});
+        listarPacientesParaAtendimentoPorData();
     }
-
+    
     const selecionarEspecialidade = (e) => {
-        setConsultorioBloco({...consultorioBloco, idEspecialidade: e.value});
+        idEspecialidade = e.value;
+        setConsultorioBloco({...consultorioBloco, idEspecialidade: idEspecialidade});
+        listarPacientesParaAtendimentoPorData();
     }
 
     function handleBtnIniciarAtendimento(consulta) {
@@ -71,55 +82,24 @@ export default function ListaPacientesParaAtendimento() {
         setApagar(!apagar);
     }
 
-    const listaDeConsultorios = () => {
-        idConsultorioBlocos = [];
-        if (typeof objeto.consultoriosBloco !== "undefined") {
-            console.log("ConsultoriosBloco:", objeto.consultoriosBloco);
-            objeto.consultoriosBloco.map((bloco, index) => {
-                idConsultorioBlocos[index] = (Number(bloco.valor));
-                return idConsultorioBlocos;
-            });
-            console.log("Ponto Cego");
-        }
-        console.log("Ponto 1");
-        objeto.consultoriosBloco = undefined;
-        objeto.consultas = undefined;
-        listarPacientesParaAtendimentoPorData();
-    }
-
     const listarPacientesParaAtendimentoPorData = () => {
         console.log("Dentro de ListarPacientesParaAtendimentoPorData");
         console.log("Tamanho:", idConsultorioBlocos.length);
-        if (idConsultorioBlocos.length > 0) {
-            console.log("idConsultorioBloco maior que Zero");
-            xfetch('/hpm/consulta/consultorios/opcoes', {idConsultorioBlocos}, HttpVerbo.POST)
-                .then(response => {
-                        console.log(idConsultorioBlocos.length);
-                        if (typeof response !== "undefined" ? response.status === "OK" : false) {
-                            setObjeto({...objeto, consultas: response.resultado});
-                        }
-                    }
-                )
-                .catch(error => console.log(error))
-        }
-    }
+        console.log("idConsultorioBloco maior que Zero");
 
-    useEffect(() => {
-        setObjeto({...objeto, consultoriosBloco: []})
-        console.log("Ponto A", consultorioBloco.data);
-        if (consultorioBloco.data !== "") {
-            console.log("Ponto B");
-            xfetch('/hpm/consultorioBloco/data/especialidade/opcoes', consultorioBloco, HttpVerbo.POST)
-                .then(json => {
-                        if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                            setObjeto({...objeto, consultoriosBloco: json.resultado});
-                        }
+        atendimentos.dataConsulta = data;
+        atendimentos.idEspecialidade = idEspecialidade;
+        
+        xfetch('/hpm/consulta/pesquisar-atendimentos', atendimentos, HttpVerbo.POST)
+            .then(response => {
+                console.log(atendimentos);
+                    if (typeof response !== "undefined" ? response.status === "OK" : false) {
+                        setObjeto({...objeto, consultas: response.resultado});
                     }
-                )
-                .catch(error => console.log(error))
-        }
-        listaDeConsultorios();
-    }, [consultorioBloco])
+                }
+            )
+            .catch(error => console.log(error))
+    }
 
     console.log("Consultas", objeto.consultas);
 

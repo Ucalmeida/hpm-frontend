@@ -1,11 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { BotaoSalvar, Card, Input, Pagina, Select } from "../../componentes";
+import React, { useEffect, useState } from "react";
+import { BotaoSalvar, Card, Input, Pagina, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
 import { HttpVerbo, MSG } from "../../util/Constantes";
-import EscalasCadastradasCard from "../../componentes/card/EscalasCadastradasCard";
+// ATUALIZAR: import EscalasCadastradasCard from "../../componentes/card/EscalasCadastradasCard"; -- Comentei
 
 export default function CadastrarEscala() {
-    const [cadastrar, setCadastrar] = useState(false);
+    // ATUALIZAR: const [cadastrar, setCadastrar] = useState(false); -- Comentei
+
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const [lista, setLista] = useState({
+        escalas: [
+            {
+                id: "",
+                nmEscala: "",
+                dtInicio: "",
+                dtTermino: "",
+                situacao: "",
+            }
+        ]
+    });
+    // ATUALIZAR: Até aqui
 
     const [objeto, setObjeto] = useState({
         nome: '',
@@ -74,6 +88,14 @@ export default function CadastrarEscala() {
         objeto.idStatus = e.target.value;
     }
 
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const listarEscalasPorStatus = () => {
+        xfetch('/hpm/escala/' + objeto.idStatus + '/opcoes', {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(lista => setLista({...lista, escalas: lista.resultado}))
+    }
+    // ATUALIZAR: Até aqui
+
     const enviar = (e) => {
         if (verificador.mesInicio === verificador.mesEscala && 
             verificador.mesTermino === verificador.mesEscala &&
@@ -85,7 +107,8 @@ export default function CadastrarEscala() {
                         }
                     }
                 )
-            setCadastrar(!cadastrar);
+            // setCadastrar(!cadastrar); ATUALIZAR: Mudei isso aqui no dia 06 de fevereiro de 2023 para teste
+            listarEscalasPorStatus(); // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
         } else {
             ExibirMensagem("Mês selecionado para nome da escala não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
         }
@@ -96,6 +119,28 @@ export default function CadastrarEscala() {
         .then(res => res.json())
         .then(status => setStatus({...status, listaStatus: status.resultado}))
     }, [])
+
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const colunas = [
+        {text: "Nome"},
+        {text: "Data Início"},
+        {text: "Data Término"},
+        {text: "Situação"}
+    ]
+
+    const dados = () => {
+        return (
+            typeof lista.escalas !== "undefined" ? lista.escalas.map((escala) => {
+                return ({
+                    'nome': escala.nome,
+                    'data_inicio': escala.dtInicio,
+                    'data_termino': escala.dtTermino,
+                    'situacao': escala.status
+                })
+            }) : null
+        )
+    }
+    // ATUALIZAR: Até aqui
     
     return(
         <Pagina titulo="Cadastrar Escala">
@@ -147,7 +192,10 @@ export default function CadastrarEscala() {
                             <BotaoSalvar onClick={enviar} />
                         </div>
                     </Card>
-                    <EscalasCadastradasCard idStatus={Number(objeto.idStatus)} cadastrarEscala={cadastrar}/>
+                    {/* ATUALIZAR: <EscalasCadastradasCard idStatus={Number(objeto.idStatus)} cadastrarEscala={cadastrar}/> -- Comentei */}
+                    <Card titulo="Escalas Cadastradas">
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+                    </Card>
                 </div>
             </div>
         </Pagina>

@@ -1,11 +1,28 @@
 import React, {useEffect, useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
+import {Botao, BotaoSalvar, Card, Input, Pagina, Select, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
-import ConsultoriosBlocoCard from "../../componentes/card/ConsultoriosBlocoCard";
+import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
+// ATUALIZAR: import ConsultoriosBlocoCard from "../../componentes/card/ConsultoriosBlocoCard"; -- Comitei
 
 export default function ConsultorioBloco(){
     const [apagar, setApagar] = useState(false);
+
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const [lista, setLista] = useState({
+        blocos: [
+            {
+                id: "",
+                nmEscala: "",
+                nmEspecialidade: "",
+                nmPiso: "",
+                dtInicio: "",
+                dtTermino: "",
+                qtConsultas: "",
+                qtEmergencias: "",
+            }
+        ]
+    });
+    // ATUALIZAR: Até aqui
 
     const [objeto, setObjeto] = useState(
         {
@@ -108,6 +125,7 @@ export default function ConsultorioBloco(){
 
     const selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = Number(e.value)
+        handleChange();
         listarProfissionalPorEspecialidade();
     }
 
@@ -135,7 +153,7 @@ export default function ConsultorioBloco(){
                 xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
                     .then( json =>{
                             if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
+                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO, '', '', '', '', handleChange());
                             }
                         }
                     )
@@ -150,6 +168,59 @@ export default function ConsultorioBloco(){
             .then( res => res.json())
             .then(status => setStatus({...status, listaStatus: status.resultado}))
     }, [])
+
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const handleBtnExcluir = (blocoId) => {
+        xfetch('/hpm/consultorioBloco/excluir/' + blocoId, {}, HttpVerbo.PUT)
+            .then( json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem("Bloco Excluído!", MSG.SUCESSO, '', '', '', '', handleChange());
+                    }
+                }
+            )
+    }
+    
+    const handleChange = () => {
+        if (objeto.idEspecialidade !== null) {
+            xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
+            .then(response => response.json())
+            .then(lista => setLista({...lista, blocos: lista.resultado}))
+        }
+    }
+
+    const colunas = [
+        {text: "Escala"},
+        {text: "Nome"},
+        {text: "Especialidade"},
+        {text: "Sala"},
+        {text: "Data Início"},
+        {text: "Data Término"},
+        {text: "Consultas"},
+        {text: "Encaixes"},
+        {text: "Ação"}
+    ]
+
+    const dados = () => {
+        return (
+            lista.blocos.map((bloco) => {
+                return ({
+                    'escala': bloco.texto8,
+                    'nome': bloco.texto,
+                    'especialidade': bloco.texto2,
+                    'sala': bloco.texto7,
+                    'data_inicio': bloco.texto3,
+                    'data_termino': bloco.texto4,
+                    'consultas': bloco.texto5,
+                    'encaixes': bloco.texto6,
+                    'acao': <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(bloco.valor)} value={bloco.valor} icone={""}>Excluir</Botao>
+                        {/*<BotaoExcluir onClick={() => UseHandleExcluir("/hpm/consultorioBloco/excluir/" + bloco.valor, {}, "Bloco Excluído!", handleChange())} />*/}
+                    </div>
+                })
+            })
+        )
+    }
+    // ATUALIZAR: Até aqui
 
     const selectEspecialista =  objeto.idEspecialidade ? <div className="col-lg-6">
         <label>Profissional</label>
@@ -253,7 +324,10 @@ export default function ConsultorioBloco(){
                             <BotaoSalvar onClick={enviar} />
                         </div>
                     </Card>
-                    <ConsultoriosBlocoCard idEspecialidade={Number(objeto.idEspecialidade)} apagarBloco={apagar}/>
+                    {/* ATUALIZAR: <ConsultoriosBlocoCard idEspecialidade={Number(objeto.idEspecialidade)} apagarBloco={apagar}/> --Comitei */}
+                    <Card titulo="Consultórios Cadastrados">
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5}/>
+                    </Card>
                 </div>
             </div>
         </Pagina>
