@@ -88,7 +88,7 @@ export default function ConsultasAgendadasCard(props) {
                 return({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,
-                    'data__hora': dtHoraSeparada[0] + " (" + diaDaSemana[shortDate.getDay()] + ") " + " - " + dtHoraSeparada[1],
+                    'data__hora': `${dtHoraSeparada[0]} ( ${diaDaSemana[shortDate.getDay()]} ) - ${dtHoraSeparada[1]}`,
                     'especialidade': consulta.nmEspecialidade,
                     'medico': consulta.nmMedico,
                     'sala': consulta.sala,

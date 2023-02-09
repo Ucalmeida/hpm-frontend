@@ -33,7 +33,7 @@ export function PerfilAcoes() {
         xfetch('/hpm/acao', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(dados => {
-                if (dados.status == "OK") {
+                if (dados.status === "OK") {
                     setObjeto({...objeto, listaAcoes: dados.resultado, carregandoAcoes: false})
                 }
             })
@@ -81,7 +81,7 @@ export function PerfilAcoes() {
             idPerfil: idPerfil,
             dependencias: []
         }
-        let acaoEscolhida = objeto.listaAcoes.find(a => a.id == idAcao);
+        let acaoEscolhida = objeto.listaAcoes.find(a => a.id === idAcao);
         if (acaoEscolhida.isFrontend) {
 
             let acaoFrontend = encontraAcao(acaoEscolhida.link);

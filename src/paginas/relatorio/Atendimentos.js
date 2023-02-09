@@ -58,7 +58,7 @@ export default function Atendimentos(){
     }
 
     const selecionarStatus = (e) => {
-       if(e.value == ''){
+       if(e.value === ''){
            aux.idStatus = null
        }else{
            objeto.idStatus = e.value;
@@ -67,7 +67,7 @@ export default function Atendimentos(){
     }
 
     const selecionarEspecialidade = (e) => {
-        if(e.value == ''){
+        if(e.value === ''){
           aux.idEspecialidade = null
             setList({...list,profissionais: []})
             aux.idProfissionalSaude = null
@@ -80,7 +80,7 @@ export default function Atendimentos(){
     }
 
     const selecionarProfissionalSaude = (e) => {
-        if(e.target.value == 'Selecione...'){
+        if(e.target.value === 'Selecione...'){
            aux.idProfissionalSaude = null
         }else{
             objeto.idProfissionalSaude = e.target.value;
@@ -110,7 +110,7 @@ export default function Atendimentos(){
         }else if(aux.dataInicial > aux.dataFinal){
             ExibirMensagem("A data - hora inicial não pode ser superior a data - hora final!", MSG.ALERTA)
             setList({...list, consultas:[]})
-        }else if(aux.dataInicial == ''){
+        }else if(aux.dataInicial === ''){
             ExibirMensagem("Insira um valor válido. O campo data - hora inicial está incompleto ou inválido.", MSG.ALERTA)
             setList({...list, consultas:[]})
         }else if(aux.dataInicial != null && aux.dataFinal == null){
