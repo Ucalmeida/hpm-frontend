@@ -40,6 +40,8 @@ import ConsultorioBloco from "./paginas/cadastrar/ConsultorioBloco";
 import Dependente from "./paginas/cadastrar/Dependente";
 import CadastrarEscala from "./paginas/cadastrar/CadastrarEscala";
 
+import EditarConsultorioBloco from "./paginas/editar/EditarConsultorioBloco";
+
 import EditordeTexto from "./paginas/EditordeTexto";
 
 import ListarDependentes from "./paginas/listar/ListarDependentes";
@@ -130,6 +132,8 @@ const App =  () =>  {
                     <Route exact path="/cadastrar/dependente" component={Dependente} />
                     <Route exact path="/cadastrar/cadastrarEscala" component={CadastrarEscala} />
                     <Route exact path="/cadastrar/cadastrarSistemaExterno" component={CadastrarSistemaExterno}/>
+
+                    <Route exact path="/editar/editarConsultorioBloco" component={ConsultorioBloco} />
 
                     <Route exact path="/editordeTexto" component={EditordeTexto} />
 

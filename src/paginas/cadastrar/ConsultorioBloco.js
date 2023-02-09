@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {Botao, BotaoSalvar, Card, Input, Pagina, Select, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
-import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
+import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
+import EditarConsultorioBloco from '../editar/EditarConsultorioBloco';
 // ATUALIZAR: import ConsultoriosBlocoCard from "../../componentes/card/ConsultoriosBlocoCard"; -- Comitei
 
 export default function ConsultorioBloco(){
@@ -179,7 +180,7 @@ export default function ConsultorioBloco(){
                 }
             )
     }
-    
+
     const handleChange = () => {
         if (objeto.idEspecialidade !== null) {
             xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
@@ -214,6 +215,16 @@ export default function ConsultorioBloco(){
                     'encaixes': bloco.texto6,
                     'acao': <div>
                         <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(bloco.valor)} value={bloco.valor} icone={""}>Excluir</Botao>
+                        <EditarConsultorioBloco 
+                            corDoBotao={BOTAO.COR.ALERTA}
+                            icone={ICONE.EDITAR}
+                            titulo={"Editar"}
+                            nome={"Editar"}
+                            valor={bloco.valor}
+                        />
+                        {/* <Botao cor={BOTAO.COR.ALERTA} value={bloco.valor} icone={""}>
+                            Editar
+                        </Botao> */}
                         {/*<BotaoExcluir onClick={() => UseHandleExcluir("/hpm/consultorioBloco/excluir/" + bloco.valor, {}, "Bloco Excluído!", handleChange())} />*/}
                     </div>
                 })

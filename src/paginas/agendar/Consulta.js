@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
-import {Botao, Card, Pagina, Select} from "../../componentes";
-import {ExibirMensagem, xfetch} from "../../util";
-import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
+import React, { useState } from "react";
+import { Botao, Card, Pagina, Select } from "../../componentes";
 import ConsultasAgendadasCard from "../../componentes/card/ConsultasAgendadasCard";
+import { ExibirMensagem, xfetch } from "../../util";
+import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
 
 export default function Consulta() {
     const [objeto, setObjeto] = useState(
