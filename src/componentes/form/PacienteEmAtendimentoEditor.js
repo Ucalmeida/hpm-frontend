@@ -2,14 +2,13 @@ import { Editor } from '@tinymce/tinymce-react';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { FormGroup, Tab, Tabs } from 'react-bootstrap';
+import ModalFormMedicoAtestado from '../../componentes/modal/ModalFormMedicoAtestado';
 import { ExibirMensagem, xfetch } from '../../util';
 import { BOTAO, HttpVerbo, ICONE, MSG } from '../../util/Constantes';
 import { Botao, BotaoExcluir } from '../Botao';
 import { Card } from '../card/Card';
 import { AutocompletarCid } from './AutocompletarCid';
 import Input from './Input';
-import ModalFormMedicoAtestado from '../../componentes/modal/ModalFormMedicoAtestado';
-import { Accordion } from '../card/Accordion';
 
 function PacienteEmAtendimentoEditor(props) {
     const editorRef = useRef(null);

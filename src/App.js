@@ -17,6 +17,7 @@ import ListaPacientesParaAtendimento from "./paginas/atendimento/ListaPacientesP
 import PacienteEmAtendimento from "./paginas/atendimento/PacienteEmAtendimento";
 import AtestadoImprimir from "./paginas/atendimento/AtestadoImprimir";
 import ReceitaImprimir from "./paginas/atendimento/ReceitaImprimir";
+import Impressos from './paginas/atendimento/Impressos';
 
 import Objeto from "./paginas/cadastrar/Objeto";
 import Sangue from "./paginas/cadastrar/Sangue";
@@ -38,6 +39,8 @@ import InstituicaoConvenio from "./paginas/cadastrar/InstituicaoConvenio";
 import ConsultorioBloco from "./paginas/cadastrar/ConsultorioBloco";
 import Dependente from "./paginas/cadastrar/Dependente";
 import CadastrarEscala from "./paginas/cadastrar/CadastrarEscala";
+
+import EditarConsultorioBloco from "./paginas/editar/EditarConsultorioBloco";
 
 import EditordeTexto from "./paginas/EditordeTexto";
 
@@ -104,6 +107,7 @@ const App =  () =>  {
                     <Route exact path="/atendimento/pacienteEmAtendimento" component={PacienteEmAtendimento} />
                     <Route exact path="/atendimento/atestadoImprimir" component={AtestadoImprimir} />
                     <Route exact path="/atendimento/receitaImprimir" component={ReceitaImprimir} />
+                    <Route exact path="/atendimento/impressos" component={Impressos} />
 
                     <Route exact path="/cadastrar/objeto" component={Objeto} />
                     <Route exact path="/cadastrar/sangue" component={Sangue} />
@@ -128,6 +132,8 @@ const App =  () =>  {
                     <Route exact path="/cadastrar/dependente" component={Dependente} />
                     <Route exact path="/cadastrar/cadastrarEscala" component={CadastrarEscala} />
                     <Route exact path="/cadastrar/cadastrarSistemaExterno" component={CadastrarSistemaExterno}/>
+
+                    <Route exact path="/editar/editarConsultorioBloco" component={ConsultorioBloco} />
 
                     <Route exact path="/editordeTexto" component={EditordeTexto} />
 
