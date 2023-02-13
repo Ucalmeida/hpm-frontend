@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 
-import { Botao, BotaoAlterar, Card, Input, Select, Tabela } from '../../componentes';
 import { Form, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { BOTAO, HttpVerbo, ICONE, MSG } from '../../util/Constantes';
+import { Botao, BotaoAlterar, Card, Input, Select, Tabela } from '../../componentes';
 import { ExibirMensagem, xfetch } from '../../util';
+import { BOTAO, HttpVerbo, MSG } from '../../util/Constantes';
 
 export default function EditarConsultorioBloco(props) {
     const [show, setShow] = useState(false);
@@ -42,8 +41,11 @@ export default function EditarConsultorioBloco(props) {
                 console.log("JSON Resultado:", json);
                 setDadosConsultorioBloco({...dadosConsultorioBloco, bloco: json.resultado})
             })
-        console.log("Valor de ID:", id);
     }, [apagar])
+
+    useEffect(() => {
+        calendario();
+    }, [show])
 
     console.log("Bloco:", dadosConsultorioBloco);
 
@@ -119,27 +121,51 @@ export default function EditarConsultorioBloco(props) {
             salaNome: ""
     });
 
-    if (typeof dadosConsultorioBloco.bloco !== "undefined") {
-        objeto.idEspecialidade = dadosConsultorioBloco.bloco.especialidadeId;
-        objeto.idProfissionalSaude = dadosConsultorioBloco.bloco.profissionalSaudeId;
-        objeto.qtdConsultas = Number(dadosConsultorioBloco.bloco.qtdConsultas);
-        objeto.qtdEmergencias = Number(dadosConsultorioBloco.bloco.qtdEncaixes);
+    const [datas] = useState({
+        inicio: "",
+        termino: ""
+    });
+
+    const [qtd] = useState({
+        consultas: "",
+        encaixes: ""
+    })
+
+    const calendario = () => {
+        datas.inicio = dadosConsultorioBloco.bloco.dataInicio.split(" - ");
+        console.log("Inicio:", datas.inicio);
+        let anoInicio = datas.inicio[0].split("/")[2];
+        let mesInicio = datas.inicio[0].split("/")[1];
+        let diaInicio = datas.inicio[0].split("/")[0];
+        
+        datas.termino = dadosConsultorioBloco.bloco.dataTermino.split(" - ");
+        console.log("Termino:", datas.termino);
+        let anoTermino = datas.termino[0].split("/")[2];
+        let mesTermino = datas.termino[0].split("/")[1];
+        let diaTermino = datas.termino[0].split("/")[0];
+        
+        setObjeto({...objeto, 
+            dataInicio: anoInicio + "-" + mesInicio + "-" + diaInicio + "T" + datas.inicio[1], 
+            dataTermino: anoTermino + "-" + mesTermino + "-" + diaTermino + "T" + datas.termino[1]});
     }
 
-    if (typeof dadosConsultorioBloco.bloco !== "undefined") {
+    if (typeof dadosConsultorioBloco.bloco !== "undefined" && show) {
+        objeto.idEspecialidade = dadosConsultorioBloco.bloco.especialidadeId;
+        objeto.idProfissionalSaude = dadosConsultorioBloco.bloco.profissionalSaudeId;
+        qtd.consultas = Number(dadosConsultorioBloco.bloco.qtdConsultas);
+        qtd.encaixes = Number(dadosConsultorioBloco.bloco.qtdEncaixes);
         nomes.escalaNome = dadosConsultorioBloco.bloco.escalaNome;
         nomes.especialidadeNome = dadosConsultorioBloco.bloco.especialidadeNome;
         nomes.profissionalSaudeNome = dadosConsultorioBloco.bloco.profissionalSaudeNome;
         nomes.salaNome = dadosConsultorioBloco.bloco.salaNome;
     }
 
-    console.log("Objeto:", objeto);
-
     const handleDtHrInicio = (e) => {
         dt = e.target.value;
         let mesVerificador = dt.split("-");
         verificador.mesInicio = Number(mesVerificador[1]);
         verificador.ano = Number(mesVerificador[0]);
+        objeto.dataInicio = dt;
         setObjeto({...objeto, dataInicio: dt});
     }
 
@@ -148,6 +174,7 @@ export default function EditarConsultorioBloco(props) {
         let mesVerificador = dt.split("-");
         verificador.mesTermino = Number(mesVerificador[1]);
         verificador.ano = Number(mesVerificador[0]);
+        objeto.dataTermino = dt;
         setObjeto({...objeto, dataTermino: dt});
     }
 
@@ -179,6 +206,7 @@ export default function EditarConsultorioBloco(props) {
         .then( json =>{
             if(json.status === "OK") {
                 setApagar(!apagar);
+                dados();
                 ExibirMensagem('Consulta Cancelada!', MSG.SUCESSO)
             } else {
                 ExibirMensagem(json.message, MSG.ERRO)
@@ -229,14 +257,17 @@ export default function EditarConsultorioBloco(props) {
         if (verificador.mesInicio === verificador.mesEscala && 
             verificador.mesTermino === verificador.mesEscala &&
             verificador.ano === verificador.anoEscala) {
-                xfetch(`/hpm/consultorioBloco/alterar/${dadosConsultorioBloco.bloco.id}`, objeto, HttpVerbo.PUT)
-                    .then( json =>{
-                            if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
-                            }
-                        }
-                    )
-                setApagar(!apagar);
+                if (objeto.qtdConsultas === null) objeto.qtdConsultas = qtd.consultas;
+                if (objeto.qtdEmergencias === null) objeto.qtdEmergencias = qtd.encaixes;
+                console.log("Alterado:", objeto);
+                // xfetch(`/hpm/consultorioBloco/alterar/${dadosConsultorioBloco.bloco.id}`, objeto, HttpVerbo.PUT)
+                //     .then( json =>{
+                //             if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                //                 ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
+                //             }
+                //         }
+                //     )
+                // setApagar(!apagar);
             } else {
                 ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
             }
@@ -264,6 +295,8 @@ export default function EditarConsultorioBloco(props) {
             }) : ''}
         </select>
     </div> : ''
+
+    console.log("Objeto:", objeto);
 
     const colunas = [
         {text: "Nome"},
@@ -305,7 +338,7 @@ export default function EditarConsultorioBloco(props) {
                                             <select
                                                 className="form-control"
                                                 name="idStatus"
-                                                value={"status.idStatus"}
+                                                value={status.idStatus}
                                                 onChange={handleStatus}>
                                                 <option hidden>Selecione...</option>
                                                 {status.listaStatus.map((v, k) => {
@@ -369,7 +402,7 @@ export default function EditarConsultorioBloco(props) {
                                                 value={objeto.qtdConsultas}
                                                 name="qtdConsultas"
                                                 label="Quantidade de Consultas"
-                                                placeholder="Qtd consultas"/>
+                                                placeholder={qtd.consultas}/>
                                         </div>
                                         <div className="col-lg-3">
                                             <Input
@@ -378,7 +411,7 @@ export default function EditarConsultorioBloco(props) {
                                                 value={objeto.qtdEmergencias}
                                                 name="qtdEmergencias"
                                                 label="Quantidade de Encaixes"
-                                                placeholder="Qtd encaixes"/>
+                                                placeholder={qtd.encaixes}/>
                                         </div>
                                     </div>
                                 </Card>

@@ -204,6 +204,7 @@ export default function ConsultorioBloco(){
     const dados = () => {
         return (
             lista.blocos.map((bloco) => {
+                console.log("Teste:", bloco);
                 return ({
                     'escala': bloco.texto8,
                     'nome': bloco.texto,
@@ -213,7 +214,7 @@ export default function ConsultorioBloco(){
                     'data_termino': bloco.texto4,
                     'consultas': bloco.texto5,
                     'encaixes': bloco.texto6,
-                    'acao': <div>
+                    'acao': bloco.id !== "" ? <div>
                         <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(bloco.valor)} value={bloco.valor} icone={""}>Excluir</Botao>
                         <EditarConsultorioBloco 
                             corDoBotao={BOTAO.COR.ALERTA}
@@ -222,11 +223,7 @@ export default function ConsultorioBloco(){
                             nome={"Editar"}
                             valor={bloco.valor}
                         />
-                        {/* <Botao cor={BOTAO.COR.ALERTA} value={bloco.valor} icone={""}>
-                            Editar
-                        </Botao> */}
-                        {/*<BotaoExcluir onClick={() => UseHandleExcluir("/hpm/consultorioBloco/excluir/" + bloco.valor, {}, "Bloco Excluído!", handleChange())} />*/}
-                    </div>
+                    </div> : ""
                 })
             })
         )
