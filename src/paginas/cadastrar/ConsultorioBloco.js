@@ -126,7 +126,6 @@ export default function ConsultorioBloco(){
 
     const selecionarEspecialidade = (e) => {
         objeto.idEspecialidade = Number(e.value)
-        handleChange();
         listarProfissionalPorEspecialidade();
     }
 
@@ -154,7 +153,7 @@ export default function ConsultorioBloco(){
                 xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
                     .then( json =>{
                             if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO, '', '', '', '', handleChange());
+                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
                             }
                         }
                     )
@@ -175,19 +174,19 @@ export default function ConsultorioBloco(){
         xfetch('/hpm/consultorioBloco/excluir/' + blocoId, {}, HttpVerbo.PUT)
             .then( json => {
                     if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                        ExibirMensagem("Bloco Excluído!", MSG.SUCESSO, '', '', '', '', handleChange());
+                        ExibirMensagem("Bloco Excluído!", MSG.SUCESSO);
                     }
                 }
             )
     }
 
-    const handleChange = () => {
+    useEffect(() => {
         if (objeto.idEspecialidade !== null) {
             xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
             .then(response => response.json())
             .then(lista => setLista({...lista, blocos: lista.resultado}))
         }
-    }
+    }, [objeto.idEspecialidade])
 
     const colunas = [
         {text: "Escala"},

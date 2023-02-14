@@ -1,77 +1,51 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Form, Modal } from 'react-bootstrap';
 import { Botao, BotaoAlterar, Card, Input, Select, Tabela } from '../../componentes';
 import { ExibirMensagem, xfetch } from '../../util';
 import { BOTAO, HttpVerbo, MSG } from '../../util/Constantes';
+import ConsultorioBloco from '../cadastrar/ConsultorioBloco';
 
 export default function EditarConsultorioBloco(props) {
     const [show, setShow] = useState(false);
 
-    const [apagar, setApagar] = useState(show);
+    const [apagar, setApagar] = useState(false);
 
-    const [exibe, setExibe] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const dtInicio = useRef("");
+    const dtTermino = useRef("");
 
     const [dadosConsultorioBloco, setDadosConsultorioBloco] = useState({
         bloco: {
             dataInicio: "",
             dataTermino: "",
+            escalaId: "",
             escalaNome: "",
-            especialidadeId: null,
+            especialidadeId: "",
             especialidadeNome: "",
-            id: null,
-            profissionalSaudeId: null,
+            id: "",
+            profissionalSaudeId: "",
             profissionalSaudeNome: "",
             qtdConsultas: "",
             qtdEncaixes: "",
+            salaId: "",
             salaNome: "",
             consultasDTO: []
         }
     });
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    useEffect(() => {
-        let id = props.valor;
-        xfetch(`/hpm/consultorioBloco/${id}/consultas`, {}, HttpVerbo.GET)
-            .then(res => res.json())
-            .then(json => {
-                console.log("JSON Resultado:", json);
-                setDadosConsultorioBloco({...dadosConsultorioBloco, bloco: json.resultado})
-            })
-    }, [apagar])
-
-    useEffect(() => {
-        calendario();
-    }, [show])
-
-    console.log("Bloco:", dadosConsultorioBloco);
-
-    const [lista, setLista] = useState({
-        blocos: [
-            {
-                id: "",
-                nmEscala: "",
-                nmEspecialidade: "",
-                nmPiso: "",
-                dtInicio: "",
-                dtTermino: "",
-                qtdConsultas: "",
-                qtdEmergencias: "",
-            }
-        ]
-    });
 
     const [objeto, setObjeto] = useState(
         {
-            dataInicio : null,
-            dataTermino: null,
-            idEscala: null,
-            idEspecialidade: null,
-            idProfissionalSaude: null,
-            idSala: null,
+            dataInicio : "",
+            dataTermino: "",
+            idEscala: "",
+            idEspecialidade: "",
+            idProfissionalSaude: "",
+            idSala: "",
             qtdConsultas: null,
             qtdEmergencias: null
         }
@@ -85,8 +59,6 @@ export default function EditarConsultorioBloco(props) {
         listaStatus: []
     });
 
-    const escalaObjeto = 31;
-
     const [verificador, setVerificador] = useState({
         ano: 0,
         mesInicio: 0,
@@ -94,6 +66,41 @@ export default function EditarConsultorioBloco(props) {
         mesEscala: 0,
         anoEscala: 0
     });
+
+    useEffect(() => {
+        if (show) {
+            xfetch(`/hpm/consultorioBloco/${props.valor}/consultas`, {}, HttpVerbo.GET)
+                .then(res => res.json())
+                .then(json => {
+                    setDadosConsultorioBloco({...dadosConsultorioBloco, bloco: json.resultado});
+                })
+        }
+    }, [show])
+    
+    useEffect(() => {
+        if (show) {
+            xfetch(`/hpm/consultorioBloco/${props.valor}/consultas`, {}, HttpVerbo.GET)
+                .then(res => res.json())
+                .then(json => {
+                    setDadosConsultorioBloco({...dadosConsultorioBloco, bloco: json.resultado});
+                })
+        }
+    }, [apagar])
+
+    useEffect(() => {
+        if (show) {
+            setObjeto({...objeto, 
+                dataInicio: dtInicio.current, 
+                dataTermino: dtTermino.current,
+                qtdConsultas: Number(dadosConsultorioBloco.bloco.qtdConsultas),
+                qtdEmergencias: Number(dadosConsultorioBloco.bloco.qtdEncaixes),
+                idEscala: Number(dadosConsultorioBloco.bloco.escalaId),
+                idSala: Number(dadosConsultorioBloco.bloco.salaId)
+            });
+        }
+    }, [dtInicio.current])
+
+    const escalaObjeto = 31;
 
     const meses = [
         "Janeiro",
@@ -131,33 +138,37 @@ export default function EditarConsultorioBloco(props) {
         encaixes: ""
     })
 
-    const calendario = () => {
-        datas.inicio = dadosConsultorioBloco.bloco.dataInicio.split(" - ");
-        console.log("Inicio:", datas.inicio);
-        let anoInicio = datas.inicio[0].split("/")[2];
-        let mesInicio = datas.inicio[0].split("/")[1];
-        let diaInicio = datas.inicio[0].split("/")[0];
-        
-        datas.termino = dadosConsultorioBloco.bloco.dataTermino.split(" - ");
-        console.log("Termino:", datas.termino);
-        let anoTermino = datas.termino[0].split("/")[2];
-        let mesTermino = datas.termino[0].split("/")[1];
-        let diaTermino = datas.termino[0].split("/")[0];
-        
-        setObjeto({...objeto, 
-            dataInicio: anoInicio + "-" + mesInicio + "-" + diaInicio + "T" + datas.inicio[1], 
-            dataTermino: anoTermino + "-" + mesTermino + "-" + diaTermino + "T" + datas.termino[1]});
+    const escalaSelecionada = (nm_escala) => {
+        const nomeEscala = nm_escala;
+        [mes, ano] = nomeEscala.split(" - ");
+        verificador.mesEscala = meses.indexOf(mes) + 1;
+        verificador.anoEscala = Number(ano);
     }
 
     if (typeof dadosConsultorioBloco.bloco !== "undefined" && show) {
+        datas.inicio = dadosConsultorioBloco.bloco.dataInicio.split(" - ");
+        datas.termino = dadosConsultorioBloco.bloco.dataTermino.split(" - ");
+        dtInicio.current = datas.inicio[0].split("/")[2] + "-" + datas.inicio[0].split("/")[1] + "-" + datas.inicio[0].split("/")[0] + "T" + datas.inicio[1];
+        dtTermino.current = datas.termino[0].split("/")[2] + "-" + datas.termino[0].split("/")[1] + "-" + datas.termino[0].split("/")[0] + "T" + datas.termino[1];
+        verificador.mesInicio = Number(datas.inicio[0].split("/")[1])
+        verificador.mesTermino = Number(datas.termino[0].split("/")[1])
+        verificador.ano = Number(datas.inicio[0].split("/")[2])
+        
         objeto.idEspecialidade = dadosConsultorioBloco.bloco.especialidadeId;
         objeto.idProfissionalSaude = dadosConsultorioBloco.bloco.profissionalSaudeId;
-        qtd.consultas = Number(dadosConsultorioBloco.bloco.qtdConsultas);
-        qtd.encaixes = Number(dadosConsultorioBloco.bloco.qtdEncaixes);
         nomes.escalaNome = dadosConsultorioBloco.bloco.escalaNome;
         nomes.especialidadeNome = dadosConsultorioBloco.bloco.especialidadeNome;
         nomes.profissionalSaudeNome = dadosConsultorioBloco.bloco.profissionalSaudeNome;
         nomes.salaNome = dadosConsultorioBloco.bloco.salaNome;
+        escalaSelecionada(nomes.escalaNome);
+    }
+
+    const selecionarEscala = (e) => {
+        objeto.idEscala = Number(e.target.value);
+        const nomeEscala = escala.escalas.filter(escala => escala.valor === objeto.idEscala);
+        [mes, ano] = nomeEscala[0].nome.split(" - ");
+        verificador.mesEscala = meses.indexOf(mes) + 1;
+        verificador.anoEscala = Number(ano);
     }
 
     const handleDtHrInicio = (e) => {
@@ -204,14 +215,13 @@ export default function EditarConsultorioBloco(props) {
         consultaSelecionada.idStatus = statusId;
         await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
         .then( json =>{
-            if(json.status === "OK") {
-                setApagar(!apagar);
-                dados();
+            if (typeof json !== "undefined" ? json.status === "OK" : false) {
                 ExibirMensagem('Consulta Cancelada!', MSG.SUCESSO)
             } else {
                 ExibirMensagem(json.message, MSG.ERRO)
             }
         })
+        setApagar(!apagar);
     }
 
     const listarEscalaPorStatus = (e) => {
@@ -221,14 +231,6 @@ export default function EditarConsultorioBloco(props) {
                     setEscala({...escala, escalas: json.resultado});
                 }
             )
-    }
-
-    const selecionarEscala = (e) => {
-        objeto.idEscala = Number(e.target.value);
-        const nomeEscala = escala.escalas.filter(escala => escala.valor === objeto.idEscala);
-        [mes, ano] = nomeEscala[0].nome.split(" - ");
-        verificador.mesEscala = meses.indexOf(mes) + 1;
-        verificador.anoEscala = Number(ano);
     }
 
     const selecionarEspecialidade = (e) => {
@@ -259,15 +261,14 @@ export default function EditarConsultorioBloco(props) {
             verificador.ano === verificador.anoEscala) {
                 if (objeto.qtdConsultas === null) objeto.qtdConsultas = qtd.consultas;
                 if (objeto.qtdEmergencias === null) objeto.qtdEmergencias = qtd.encaixes;
-                console.log("Alterado:", objeto);
-                // xfetch(`/hpm/consultorioBloco/alterar/${dadosConsultorioBloco.bloco.id}`, objeto, HttpVerbo.PUT)
-                //     .then( json =>{
-                //             if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                //                 ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
-                //             }
-                //         }
-                //     )
-                // setApagar(!apagar);
+                xfetch(`/hpm/consultorioBloco/alterar/${dadosConsultorioBloco.bloco.id}`, objeto, HttpVerbo.PUT)
+                    .then( json =>{
+                            if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                                ExibirMensagem('Consultorio Bloco Alterado Com Sucesso!', MSG.SUCESSO, '', '', '', window.location.reload());
+                            }
+                        }
+                    )
+                    .catch(error => console.log(error))
             } else {
                 ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
             }
@@ -296,8 +297,6 @@ export default function EditarConsultorioBloco(props) {
         </select>
     </div> : ''
 
-    console.log("Objeto:", objeto);
-
     const colunas = [
         {text: "Nome"},
         {text: "Telefone"},
@@ -323,7 +322,7 @@ export default function EditarConsultorioBloco(props) {
     return (
         <>
             <Botao cor={props.corDoBotao} icone={props.icone} onClick={handleShow}>{props.nome}</Botao>
-            <Modal show={show} onHide={handleClose} size="xl">
+            <Modal show={show} onHide={handleClose} size="xl" scrollable={true}>
                 <Modal.Header closeButton>
                     <Modal.Title>{props.titulo}</Modal.Title>
                 </Modal.Header>
@@ -354,9 +353,13 @@ export default function EditarConsultorioBloco(props) {
                                                 className="form-control"
                                                 onChange={selecionarEscala}
                                                 nome="idEscala">
-                                                <option hidden>Selecione...</option>
+                                                <option className="flex-fill" value={objeto.idEscala}>{nomes.escalaNome}</option>
                                                 {typeof escala.escalas !== "undefined" ? escala.escalas.map((v, k) => {
-                                                    return <option className="flex-fill" value={v.valor} key={k}> {v.nome}</option>
+                                                    if (objeto.idEscala === v.valor) {
+                                                        return "";
+                                                    } else {
+                                                        return <option className="flex-fill" value={v.valor} key={k}> {v.nome}</option>
+                                                    }
                                                 }) : ''}
                                             </select>
                                         </div>
