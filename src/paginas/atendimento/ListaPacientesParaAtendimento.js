@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Botao, Card, Input, Pagina, Select, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
 import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
+import { Logoff } from "../../componentes/pagina/Logoff";
 
 export default function ListaPacientesParaAtendimento() {
     const [apagar, setApagar] = useState(false);
@@ -135,6 +136,8 @@ export default function ListaPacientesParaAtendimento() {
                 })
             }) : "")
     }
+
+    Logoff();
 
     return(
         <Pagina titulo="Consultas Agendadas">
