@@ -56,7 +56,7 @@ export default function Dependente(){
         setObjeto({...objeto, idPessoa: idPessoa})
     }
 
-    function verificarVinculo(){
+    function verificarVinculo() {
         console.log(objeto);
         xfetch('/hpm/pessoa/porId/'+objeto.idPessoa, {}, HttpVerbo.GET)
             .then(res => res.json())
