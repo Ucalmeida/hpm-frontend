@@ -3,7 +3,7 @@ import { Botao, Card, Pagina, Select } from "../../componentes";
 import ConsultasAgendadasCard from "../../componentes/card/ConsultasAgendadasCard";
 import { ExibirMensagem, xfetch } from "../../util";
 import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
-import { Logoff } from "../../componentes/pagina/Logoff";
+import { Logoff } from '../../util/Util';
 
 export default function Consulta() {
     const [objeto, setObjeto] = useState(

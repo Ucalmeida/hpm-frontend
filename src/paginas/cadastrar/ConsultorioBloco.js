@@ -2,11 +2,12 @@ import React, {useEffect, useState} from "react";
 import {Botao, BotaoSalvar, Card, Input, Pagina, Select, Tabela} from "../../componentes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
+import { Logoff } from '../../util/Util';
 import EditarConsultorioBloco from '../editar/EditarConsultorioBloco';
 // ATUALIZAR: import ConsultoriosBlocoCard from "../../componentes/card/ConsultoriosBlocoCard"; -- Comitei
 
-export default function ConsultorioBloco(){
-    const [apagar, setApagar] = useState(false);
+export default function ConsultorioBloco() {
+    const [selecionar, setSelecionar] = useState(false);
 
     // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
     const [lista, setLista] = useState({
@@ -122,6 +123,8 @@ export default function ConsultorioBloco(){
         [mes, ano] = nomeEscala[0].nome.split(" - ");
         verificador.mesEscala = meses.indexOf(mes) + 1;
         verificador.anoEscala = Number(ano);
+        console.log("IdEscala:", objeto.idEscala);
+        setSelecionar(!selecionar);
     }
 
     const selecionarEspecialidade = (e) => {
@@ -157,7 +160,6 @@ export default function ConsultorioBloco(){
                             }
                         }
                     )
-                setApagar(!apagar);
             } else {
                 ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
             }
@@ -181,12 +183,12 @@ export default function ConsultorioBloco(){
     }
 
     useEffect(() => {
-        if (objeto.idEspecialidade !== null) {
-            xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
+        if (objeto.idEscala !== null) {
+            xfetch('/hpm/consultorioBloco/escala/' + objeto.idEscala + '/opcoes', {}, HttpVerbo.GET)
             .then(response => response.json())
             .then(lista => setLista({...lista, blocos: lista.resultado}))
         }
-    }, [objeto.idEspecialidade])
+    }, [objeto.idEscala, selecionar])
 
     const colunas = [
         {text: "Escala"},
@@ -242,6 +244,8 @@ export default function ConsultorioBloco(){
         </select>
     </div> : ''
 
+    Logoff();
+    
     return(
         <Pagina titulo="Cadastrar ConsultorioBloco">
             <div className="row">
