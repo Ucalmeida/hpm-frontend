@@ -1,8 +1,7 @@
-import React, {useEffect, useState} from "react";
-import {Botao, BotaoSalvar, Card, Input, Pagina, Select, Tabela} from "../../componentes";
-import {ExibirMensagem, xfetch} from "../../util";
-import {BOTAO, HttpVerbo, ICONE, MSG} from "../../util/Constantes";
-import { Logoff } from '../../util/Util';
+import React, { useEffect, useState } from "react";
+import { Botao, BotaoSalvar, Card, Input, Pagina, Select, Tabela } from "../../componentes";
+import { ExibirMensagem, xfetch } from "../../util";
+import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
 import EditarConsultorioBloco from '../editar/EditarConsultorioBloco';
 // ATUALIZAR: import ConsultoriosBlocoCard from "../../componentes/card/ConsultoriosBlocoCard"; -- Comitei
 
