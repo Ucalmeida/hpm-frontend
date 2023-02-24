@@ -184,8 +184,7 @@ export default function ConsultorioBloco() {
 
     useEffect(() => {
         if (objeto.idEscala !== null) {
-            xfetch('/hpm/consultorioBloco/escala/' + objeto.idEscala + '/opcoes', {}, HttpVerbo.GET)
-            .then(response => response.json())
+            xfetch('/hpm/consultorioBloco/escala/' + objeto.idEscala + '/opcoes', {}, HttpVerbo.POST)
             .then(lista => setLista({...lista, blocos: lista.resultado}))
         }
     }, [objeto.idEscala, selecionar])
@@ -244,7 +243,7 @@ export default function ConsultorioBloco() {
         </select>
     </div> : ''
 
-    Logoff();
+    // Logoff();
     
     return(
         <Pagina titulo="Cadastrar ConsultorioBloco">
