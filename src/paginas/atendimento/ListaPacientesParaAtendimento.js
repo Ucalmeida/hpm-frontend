@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Botao, Card, Input, Pagina, Select, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
 import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
-import { Logoff } from "../../componentes/pagina/Logoff";
 
 export default function ListaPacientesParaAtendimento() {
     const [apagar, setApagar] = useState(false);
@@ -24,8 +23,6 @@ export default function ListaPacientesParaAtendimento() {
         data: ""
     });
 
-    let data = "";
-    let idEspecialidade = null;
 
     let consultaSelecionada = {
         idConsulta: '',
@@ -33,14 +30,14 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const handleDtBloco = (e) => {
-        data = e.target.value;
-        setConsultorioBloco({...consultorioBloco, data: data});
+        setConsultorioBloco({...consultorioBloco, data: e.target.value});
+        atendimentos.dataConsulta = e.target.value;
         listarPacientesParaAtendimentoPorData();
     }
     
     const selecionarEspecialidade = (e) => {
-        idEspecialidade = e.value;
-        setConsultorioBloco({...consultorioBloco, idEspecialidade: idEspecialidade});
+        setConsultorioBloco({...consultorioBloco, idEspecialidade: e.value});
+        atendimentos.idEspecialidade = e.value;
         listarPacientesParaAtendimentoPorData();
     }
 
@@ -88,12 +85,9 @@ export default function ListaPacientesParaAtendimento() {
         console.log("Tamanho:", idConsultorioBlocos.length);
         console.log("idConsultorioBloco maior que Zero");
 
-        atendimentos.dataConsulta = data;
-        atendimentos.idEspecialidade = idEspecialidade;
-        
         xfetch('/hpm/consulta/pesquisar-atendimentos', atendimentos, HttpVerbo.POST)
-            .then(response => {
-                console.log(atendimentos);
+        .then(response => {
+                    console.log("Atendimentos:", atendimentos);
                     if (typeof response !== "undefined" ? response.status === "OK" : false) {
                         setObjeto({...objeto, consultas: response.resultado});
                     }
@@ -136,8 +130,6 @@ export default function ListaPacientesParaAtendimento() {
                 })
             }) : "")
     }
-
-    Logoff();
 
     return(
         <Pagina titulo="Consultas Agendadas">
