@@ -1,5 +1,5 @@
 import {BotaoImprimir, Card, Pagina} from "../../componentes";
-import React, {Fragment, useRef} from "react";
+import React, { useRef } from "react";
 import logoHPM from "../../img/brasoes/brasao_hpm.png";
 import {Link} from "react-router-dom";
 import ReactToPrint, {useReactToPrint} from "react-to-print";

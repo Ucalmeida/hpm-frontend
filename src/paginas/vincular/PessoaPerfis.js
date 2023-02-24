@@ -144,10 +144,9 @@ export default function PessoaPerfis() {
         const path = link.split("/")
         let find = acoes.find(a => a.url === path[1]);
 
-        let i = 2
-        while (find !== undefined && find.acoes) {
+        
+        for (let i = 2; find !== undefined && find.acoes; i++) {
             find = find.acoes.filter(a => a.url === path[i])
-            i++
         }
         return find[0];
     }
