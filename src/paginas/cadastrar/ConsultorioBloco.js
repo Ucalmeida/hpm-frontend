@@ -159,9 +159,10 @@ export default function ConsultorioBloco() {
                             }
                         }
                     )
-            } else {
-                ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
-            }
+                setSelecionar(!selecionar);
+        } else {
+            ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
+        }
     }
 
     useEffect(() => {
@@ -179,14 +180,16 @@ export default function ConsultorioBloco() {
                     }
                 }
             )
+        setSelecionar(!selecionar);
     }
 
     useEffect(() => {
+        console.log("🚀 ~ file: ConsultorioBloco.js:189 ~ useEffect ~ objeto.idEscala:", objeto.idEscala)
         if (objeto.idEscala !== null) {
             xfetch('/hpm/consultorioBloco/escala/' + objeto.idEscala + '/opcoes', {}, HttpVerbo.POST)
             .then(lista => setLista({...lista, blocos: lista.resultado}))
         }
-    }, [objeto.idEscala, selecionar])
+    }, [selecionar])
 
     const colunas = [
         {text: "Escala"},
@@ -208,7 +211,7 @@ export default function ConsultorioBloco() {
                     'escala': bloco.texto8,
                     'nome': bloco.texto,
                     'especialidade': bloco.texto2,
-                    'sala': bloco.texto7,
+                    'sala': bloco.texto7, // Inserir o nome completo
                     'data_inicio': bloco.texto3,
                     'data_termino': bloco.texto4,
                     'consultas': bloco.texto5,
@@ -242,8 +245,6 @@ export default function ConsultorioBloco() {
         </select>
     </div> : ''
 
-    // Logoff();
-    
     return(
         <Pagina titulo="Cadastrar ConsultorioBloco">
             <div className="row">

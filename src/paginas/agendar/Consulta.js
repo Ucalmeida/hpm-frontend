@@ -3,7 +3,6 @@ import { Botao, Card, Pagina, Select } from "../../componentes";
 import ConsultasAgendadasCard from "../../componentes/card/ConsultasAgendadasCard";
 import { ExibirMensagem, xfetch } from "../../util";
 import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
-import { Logoff } from '../../util/Util';
 
 export default function Consulta() {
     const [objeto, setObjeto] = useState(
@@ -75,8 +74,6 @@ export default function Consulta() {
     let consultaBloco = objeto.consultoriosBloco
 
     console.log("Pessoa:", objeto.idPessoa);
-
-    Logoff();
 
     return(
         <Pagina titulo="Agendar Consulta">
