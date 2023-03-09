@@ -283,7 +283,7 @@ export default function ConsultorioBloco() {
                                 <Select
                                     funcao={selecionarEspecialidade}
                                     nome="idEspecialidade"
-                                    url={"/hpm/especialidade/opcoes"} />
+                                    url={"/hpm/especialidade/naoExcluidas"} />
                             </div>
                             {selectEspecialista}
                             <div className="col-lg-6">
