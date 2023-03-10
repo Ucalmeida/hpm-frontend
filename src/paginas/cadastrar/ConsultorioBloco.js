@@ -184,7 +184,6 @@ export default function ConsultorioBloco() {
     }
 
     useEffect(() => {
-        console.log("🚀 ~ file: ConsultorioBloco.js:189 ~ useEffect ~ objeto.idEscala:", objeto.idEscala)
         if (objeto.idEscala !== null) {
             xfetch('/hpm/consultorioBloco/escala/' + objeto.idEscala + '/opcoes', {}, HttpVerbo.POST)
             .then(lista => setLista({...lista, blocos: lista.resultado}))
