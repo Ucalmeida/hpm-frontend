@@ -5,7 +5,6 @@ import { Form, Modal } from 'react-bootstrap';
 import { Botao, BotaoAlterar, Card, Input, Select, Tabela } from '../../componentes';
 import { ExibirMensagem, xfetch } from '../../util';
 import { BOTAO, HttpVerbo, MSG } from '../../util/Constantes';
-import ConsultorioBloco from '../cadastrar/ConsultorioBloco';
 
 export default function EditarConsultorioBloco(props) {
     const [show, setShow] = useState(false);
