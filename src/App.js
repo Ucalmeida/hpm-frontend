@@ -1,8 +1,8 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import {xfetch} from "./util";
-import {HttpVerbo} from "./util/Constantes";
+import { xfetch } from "./util";
+import { HttpVerbo } from "./util/Constantes";
 
 import Login from './paginas/Login';
 import Principal from './paginas/Principal';
@@ -13,35 +13,33 @@ import AgendarConsulta from "./paginas/agendar/Consulta";
 import ConsultasAgendadas from "./paginas/agendar/ConsultasAgendadas";
 import ConsultasAgendadasImprimir from "./paginas/agendar/ConsultasAgendadasImprimir";
 
-import ListaPacientesParaAtendimento from "./paginas/atendimento/ListaPacientesParaAtendimento";
-import ListaAtendimentosPaciente from "./paginas/atendimentos/ListaAtendimentosPaciente";
-import PacienteEmAtendimento from "./paginas/atendimento/PacienteEmAtendimento";
 import AtestadoImprimir from "./paginas/atendimento/AtestadoImprimir";
-import ReceitaImprimir from "./paginas/atendimento/ReceitaImprimir";
 import Impressos from './paginas/atendimento/Impressos';
+import ListaPacientesParaAtendimento from "./paginas/atendimento/ListaPacientesParaAtendimento";
+import PacienteEmAtendimento from "./paginas/atendimento/PacienteEmAtendimento";
+import ReceitaImprimir from "./paginas/atendimento/ReceitaImprimir";
+import ListaAtendimentosPaciente from "./paginas/atendimentos/ListaAtendimentosPaciente";
 
-import Objeto from "./paginas/cadastrar/Objeto";
-import Sangue from "./paginas/cadastrar/Sangue";
-import Especialidade from "./paginas/cadastrar/Especialidade";
+import CadastrarEscala from "./paginas/cadastrar/CadastrarEscala";
 import CadastrarEspecialidadeProfissionalSaude from "./paginas/cadastrar/CadastrarEspecialidadeProfissionalSaude";
-import Pessoa from "./paginas/cadastrar/Pessoa";
-import Predio from "./paginas/cadastrar/Predio";
-import Perfil from "./paginas/cadastrar/Perfil";
-import Tipo from "./paginas/cadastrar/Tipo";
-import Setor from "./paginas/cadastrar/Setor";
-import Funcao from "./paginas/cadastrar/Funcao";
-import Piso from "./paginas/cadastrar/Piso";
-import Menu from "./paginas/cadastrar/Menu";
-import Sala from "./paginas/cadastrar/Sala";
-import Medicamento from "./paginas/cadastrar/Medicamento";
-import Status from "./paginas/cadastrar/Status";
-import Exame from "./paginas/cadastrar/Exame";
-import InstituicaoConvenio from "./paginas/cadastrar/InstituicaoConvenio";
 import ConsultorioBloco from "./paginas/cadastrar/ConsultorioBloco";
 import Dependente from "./paginas/cadastrar/Dependente";
-import CadastrarEscala from "./paginas/cadastrar/CadastrarEscala";
-
-import EditarConsultorioBloco from "./paginas/editar/EditarConsultorioBloco";
+import Especialidade from "./paginas/cadastrar/Especialidade";
+import Exame from "./paginas/cadastrar/Exame";
+import Funcao from "./paginas/cadastrar/Funcao";
+import InstituicaoConvenio from "./paginas/cadastrar/InstituicaoConvenio";
+import Medicamento from "./paginas/cadastrar/Medicamento";
+import Menu from "./paginas/cadastrar/Menu";
+import Objeto from "./paginas/cadastrar/Objeto";
+import Perfil from "./paginas/cadastrar/Perfil";
+import Pessoa from "./paginas/cadastrar/Pessoa";
+import Piso from "./paginas/cadastrar/Piso";
+import Predio from "./paginas/cadastrar/Predio";
+import Sala from "./paginas/cadastrar/Sala";
+import Sangue from "./paginas/cadastrar/Sangue";
+import Setor from "./paginas/cadastrar/Setor";
+import Status from "./paginas/cadastrar/Status";
+import Tipo from "./paginas/cadastrar/Tipo";
 
 import EditordeTexto from "./paginas/EditordeTexto";
 
@@ -50,24 +48,24 @@ import ListarEscalas from "./paginas/listar/ListarEscalas";
 import ListarEspecialidadePorProfissionalSaude from "./paginas/listar/ListarEspecialidadePorProfissionalSaude";
 import ListarProfissionaisSaude from "./paginas/listar/ListarProfissionaisSaude";
 
+import Consulta from "./paginas/recepcao/Consulta";
+import ConsultaEmergencia from "./paginas/recepcao/ConsultaEmergencia";
 import ListarPacientes from "./paginas/recepcao/ListarPacientes";
 import MarcarConsultas from "./paginas/recepcao/MarcarConsultas";
 import VerPacientesConsultaAgendada from "./paginas/recepcao/VerPacientesConsultaAgendada";
-import ConsultaEmergencia from "./paginas/recepcao/ConsultaEmergencia";
-import Consulta from "./paginas/recepcao/Consulta";
 
 import Atendimentos from "./paginas/relatorio/Atendimentos";
 
-import {SetorFuncao} from "./paginas/vincular/SetorFuncao";
-import {SetorFuncaoAcoes} from "./paginas/vincular/SetorFuncaoAcoes";
-import {SubSetor} from "./paginas/vincular/SubSetor";
-import {PerfilAcoes} from "./paginas/vincular/PerfilAcoes";
+import { PerfilAcoes } from "./paginas/vincular/PerfilAcoes";
+import { SetorFuncao } from "./paginas/vincular/SetorFuncao";
+import { SetorFuncaoAcoes } from "./paginas/vincular/SetorFuncaoAcoes";
+import { SubSetor } from "./paginas/vincular/SubSetor";
 
+import { MenuLateral, Rodape, Topo } from "./componentes/pagina";
 import AlterarSenha from "./paginas/AlterarSenha";
+import CadastrarSistemaExterno from "./paginas/cadastrar/CadastrarSistemaExterno";
 import EsqueciMinhaSenha from "./paginas/EsqueciMinhaSenha";
 import RecuperarSenha from "./paginas/RecuperarSenha";
-import {MenuLateral, Rodape, Topo} from "./componentes/pagina";
-import CadastrarSistemaExterno from "./paginas/cadastrar/CadastrarSistemaExterno";
 import PessoaPerfis from "./paginas/vincular/PessoaPerfis";
 
 function verificaToken() {
