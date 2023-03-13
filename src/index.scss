@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700');
+
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+// @import '~admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css';
+@import "~overlayscrollbars/css/OverlayScrollbars.min.css";
+// @import "~admin-lte/dist/css/adminlte.min.css";
+@import './css/adminlte.portal.css';
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+.main-header .navbar-nav .nav-item .nav-link {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.navbar-nav > .user-menu .user-image {
+  height: 1.6rem;
+  width: 1.6rem;
+  margin-right: 0;
+  margin-left: -8px;
+}
