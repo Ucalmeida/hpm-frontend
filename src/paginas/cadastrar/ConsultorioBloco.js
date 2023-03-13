@@ -155,11 +155,10 @@ export default function ConsultorioBloco() {
                 xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
                     .then( json =>{
                             if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
+                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO, '', '', '', '', handleCadastro());
                             }
                         }
                     )
-                setSelecionar(!selecionar);
         } else {
             ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
         }
@@ -176,18 +175,22 @@ export default function ConsultorioBloco() {
         xfetch('/hpm/consultorioBloco/excluir/' + blocoId, {}, HttpVerbo.PUT)
             .then( json => {
                     if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                        ExibirMensagem("Bloco Excluído!", MSG.SUCESSO);
+                        ExibirMensagem("Bloco Excluído!", MSG.SUCESSO, '', '', '', '', handleCadastro());
                     }
                 }
             )
-        setSelecionar(!selecionar);
     }
 
-    useEffect(() => {
+    const handleCadastro = () => {
         if (objeto.idEscala !== null) {
+            console.log("🚀 ~ file: ConsultorioBloco.js:185 ~ handleCadastro ~ selecionar:", selecionar);
             xfetch('/hpm/consultorioBloco/escala/' + objeto.idEscala + '/opcoes', {}, HttpVerbo.POST)
             .then(lista => setLista({...lista, blocos: lista.resultado}))
         }
+    }
+
+    useEffect(() => {
+        handleCadastro();
     }, [selecionar])
 
     const colunas = [
