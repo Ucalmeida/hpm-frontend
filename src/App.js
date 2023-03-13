@@ -18,7 +18,7 @@ import Impressos from './paginas/atendimento/Impressos';
 import ListaPacientesParaAtendimento from "./paginas/atendimento/ListaPacientesParaAtendimento";
 import PacienteEmAtendimento from "./paginas/atendimento/PacienteEmAtendimento";
 import ReceitaImprimir from "./paginas/atendimento/ReceitaImprimir";
-import ListaAtendimentosPaciente from "./paginas/atendimentos/ListaAtendimentosPaciente";
+import ListaAtendimentosPaciente from "./paginas/atendimento/ListaAtendimentosPaciente";
 
 import CadastrarEscala from "./paginas/cadastrar/CadastrarEscala";
 import CadastrarEspecialidadeProfissionalSaude from "./paginas/cadastrar/CadastrarEspecialidadeProfissionalSaude";
