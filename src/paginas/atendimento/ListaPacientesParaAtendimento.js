@@ -49,6 +49,9 @@ export default function ListaPacientesParaAtendimento() {
         localStorage.setItem('nmPaciente', consulta.nmPaciente);
         localStorage.setItem('cpfPaciente', consulta.cpfPaciente);
         localStorage.setItem('nmCelular', consulta.nmCelular);
+        localStorage.setItem('nmInstituicao', consulta.nmInstituicao);
+        localStorage.setItem('nmSangue', consulta.nmSangue);
+        localStorage.setItem('sexo', consulta.sexo);
         localStorage.setItem('dtNascimento', consulta.dtNascimento);
         localStorage.setItem('altura', consulta.altura);
         localStorage.setItem('peso', consulta.peso);

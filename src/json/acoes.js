@@ -41,9 +41,9 @@ export const acoes = [
         "icone": "fas fa-stethoscope"
       },
       {
-        "nome": "Listar Atendimentos por Paciente",
-        "descricao": "Lista de atendimentos por pacientes",
-        "url": "listaAtendimentosPaciente",
+        "nome": "Listar Histórico por Paciente",
+        "descricao": "Lista histórico de atendimentos por pacientes",
+        "url": "listaHistoricosPacientes",
         "icone": "fas fa-stethoscope"
       },
       {

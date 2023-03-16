@@ -9,6 +9,10 @@ export default function PacienteEmAtendimento() {
         id: localStorage.getItem("pacienteConsulta"),
         idPessoa: localStorage.getItem("idPessoa"),
         nmPaciente: localStorage.getItem("nmPaciente"),
+        cpfPaciente: localStorage.getItem("cpfPaciente"),
+        instituicao: localStorage.getItem("nmInstituicao"),
+        tipoSanguineo: localStorage.getItem("nmSangue"),
+        sexo: localStorage.getItem("sexo"),
         dtNascimento: localStorage.getItem('dtNascimento'),
         altura: localStorage.getItem('altura'),
         peso: localStorage.getItem('peso'),
@@ -51,7 +55,7 @@ export default function PacienteEmAtendimento() {
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
                 <div className="col-lg-12">
-                    <Card>
+                    {/* <Card>
                         <div className="col-lg-12">
                             <div className={"info-box"}>
                                 <div className="info-box-content">
@@ -76,7 +80,7 @@ export default function PacienteEmAtendimento() {
                                 </div>
                             </div>
                         </div>
-                    </Card>
+                    </Card> */}
                     <Card className={"collapsed-card"} titulo="Evolução" botaoMin>
                         <div className={"row"}>
                             <div className="col-lg-12">
@@ -107,18 +111,18 @@ export default function PacienteEmAtendimento() {
                                                 label="Nome"
                                                 placeholder="Nome" disabled required/>
                                         </div>
-                                        <div id="matriculaPaciente" className="col-lg-6">
+                                        {/* <div id="matriculaPaciente" className="col-lg-6">
                                             <Input
                                                 type="text"
                                                 value={"2002070001-76"}
                                                 name="matricula"
                                                 label="Matrícula"
                                                 placeholder="Matrícula" disabled/>
-                                        </div>
+                                        </div> */}
                                         <div id="cpfPaciente" className="col-lg-6">
                                             <Input
                                                 type="text"
-                                                value={"999.999.999-99"}
+                                                value={consulta.cpfPaciente}
                                                 name="cpf"
                                                 label="CPF"
                                                 placeholder={"CPF"} disabled/>
@@ -126,7 +130,7 @@ export default function PacienteEmAtendimento() {
                                         <div id="instituicaoPaciente" className="col-lg-6">
                                             <Input
                                                 type="text"
-                                                value={"PMSE"}
+                                                value={consulta.instituicao}
                                                 name="instituicao"
                                                 label="Instituição"
                                                 placeholder="Instituição" disabled/>
@@ -156,15 +160,11 @@ export default function PacienteEmAtendimento() {
                                         </div>
                                         <div className="info-box-content">
                                             <span className="info-box-text">Sexo</span>
-                                            <span className="info-box-number">{"Masculino"}</span>
-                                        </div>
-                                        <div className="info-box-content">
-                                            <span className="info-box-text">Raça</span>
-                                            <span className="info-box-number">{"Branca"}</span>
+                                            <span className="info-box-number">{consulta.sexo}</span>
                                         </div>
                                         <div className="info-box-content">
                                             <span className="info-box-text">Tipo Sangíneo</span>
-                                            <span className="info-box-number">{"A+"}</span>
+                                            <span className="info-box-number">{consulta.tipoSanguineo}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -199,30 +199,6 @@ export default function PacienteEmAtendimento() {
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        {/* <div className="col-lg-6">
-                                            <Input
-                                                type="text"
-                                                value={"23/01/2023 09:30"}
-                                                name="nome"
-                                                label="Data/Hora Atendimento"
-                                                placeholder="Nome" disabled required />
-                                        </div> */}
-                                        {/* <div className="col-lg-6">
-                                            <Input
-                                                type="text"
-                                                value={"DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL"}
-                                                name="profissionalSaude"
-                                                label="Responsável Atendimento/Especialidade"
-                                                placeholder={"profissionalSaude"} disabled />
-                                        </div> */}
-                                        {/* <div className="col-lg-12">
-                                            <Input
-                                                type="textarea"
-                                                value={"Aqui temos um exemplo de descrição do atendimento realizado."}
-                                                name="atendimento"
-                                                label="Descrição Atendimento"
-                                                placeholder="Descrição atendimento" disabled />
-                                        </div> */}
                                     </div>
                                 </div>
                             </Tab>
@@ -260,42 +236,10 @@ export default function PacienteEmAtendimento() {
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        {/* <div className="col-lg-6">
-                                            <Input
-                                                type="text"
-                                                value={"23/01/2023 09:30"}
-                                                name="nome"
-                                                label="Data Atendimento"
-                                                placeholder="Nome" disabled required />
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <Input
-                                                type="text"
-                                                value={"Z23.0, M43.6, M22.4"}
-                                                name="cids"
-                                                label="CID"
-                                                placeholder={"cids"} disabled />
-                                        </div>
-                                        <div className="col-lg-4">
-                                            <Input
-                                                type="textarea"
-                                                value={"3"}
-                                                name="atendimento"
-                                                label="Quantidade de Dias Concedidos"
-                                                placeholder="Descrição atendimento" disabled />
-                                        </div>
-                                        <div className="col-lg-8">
-                                            <Input
-                                                type="text"
-                                                value={"DRa ADRIANA MOTA CARNAUBA"}
-                                                name="profissionalSaude"
-                                                label="Responsável pela Concessão"
-                                                placeholder={"profissionalSaude"} disabled />
-                                        </div> */}
                                     </div>
                                 </div>
                             </Tab>
-                            <Tab title="Estados Preexistentes" eventKey="aba5">
+                            {/* <Tab title="Estados Preexistentes" eventKey="aba5">
                                 <br />
                                 <div className="col-lg-12">
                                     <div className="row">
@@ -332,7 +276,7 @@ export default function PacienteEmAtendimento() {
                                         </div>
                                     </div>
                                 </div>
-                            </Tab>
+                            </Tab> */}
                         </Tabs>
                     </Card>
                 </div>
