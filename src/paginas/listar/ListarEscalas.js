@@ -1,7 +1,8 @@
-import {Botao, Card, Pagina, Select, Tabela} from "../../componentes";
+import {Botao, BotaoExcluir, Card, Pagina, Select, Tabela} from "../../componentes";
 import React, {useState, useEffect} from "react";
 import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {ExibirMensagem, xfetch} from "../../util";
+import {UseHandleExcluir} from "../../hooks/UseHandleExcluir";
 
 export default function ListarEscalas() {
     const [objeto, setObjeto] = useState({});
@@ -15,6 +16,9 @@ export default function ListarEscalas() {
     });
 
     const handleAlterarEscala = (escala) => {
+        if (objeto.idStatus === 13) {
+            msg = "Ativada!";
+        }
         xfetch('/hpm/escala/alterar/' + escala.valor, objeto, HttpVerbo.PUT)
             .then( json => {
                     if (typeof json !== "undefined" ? json.status === "OK" : false) {
@@ -80,13 +84,17 @@ export default function ListarEscalas() {
                         msg = "Inativada!";
                         btnAlteracaoStatus = <div id={"btnAlteracao"}>
                             <Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnAlterarStatus(escala, statusId)} value={escala.valor}>Inativar</Botao>
+                            <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(escala.valor)} value={escala.valor} icone={""}>Excluir</Botao>
                         </div>;
                     }
                     if (escala.idStatus === 14) {
                         statusId = 15;
+                        let statusAtivar = 13;
                         msg = "Finalizada!";
                         btnAlteracaoStatus = <div id={"btnAlteracao"}>
+                            <Botao cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnAlterarStatus(escala, statusAtivar)} value={escala.valor}>Ativar</Botao>
                             <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnAlterarStatus(escala, statusId)} value={escala.valor}>Finalizar</Botao>
+                            <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(escala.valor)} value={escala.valor} icone={""}>Excluir</Botao>
                         </div>;
                     }
                     if (escala.idStatus === 15) {
@@ -99,9 +107,9 @@ export default function ListarEscalas() {
                         'situacao': escala.status,
                         'acoes':<div className={"row"}>
                                     {btnAlteracaoStatus}
-                                    <div>
-                                        <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(escala.valor)} value={escala.valor} icone={""}>Excluir</Botao>
-                                    </div>
+                                    {/*<div>*/}
+                                    {/*    <BotaoExcluir onClick={() => UseHandleExcluir("/hpm/escala/excluir/" + escala.valor, objeto, "Escala Excluída!", listarEscalasPorStatus())} value={escala.valor} />*/}
+                                    {/*</div>*/}
                                 </div>
                     })
                 })
@@ -130,7 +138,7 @@ export default function ListarEscalas() {
                         </div>
                     </Card>
                     <Card titulo="Lista de Escalas">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

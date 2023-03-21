@@ -119,7 +119,7 @@ export default function Status(){
                 </div>
                 <div className="col-lg-12">
                     <Card titulo="Status cadastrados no objeto selecionado">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                         {spinner}
                     </Card>
                 </div>

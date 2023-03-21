@@ -22,6 +22,7 @@
     "icss-utils": "^5.1.0",
     "jquery": "^3.6.0",
     "jquery-ui": "^1.13.2",
+    "md5": "^2.3.0",
     "overlayscrollbars-react": "^0.2.3",
     "postcss-modules-extract-imports": "^3.0.0",
     "postcss-modules-local-by-default": "^4.0.0",

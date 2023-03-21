@@ -1,36 +1,9 @@
-import React, {useRef} from 'react';
+import { Editor } from '@tinymce/tinymce-react';
 import PropTypes from 'prop-types';
-import {Editor} from '@tinymce/tinymce-react';
-import {Botao} from "./index";
-import {ExibirMensagem, xfetch} from "../util";
-import {HttpVerbo, MSG} from "../util/Constantes";
+import React, { useRef } from 'react';
 
 function EditorTexto(props) {
     const editorRef = useRef(null);
-
-    let consultaSelecionada = {
-        idConsulta: '',
-        idStatus: '',
-        relato: '',
-        idCIDs: []
-    }
-
-    const handleBtnFinalizarConsulta = async (consultaId, statusId, cidsId) => {
-        consultaSelecionada.idConsulta = consultaId;
-        consultaSelecionada.idStatus = statusId;
-        consultaSelecionada.idCIDs = cidsId;
-        if (editorRef.current) {
-            consultaSelecionada.relato = editorRef.current.getContent();
-        }
-        console.log("Lista:", consultaSelecionada);
-        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
-            .then(json => {
-                if(typeof json !== 'undefined' ? json.status === "OK" : false) {
-                    ExibirMensagem('Consulta Salva Com Sucesso!', MSG.SUCESSO)
-                }
-            })
-        window.close();
-    }
 
     return (
         <>
@@ -52,8 +25,6 @@ function EditorTexto(props) {
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                 }}
             />
-            <br />
-            <Botao cor={props.corDoBotao} icone={props.icone} onClick={() => handleBtnFinalizarConsulta(props.idConsulta, Number("7"), props.cids)}>{props.nome}</Botao>
         </>
     )
 };
@@ -62,13 +33,8 @@ EditorTexto.defaultProps = {
     menuBara : true
 }
 EditorTexto.propTypes = {
-    menuBara : PropTypes.bool,
-    corDoBotao: PropTypes.string,
-    icone: PropTypes.string,
-    nome: PropTypes.string,
-    idConsulta: PropTypes.string,
-    cids: PropTypes.array,
-    funcao: PropTypes.func,
+    menuBara : PropTypes.bool
 };
 
-export {EditorTexto};
+export { EditorTexto };
+

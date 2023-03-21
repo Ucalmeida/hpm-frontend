@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {Autocompletar} from "../../componentes/form";
-import {Card, Pagina, Tabela} from "../../componentes";
-import {xfetch} from "../../util";
-import {HttpVerbo} from "../../util/Constantes";
+import React, { useEffect, useState } from "react";
+import { Card, Pagina, Tabela } from "../../componentes";
+import { Autocompletar } from "../../componentes/form";
 
 export default function CadastrarEspecialidadeProfissionalSaude() {
     const [objeto, setObjeto] = useState({});
@@ -42,22 +40,6 @@ export default function CadastrarEspecialidadeProfissionalSaude() {
         setObjeto({...objeto, idPessoa: idpessoa});
     }
 
-    // useEffect(() => {
-    //     if(typeof(objeto.idEspecialidade) !== undefined) {
-    //         listarEspecialidadePorProfissional();
-    //     }
-    //     console.log("UseEffect", objeto)
-    // }, [objeto])
-    //
-    // const listarEspecialidadePorProfissional = () => {
-    //     console.log("Objeto", objeto);
-    //     xfetch('/hpm/profissionalSaude/' + objeto.idPessoa + '/opcoes', {objeto}, HttpVerbo.GET)
-    //         .then(res => res.json())
-    //         .then(lista => {
-    //             setLista({...lista, especialidades: lista.resultado})
-    //         })
-    // }
-
     const colunas = [
         {text: "Especialidade"}
     ]
@@ -88,7 +70,7 @@ export default function CadastrarEspecialidadeProfissionalSaude() {
                             onSelect={handleSelecionarPessoa} />
                     </Card>
                     <Card titulo="Lista de especialidades por profissional de saúde">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

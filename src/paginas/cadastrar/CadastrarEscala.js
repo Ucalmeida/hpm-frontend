@@ -1,9 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { BotaoSalvar, Card, Input, Pagina, Select } from "../../componentes";
+import React, { useEffect, useState } from "react";
+import { BotaoSalvar, Card, Input, Pagina, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
 import { HttpVerbo, MSG } from "../../util/Constantes";
+// ATUALIZAR: import EscalasCadastradasCard from "../../componentes/card/EscalasCadastradasCard"; -- Comentei
 
 export default function CadastrarEscala() {
+    // ATUALIZAR: const [cadastrar, setCadastrar] = useState(false); -- Comentei
+
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const [lista, setLista] = useState({
+        escalas: [
+            {
+                id: "",
+                nmEscala: "",
+                dtInicio: "",
+                dtTermino: "",
+                situacao: "",
+            }
+        ]
+    });
+    // ATUALIZAR: Até aqui
 
     const [objeto, setObjeto] = useState({
         nome: '',
@@ -12,64 +28,119 @@ export default function CadastrarEscala() {
         idStatus: null
     });
 
-    const [nomeEscala, setNomeEscala] = useState({
-        mes: '',
-        ano: ''
-    });
-
     const [status, setStatus] = useState({
         listaStatus: []
     });
 
-    let escalaObjeto = 31;
+    const escalaObjeto = 31;
+
+    const [verificador, setVerificador] = useState({
+        ano: 0,
+        mesInicio: 0,
+        mesTermino: 0,
+        mesEscala: 0,
+        anoEscala: 0
+    });
+
+    const meses = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ];
+
+    let dt = "";
 
     const handleDtHrInicio = (e) => {
-        let dt = e.target.value;
+        dt = e.target.value;
+        let mesVerificador = dt.split("-");
+        verificador.mesInicio = Number(mesVerificador[1]);
+        verificador.ano = Number(mesVerificador[0]);
         setObjeto({...objeto, dataInicio: dt});
     }
 
     const handleDtHrTermino = (e) => {
-       let dt = e.target.value;
+       dt = e.target.value;
+       let mesVerificador = dt.split("-");
+       verificador.mesTermino = Number(mesVerificador[1]);
+       verificador.ano = Number(mesVerificador[0]);
        setObjeto({...objeto, dataTermino: dt});
     }
     
     const handleChange = (e) => {
-        objeto.nome = nomeEscala.mes + " - " + nomeEscala.ano;
-        console.log("Objeto:", objeto);
-        console.log("NomeEscala:", nomeEscala);
-    }
-
-    const handleMes = (e) => {
-        nomeEscala.mes = e.target.value;
-        handleChange();
-    }
-
-    const handleAno = (e) => {
-        nomeEscala.ano = e.target.value;
-        handleChange();
+        const myDate = e.target.value;
+        let [ano, mes] = myDate.split("-");
+        verificador.mesEscala = Number(mes);
+        mes = meses[mes - 1];
+        objeto.nome = mes + " - " + ano;
+        verificador.anoEscala = Number(ano);
     }
 
     const handleStatus = (e) => {
-        const status = e.target.value;
-        setObjeto({...objeto, idStatus : status});
+        objeto.idStatus = e.target.value;
     }
 
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const listarEscalasPorStatus = () => {
+        xfetch('/hpm/escala/' + objeto.idStatus + '/opcoes', {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(lista => setLista({...lista, escalas: lista.resultado}))
+    }
+    // ATUALIZAR: Até aqui
+
     const enviar = (e) => {
-        console.log("Objeto", objeto);
-        xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
-            .then( json =>{
-                    if (typeof json !== "undefined" ? json.status === "OK" : null) {
-                        ExibirMensagem('Escala Cadastrada Com Sucesso!', MSG.SUCESSO);
+        if (verificador.mesInicio === verificador.mesEscala && 
+            verificador.mesTermino === verificador.mesEscala &&
+            verificador.ano === verificador.anoEscala) {
+            xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
+                .then( json =>{
+                        if (typeof json !== "undefined" ? json.status === "OK" : null) {
+                            ExibirMensagem('Escala Cadastrada Com Sucesso!', MSG.SUCESSO);
+                        }
                     }
-                }
-            )
+                )
+            // setCadastrar(!cadastrar); ATUALIZAR: Mudei isso aqui no dia 06 de fevereiro de 2023 para teste
+            listarEscalasPorStatus(); // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+        } else {
+            ExibirMensagem("Mês selecionado para nome da escala não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
+        }
     }
 
     useEffect(() => {
         xfetch('/hpm/status/' + escalaObjeto, {}, HttpVerbo.GET)
-        .then( res => res.json())
+        .then(res => res.json())
         .then(status => setStatus({...status, listaStatus: status.resultado}))
     }, [])
+
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const colunas = [
+        {text: "Nome"},
+        {text: "Data Início"},
+        {text: "Data Término"},
+        {text: "Situação"}
+    ]
+
+    const dados = () => {
+        return (
+            typeof lista.escalas !== "undefined" ? lista.escalas.map((escala) => {
+                return ({
+                    'nome': escala.nome,
+                    'data_inicio': escala.dtInicio,
+                    'data_termino': escala.dtTermino,
+                    'situacao': escala.status
+                })
+            }) : null
+        )
+    }
+    // ATUALIZAR: Até aqui
     
     return(
         <Pagina titulo="Cadastrar Escala">
@@ -77,30 +148,13 @@ export default function CadastrarEscala() {
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className={"row"}>
-                            <div className="col-lg-6">
-                                <label>Mês</label>
-                                <select className={"form-control col-lg-12"} name="mes" onChange={handleMes}>
-                                    <option>Selecione o mês...</option>
-                                    <option value={"Janeiro"}>Janeiro</option>
-                                    <option value={"Fevereiro"}>Fevereiro</option>
-                                    <option value={"Março"}>Março</option>
-                                    <option value={"Abril"}>Abril</option>
-                                    <option value={"Maio"}>Maio</option>
-                                    <option value={"Junho"}>Junho</option>
-                                    <option value={"Julho"}>Julho</option>
-                                    <option value={"Agosto"}>Agosto</option>
-                                    <option value={"Setembro"}>Setembro</option>
-                                    <option value={"Outubro"}>Outubro</option>
-                                    <option value={"Novembro"}>Novembro</option>
-                                    <option value={"Dezembro"}>Dezembro</option>
-                                </select>
-                            </div>
                             <div className={"col-lg-6"}>
-                                <label>Ano</label>
-                                <select className={"form-control col-lg-12"} name="ano" required={true} onChange={handleAno}>
-                                    <option>Selecione o ano...</option>
-                                    <option value={"2022"}>2022</option>
-                                </select>
+                                <Input
+                                    id={"date-input"}
+                                    type="Month"
+                                    onChange={handleChange}
+                                    name="nome"
+                                    label="Nome da Escala"/>
                             </div>
                             <div className="col-lg-6">
                                 <Input
@@ -119,8 +173,8 @@ export default function CadastrarEscala() {
                                     name="dataTermino"
                                     label="Data e hora término"
                                     placeholder="Data e hora"/>
-                            </div>
-                            <div className="col-lg-2">
+                                </div>
+                            <div className="col-lg-6">
                                 <label>Tipo Escala</label>
                                 <select
                                     className="form-control"
@@ -137,6 +191,10 @@ export default function CadastrarEscala() {
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
                             <BotaoSalvar onClick={enviar} />
                         </div>
+                    </Card>
+                    {/* ATUALIZAR: <EscalasCadastradasCard idStatus={Number(objeto.idStatus)} cadastrarEscala={cadastrar}/> -- Comentei */}
+                    <Card titulo="Escalas Cadastradas">
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

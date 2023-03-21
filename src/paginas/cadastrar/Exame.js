@@ -128,7 +128,7 @@ export default function Exame() {
                 </div>
                 <div className="col-lg-12">
                     <Card titulo="Exames cadastrados">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                         {spinner}
                     </Card>
                 </div>

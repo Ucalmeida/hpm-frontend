@@ -1,16 +1,18 @@
-import {Card, EditorTexto, Pagina} from "../../componentes";
-import React, {useState} from "react";
-import {BOTAO, ICONE} from "../../util/Constantes";
-import ModalFormMedico from "../../componentes/modal/ModalFormMedicoAtestado";
-import ModalFormMedicoAtestado from "../../componentes/modal/ModalFormMedicoAtestado";
-import {FormGroup, Tab, Tabs} from "react-bootstrap";
-import {AutocompletarCid} from "../../componentes/form/AutocompletarCid";
+import React, { useState } from "react";
+import { Tab, Tabs } from 'react-bootstrap';
+import { Card, Input, Pagina } from "../../componentes";
+import { PacienteEmAtendimentoEditor } from '../../componentes/form/PacienteEmAtendimentoEditor';
+import { BOTAO, ICONE } from "../../util/Constantes";
 
 export default function PacienteEmAtendimento() {
     const [consulta, setConsulta] = useState({
         id: localStorage.getItem("pacienteConsulta"),
         idPessoa: localStorage.getItem("idPessoa"),
         nmPaciente: localStorage.getItem("nmPaciente"),
+        cpfPaciente: localStorage.getItem("cpfPaciente"),
+        instituicao: localStorage.getItem("nmInstituicao"),
+        tipoSanguineo: localStorage.getItem("nmSangue"),
+        sexo: localStorage.getItem("sexo"),
         dtNascimento: localStorage.getItem('dtNascimento'),
         altura: localStorage.getItem('altura'),
         peso: localStorage.getItem('peso'),
@@ -18,26 +20,15 @@ export default function PacienteEmAtendimento() {
         idade: null,
         imc: null,
         pessoas: [],
-        idCids: [],
-        diasAfastado: null
+        idCids: []
     });
-
-    const [cids, setCids] = useState([]);
 
     let medida = {
         medidaAltura: "m",
         medidaPeso: "Kg"
     };
 
-    consulta.altura /= 100;
-
-    const handleCID = () => {
-        const idCid = document.getElementById("idcid").value;
-        const idCidNome = document.getElementById("idcidAuto").value;
-        let codigoCid = idCidNome.split(" - ");
-        setConsulta({...consulta, idCids: [...consulta.idCids, Number(idCid)]});
-        setCids([...cids, codigoCid[0]]);
-    }
+    const altura = Number(consulta.altura / 100);
 
     let calcIdade = (data) => {
         const atual = new Date();
@@ -53,7 +44,6 @@ export default function PacienteEmAtendimento() {
 
     let calcImc = () => {
         let peso = Number(consulta.peso);
-        let altura = Number(consulta.altura);
         let imc = peso / (altura * altura);
         return imc.toFixed(2);
     }
@@ -61,16 +51,11 @@ export default function PacienteEmAtendimento() {
     consulta.idade = calcIdade(consulta.dtNascimento);
     consulta.imc = calcImc();
 
-    localStorage.setItem("arrayCids", consulta.idCids);
-    localStorage.setItem("arrayCodigosCids", cids);
-    console.log("CIDs:", cids);
-    console.log("Consulta CIDs:", consulta.idCids);
-    console.log("Consulta:", consulta);
     return (
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
                 <div className="col-lg-12">
-                    <Card>
+                    {/* <Card>
                         <div className="col-lg-12">
                             <div className={"info-box"}>
                                 <div className="info-box-content">
@@ -83,7 +68,7 @@ export default function PacienteEmAtendimento() {
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Altura do Paciente</span>
-                                    <span className="info-box-number">{consulta.altura + medida.medidaAltura}</span>
+                                    <span className="info-box-number">{altura + medida.medidaAltura}</span>
                                 </div>
                                 <div className="info-box-content">
                                     <span className="info-box-text">Peso do Paciente</span>
@@ -95,11 +80,11 @@ export default function PacienteEmAtendimento() {
                                 </div>
                             </div>
                         </div>
-                    </Card>
-                    <Card titulo="Evolução">
+                    </Card> */}
+                    <Card className={"collapsed-card"} titulo="Evolução" botaoMin>
                         <div className={"row"}>
                             <div className="col-lg-12">
-                                <EditorTexto
+                                <PacienteEmAtendimentoEditor
                                     corDoBotao={BOTAO.COR.PERIGO}
                                     icone={ICONE.SALVAR}
                                     idConsulta={consulta.id}
@@ -109,52 +94,189 @@ export default function PacienteEmAtendimento() {
                             </div>
                         </div>
                     </Card>
-                    <Card titulo="CID">
-                        <div className={"row"}>
-                            <div className="col-lg-12">
-                                <AutocompletarCid
-                                    name="cid"
-                                    url={"/hpm/cid/por-nome/"}
-                                    label="Digite o CID:"
-                                    placeholder="Nome ou código aqui"
-                                    tamanho={6}
-                                    retorno={handleCID} />
-                            </div>
-                            <br />
-                            <br />
-                        </div>
-                        <br />
-                        <FormGroup>
-                            <div className={"col-lg-12"}>
-                                {cids.map((cid, index) => (
-                                    <div className={"info-box col-lg-2"}>
-                                        <div key={index} className="info-box-content">
-                                            <span className="info-box-text">CID</span>
-                                            <span className="info-box-text">{cid}</span>
+                    <Card className={"collapsed-card"} titulo={"Dados do Paciente"} botaoMin>
+                        <Tabs>
+                            <Tab title="Dados Pessoais" eventKey="aba1">
+                                <br/>
+                                <div className="row">
+                                    <div id="imagemPaciente" className="col-lg-3">
+                                        <img id={"imagemDefault"}src="" alt="" />
+                                    </div>
+                                    <div id="dadosPaciente" className="col-lg-8">
+                                        <div id="nomePaciente" className="col-lg-6">
+                                            <Input
+                                                type="text"
+                                                value={consulta.nmPaciente}
+                                                name="nome"
+                                                label="Nome"
+                                                placeholder="Nome" disabled required/>
+                                        </div>
+                                        {/* <div id="matriculaPaciente" className="col-lg-6">
+                                            <Input
+                                                type="text"
+                                                value={"2002070001-76"}
+                                                name="matricula"
+                                                label="Matrícula"
+                                                placeholder="Matrícula" disabled/>
+                                        </div> */}
+                                        <div id="cpfPaciente" className="col-lg-6">
+                                            <Input
+                                                type="text"
+                                                value={consulta.cpfPaciente}
+                                                name="cpf"
+                                                label="CPF"
+                                                placeholder={"CPF"} disabled/>
+                                        </div>
+                                        <div id="instituicaoPaciente" className="col-lg-6">
+                                            <Input
+                                                type="text"
+                                                value={consulta.instituicao}
+                                                name="instituicao"
+                                                label="Instituição"
+                                                placeholder="Instituição" disabled/>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
-                        </FormGroup>
-                    </Card>
-                    <Card titulo={"Formulários"}>
-                        <Tabs>
-                            <Tab title="Atestado" eventKey="aba1">
-                                <br />
-                                <ModalFormMedicoAtestado
-                                    corDoBotao={BOTAO.COR.SUCESSO}
-                                    icone={ICONE.PDF}
-                                    titulo={"Atestado"}
-                                    nome={"Atestado"}/>
+                                </div>
                             </Tab>
-                            <Tab title="Receita" eventKey="aba2">
+                            <Tab title="Características Físicas" eventKey="aba2">
                                 <br />
-                                <ModalFormMedico corDoBotao={BOTAO.COR.INFO} icone={ICONE.PDF} titulo={"Receita"} nome={"Receita"} />
+                                <div className="col-lg-12">
+                                    <div className={"info-box"}>
+                                        <div className="info-box-content">
+                                            <span className="info-box-text">Idade do Paciente</span>
+                                            <span className="info-box-number">{consulta.idade}</span>
+                                        </div>
+                                        <div className="info-box-content">
+                                            <span className="info-box-text">Altura do Paciente</span>
+                                            <span className="info-box-number">{altura + medida.medidaAltura}</span>
+                                        </div>
+                                        <div className="info-box-content">
+                                            <span className="info-box-text">Peso do Paciente</span>
+                                            <span className="info-box-number">{consulta.peso + medida.medidaPeso}</span>
+                                        </div>
+                                        <div className="info-box-content">
+                                            <span className="info-box-text">IMC do Paciente</span>
+                                            <span className="info-box-number">{consulta.imc}</span>
+                                        </div>
+                                        <div className="info-box-content">
+                                            <span className="info-box-text">Sexo</span>
+                                            <span className="info-box-number">{consulta.sexo}</span>
+                                        </div>
+                                        <div className="info-box-content">
+                                            <span className="info-box-text">Tipo Sangíneo</span>
+                                            <span className="info-box-number">{consulta.tipoSanguineo}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </Tab>
-                            <Tab title="Requisição de Exames" eventKey="aba3">
+                            <Tab title="Histórico Evolução" eventKey="aba3">
                                 <br />
-                                <ModalFormMedico corDoBotao={BOTAO.COR.ALERTA} icone={ICONE.PDF} titulo={"Requisição de Exames"} nome={"Requisição de Exames"} />
+                                <div className="col-lg-12">
+                                    <div className="row">
+                                        <table className={"col-lg-12"} border="1">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Data/Hora Atendimento</b></td>
+                                                    <td><b>Responsável Atendimento/Especialidade</b></td>
+                                                    <td><b>Descrição Atendimento</b></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>23/01/2023 09:30</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
+                                                    <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>22/01/2023 09:30</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
+                                                    <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>21/01/2023 09:30</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
+                                                    <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </Tab>
+                            <Tab title="Atestados Concedidos" eventKey="aba4">
+                                <br />
+                                <div className="col-lg-12">
+                                    <div className="row">
+                                        <table className={"col-lg-12"} border="1">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Data Atendimento</b></td>
+                                                    <td><b>CIDs</b></td>
+                                                    <td><b>Quantidade de Dias Concedidos</b></td>
+                                                    <td><b>Responsável pela Concessão</b></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>23/01/2023</td>
+                                                    <td>Z23.0, M43.6, M22.4</td>
+                                                    <td>3</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>22/01/2023</td>
+                                                    <td>Z23.0, M43.6, M22.4</td>
+                                                    <td>3</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>21/01/2023</td>
+                                                    <td>Z23.0, M43.6, M22.4</td>
+                                                    <td>3</td>
+                                                    <td>DRa ADRIANA MOTA CARNAUBA</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </Tab>
+                            {/* <Tab title="Estados Preexistentes" eventKey="aba5">
+                                <br />
+                                <div className="col-lg-12">
+                                    <div className="row">
+                                        <div className="col-lg-12">
+                                            <Input
+                                                type="textarea"
+                                                value={"Alcoolismo, Diabetes, Hipertensão, Cardiopatia, Tabagismo, Lesões Ósseas(Fraturas)"}
+                                                name="atendimento"
+                                                label="Estados Preexistentes"
+                                                placeholder="Descrição atendimento" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                            </Tab>
+                            <Tab title="Alergias" eventKey="aba6">
+                                <br />
+                                <div className="col-lg-12">
+                                    <div className="row">
+                                        <div className="col-lg-6">
+                                            <Input
+                                                type="text"
+                                                value={"Sulfa"}
+                                                name="nome"
+                                                label="Medicamentos"
+                                                placeholder="Medicamentos" disabled required />
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <Input
+                                                type="text"
+                                                value={"Polvo, Camarão"}
+                                                name="alimentos"
+                                                label="Alimentos"
+                                                placeholder={"alimentos"} disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                            </Tab> */}
                         </Tabs>
                     </Card>
                 </div>

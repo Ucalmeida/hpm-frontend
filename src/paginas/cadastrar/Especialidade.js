@@ -107,7 +107,7 @@ export default function Especialidade() {
                 </div>
                 <div className="col-lg-12">
                     <Card titulo="Especialidades cadastradas">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                         {spinner}
                     </Card>
                 </div>

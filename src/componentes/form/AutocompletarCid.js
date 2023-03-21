@@ -19,7 +19,7 @@ export class AutocompletarCid extends React.Component {
     handle = (e) => {
         e.preventDefault()
         this.setState({[e.target.name]: e.target.value.toUpperCase()})
-        if(e.target.value == ''){
+        if(e.target.value === ''){
             this.props.changeResultado(e.target.value)
         }
     }
@@ -27,20 +27,35 @@ export class AutocompletarCid extends React.Component {
     componentDidMount() {
         const url = this.props.url;
         let that = this;
-        let idAuto = 'id' + this.props.name + 'Auto';
+        let idAuto = "id" + this.props.name + "Auto";
 
         $('#' + idAuto).autocomplete({
             source: function( request, response ) {
                 that.setState({carregando: true})
                 let key = request.term;
-                xfetch(url + key, {}, HttpVerbo.GET)
-                    .then(res => res.json())
-                    .then(json => response(json.resultado) && that.setState({carregando: false}) && (that.props.changeResultado(json.resultado.length)) && ((json.resultado.length === 0) ? ExibirMensagem("Não Encontrado", MSG.ALERTA) : ''))
-                    .catch(e => that.setState({carregando: false}))
+                if (idAuto !== "idmedicamentoAuto") {
+                    xfetch(url + "por-codigo/" + key, {}, HttpVerbo.GET)
+                        .then(res => res.json())
+                        .then(resultNome => 
+                            resultNome.resultado.length === 0 ? 
+                            xfetch(url + "por-nome/" + key, {}, HttpVerbo.GET)
+                                .then(res => res.json())
+                                .then(json => response(json.resultado) && that.setState({carregando: false}) && (that.props.changeResultado(json.resultado.length)))
+                                .catch(e => that.setState({carregando: false}))
+                            : resultNome)
+                        .then(json => response(json.resultado) && that.setState({carregando: false}) && (that.props.changeResultado(json.resultado.length)) && ((json.resultado.length === 0) ? ExibirMensagem("Não Encontrado", MSG.ALERTA) : ''))
+                        .catch(e => that.setState({carregando: false}))
+                }
+                if (idAuto === "idmedicamentoAuto") {
+                    xfetch(url + "por-nome/" + key, {}, HttpVerbo.GET)
+                        .then(res => res.json())
+                        .then(json => response(json.resultado) && that.setState({carregando: false})  && (that.props.changeResultado(json.resultado.length)))
+                        .catch(e => that.setState({carregando: false}))
+                }
             },
             minLength: this.props.tamanho,
             select: function( event, ui ) {
-                that.setState({valor: ui.item.value, busca: ui.item.label})
+                that.setState({valor: ui.item.value, busca: ui.item.label, carregando: false})
                 that.props.retorno(ui.item.value)
                 return false
             }
@@ -68,7 +83,7 @@ export class AutocompletarCid extends React.Component {
                         value={busca}
                         placeholder={this.props.placeholder}
                     />
-                    {/*{spinner}*/}
+                    {spinner}
                 </div>
                 <div className="col-lg-1">
                     <input

@@ -107,7 +107,7 @@ function CadastrarNome({label, labelListagem, url, urlListagem, urlExcluir}) {
                 <div className="col-lg-12">
                     <Card titulo={labelListagem}>
                         {spiner}
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

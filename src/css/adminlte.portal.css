@@ -871,3 +871,32 @@ a.btn, a.nav-link, span.btn {
 /*.input-group-append > button {*/
 /*	border: none;*/
 /*}*/
+
+.tox-notifications-container {
+    display: none !important;
+}
+
+.btnFinalizar {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    text-align: center;
+}
+
+#imagemPaciente {
+    appearance: none;
+    width: 30%;
+    height: 240px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: block;
+}
+
+#nomePaciente, #matriculaPaciente, #cpfPaciente, #instituicaoPaciente {
+    display: inline-block;
+}
+
+#dadosPaciente {
+    margin: auto;
+    display: inline-block;
+}

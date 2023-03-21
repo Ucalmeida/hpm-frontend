@@ -1,11 +1,29 @@
-import React, {useState} from "react";
-import {BotaoSalvar, Card, Input, Pagina, Select} from "../../componentes";
-import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
-import ConsultoriosBlocoCard from "../../componentes/card/ConsultoriosBlocoCard";
+import React, { useEffect, useState } from "react";
+import { Botao, BotaoSalvar, Card, Input, Pagina, Select, Tabela } from "../../componentes";
+import { ExibirMensagem, xfetch } from "../../util";
+import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
+import EditarConsultorioBloco from '../editar/EditarConsultorioBloco';
+// ATUALIZAR: import ConsultoriosBlocoCard from "../../componentes/card/ConsultoriosBlocoCard"; -- Comitei
 
-export default function ConsultorioBloco(){
-    const [apagar, setApagar] = useState(false);
+export default function ConsultorioBloco() {
+    const [selecionar, setSelecionar] = useState(false);
+
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const [lista, setLista] = useState({
+        blocos: [
+            {
+                id: "",
+                nmEscala: "",
+                nmEspecialidade: "",
+                nmPiso: "",
+                dtInicio: "",
+                dtTermino: "",
+                qtConsultas: "",
+                qtEmergencias: "",
+            }
+        ]
+    });
+    // ATUALIZAR: Até aqui
 
     const [objeto, setObjeto] = useState(
         {
@@ -22,12 +40,55 @@ export default function ConsultorioBloco(){
 
     const [profissionais, setProfissionais] = useState({});
 
+    const [escala, setEscala] = useState({});
+
+    const [status, setStatus] = useState({
+        listaStatus: []
+    });
+
+    const escalaObjeto = 31;
+
+    const [verificador, setVerificador] = useState({
+        ano: 0,
+        mesInicio: 0,
+        mesTermino: 0,
+        mesEscala: 0,
+        anoEscala: 0
+    });
+
+    const meses = [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+    ];
+
+    let [mes, ano] = "";
+
+    let dt = "";
+
     const handleDtHrInicio = (e) => {
-        setObjeto({...objeto, dataInicio: e.target.value});
+        dt = e.target.value;
+        let mesVerificador = dt.split("-");
+        verificador.mesInicio = Number(mesVerificador[1]);
+        verificador.ano = Number(mesVerificador[0]);
+        setObjeto({...objeto, dataInicio: dt});
     }
 
     const handleDtHrTermino = (e) => {
-        setObjeto({...objeto, dataTermino: e.target.value});
+        dt = e.target.value;
+        let mesVerificador = dt.split("-");
+        verificador.mesTermino = Number(mesVerificador[1]);
+        verificador.ano = Number(mesVerificador[0]);
+        setObjeto({...objeto, dataTermino: dt});
     }
 
     const handleQtdConsulta = (e) => {
@@ -40,8 +101,29 @@ export default function ConsultorioBloco(){
         setObjeto({...objeto, qtdEmergencias: Number(e.target.value)})
     }
 
+    const handleStatus = (e) => {
+        const statusId = e.target.value;
+        status.idStatus = Number(statusId);
+        listarEscalaPorStatus();
+    }
+
+    const listarEscalaPorStatus = (e) => {
+        xfetch('/hpm/escala/' + status.idStatus + '/opcoes',{}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(json => {
+                    setEscala({...escala, escalas: json.resultado});
+                }
+            )
+    }
+
     const selecionarEscala = (e) => {
-        objeto.idEscala = e.value;
+        objeto.idEscala = Number(e.target.value);
+        const nomeEscala = escala.escalas.filter(escala => escala.valor === objeto.idEscala);
+        [mes, ano] = nomeEscala[0].nome.split(" - ");
+        verificador.mesEscala = meses.indexOf(mes) + 1;
+        verificador.anoEscala = Number(ano);
+        console.log("IdEscala:", objeto.idEscala);
+        setSelecionar(!selecionar);
     }
 
     const selecionarEspecialidade = (e) => {
@@ -67,16 +149,90 @@ export default function ConsultorioBloco(){
     }
 
     const enviar = (e) => {
-        console.log("Lista Objeto:", objeto);
-        xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
-            .then( json =>{
+        if (verificador.mesInicio === verificador.mesEscala && 
+            verificador.mesTermino === verificador.mesEscala &&
+            verificador.ano === verificador.anoEscala) {
+                xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
+                    .then( json =>{
+                            if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO, '', '', '', '', handleCadastro());
+                            }
+                        }
+                    )
+        } else {
+            ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
+        }
+    }
+
+    useEffect(() => {
+        xfetch('/hpm/status/' + escalaObjeto, {}, HttpVerbo.GET)
+            .then( res => res.json())
+            .then(status => setStatus({...status, listaStatus: status.resultado}))
+    }, [])
+
+    // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+    const handleBtnExcluir = (blocoId) => {
+        xfetch('/hpm/consultorioBloco/excluir/' + blocoId, {}, HttpVerbo.PUT)
+            .then( json => {
                     if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                        ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO);
+                        ExibirMensagem("Bloco Excluído!", MSG.SUCESSO, '', '', '', '', handleCadastro());
                     }
                 }
             )
-        setApagar(!apagar);
     }
+
+    const handleCadastro = () => {
+        if (objeto.idEscala !== null) {
+            console.log("🚀 ~ file: ConsultorioBloco.js:185 ~ handleCadastro ~ selecionar:", selecionar);
+            xfetch('/hpm/consultorioBloco/escala/' + objeto.idEscala + '/opcoes', {}, HttpVerbo.POST)
+            .then(lista => setLista({...lista, blocos: lista.resultado}))
+        }
+    }
+
+    useEffect(() => {
+        handleCadastro();
+    }, [selecionar])
+
+    const colunas = [
+        {text: "Escala"},
+        {text: "Nome"},
+        {text: "Especialidade"},
+        {text: "Sala"},
+        {text: "Data Início"},
+        {text: "Data Término"},
+        {text: "Consultas"},
+        {text: "Encaixes"},
+        {text: "Ação"}
+    ]
+
+    const dados = () => {
+        return (
+            lista.blocos.map((bloco) => {
+                console.log("Teste:", bloco);
+                return ({
+                    'escala': bloco.texto8,
+                    'nome': bloco.texto,
+                    'especialidade': bloco.texto2,
+                    'sala': bloco.texto7, // Inserir o nome completo
+                    'data_inicio': bloco.texto3,
+                    'data_termino': bloco.texto4,
+                    'consultas': bloco.texto5,
+                    'encaixes': bloco.texto6,
+                    'acao': bloco.id !== "" ? <div>
+                        <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(bloco.valor)} value={bloco.valor} icone={""}>Excluir</Botao>
+                        <EditarConsultorioBloco 
+                            corDoBotao={BOTAO.COR.ALERTA}
+                            icone={ICONE.EDITAR}
+                            titulo={"Editar"}
+                            nome={"Editar"}
+                            valor={bloco.valor}
+                        />
+                    </div> : ""
+                })
+            })
+        )
+    }
+    // ATUALIZAR: Até aqui
 
     const selectEspecialista =  objeto.idEspecialidade ? <div className="col-lg-6">
         <label>Profissional</label>
@@ -97,19 +253,39 @@ export default function ConsultorioBloco(){
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
                         <div className="row">
-                            <div className="col-lg-6">
+                            <div className="col-lg-3">
+                                <label>Tipo Escala</label>
+                                <select
+                                    className="form-control"
+                                    name="idStatus"
+                                    value={status.idStatus}
+                                    onChange={handleStatus}>
+                                    <option hidden>Selecione...</option>
+                                    {status.listaStatus.map((v, k) => {
+                                        if (v.id !== 15) {
+                                            return <option className="flex-fill" value={v.id} key={k}> {v.nome}</option>
+                                        }
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col-lg-3">
                                 <label>Escala</label>
-                                <Select
-                                    funcao={selecionarEscala}
-                                    nome="idEscala"
-                                    url={"/hpm/escala/opcoes"} />
+                                <select
+                                    className="form-control"
+                                    onChange={selecionarEscala}
+                                    nome="idEscala">
+                                    <option hidden>Selecione...</option>
+                                    {typeof escala.escalas !== "undefined" ? escala.escalas.map((v, k) => {
+                                        return <option className="flex-fill" value={v.valor} key={k}> {v.nome}</option>
+                                    }) : ''}
+                                </select>
                             </div>
                             <div className="col-lg-6">
                                 <label>Especialidade</label>
                                 <Select
                                     funcao={selecionarEspecialidade}
                                     nome="idEspecialidade"
-                                    url={"/hpm/especialidade/opcoes"} />
+                                    url={"/hpm/especialidade/naoExcluidas"} />
                             </div>
                             {selectEspecialista}
                             <div className="col-lg-6">
@@ -152,15 +328,18 @@ export default function ConsultorioBloco(){
                                     onChange={handleQtdEmergencia}
                                     value={objeto.qtdEmergencias}
                                     name="qtdEmergencias"
-                                    label="Quantidade de Emergencias"
-                                    placeholder="Qtd emergencias"/>
+                                    label="Quantidade de Encaixes"
+                                    placeholder="Qtd encaixes"/>
                             </div>
                         </div>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
                             <BotaoSalvar onClick={enviar} />
                         </div>
                     </Card>
-                    <ConsultoriosBlocoCard idEspecialidade={objeto.idEspecialidade} apagarBloco={apagar}/>
+                    {/* ATUALIZAR: <ConsultoriosBlocoCard idEspecialidade={Number(objeto.idEspecialidade)} apagarBloco={apagar}/> --Comitei */}
+                    <Card titulo="Consultórios Cadastrados">
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5}/>
+                    </Card>
                 </div>
             </div>
         </Pagina>

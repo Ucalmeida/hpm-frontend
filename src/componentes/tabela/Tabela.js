@@ -29,8 +29,12 @@ function Tabela (props) {
         //TODO
     }
 
+    const pegarId = () => {
+        return props.id;
+    }
+
     const config = {
-        page_size: 10,
+        page_size: props.pageSize,
         length_menu: [5 ,10, 20, 50,100 ],
         button: getBotoes(),
         fa5_support: true,
@@ -49,16 +53,18 @@ function Tabela (props) {
         }
     }
 
-    return ( <DataReact columns={gerarColunas()} records={gerarDados()} config={config}/> );
+    return ( <DataReact id={pegarId()} columns={gerarColunas()} records={gerarDados()} config={config}/> );
 };
 
 Tabela.propTypes = {
+    id: PropTypes.string,
     colunas: PropTypes.array.isRequired,
     dados: PropTypes.any.isRequired,
     rodape: PropTypes.string,
     botoes: PropTypes.bool,
     botoesExtra: PropTypes.any,
     pesquisar: PropTypes.bool,
+    pageSize: PropTypes.number.isRequired
 };
 Tabela.defaultProps = {
     botoes: true

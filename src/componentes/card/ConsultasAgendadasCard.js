@@ -29,6 +29,8 @@ export default function ConsultasAgendadasCard(props) {
         idStatus: ''
     }
 
+    const diaDaSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+
     function handleBtnImprimir(consulta) {
         localStorage.setItem('pacienteConsulta', consulta.id);
         localStorage.setItem('nmPaciente', consulta.nmPaciente);
@@ -81,11 +83,12 @@ export default function ConsultasAgendadasCard(props) {
     const dados = () => {
         return(
             lista.consultas.map((consulta) => {
-                console.log("Lista uso:", consulta);
+                let dtHoraSeparada = consulta.dtHora.split(" - ");
+                let shortDate = new Date(dtHoraSeparada[0]);
                 return({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,
-                    'data__hora': consulta.dtHora,
+                    'data__hora': `${dtHoraSeparada[0]} ( ${diaDaSemana[shortDate.getDay()]} ) - ${dtHoraSeparada[1]}`,
                     'especialidade': consulta.nmEspecialidade,
                     'medico': consulta.nmMedico,
                     'sala': consulta.sala,
@@ -102,7 +105,7 @@ export default function ConsultasAgendadasCard(props) {
 
     return(
         <Card titulo="Consultas Agendadas">
-            <Tabela colunas={colunas} dados={dados()} />
+            <Tabela colunas={colunas} dados={dados()} pageSize={5}/>
         </Card>
     );
 }

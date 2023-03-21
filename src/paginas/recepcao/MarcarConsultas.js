@@ -11,34 +11,39 @@ export default function MarcarConsultas() {
         medicos: []
     });
 
+    const [total, setTotal] = useState({
+        id: [],
+        qtConsultas: []
+    });
+
     const handleBtnVerPacientes = async (consultorioBlocoId, medico) => {
         objeto.idConsultorioBloco = consultorioBlocoId;
         localStorage.setItem('consultorioBloco', objeto.idConsultorioBloco);
-        localStorage.setItem('dtHora', medico.texto3 + " - " + medico.texto4);
-        localStorage.setItem('nmEspecialidade', medico.texto2);
-        localStorage.setItem('nmMedico', medico.texto);
+        localStorage.setItem('dtHora', medico.dataInicio + " - " + medico.dataTermino);
+        localStorage.setItem('nmEspecialidade', medico.especialidadeNome);
+        localStorage.setItem('nmMedico', medico.profissionalSaudeNome);
         window.open("/recepcao/verPacientesConsultaAgendada");
     }
 
     const handleBtnConsulta = async (medico) => {
         localStorage.setItem('emergencia', false);
-        localStorage.setItem('medicoConsulta', medico.valor);
-        localStorage.setItem('nmProfissionalSaude', medico.texto);
-        localStorage.setItem('nmEspecialidade', medico.texto2);
-        localStorage.setItem('idEspecialidade', medico.valor3);
-        localStorage.setItem('idProfissionalSaude', medico.valor2);
-        localStorage.setItem('dataHora', medico.texto3 + " - " + medico.texto4);
+        localStorage.setItem('medicoConsulta', medico.id);
+        localStorage.setItem('nmProfissionalSaude', medico.profissionalSaudeNome);
+        localStorage.setItem('nmEspecialidade', medico.especialidadeNome);
+        localStorage.setItem('idEspecialidade', medico.especialidadeId);
+        localStorage.setItem('idProfissionalSaude', medico.profissionalSaudeId);
+        localStorage.setItem('dataHora', medico.dataInicio + " - " + medico.dataTermino);
         window.open("/recepcao/consulta");
     }
 
     const handleBtnUrgencia = async (medico) => {
         localStorage.setItem('emergencia', true);
-        localStorage.setItem('medicoConsulta', medico.valor);
-        localStorage.setItem('nmProfissionalSaude', medico.texto);
-        localStorage.setItem('nmEspecialidade', medico.texto2);
-        localStorage.setItem('idEspecialidade', medico.valor3);
-        localStorage.setItem('idProfissionalSaude', medico.valor2);
-        localStorage.setItem('dataHora', medico.texto3 + " - " + medico.texto4);
+        localStorage.setItem('medicoConsulta', medico.id);
+        localStorage.setItem('nmProfissionalSaude', medico.profissionalSaudeNome);
+        localStorage.setItem('nmEspecialidade', medico.especialidadeNome);
+        localStorage.setItem('idEspecialidade', medico.especialidadeId);
+        localStorage.setItem('idProfissionalSaude', medico.profissionalSaudeId);
+        localStorage.setItem('dataHora', medico.dataInicio + " - " + medico.dataTermino);
         window.open("/recepcao/consultaEmergencia");
     }
 
@@ -48,34 +53,37 @@ export default function MarcarConsultas() {
     }
 
     const listarConsultoriosBlocoPorEspecialidade = () => {
-        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
-            .then(res => res.json())
+        xfetch('/hpm/consultorioBloco/especialidade/' + objeto.idEspecialidade + '/opcoes', {}, HttpVerbo.POST)
             .then(lista => {
+                console.log("Resultado da lista:", lista.resultado);
                 setLista({...lista, medicos: lista.resultado})
             })
     }
+    console.log("Medicos", lista);
 
     const colunas =[
         {text: "Nome"},
         {text: "Início"},
         {text: "Término"},
         {text: "Vagas"},
+        {text: "Encaixes"},
         {text: "Ações"}
     ]
 
     const dados = () => {
         if(typeof(lista.medicos) !== "undefined") {
             return(
-                lista.medicos.map((medico) => {
+                lista.medicos.map((medico, index) => {
                     return({
-                        'nome': medico.texto,
-                        'inicio': medico.texto3,
-                        'termino': medico.texto4,
-                        'vagas': medico.texto5,
+                        'nome': medico.profissionalSaudeNome,
+                        'inicio': medico.dataInicio,
+                        'termino': medico.dataTermino,
+                        'vagas': medico.qtdTotalConsultasDisponiveis,
+                        'encaixes': medico.qtdTotalEmergenciasDisponiveis,
                         'acoes': <div>
-                                    <Botao onClick={() => handleBtnVerPacientes(medico.valor, medico)} value={medico.valor}>Ver Pacientes</Botao>
+                                    <Botao onClick={() => handleBtnVerPacientes(medico.id, medico)} value={medico.id}>Ver Pacientes</Botao>
                                     <Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>
-                                    <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Urgência</Botao>
+                                    <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Encaixes</Botao>
                                 </div>
                     })
                 })
@@ -100,7 +108,7 @@ export default function MarcarConsultas() {
                         </div>
                     </Card>
                     <Card titulo="Lista de médicos por especialidade">
-                        <Tabela colunas={colunas} dados={dados()} />
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>
