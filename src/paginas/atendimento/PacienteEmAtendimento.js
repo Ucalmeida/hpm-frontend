@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tab, Tabs } from 'react-bootstrap';
-import { Card, Input, Pagina } from "../../componentes";
+import { Card, Input, Pagina, Tabela } from "../../componentes";
 import { PacienteEmAtendimentoEditor } from '../../componentes/form/PacienteEmAtendimentoEditor';
-import { BOTAO, ICONE } from "../../util/Constantes";
+import { BOTAO, ICONE, HttpVerbo } from "../../util/Constantes";
+import { xfetch } from "../../util";
 
 export default function PacienteEmAtendimento() {
+    const [objeto, setObjeto] = useState({
+        consultas: []
+    });
+
+    const [atestado, setAtestado] = useState({
+        atestados: []
+    });
+
     const [consulta, setConsulta] = useState({
         id: localStorage.getItem("pacienteConsulta"),
         idPessoa: localStorage.getItem("idPessoa"),
@@ -51,36 +60,83 @@ export default function PacienteEmAtendimento() {
     consulta.idade = calcIdade(consulta.dtNascimento);
     consulta.imc = calcImc();
 
+    const listaConsultasPacientes = () => {
+        xfetch("/hpm/consulta/historico/pessoa/" + consulta.idPessoa, {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(response => {
+                if (typeof response !== "undefined" ? response.status === "OK" : false) {                    
+                    setObjeto({...objeto, consultas: response.resultado});
+                }
+            })
+            .catch(error => console.log(error))
+                console.log("Consultas", objeto);
+    }
+
+    const listaAtestadosPacientes = () => {
+        xfetch("/hpm/consulta/atestado/historico/pessoa/" + consulta.idPessoa, {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(response => {
+                console.log("Atestados:", response.resultado);
+                if (typeof response !== "undefined" ? response.status === "OK" : false) {                    
+                    setAtestado({...atestado, atestados: response.resultado});
+                }
+            })
+            .catch(error => console.log(error))
+                console.log("Consultas", objeto);
+    }
+
+    useEffect(() => {
+        listaConsultasPacientes();
+        listaAtestadosPacientes();
+    }, []);
+
+    const colunasHistorico = [
+        {text: "Data Hora Atendimento"},
+        {text: "Médico Especialidade"},
+        {text: "Anamnese"},
+        {text: "Conduta"},
+        {text: "Exame Físico"}
+    ]
+    
+    const colunasAtestados = [
+        {text: "Data Hora Atendimento"},
+        {text: "CID"},
+        {text: "Quantidade de dias concedidos"},
+        {text: "Responsável pela Concessão"}
+    ]
+
+    const dadosHistorico = () => {
+        return(
+            typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
+                return ({
+                    'data_hora_atendimento': consulta.dtHora,
+                    'medico_especialidade': consulta.nmMedico + " - " + consulta.nmEspecialidade,
+                    'anamnese': consulta.anamnese,
+                    'conduta': consulta.conduta,
+                    'exame_fisico': consulta.exameFisico
+                })
+            }) : "")
+    }
+    
+    const dadosAtestados = () => {
+        return(
+            typeof atestado.atestados !== 'undefined' ? atestado.atestados.map((atestado) => {
+                let listaCids = atestado.cids.length > 0 ? atestado.cids.map((cid, index) => {
+                    return cid.codigo + (index < (atestado.cids.length - 1) ? ", " : "");
+                }) : "";
+                return ({
+                    'data_hora_atendimento': atestado.consulta.dtHora,
+                    'cid': listaCids,
+                    'quantidade_de_dias_concedidos': atestado.qtdDiasAfastamento,
+                    'responsavel_pela_concessao': atestado.consulta.nmMedico + " - " + atestado.consulta.nmEspecialidade
+                })
+            }) : "")
+    }
+
     return (
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
                 <div className="col-lg-12">
-                    {/* <Card>
-                        <div className="col-lg-12">
-                            <div className={"info-box"}>
-                                <div className="info-box-content">
-                                    <span className="info-box-text">Nome do Paciente</span>
-                                    <span className="info-box-text">{consulta.nmPaciente}</span>
-                                </div>
-                                <div className="info-box-content">
-                                    <span className="info-box-text">Idade do Paciente</span>
-                                    <span className="info-box-number">{consulta.idade}</span>
-                                </div>
-                                <div className="info-box-content">
-                                    <span className="info-box-text">Altura do Paciente</span>
-                                    <span className="info-box-number">{altura + medida.medidaAltura}</span>
-                                </div>
-                                <div className="info-box-content">
-                                    <span className="info-box-text">Peso do Paciente</span>
-                                    <span className="info-box-number">{consulta.peso + medida.medidaPeso}</span>
-                                </div>
-                                <div className="info-box-content">
-                                    <span className="info-box-text">IMC do Paciente</span>
-                                    <span className="info-box-number">{consulta.imc}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </Card> */}
                     <Card className={"collapsed-card"} titulo="Evolução" botaoMin>
                         <div className={"row"}>
                             <div className="col-lg-12">
@@ -111,14 +167,6 @@ export default function PacienteEmAtendimento() {
                                                 label="Nome"
                                                 placeholder="Nome" disabled required/>
                                         </div>
-                                        {/* <div id="matriculaPaciente" className="col-lg-6">
-                                            <Input
-                                                type="text"
-                                                value={"2002070001-76"}
-                                                name="matricula"
-                                                label="Matrícula"
-                                                placeholder="Matrícula" disabled/>
-                                        </div> */}
                                         <div id="cpfPaciente" className="col-lg-6">
                                             <Input
                                                 type="text"
@@ -172,71 +220,17 @@ export default function PacienteEmAtendimento() {
                             <Tab title="Histórico Evolução" eventKey="aba3">
                                 <br />
                                 <div className="col-lg-12">
-                                    <div className="row">
-                                        <table className={"col-lg-12"} border="1">
-                                            <thead>
-                                                <tr>
-                                                    <td><b>Data/Hora Atendimento</b></td>
-                                                    <td><b>Responsável Atendimento/Especialidade</b></td>
-                                                    <td><b>Descrição Atendimento</b></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>23/01/2023 09:30</td>
-                                                    <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
-                                                    <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>22/01/2023 09:30</td>
-                                                    <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
-                                                    <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>21/01/2023 09:30</td>
-                                                    <td>DRa ADRIANA MOTA CARNAUBA - CLÍNICA GERAL</td>
-                                                    <td>Aqui temos um exemplo de descrição do atendimento realizado.</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <Card>
+                                        <Tabela colunas={colunasHistorico} dados={dadosHistorico()} pageSize={5} />
+                                    </Card>
                                 </div>
                             </Tab>
                             <Tab title="Atestados Concedidos" eventKey="aba4">
                                 <br />
                                 <div className="col-lg-12">
-                                    <div className="row">
-                                        <table className={"col-lg-12"} border="1">
-                                            <thead>
-                                                <tr>
-                                                    <td><b>Data Atendimento</b></td>
-                                                    <td><b>CIDs</b></td>
-                                                    <td><b>Quantidade de Dias Concedidos</b></td>
-                                                    <td><b>Responsável pela Concessão</b></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>23/01/2023</td>
-                                                    <td>Z23.0, M43.6, M22.4</td>
-                                                    <td>3</td>
-                                                    <td>DRa ADRIANA MOTA CARNAUBA</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>22/01/2023</td>
-                                                    <td>Z23.0, M43.6, M22.4</td>
-                                                    <td>3</td>
-                                                    <td>DRa ADRIANA MOTA CARNAUBA</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>21/01/2023</td>
-                                                    <td>Z23.0, M43.6, M22.4</td>
-                                                    <td>3</td>
-                                                    <td>DRa ADRIANA MOTA CARNAUBA</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <Card>
+                                        <Tabela colunas={colunasAtestados} dados={dadosAtestados()} pageSize={5} />
+                                    </Card>
                                 </div>
                             </Tab>
                             {/* <Tab title="Estados Preexistentes" eventKey="aba5">
