@@ -58,8 +58,8 @@ export const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "application/json");
     myHeaders.append("idTransacao", idTransacao);
-    if (localStorage.getItem('token')) {
-        myHeaders.append("token", localStorage.getItem('token'));
+    if (sessionStorage.getItem('token')) {
+        myHeaders.append("token", sessionStorage.getItem('token'));
     }
 
     const myInit = { method: verbo,
@@ -82,26 +82,25 @@ export const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 }
 
 export function Logado () {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
 }
 
 export function ValidaToken () {
     const tokenJson = {
-        token: localStorage.getItem('token')
+        token: sessionStorage.getItem('token')
     }
     xfetch('/validaToken',tokenJson, HttpVerbo.POST)
         .then(json => {
             if (!json.resultado) {
-                localStorage.clear();
+                sessionStorage.clear();
                 window.location.replace('/login')
             }
         })
 }
 
 export const Logoff = () => {
-    window.addEventListener('beforeunload', (e) => {
+    window.onunload = ((e) => {
         e.preventDefault();
         localStorage.clear();
-        window.location.reload();
     });
 }

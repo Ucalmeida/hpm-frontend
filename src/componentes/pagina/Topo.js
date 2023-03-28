@@ -12,7 +12,7 @@ export default class Topo extends React.Component {
         super(toggleMenuSidebar);
         this.toggleMenuSidebar = toggleMenuSidebar
 
-        let token = localStorage.getItem('token');
+        let token = sessionStorage.getItem('token');
         let usuario = localStorage.getItem('usuario');
         this.state = {
             usuario: usuario,
