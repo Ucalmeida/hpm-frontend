@@ -128,10 +128,10 @@ function PacienteEmAtendimentoEditor(props) {
         })
     }
 
-    const handleBtnFinalizarConsulta = async (consultaId, statusId, cidsId) => {
+    const handleBtnFinalizarConsulta = async (consultaId, statusId) => {
         consultaSelecionada.idConsulta = consultaId;
         consultaSelecionada.idStatus = statusId;
-        consultaSelecionada.idCIDs = cidsId;
+        consultaSelecionada.idCIDs = consulta.idCids;
         if (editorRef.current || editorExFisico.current || editorConduta.current) {
             consultaSelecionada.anamnese = editorRef.current.getContent({format: "text"});
             consultaSelecionada.exameFisico = editorExFisico.current.getContent({format: "text"});
@@ -333,7 +333,7 @@ function PacienteEmAtendimentoEditor(props) {
                     </Tabs>
                 </Card>
                 <div className={'btnFinalizar'}>
-                    <Botao cor={props.corDoBotao} icone={props.icone} onClick={() => handleBtnFinalizarConsulta(props.idConsulta, Number("7"), props.cids)}>{props.nome}</Botao>
+                    <Botao cor={props.corDoBotao} icone={props.icone} onClick={() => handleBtnFinalizarConsulta(props.idConsulta, Number("7"))}>{props.nome}</Botao>
                 </div>
             </div>
         </div>

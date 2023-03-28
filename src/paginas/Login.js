@@ -54,8 +54,8 @@ const Login = () => {
                     localStorage.setItem('id', dados.id);
                     localStorage.setItem('usuario', dados.usuario);
                     localStorage.setItem('login', dados.login);
-                    localStorage.setItem('token', dados.token);
-                    localStorage.setItem('perfis', dados.perfis)
+                    sessionStorage.setItem('token', dados.token);
+                    localStorage.setItem('perfis', dados.perfis);
                     setUser({...user, logado: true})
                     window.location.reload();
                 }
@@ -69,7 +69,7 @@ const Login = () => {
 
     const {login, senha, logado, carregando} = user;
 
-    if (logado || localStorage.getItem('token')) {
+    if (logado || sessionStorage.getItem('token')) {
         return <Redirect to={'/principal'}/>
     }
     let spiner = '';
