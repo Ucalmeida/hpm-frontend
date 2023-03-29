@@ -68,7 +68,7 @@ import RecuperarSenha from "./paginas/RecuperarSenha";
 import PessoaPerfis from "./paginas/vincular/PessoaPerfis";
 
 function verificaToken() {
-    xfetch('/validaToken', {token: sessionStorage.getItem('token')}, HttpVerbo.POST)
+    xfetch('/validaToken', {token: localStorage.getItem('token')}, HttpVerbo.POST)
         .then(json => {
                 let valido = json.resultado
                 if (!valido) {
