@@ -43,10 +43,10 @@ export default class Topo extends React.Component {
 
             return (
                 <li className='nav-item dropdown mr-2'>
-                    <a className='nav-link' data-toggle='dropdown' href='#'>
+                    {/* <a className='nav-link' data-toggle='dropdown' href='#'>
                         <i className='far fa-bell'></i>
                         <span className='badge badge-warning navbar-badge'> {listaNotificacoes.length} </span>
-                    </a>
+                    </a> */}
                     <div className='dropdown-menu dropdown-menu-lg dropdown-menu-center animated--grow-in'>
                         <span className='dropdown-item dropdown-header text-bold'>Notificações</span>
                         <div className='dropdown-divider'></div>
