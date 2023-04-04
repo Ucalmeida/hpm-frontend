@@ -50,7 +50,7 @@ export default function Consulta() {
 
     const listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
         setObjeto({...objeto, consultoriosBloco: []})
-        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idProfissional + '/disponiveis/opcoes', {}, HttpVerbo.GET)
+        xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idProfissional + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
                     setObjeto({...objeto, consultoriosBloco: json.resultado})
