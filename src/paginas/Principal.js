@@ -27,7 +27,7 @@ export default function Principal () {
     // }
     return (
 
-        <Pagina titulo="Bem Vindo" subTitulo="Sub Titulo">
+        <Pagina titulo="Bem Vindo">
             {/*<div className="row">*/}
             {/*    <div className="col-6">*/}
             {/*        <Card titulo={"Auto completar"}>*/}

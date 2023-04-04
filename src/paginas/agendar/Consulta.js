@@ -70,10 +70,8 @@ export default function Consulta() {
             )
     }
 
-    let prof = objeto.profissionais
-    let consultaBloco = objeto.consultoriosBloco
-
-    console.log("Pessoa:", objeto.idPessoa);
+    let prof = objeto.profissionais;
+    let consultaBloco = objeto.consultoriosBloco;
 
     return(
         <Pagina titulo="Agendar Consulta">
