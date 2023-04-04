@@ -84,11 +84,13 @@ export default function ConsultasAgendadasCard(props) {
         return(
             lista.consultas.map((consulta) => {
                 let dtHoraSeparada = consulta.dtHora.split(" - ");
-                let shortDate = new Date(dtHoraSeparada[0]);
+                let dtSeparada = dtHoraSeparada[0].split("/");
+                let dtRearanjo  = dtSeparada[2] + "-" + dtSeparada[1] + "-" + dtSeparada[0];
+                let shortDate = new Date(dtRearanjo);
                 return({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,
-                    'data__hora': `${dtHoraSeparada[0]} ( ${diaDaSemana[shortDate.getDay()]} ) - ${dtHoraSeparada[1]}`,
+                    'data__hora': `${dtHoraSeparada[0]} ( ${diaDaSemana[shortDate.getDay() + 1]} ) - ${dtHoraSeparada[1]}`,
                     'especialidade': consulta.nmEspecialidade,
                     'medico': consulta.nmMedico,
                     'sala': consulta.sala,
