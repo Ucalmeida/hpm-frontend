@@ -6,14 +6,16 @@ import ReactToPrint, {useReactToPrint} from "react-to-print";
 
 const ConsultasAgendadasImprimir = () => {
     const componentRef = useRef();
+    
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
+
     const consultaAgendada = {
         idConsulta: localStorage.getItem('pacienteConsulta'),
         nmPaciente: localStorage.getItem('nmPaciente'),
         cpfPaciente: localStorage.getItem('cpfPaciente'),
-        nmCelular: localStorage.getItem('nmCelular'),
+        nmCelular: localStorage.getItem('nmCelular') !== "null" ? localStorage.getItem('nmCelular') : "Não Informado",
         dtHora: localStorage.getItem('dtHora'),
         nmEspecialidade: localStorage.getItem('nmEspecialidade'),
         nmMedico: localStorage.getItem('nmMedico'),
@@ -21,6 +23,7 @@ const ConsultasAgendadasImprimir = () => {
         piso: localStorage.getItem('piso'),
         status: localStorage.getItem('nmStatus')
     }
+
     return (
         <Pagina titulo="Imprimir Consultas Agendadas">
             <div className="row">
@@ -37,7 +40,7 @@ const ConsultasAgendadasImprimir = () => {
                                         SISTEMA DE AGENDAMENTO DE CONSULTA MÉDICA <br />
                                         COMPROVANTE DE AGENDAMENTO</b></h4><br />
                                     <h6 style={{marginLeft: '1.5em'}}>Paciente: {consultaAgendada.nmPaciente}</h6>
-                                    <h6 style={{marginLeft: '1.5em'}}>Telefone: {consultaAgendada.nmCelular}</h6>
+                                    <h6 style={{marginLeft: '1.5em'}}>Telefone: { consultaAgendada.nmCelular }</h6>
                                     <h6 style={{marginLeft: '1.5em'}}>Consultório: {consultaAgendada.sala} + {consultaAgendada.piso}</h6>
                                     <h6 style={{marginLeft: '1.5em'}}>Especialidade: {consultaAgendada.nmEspecialidade}</h6>
                                     <h6 style={{marginLeft: '1.5em'}}>Médico: {consultaAgendada.nmMedico}</h6>
