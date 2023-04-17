@@ -83,7 +83,7 @@ tr.selected > td > a.btn {
 }
 
 .login-box, .register-box {
-    margin-top: 100px;
+    margin: 100px auto;
 }
 
 /* ---------------------------------------  MENU SUPERIOR --------------------------------------------*/
