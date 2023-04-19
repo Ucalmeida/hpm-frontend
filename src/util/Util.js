@@ -55,10 +55,12 @@ export const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 
     let myHeaders = new Headers();
     let idTransacao = uuid();
+    let idPessoaLogada = localStorage.getItem('id');
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Access-Control-Allow-Origin", "*");
     myHeaders.append("idTransacao", idTransacao);
+    myHeaders.append("idPessoaLogada", idPessoaLogada);
     if (localStorage.getItem('token')) {
         myHeaders.append("token", localStorage.getItem('token'));
     }

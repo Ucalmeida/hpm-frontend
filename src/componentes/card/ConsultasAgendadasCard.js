@@ -113,6 +113,6 @@ export default function ConsultasAgendadasCard(props) {
 }
 
 ConsultasAgendadasCard.propTypes = {
-    objeto: PropTypes.string,
+    objeto: PropTypes.number,
     url: PropTypes.string
 }
