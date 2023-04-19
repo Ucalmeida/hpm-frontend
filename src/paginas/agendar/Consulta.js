@@ -7,7 +7,7 @@ import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
 export default function Consulta() {
     const [objeto, setObjeto] = useState(
         {
-            idPessoa: localStorage.getItem('id'),
+            idPessoa: Number(localStorage.getItem('id')),
             idConsultorioBloco: '',
             idProfissional: '',
             idEspecialidade: null,
@@ -122,9 +122,9 @@ export default function Consulta() {
                                     value={objeto.idConsultorioBloco}
                                     onChange={selecionarConsultorioBloco}>
                                     <option hidden>Selecione...</option>
-                                    {consultaBloco.map((v, k) => {
+                                    {consultaBloco !== undefined ? consultaBloco.map((v, k) => {
                                         return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
-                                    })}
+                                    }) : null}
                                 </select>
                             </div>
                             <div className="col-lg-12 text-lg-right mt-4 mb-4">
