@@ -85,7 +85,7 @@ export default function CadastrarEscala() {
     }
 
     const handleStatus = (e) => {
-        objeto.idStatus = e.target.value;
+        setObjeto({...objeto, idStatus: e.target.value});
     }
 
     // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
@@ -103,12 +103,12 @@ export default function CadastrarEscala() {
             xfetch('/hpm/escala/cadastrar', objeto, HttpVerbo.POST)
                 .then( json =>{
                         if (typeof json !== "undefined" ? json.status === "OK" : null) {
-                            ExibirMensagem('Escala Cadastrada Com Sucesso!', MSG.SUCESSO);
+                            ExibirMensagem('Escala Cadastrada Com Sucesso!', MSG.SUCESSO, '', '', '', '', listarEscalasPorStatus());
                         }
                     }
                 )
             // setCadastrar(!cadastrar); ATUALIZAR: Mudei isso aqui no dia 06 de fevereiro de 2023 para teste
-            listarEscalasPorStatus(); // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
+            // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
         } else {
             ExibirMensagem("Mês selecionado para nome da escala não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
         }
@@ -182,8 +182,8 @@ export default function CadastrarEscala() {
                                     value={objeto.idStatus}
                                     onChange={handleStatus}>
                                     <option hidden>Selecione...</option>
-                                    {status.listaStatus.map((v, k) => {
-                                        return <option className="flex-fill" value={v.id} key={k}> {v.nome}</option>
+                                    {status.listaStatus.map((v) => {
+                                        return <option className="flex-fill" value={v.id} key={v.id}> {v.nome}</option>
                                     })}
                                 </select>
                             </div>

@@ -156,7 +156,7 @@ function PacienteEmAtendimentoEditor(props) {
                 <Card className={"collapsed-card"} titulo={"Anamnese"} botaoMin>
                     <Editor
                         onInit={(evt, editor) => editorRef.current = editor}
-                        initialValue="<p>Insira aqui o texto.</p>"
+                        placeholder={"Insira aqui o texto."}
                         init={{
                             height: 300,
                             menubar: props.menuBara,
@@ -176,7 +176,6 @@ function PacienteEmAtendimentoEditor(props) {
                 <Card className={"collapsed-card"} titulo={"Exame Físico"} botaoMin>
                     <Editor
                         onInit={(evt, editor) => editorExFisico.current = editor}
-                        initialValue="<p>Insira aqui o texto.</p>"
                         init={{
                             height: 300,
                             menubar: props.menuBara,
@@ -196,7 +195,6 @@ function PacienteEmAtendimentoEditor(props) {
                 <Card className={"collapsed-card"} titulo={"Conduta"} botaoMin>
                     <Editor
                         onInit={(evt, editor) => editorConduta.current = editor}
-                        initialValue="<p>Insira aqui o texto.</p>"
                         init={{
                             height: 300,
                             menubar: props.menuBara,

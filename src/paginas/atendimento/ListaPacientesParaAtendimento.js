@@ -168,8 +168,12 @@ export default function ListaPacientesParaAtendimento() {
                             </div>
                         </div>
                     </Card>
-                    <Card titulo="Pacientes Confirmados">
-                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+                    <Card titulo="Paciente Confirmado">
+                        {   
+                            (objeto.consultas !== undefined) ? 
+                                <Tabela colunas={colunas} dados={dados()} pageSize={5} /> 
+                                : "Nenhum Resultado Encontrado..."
+                        }
                     </Card>
                 </div>
             </div>
