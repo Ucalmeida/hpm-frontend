@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {Link, Redirect} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Redirect } from "react-router-dom";
 
-import logoHPM from "../img/brasoes/brasao_hpm.png";
-import {ExibirMensagem, xfetch} from "../util";
-import {Botao, Icone} from "../componentes";
+import { Icone } from "../componentes";
 import PaginaSemLogin from "../componentes/pagina/PaginaSemLogin";
-import {HttpVerbo, MSG} from "../util/Constantes";
+import logoHPM from "../img/brasoes/brasao_hpm.png";
+import { ExibirMensagem, xfetch } from "../util";
+import { HttpVerbo, MSG } from "../util/Constantes";
 
 document.getElementById('body').classList.remove('hold-transition','sidebar-mini','layout-fixed');
 document.getElementById('body').classList.add('login-page');
@@ -37,7 +37,9 @@ const Login = () => {
     }
 
     const jaLogado = () => {
-
+        if (localStorage.getItem('token')) {
+            setUser({...user, logado: true});
+        }
     }
 
     const enviar = (e) => {
@@ -82,41 +84,41 @@ const Login = () => {
 
     return (
         <PaginaSemLogin titulo="Insira abaixo suas credenciais para entrar no módulo HPM" img={logoHPM}>
-            <div className="mb-3">
-                <div className="input-group">
-                    <input
-                        type="text"
-                        className="form-control"
-                        name="login"
-                        value={login}
-                        onChange={handleLogin}
-                        placeholder="Usuário"
-                    />
-                    <div className="input-group-append">
-                        <div className="input-group-text">
-                            <span className="fas fa-envelope"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="mb-3">
-                <div className="input-group">
-                    <input
-                        type="password"
-                        className="form-control"
-                        name="senha"
-                        value={senha}
-                        onChange={handleSenha}
-                        placeholder="Senha"
-                    />
-                    <div className="input-group-append">
-                        <div className="input-group-text">
-                            <span className="fas fa-lock"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <form onSubmit={enviar}>
+                <div className="mb-3">
+                    <div className="input-group">
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="login"
+                            value={login}
+                            onChange={handleLogin}
+                            placeholder="Usuário"
+                        />
+                        <div className="input-group-append">
+                            <div className="input-group-text">
+                                <span className="fas fa-envelope"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="mb-3">
+                    <div className="input-group">
+                        <input
+                            type="password"
+                            className="form-control"
+                            name="senha"
+                            value={senha}
+                            onChange={handleSenha}
+                            placeholder="Senha"
+                        />
+                        <div className="input-group-append">
+                            <div className="input-group-text">
+                                <span className="fas fa-lock"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="col-12 text-center">
                     <button type="submit" className="btn btn-primary"><Icone icone={"fas fa-sign-in-alt"}/>Acessar</button>
                 </div>

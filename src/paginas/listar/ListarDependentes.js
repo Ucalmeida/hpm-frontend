@@ -2,8 +2,10 @@ import {Autocompletar, Card, Pagina, Tabela} from "../../componentes";
 import React, {useEffect, useState} from "react";
 import {HttpVerbo} from "../../util/Constantes";
 import {xfetch} from "../../util";
+import { temPermissao } from '../../util/Util';
 
 export default function ListarDependentes() {
+    
     const [objeto, setObjeto] = useState({
         idPessoa: null
     })
@@ -62,28 +64,30 @@ export default function ListarDependentes() {
         setList({...list, dependentes: []})
     }, [result.prm])
 
-    return (
-        <Pagina titulo="Listar Dependentes">
-            <div id="form" className={"row"}>
-                <Card titulo="Listar">
-                    <div>
-                        <Autocompletar
-                            name="pessoa"
-                            url="/hpm/pessoa/"
-                            label="Nome ou CPF:"
-                            placeholder="Nome ou CPF aqui"
-                            tamanho={6}
-                            retorno={selecionarPessoa}
-                            changeResultado={minhaFuncao}
-                        />
-                    </div>
-                </Card>
-            </div>
-            <div id="tab" className={"row"}>
-                <Card titulo="Lista de dependentes">
-                    <Tabela colunas={colunas} dados={dados()} pageSize={5} />
-                </Card>
-            </div>
-        </Pagina>
-    );
+    if (temPermissao("/listar/listarDependentes")) {
+        return (
+            <Pagina titulo="Listar Dependentes">
+                <div id="form" className={"row"}>
+                    <Card titulo="Listar">
+                        <div>
+                            <Autocompletar
+                                name="pessoa"
+                                url="/hpm/pessoa/"
+                                label="Nome ou CPF:"
+                                placeholder="Nome ou CPF aqui"
+                                tamanho={6}
+                                retorno={selecionarPessoa}
+                                changeResultado={minhaFuncao}
+                            />
+                        </div>
+                    </Card>
+                </div>
+                <div id="tab" className={"row"}>
+                    <Card titulo="Lista de dependentes">
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+                    </Card>
+                </div>
+            </Pagina>
+        );
+    }
 }

@@ -183,7 +183,6 @@ export default function ConsultorioBloco() {
 
     const handleCadastro = () => {
         if (objeto.idEscala !== null) {
-            console.log("🚀 ~ file: ConsultorioBloco.js:185 ~ handleCadastro ~ selecionar:", selecionar);
             xfetch('/hpm/consultorioBloco/escala/' + objeto.idEscala + '/opcoes', {}, HttpVerbo.POST)
             .then(lista => setLista({...lista, blocos: lista.resultado}))
         }

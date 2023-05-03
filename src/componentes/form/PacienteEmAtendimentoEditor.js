@@ -143,6 +143,7 @@ function PacienteEmAtendimentoEditor(props) {
                     ExibirMensagem('Consulta Salva Com Sucesso!', MSG.SUCESSO)
                 }
             })
+        window.opener.location.reload();
         window.close();
     }
 

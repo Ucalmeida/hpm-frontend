@@ -3,6 +3,7 @@ import { Botao, Card, Pagina, Select } from "../../componentes";
 import ConsultasAgendadasCard from "../../componentes/card/ConsultasAgendadasCard";
 import { ExibirMensagem, xfetch } from "../../util";
 import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
+import { temPermissao } from '../../util/Util';
 
 export default function Consulta() {
     const [objeto, setObjeto] = useState(
@@ -73,68 +74,70 @@ export default function Consulta() {
     let prof = objeto.profissionais;
     let consultaBloco = objeto.consultoriosBloco;
 
-    return(
-        <Pagina titulo="Agendar Consulta">
-            <div className="row">
-                <div className="col-lg-12">
-                    <Card titulo="Agendar">
-                        <div className="row">
-                            <div className="col-lg-3">
-                                <label>Paciente</label>
-                                <Select
-                                    funcao={selecionarPaciente}
-                                    nome="idPaciente"
-                                    url={"/hpm/dependente/titular/" + localStorage.getItem('id') + "/opcoes"}
-                                />
+    if (temPermissao("/agendar/consulta")) {
+        return(
+            <Pagina titulo="Agendar Consulta">
+                <div className="row">
+                    <div className="col-lg-12">
+                        <Card titulo="Agendar">
+                            <div className="row">
+                                <div className="col-lg-3">
+                                    <label>Paciente</label>
+                                    <Select
+                                        funcao={selecionarPaciente}
+                                        nome="idPaciente"
+                                        url={"/hpm/dependente/titular/" + localStorage.getItem('id') + "/opcoes"}
+                                    />
+                                </div>
+                                <div className="col-lg-3">
+                                    <label>Especialidade</label>
+                                    <Select
+                                        funcao={selecionarEspecialidade}
+                                        nome="idEspecialidade"
+                                        url={"/hpm/especialidade/escalas-ativas/opcoes"}
+                                    />
+                                </div>
+    
+                                <input type="hidden" name="idPessoa"/>
+    
+                                <div className="col-lg-3">
+                                    <label>Médico</label>
+                                    <br/>
+                                    <select
+                                        className="form-control"
+                                        name="idProfissional"
+                                        value={objeto.idProfissional}
+                                        onChange={selecionarProfissionalSaude}>
+                                        <option hidden>Selecione...</option>
+                                        {prof.map((v, k) => {
+                                            return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
+                                        })}
+                                    </select>
+                                </div>
+    
+                                <div className="col-lg-3">
+                                    <label>Data - Hora</label>
+                                    <br/>
+                                    <select
+                                        className="form-control"
+                                        name="idConsultorioBloco"
+                                        value={objeto.idConsultorioBloco}
+                                        onChange={selecionarConsultorioBloco}>
+                                        <option hidden>Selecione...</option>
+                                        {consultaBloco !== undefined ? consultaBloco.map((v, k) => {
+                                            return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
+                                        }) : null}
+                                    </select>
+                                </div>
+                                <div className="col-lg-12 text-lg-right mt-4 mb-4">
+                                    <Botao cor={BOTAO.COR.SUCESSO} icone={ICONE.SALVAR} onClick={enviar}>Agendar</Botao>
+                                </div>
                             </div>
-                            <div className="col-lg-3">
-                                <label>Especialidade</label>
-                                <Select
-                                    funcao={selecionarEspecialidade}
-                                    nome="idEspecialidade"
-                                    url={"/hpm/especialidade/escalas-ativas/opcoes"}
-                                />
-                            </div>
-
-                            <input type="hidden" name="idPessoa"/>
-
-                            <div className="col-lg-3">
-                                <label>Médico</label>
-                                <br/>
-                                <select
-                                    className="form-control"
-                                    name="idProfissional"
-                                    value={objeto.idProfissional}
-                                    onChange={selecionarProfissionalSaude}>
-                                    <option hidden>Selecione...</option>
-                                    {prof.map((v, k) => {
-                                        return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
-                                    })}
-                                </select>
-                            </div>
-
-                            <div className="col-lg-3">
-                                <label>Data - Hora</label>
-                                <br/>
-                                <select
-                                    className="form-control"
-                                    name="idConsultorioBloco"
-                                    value={objeto.idConsultorioBloco}
-                                    onChange={selecionarConsultorioBloco}>
-                                    <option hidden>Selecione...</option>
-                                    {consultaBloco !== undefined ? consultaBloco.map((v, k) => {
-                                        return <option className="flex-fill" value={v.valor} key={k}> {v.texto}</option>
-                                    }) : null}
-                                </select>
-                            </div>
-                            <div className="col-lg-12 text-lg-right mt-4 mb-4">
-                                <Botao cor={BOTAO.COR.SUCESSO} icone={ICONE.SALVAR} onClick={enviar}>Agendar</Botao>
-                            </div>
-                        </div>
-                    </Card>
-                    <ConsultasAgendadasCard url={'/hpm/consulta/titular-dependentes/agendadas/' + objeto.idPessoa} objeto={objeto.idPessoa}/>
+                        </Card>
+                        <ConsultasAgendadasCard url={'/hpm/consulta/titular-dependentes/agendadas/' + objeto.idPessoa} objeto={objeto.idPessoa}/>
+                    </div>
                 </div>
-            </div>
-        </Pagina>
-    )
+            </Pagina>
+        )
+    }
 }
