@@ -69,7 +69,6 @@ export default function PacienteEmAtendimento() {
                 }
             })
             .catch(error => console.log(error))
-                console.log("Consultas", objeto);
     }
 
     const listaAtestadosPacientes = () => {
@@ -82,7 +81,6 @@ export default function PacienteEmAtendimento() {
                 }
             })
             .catch(error => console.log(error))
-                console.log("Consultas", objeto);
     }
 
     useEffect(() => {

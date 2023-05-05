@@ -107,3 +107,11 @@ export const Logoff = () => {
         localStorage.clear();
     });
 }
+
+export const temPermissao = (acao) => {
+    let perfis = localStorage.getItem('perfis');
+    if (perfis) {        
+        return perfis.includes(acao);
+    }
+    return false;
+}

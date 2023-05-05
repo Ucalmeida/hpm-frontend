@@ -35,6 +35,7 @@ export default function Consulta() {
                     }
                 }
             )
+            window.opener.location.reload();
     }
 
     return(

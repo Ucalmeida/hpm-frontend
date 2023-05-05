@@ -101,6 +101,15 @@ export default function ListaPacientesParaAtendimento() {
 
     console.log("Consultas", objeto.consultas);
 
+    if (atendimentos.dataConsulta !== null) {
+        localStorage.setItem('data', atendimentos.dataConsulta);
+    }
+
+    if (atendimentos.dataConsulta === null && localStorage.getItem('data') !== null) {
+        atendimentos.dataConsulta = localStorage.getItem('data');
+        listarPacientesParaAtendimentoPorData();
+    }
+
     const colunas = [
         {text: "Paciente"},
         {text: "CPF do Paciente"},
@@ -159,8 +168,12 @@ export default function ListaPacientesParaAtendimento() {
                             </div>
                         </div>
                     </Card>
-                    <Card titulo="Pacientes Confirmados">
-                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+                    <Card titulo="Paciente Confirmado">
+                        {   
+                            (objeto.consultas !== undefined) ? 
+                                <Tabela colunas={colunas} dados={dados()} pageSize={5} /> 
+                                : "Nenhum Resultado Encontrado..."
+                        }
                     </Card>
                 </div>
             </div>
