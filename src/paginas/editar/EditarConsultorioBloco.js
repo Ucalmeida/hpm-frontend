@@ -2,9 +2,10 @@ import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 
 import { Form, Modal } from 'react-bootstrap';
-import { Botao, BotaoAlterar, Card, Input, Select, Tabela } from '../../componentes';
+import { Botao, Card, Input, Select, Tabela } from '../../componentes';
+import ModalFormAlterarConsultorioBloco from '../../componentes/modal/ModalFormAlterarConsultorioBloco';
 import { ExibirMensagem, xfetch } from '../../util';
-import { BOTAO, HttpVerbo, MSG } from '../../util/Constantes';
+import { BOTAO, HttpVerbo, ICONE, MSG } from '../../util/Constantes';
 
 export default function EditarConsultorioBloco(props) {
     const [show, setShow] = useState(false);
@@ -254,25 +255,6 @@ export default function EditarConsultorioBloco(props) {
             )
     }
 
-    const enviar = (e) => {
-        if (verificador.mesInicio === verificador.mesEscala && 
-            verificador.mesTermino === verificador.mesEscala &&
-            verificador.ano === verificador.anoEscala) {
-                if (objeto.qtdConsultas === null) objeto.qtdConsultas = qtd.consultas;
-                if (objeto.qtdEmergencias === null) objeto.qtdEmergencias = qtd.encaixes;
-                xfetch(`/hpm/consultorioBloco/alterar/${dadosConsultorioBloco.bloco.id}`, objeto, HttpVerbo.PUT)
-                    .then( json =>{
-                            if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                                ExibirMensagem('Consultorio Bloco Alterado Com Sucesso!', MSG.SUCESSO, '', '', '', window.location.reload());
-                            }
-                        }
-                    )
-                    .catch(error => console.log(error))
-            } else {
-                ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
-            }
-    }
-
     useEffect(() => {
         xfetch('/hpm/status/' + escalaObjeto, {}, HttpVerbo.GET)
             .then( res => res.json())
@@ -428,7 +410,15 @@ export default function EditarConsultorioBloco(props) {
                     <Botao cor={BOTAO.COR.SECUNDARIO} onClick={handleClose}>
                         Fechar
                     </Botao>
-                    <BotaoAlterar onClick={enviar} />
+                    <ModalFormAlterarConsultorioBloco 
+                            corDoBotao={BOTAO.COR.ALERTA}
+                            icone={ICONE.ALTERAR}
+                            titulo={"Alterar"}
+                            nome={"Alterar"}
+                            verificador={verificador}
+                            objeto={objeto}
+                            qtd={qtd}
+                        />
                 </Modal.Footer>
             </Modal>
         </>
