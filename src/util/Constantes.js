@@ -50,6 +50,7 @@ const ICONE = {
         PESQUISAR: 'fas fa-search',
         SALVAR: 'far fa-save',
         VOLTAR: 'fas fa-reply',
+        EYE: 'fa fa-eye',
 }
 
 const TEXTO = {
