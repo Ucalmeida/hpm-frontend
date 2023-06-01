@@ -57,6 +57,7 @@ const Login = () => {
                     localStorage.setItem('usuario', dados.usuario);
                     localStorage.setItem('login', dados.login);
                     sessionStorage.setItem('token', dados.token);
+                    localStorage.setItem('tkn', dados.token);
                     localStorage.setItem('perfis', dados.perfis);
                     setUser({...user, logado: true})
                     window.location.reload();

@@ -16,6 +16,7 @@ import ConsultasAgendadasImprimir from "./paginas/agendar/ConsultasAgendadasImpr
 import AtestadoImprimir from "./paginas/atendimento/AtestadoImprimir";
 // import Impressos from './paginas/atendimento/Impressos';
 import ListaPacientesParaAtendimento from "./paginas/atendimento/ListaPacientesParaAtendimento";
+// import ListaHistoricosPacientes from "./paginas/atendimento/ListaHistoricosPacientes";
 import PacienteEmAtendimento from "./paginas/atendimento/PacienteEmAtendimento";
 import ReceitaImprimir from "./paginas/atendimento/ReceitaImprimir";
 
@@ -68,11 +69,11 @@ import RecuperarSenha from "./paginas/RecuperarSenha";
 import PessoaPerfis from "./paginas/vincular/PessoaPerfis";
 
 function verificaToken() {
-    xfetch('/validaToken', {token: localStorage.getItem('token')}, HttpVerbo.POST)
+    xfetch('/validaToken', {token: localStorage.getItem('tkn')}, HttpVerbo.POST)
         .then(json => {
                 let valido = json.resultado
                 if (!valido) {
-                    sessionStorage.clear()
+                    localStorage.clear()
                     window.location.replace('/login')
                 }
             }
@@ -102,6 +103,7 @@ const App =  () =>  {
                     <Route exact path="/agendar/consultasAgendadasImprimir" component={ConsultasAgendadasImprimir} />
 
                     <Route exact path="/atendimento/listaPacientesParaAtendimento" component={ListaPacientesParaAtendimento} />
+                    {/*<Route exact path="/atendimento/listaHistoricosPacientes" component={ListaHistoricosPacientes} />*/}
                     <Route exact path="/atendimento/pacienteEmAtendimento" component={PacienteEmAtendimento} />
                     <Route exact path="/atendimento/atestadoImprimir" component={AtestadoImprimir} />
                     <Route exact path="/atendimento/receitaImprimir" component={ReceitaImprimir} />
