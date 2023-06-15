@@ -217,7 +217,7 @@ function PacienteEmAtendimentoEditor(props) {
                         url={"/hpm/cid/"}
                         label="Digite o CID:"
                         placeholder="Nome ou código aqui"
-                        tamanho={4}
+                        tamanho={3}
                         retorno={handleCID} />
                     <br />
                     <FormGroup>
