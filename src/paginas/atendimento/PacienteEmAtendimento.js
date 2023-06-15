@@ -135,7 +135,7 @@ export default function PacienteEmAtendimento() {
         <Pagina titulo="Paciente em Atendimento">
             <div className="row">
                 <div className="col-lg-12">
-                    <Card className={"collapsed-card"} titulo={"Dados do Paciente"} botaoMin>
+                    <Card titulo={"Dados do Paciente"} botaoMin>
                         <Tabs>
                             <Tab title="Dados Pessoais" eventKey="aba1">
                                 <br/>
