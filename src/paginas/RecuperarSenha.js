@@ -11,7 +11,7 @@ export default class RecuperarSenha extends React.Component {
             cpf: '',
             novaSenha: '',
             repeteNovaSenha:'',
-             hash: ''
+            hash: ''
         }
     }
 
@@ -42,11 +42,14 @@ export default class RecuperarSenha extends React.Component {
             return;
         }
 
+        let meuHash = this.props.match.params.hash;
+        const hashTratado = meuHash.replace("hash=", "");
+
         let objeto = {
             cpf: cpf,
             novaSenha: novaSenha,
             repeteNovaSenha: repeteNovaSenha,
-            hash:  this.props.match.params.hash
+            hash: hashTratado
         }
 
         xfetch('/hpm/redefinir/recuperarMinhaSenha', objeto, HttpVerbo.POST)
