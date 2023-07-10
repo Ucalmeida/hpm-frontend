@@ -40,6 +40,12 @@ export const acoes = [
         "url": "listaPacientesParaAtendimento",
         "icone": "fas fa-stethoscope"
       },
+      {
+        "nome": "Listar Histórico de Pacientes Atendidos",
+        "descricao": "Lista para de pacientes atendidos para ver histórico",
+        "url": "listaHistoricosPacientes",
+        "icone": "fas fa-stethoscope"
+      },
       // {
       //   "nome": "Impressos",
       //   "descricao": "Tela para impressão de atestados, receitas, relatórios",

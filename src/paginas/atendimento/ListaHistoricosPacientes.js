@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Autocompletar, Card, Input, Pagina, Select, Tabela } from '../../componentes';
+import React, { useState } from 'react';
+import {Autocompletar, Botao, Card, Input, Pagina, Select, Tabela} from '../../componentes';
 import { xfetch } from '../../util';
-import { HttpVerbo } from '../../util/Constantes';
+import {BOTAO, HttpVerbo, ICONE} from '../../util/Constantes';
+import ModalFormVerHistoricoPaciente from "../../componentes/modal/ModalFormVerHistoricoPaciente";
 
 export default function ListaHistoricosPacientes() {
     const [objeto, setObjeto] = useState(
@@ -45,14 +46,15 @@ export default function ListaHistoricosPacientes() {
     }
 
     const listarPacientesParaAtendimentoPorData = () => {
-        xfetch('/hpm/consulta/pesquisar-atendimentos/paciente', objeto, HttpVerbo.POST)
-        .then(response => {
+        xfetch('/hpm/consulta/pesquisar-atendimentos', objeto, HttpVerbo.POST)
+            .then(response => {
                     if (typeof response !== "undefined" ? response.status === "OK" : false) {
+                        console.log("🚀 ~ file: ListaHistoricosPacientes.js:52 ~ listarPacientesParaAtendimentoPorData ~ response.resultado:", response.resultado)
                         setLista({...lista, consultas: response.resultado});
                     }
                 })
                 .catch(error => console.log(error))
-            }
+    }
             
     console.log("Objeto", objeto);
     console.log("Lista", lista);
@@ -63,9 +65,7 @@ export default function ListaHistoricosPacientes() {
         {text: "Celular"},
         {text: "Data - Hora"},
         {text: "Status"},
-        {text: "Anamnese"},
-        {text: "Conduta"},
-        {text: "Exame Físico"}
+        {text: "Ações"}
     ]
 
     const dados = () => {
@@ -77,9 +77,18 @@ export default function ListaHistoricosPacientes() {
                     'celular': consulta.nmCelular,
                     'data__hora': consulta.dtHora,
                     'status': consulta.nmStatus,
-                    'anamnese': consulta.anamnese,
-                    'conduta': consulta.conduta,
-                    'exame_fisico': consulta.exameFisico
+                    'acoes': <div>
+                                <ModalFormVerHistoricoPaciente
+                                    cor={BOTAO.COR.PRIMARIO}
+                                    icone={ICONE.EYE}
+                                    nome={'Ver'}
+                                    value={consulta.id}
+                                    titulo={'Histórico do Paciente'}
+                                    nomePaciente={consulta.nmPaciente}
+                                    cpfPaciente={consulta.cpfPaciente}
+                                    idPessoa={Number(consulta.idPessoa)}
+                                />
+                            </div>
                 })
             }) : "")
     }
