@@ -16,7 +16,7 @@ import ConsultasAgendadasImprimir from "./paginas/agendar/ConsultasAgendadasImpr
 import AtestadoImprimir from "./paginas/atendimento/AtestadoImprimir";
 // import Impressos from './paginas/atendimento/Impressos';
 import ListaPacientesParaAtendimento from "./paginas/atendimento/ListaPacientesParaAtendimento";
-// import ListaHistoricosPacientes from "./paginas/atendimento/ListaHistoricosPacientes";
+import ListaHistoricosPacientes from "./paginas/atendimento/ListaHistoricosPacientes";
 import PacienteEmAtendimento from "./paginas/atendimento/PacienteEmAtendimento";
 import ReceitaImprimir from "./paginas/atendimento/ReceitaImprimir";
 
@@ -103,7 +103,7 @@ const App =  () =>  {
                     <Route exact path="/agendar/consultasAgendadasImprimir" component={ConsultasAgendadasImprimir} />
 
                     <Route exact path="/atendimento/listaPacientesParaAtendimento" component={ListaPacientesParaAtendimento} />
-                    {/*<Route exact path="/atendimento/listaHistoricosPacientes" component={ListaHistoricosPacientes} />*/}
+                    <Route exact path="/atendimento/listaHistoricosPacientes" component={ListaHistoricosPacientes} />
                     <Route exact path="/atendimento/pacienteEmAtendimento" component={PacienteEmAtendimento} />
                     <Route exact path="/atendimento/atestadoImprimir" component={AtestadoImprimir} />
                     <Route exact path="/atendimento/receitaImprimir" component={ReceitaImprimir} />

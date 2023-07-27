@@ -15,10 +15,15 @@ export default class RecuperarSenha extends React.Component {
         }
     }
 
+    handleChangeCpf = (e) =>{
+        e.preventDefault();
+        let numCpf = e.target.value.replace(/^\D/g, '');
+        this.setState({[e.target.name]: numCpf})
+    }
+
     handleChange = (e) =>{
         e.preventDefault();
-        let valor = e.target.value
-        this.setState({[e.target.name]: valor})
+        this.setState({[e.target.name]: e.target.value})
     }
 
     enviar = (e) => {
@@ -81,13 +86,15 @@ export default class RecuperarSenha extends React.Component {
                         value={hash}
                         />
 
-                        <Input
+                        <input
                             type="text"
-                            onChange={this.handleChange}
-                            value={cpf}
+                            maxLength={11}
+                            className="form-control"
                             name="cpf"
-                            label="Insira abaixo seu CPF"
+                            value={cpf}
+                            onChange={this.handleChangeCpf}
                             placeholder="CPF"
+                            autoComplete="off"
                         />
 
                         <Input
