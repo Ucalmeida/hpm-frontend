@@ -15,7 +15,8 @@ export default class EsqueciMinhaSenha extends React.Component {
 
         this.onChange = (evento) => {
             evento.preventDefault();
-            this.setState({cpf: evento.target.value})
+            let numCpf = evento.target.value.replace(/^\D/g, '');
+            this.setState({cpf: numCpf});
         }
     }
 
@@ -58,6 +59,7 @@ export default class EsqueciMinhaSenha extends React.Component {
                             <div className="mb-3">
                                 <input
                                     type="text"
+                                    maxLength={11}
                                     className="form-control"
                                     name="cpf"
                                     value={this.state.cpf}
