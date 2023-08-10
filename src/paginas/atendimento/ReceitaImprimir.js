@@ -34,7 +34,7 @@ const ReceitaImprimir = () => {
         <Pagina titulo="Imprimir Receita">
             <div className="row">
                 <div className="col-lg-12">
-                    <Card titulo="Imprimir Atestado">
+                    <Card titulo="Imprimir Receita">
                         <ReactToPrint ref={componentRef}>
                             <div>
                                 <div className="login-logo">
