@@ -126,6 +126,12 @@ export default function ListaPacientesParaAtendimento() {
     const dados = () => {
         return(
             typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
+                let desabilitado = false;
+                let textoBotao = "Iniciar Atendimento";
+                if(consulta.nmStatus === "Agendada") {
+                    desabilitado = true;
+                    textoBotao = "Aguardando confirmação";
+                }
                 return ({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,
@@ -136,7 +142,7 @@ export default function ListaPacientesParaAtendimento() {
                     'piso': consulta.piso,
                     'status': consulta.nmStatus,
                     'acoes': <div>
-                        <Botao cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnIniciarAtendimento(consulta)}>Iniciar Atendimento</Botao>
+                        <Botao disabled={desabilitado} cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnIniciarAtendimento(consulta)}>{textoBotao}</Botao>
                         <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnCancelar(consulta.id, Number("8"))}
                                value={consulta.id}>Cancelar</Botao>
                     </div>
