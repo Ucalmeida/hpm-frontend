@@ -30,8 +30,9 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const handleDtBloco = (e) => {
-        setConsultorioBloco({...consultorioBloco, data: e.target.value});
-        atendimentos.dataConsulta = e.target.value;
+        let dataHora = e.target.value + "T00:00";
+        setConsultorioBloco({...consultorioBloco, data: dataHora});
+        atendimentos.dataConsulta = dataHora;
         listarPacientesParaAtendimentoPorData();
     }
     
@@ -151,7 +152,7 @@ export default function ListaPacientesParaAtendimento() {
                         <div className={"row"}>
                             <div className="col-lg-6">
                                 <Input
-                                    type="datetime-local"
+                                    type="date"
                                     value={consultorioBloco.data}
                                     onChange={handleDtBloco}
                                     name="dataBloco"
