@@ -30,8 +30,9 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const handleDtBloco = (e) => {
-        setConsultorioBloco({...consultorioBloco, data: e.target.value});
-        atendimentos.dataConsulta = e.target.value;
+        let dataHora = e.target.value + "T00:00";
+        setConsultorioBloco({...consultorioBloco, data: dataHora});
+        atendimentos.dataConsulta = dataHora;
         listarPacientesParaAtendimentoPorData();
     }
     
@@ -125,6 +126,12 @@ export default function ListaPacientesParaAtendimento() {
     const dados = () => {
         return(
             typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
+                let desabilitado = false;
+                let textoBotao = "Iniciar Atendimento";
+                if(consulta.nmStatus === "Agendada") {
+                    desabilitado = true;
+                    textoBotao = "Aguardando confirmação";
+                }
                 return ({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,
@@ -135,7 +142,7 @@ export default function ListaPacientesParaAtendimento() {
                     'piso': consulta.piso,
                     'status': consulta.nmStatus,
                     'acoes': <div>
-                        <Botao cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnIniciarAtendimento(consulta)}>Iniciar Atendimento</Botao>
+                        <Botao disabled={desabilitado} cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnIniciarAtendimento(consulta)}>{textoBotao}</Botao>
                         <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnCancelar(consulta.id, Number("8"))}
                                value={consulta.id}>Cancelar</Botao>
                     </div>
@@ -151,7 +158,7 @@ export default function ListaPacientesParaAtendimento() {
                         <div className={"row"}>
                             <div className="col-lg-6">
                                 <Input
-                                    type="datetime-local"
+                                    type="date"
                                     value={consultorioBloco.data}
                                     onChange={handleDtBloco}
                                     name="dataBloco"
