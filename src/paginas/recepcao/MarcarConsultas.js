@@ -25,16 +25,16 @@ export default function MarcarConsultas() {
         window.open("/recepcao/verPacientesConsultaAgendada");
     }
 
-    const handleBtnConsulta = async (medico) => {
-        localStorage.setItem('emergencia', false);
-        localStorage.setItem('medicoConsulta', medico.id);
-        localStorage.setItem('nmProfissionalSaude', medico.profissionalSaudeNome);
-        localStorage.setItem('nmEspecialidade', medico.especialidadeNome);
-        localStorage.setItem('idEspecialidade', medico.especialidadeId);
-        localStorage.setItem('idProfissionalSaude', medico.profissionalSaudeId);
-        localStorage.setItem('dataHora', medico.dataInicio + " - " + medico.dataTermino);
-        window.open("/recepcao/consulta");
-    }
+    // const handleBtnConsulta = async (medico) => {
+    //     localStorage.setItem('emergencia', false);
+    //     localStorage.setItem('medicoConsulta', medico.id);
+    //     localStorage.setItem('nmProfissionalSaude', medico.profissionalSaudeNome);
+    //     localStorage.setItem('nmEspecialidade', medico.especialidadeNome);
+    //     localStorage.setItem('idEspecialidade', medico.especialidadeId);
+    //     localStorage.setItem('idProfissionalSaude', medico.profissionalSaudeId);
+    //     localStorage.setItem('dataHora', medico.dataInicio + " - " + medico.dataTermino);
+    //     window.open("/recepcao/consulta");
+    // }
 
     const handleBtnUrgencia = async (medico) => {
         localStorage.setItem('emergencia', true);
@@ -82,7 +82,7 @@ export default function MarcarConsultas() {
                         'encaixes': medico.qtdTotalEmergenciasDisponiveis,
                         'acoes': <div>
                                     <Botao onClick={() => handleBtnVerPacientes(medico.id, medico)} value={medico.id}>Ver Pacientes</Botao>
-                                    <Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>
+                                    {/*<Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>*/}
                                     <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Encaixes</Botao>
                                 </div>
                     })
