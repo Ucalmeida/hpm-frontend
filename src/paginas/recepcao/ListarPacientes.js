@@ -21,8 +21,8 @@ export default function ListarPacientes() {
         consultaSelecionada.idConsulta = consultaId;
         consultaSelecionada.idStatus = statusId;
         await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
-            .then( json =>{
-                    if(json.status){
+            .then( json => {
+                    if(typeof json !== "undefined" ? json.status === "OK" : false) {
                         ExibirMensagem('Consulta Alterada!', MSG.SUCESSO, '', '', '', '', listarPacientesPorData())
                     }else{
                         ExibirMensagem(json.message, MSG.ERRO)

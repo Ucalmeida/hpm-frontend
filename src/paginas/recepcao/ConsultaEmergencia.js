@@ -20,6 +20,9 @@ export default function ConsultaEmergencia() {
 
     const selecionarPessoa = (e) => {
         let idpessoa = document.getElementById('idpessoa').value;
+        if (localStorage.getItem('id') === idpessoa) {
+            ExibirMensagem("Você não pode marcar para si mesmo(a) aqui. Vá em Agendar.", MSG.ALERTA, null, "Consulta", null, null, null);
+        }
         setObjeto({...objeto, idPessoa: idpessoa});
     }
 
