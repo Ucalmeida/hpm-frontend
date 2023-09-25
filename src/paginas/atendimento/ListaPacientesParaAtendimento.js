@@ -10,11 +10,13 @@ export default function ListaPacientesParaAtendimento() {
         idPessoa: localStorage.getItem('id')
     });
 
-    const [atendimentos] = useState({
+    const [atendimentos, setAtendimentos] = useState({
         dataConsulta: null,
         idEspecialidade: null,
         idProfissionalSaude: Number(localStorage.getItem('id'))
     });
+
+    const [dataExibida, setDataExibida] = useState('');
 
     let idConsultorioBlocos = [];
 
@@ -33,6 +35,7 @@ export default function ListaPacientesParaAtendimento() {
         let dataHora = e.target.value + "T00:00";
         setConsultorioBloco({...consultorioBloco, data: dataHora});
         atendimentos.dataConsulta = dataHora;
+        setDataExibida(e.target.value);
         listarPacientesParaAtendimentoPorData();
     }
     
@@ -159,7 +162,7 @@ export default function ListaPacientesParaAtendimento() {
                             <div className="col-lg-6">
                                 <Input
                                     type="date"
-                                    value={consultorioBloco.data}
+                                    value={dataExibida}
                                     onChange={handleDtBloco}
                                     name="dataBloco"
                                     label="Data"
