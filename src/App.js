@@ -80,9 +80,6 @@ function verificaToken() {
         )
 }
 
-clearInterval(window.checaSeguranca)
-window.checaSeguranca = setInterval(function() {verificaToken();}, 1_000 * 60 * 2);
-
 const App =  () =>  {
 
     return (
