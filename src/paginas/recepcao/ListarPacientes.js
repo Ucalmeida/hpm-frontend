@@ -120,9 +120,12 @@ export default function ListarPacientes() {
                 let corBotao = BOTAO.COR.PRIMARIO;
                 let nomeBotao = 'Confirmar';
                 let isDesabilitado = false;
+                console.log("Status ", consulta.nmStatus);
                 if (consulta.nmStatus === 'Confirmada') {
                     corBotao = BOTAO.COR.SUCESSO;
                     nomeBotao = 'Confirmada';
+                    isDesabilitado = true;
+                } else if (consulta.nmStatus !== 'Agendada') {
                     isDesabilitado = true;
                 }
                 return ({
