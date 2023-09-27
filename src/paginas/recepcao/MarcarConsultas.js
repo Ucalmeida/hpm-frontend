@@ -74,6 +74,12 @@ export default function MarcarConsultas() {
         if(typeof(lista.medicos) !== "undefined") {
             return(
                 lista.medicos.map((medico, index) => {
+                    let numeroEncaixes = Number(medico.qtdTotalEmergenciasDisponiveis);
+                    console.info(numeroEncaixes)
+                    let isDesabilitado = false;
+                    if (numeroEncaixes === 0) {
+                        isDesabilitado = true;
+                    }
                     return({
                         'nome': medico.profissionalSaudeNome,
                         'inicio': medico.dataInicio,
@@ -83,7 +89,7 @@ export default function MarcarConsultas() {
                         'acoes': <div>
                                     <Botao onClick={() => handleBtnVerPacientes(medico.id, medico)} value={medico.id}>Ver Pacientes</Botao>
                                     {/*<Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>*/}
-                                    {/*<Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Encaixes</Botao>*/}
+                                    <Botao disabled={isDesabilitado} cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Encaixes</Botao>
                                 </div>
                     })
                 })
