@@ -83,7 +83,7 @@ export default function MarcarConsultas() {
                         'acoes': <div>
                                     <Botao onClick={() => handleBtnVerPacientes(medico.id, medico)} value={medico.id}>Ver Pacientes</Botao>
                                     {/*<Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>*/}
-                                    <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Encaixes</Botao>
+                                    {/*<Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Encaixes</Botao>*/}
                                 </div>
                     })
                 })
