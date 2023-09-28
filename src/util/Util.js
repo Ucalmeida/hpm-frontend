@@ -88,6 +88,14 @@ export function Logado () {
     return sessionStorage.getItem('token');
 }
 
+export function Ambiente() {
+    let servidor = 'http://localhost:8080';
+    if (servidor.includes('http://localhost:8080')) {
+        return 'dev - HPM';
+    }
+    return 'prod - HPM';
+}
+
 export function ValidaToken () {
     const tokenJson = {
         token: sessionStorage.getItem('token')
