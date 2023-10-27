@@ -418,6 +418,7 @@ export default function EditarConsultorioBloco(props) {
                             verificador={verificador}
                             objeto={objeto}
                             qtd={qtd}
+                            url={"/hpm/consultorioBloco/alterar/" + props.valor}
                         />
                 </Modal.Footer>
             </Modal>
