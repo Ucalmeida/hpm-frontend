@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Autocompletar, Botao, Card, Input, Pagina, Select, Tabela} from '../../componentes';
+import {Autocompletar, Card, Input, Pagina, Select, Tabela} from '../../componentes';
 import {ExibirMensagem, xfetch} from '../../util';
-import {BOTAO, HttpVerbo, ICONE, MSG} from '../../util/Constantes';
-import ModalFormVerHistoricoPaciente from "../../componentes/modal/ModalFormVerHistoricoPaciente";
+import {HttpVerbo, MSG} from '../../util/Constantes';
 import {Tab, Tabs} from "react-bootstrap";
 
 export default function ListaHistoricosPacientes() {
