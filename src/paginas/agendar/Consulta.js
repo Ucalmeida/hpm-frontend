@@ -77,7 +77,7 @@ export default function Consulta() {
                 }
             }
             ).catch((error) => {
-                setIsLoading(false); // Lidar com erros da requisição
+                setIsLoading(false);
                 console.error('Erro na requisição', error);
 
             });
@@ -86,7 +86,7 @@ export default function Consulta() {
     let prof = objeto.profissionais;
     let consultaBloco = objeto.consultoriosBloco;
 
-    const isBotaoDesabilitado = isLoading || !objeto.idConsultorioBloco;
+    const isBotaoDesabilitado = !objeto.idConsultorioBloco;
 
     if (temPermissao("/agendar/consulta")) {
         return (
@@ -144,8 +144,8 @@ export default function Consulta() {
                                     </select>
                                 </div>
                                 <div className="col-lg-12 text-lg-right mt-4 mb-4">
-                                    <Botao cor={BOTAO.COR.SUCESSO} icone={ICONE.SALVAR} onClick={enviar} disabled={isLoading || isBotaoDesabilitado}>
-                                        {isLoading ? 'Enviando...' : 'Agendar'}
+                                    <Botao cor={BOTAO.COR.SUCESSO} icone={ICONE.SALVAR} onClick={enviar} disabled={isBotaoDesabilitado}>
+                                        Agendar
                                     </Botao>
                                 </div>
                             </div>
