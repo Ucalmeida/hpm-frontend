@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import {Autocompletar, Botao, Card, Input, Pagina, Select, Tabela} from '../../componentes';
-import { xfetch } from '../../util';
-import {BOTAO, HttpVerbo, ICONE} from '../../util/Constantes';
-import ModalFormVerHistoricoPaciente from "../../componentes/modal/ModalFormVerHistoricoPaciente";
+import React, {useEffect, useState} from 'react';
+import {Autocompletar, Card, Input, Pagina, Select, Tabela} from '../../componentes';
+import {ExibirMensagem, xfetch} from '../../util';
+import {HttpVerbo, MSG} from '../../util/Constantes';
+import {Tab, Tabs} from "react-bootstrap";
 
 export default function ListaHistoricosPacientes() {
     const [objeto, setObjeto] = useState(
@@ -16,6 +16,10 @@ export default function ListaHistoricosPacientes() {
 
     const [lista, setLista] = useState({
         consultas: []
+    });
+
+    const [atestado, setAtestado] = useState({
+        atestados: []
     });
 
     const [consultorioBloco, setConsultorioBloco] = useState({
@@ -46,49 +50,74 @@ export default function ListaHistoricosPacientes() {
     }
 
     const listarPacientesParaAtendimentoPorData = () => {
+        if (objeto.dataConsulta === "") {
+            ExibirMensagem('Uma data precisa ser selecionada!', MSG.ALERTA);
+            return;
+        }
         xfetch('/hpm/consulta/pesquisar-atendimentos', objeto, HttpVerbo.POST)
             .then(response => {
                     if (typeof response !== "undefined" ? response.status === "OK" : false) {
-                        console.log("🚀 ~ file: ListaHistoricosPacientes.js:52 ~ listarPacientesParaAtendimentoPorData ~ response.resultado:", response.resultado)
                         setLista({...lista, consultas: response.resultado});
                     }
                 })
                 .catch(error => console.log(error))
     }
-            
-    console.log("Objeto", objeto);
-    console.log("Lista", lista);
 
-    const colunas = [
-        {text: "Paciente"},
-        {text: "CPF"},
-        {text: "Celular"},
-        {text: "Data - Hora"},
-        {text: "Status"},
-        {text: "Ações"}
+    const listaAtestadosPacientes = () => {
+        xfetch("/hpm/consulta/atestado/historico/pessoa/" + objeto.idPessoa, {}, HttpVerbo.GET)
+            .then(res => res.json())
+            .then(response => {
+                console.log("Atestados:", response.resultado);
+                if (typeof response !== "undefined" ? response.status === "OK" : false) {
+                    setAtestado({...atestado, atestados: response.resultado});
+                }
+            })
+            .catch(error => console.log(error))
+    }
+
+    useEffect(() => {
+        listaAtestadosPacientes();
+    }, []);
+            
+    const colunasHistorico = [
+        {text: "Data Hora Atendimento"},
+        {text: "Médico Especialidade"},
+        {text: "Anamnese"},
+        {text: "Conduta"},
+        {text: "Exame Físico"}
     ]
 
-    const dados = () => {
+    const colunasAtestados = [
+        {text: "Data Hora Atendimento"},
+        {text: "CID"},
+        {text: "Quantidade de dias concedidos"},
+        {text: "Responsável pela Concessão"}
+    ]
+
+    const dadosHistorico = () => {
         return(
             typeof lista.consultas !== 'undefined' ? lista.consultas.map((consulta) => {
                 return ({
-                    'paciente': consulta.nmPaciente,
-                    'cpf': consulta.cpfPaciente,
-                    'celular': consulta.nmCelular,
-                    'data__hora': consulta.dtHora,
-                    'status': consulta.nmStatus,
-                    'acoes': <div>
-                                <ModalFormVerHistoricoPaciente
-                                    cor={BOTAO.COR.PRIMARIO}
-                                    icone={ICONE.EYE}
-                                    nome={'Ver'}
-                                    value={consulta.id}
-                                    titulo={'Histórico do Paciente'}
-                                    nomePaciente={consulta.nmPaciente}
-                                    cpfPaciente={consulta.cpfPaciente}
-                                    idPessoa={Number(consulta.idPessoa)}
-                                />
-                            </div>
+                    'data_hora_atendimento': consulta.dtHora,
+                    'medico_especialidade': consulta.nmMedico + " - " + consulta.nmEspecialidade,
+                    'anamnese': consulta.anamnese,
+                    'conduta': consulta.conduta,
+                    'exame_fisico': consulta.exameFisico
+                })
+            }) : "")
+    }
+
+    const dadosAtestados = () => {
+        return(
+            typeof atestado.atestados !== 'undefined' ? atestado.atestados.map((atestado) => {
+                let listaCids = atestado.cids.length > 0 ? atestado.cids.map((cid, index) => {
+                    return cid.codigo + (index < (atestado.cids.length - 1) ? ", " : "");
+                }) : "";
+                return ({
+                    'data_hora_atendimento': atestado.consulta.dtHora,
+                    'cid': listaCids,
+                    'quantidade_de_dias_concedidos': atestado.qtdDiasAfastamento,
+                    'responsavel_pela_concessao': atestado.consulta.nmMedico + " - " + atestado.consulta.nmEspecialidade
                 })
             }) : "")
     }
@@ -130,8 +159,25 @@ export default function ListaHistoricosPacientes() {
                             </div>
                         </div>
                     </Card>
-                    <Card titulo="Histórico de Atendimentos">
-                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+                    <Card titulo={"Dados do Paciente"} botaoMin>
+                        <Tabs>
+                            <Tab title="Histórico Evolução" eventKey="aba2"  style={{width: "100%", overflow: "auto"}}>
+                                <br />
+                                <div className="col-lg-12">
+                                    <Card>
+                                        <Tabela colunas={colunasHistorico} dados={dadosHistorico()} pageSize={5} />
+                                    </Card>
+                                </div>
+                            </Tab>
+                            <Tab title="Atestados Concedidos" eventKey="aba3"  style={{width: "100%", overflow: "auto"}}>
+                                <br />
+                                <div className="col-lg-12">
+                                    <Card>
+                                        <Tabela colunas={colunasAtestados} dados={dadosAtestados()} pageSize={5} />
+                                    </Card>
+                                </div>
+                            </Tab>
+                        </Tabs>
                     </Card>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import {ExibirMensagem} from './ExibirMensagem';
-import {xfetch, Logado, ValidaToken} from './Util';
+import {xfetch, Logado, Ambiente, ValidaToken} from './Util';
 import {
     ConverterMilisegundoParaHoraDias,
     DataAtual,
@@ -17,6 +17,7 @@ export {
     ConverterCaracteresEspeciais,
     ConverterCaracteresEspeciaisMinusculo,
     Logado,
+    Ambiente,
     HoraAtual, DataAtual, DataHoraAtual, TempoTranscorridoMilisegParaHoraData, ConverterMilisegundoParaHoraDias,
     ValidaToken,
     xfetch,

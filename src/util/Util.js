@@ -51,7 +51,7 @@ export const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 
     console.log(process.env.NODE_ENV)
 
-    let servidor = process.env.REACT_APP_BACKEND
+    let servidor = process.env.REACT_APP_BACKEND;
 
     let myHeaders = new Headers();
     let idTransacao = uuid();
@@ -86,6 +86,14 @@ export const xfetch = (endpoint, dados, verbo = HttpVerbo.GET) => {
 
 export function Logado () {
     return sessionStorage.getItem('token');
+}
+
+export function Ambiente() {
+    let servidor = process.env.REACT_APP_BACKEND;
+    if (servidor.includes('http://localhost:8080')) {
+        return 'dev - HPM';
+    }
+    return 'prod - HPM';
 }
 
 export function ValidaToken () {

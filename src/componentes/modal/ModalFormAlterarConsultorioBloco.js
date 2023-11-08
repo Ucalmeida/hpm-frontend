@@ -16,14 +16,14 @@ export default function ModalFormAlterarConsultorioBloco(props) {
         setShow(false);
     }
 
-    const enviar = (e) => {
+    const enviar = () => {
         if (props.verificador.mesInicio === props.verificador.mesEscala && 
             props.verificador.mesTermino === props.verificador.mesEscala &&
             props.verificador.ano === props.verificador.anoEscala) {
                 if (props.objeto.qtdConsultas === null) props.objeto.qtdConsultas = props.qtd.consultas;
                 if (props.objeto.qtdEmergencias === null) props.objeto.qtdEmergencias = props.qtd.encaixes;
                 xfetch(props.url, props.objeto, HttpVerbo.PUT)
-                    .then( json =>{
+                    .then( json => {
                             if (typeof json !== "undefined" ? json.status === "OK" : false) {
                                 ExibirMensagem('Consultorio Bloco Alterado Com Sucesso!', MSG.SUCESSO, '', '', '', window.location.reload());
                             }

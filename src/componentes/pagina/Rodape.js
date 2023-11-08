@@ -1,17 +1,18 @@
 import React, {Fragment} from "react";
 import {version} from "../../../package.json";
-import {Logado} from "../../util";
+import {Logado, Ambiente} from "../../util";
 import BotaoScrollTop from "./BotaoScrollTop";
 
 export function Rodape () {
         if (!Logado()) return "";
+        let ambiente = Ambiente();
         return (
             <Fragment>
                 <footer className="main-footer text-center">
                     <div className="row">
                         <div className="col-4">
                             <div className='float-left d-none d-sm-inline-block'>
-                                <small>dev - HPM </small>
+                                <small>{ambiente} </small>
                             </div>
                         </div>
                         <div className="col-4">

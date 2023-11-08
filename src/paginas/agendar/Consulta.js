@@ -6,6 +6,7 @@ import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
 import { temPermissao } from '../../util/Util';
 
 export default function Consulta() {
+    const [isLoading, setIsLoading] = useState(false);
     const [objeto, setObjeto] = useState(
         {
             idPessoa: Number(localStorage.getItem('id')),
@@ -14,7 +15,7 @@ export default function Consulta() {
             idEspecialidade: null,
             profissionais: [],
             consultoriosBloco: [],
-            pessoas:[],
+            pessoas: [],
             comDependentes: false
         }
     )
@@ -29,12 +30,12 @@ export default function Consulta() {
     }
 
     const listarProfissionalPorEspecialidade = () => {
-        setObjeto({...objeto, profissionais: []})
-        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/escalas-ativas/opcoes',{}, HttpVerbo.GET)
+        setObjeto({ ...objeto, profissionais: [] })
+        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/escalas-ativas/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setObjeto({...objeto, profissionais: json.resultado})
-                }
+                setObjeto({ ...objeto, profissionais: json.resultado })
+            }
             )
     }
     const selecionarProfissionalSaude = (e) => {
@@ -45,37 +46,50 @@ export default function Consulta() {
 
     const selecionarConsultorioBloco = (e) => {
         e.preventDefault()
-        setObjeto({...objeto, idConsultorioBloco: e.target.value})
+        setObjeto({ ...objeto, idConsultorioBloco: e.target.value })
         console.log("idConsultorioBloco", objeto.idConsultorioBloco);
     }
 
     const listarConsultorioBlocoPorEspecialidadeProfissionalSaude = () => {
-        setObjeto({...objeto, consultoriosBloco: []})
+        setObjeto({ ...objeto, consultoriosBloco: [] })
         xfetch('/hpm/consultorioBloco/' + objeto.idEspecialidade + '/' + objeto.idProfissional + '/disponiveis/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setObjeto({...objeto, consultoriosBloco: json.resultado})
-                }
+                setObjeto({ ...objeto, consultoriosBloco: json.resultado })
+            }
             )
     }
 
     const enviar = () => {
+        if (isLoading) {
+            return;
+        }
+
+        setIsLoading(true);
+
         console.log("Objeto:", objeto)
         xfetch('/hpm/consulta/cadastrar', objeto, HttpVerbo.POST)
             .then(json => {
-                    if (typeof json !== 'undefined' ? json.status === "OK" : false){
-                        ExibirMensagem('Consulta Agendada com Sucesso!', MSG.SUCESSO);
-                        window.location.reload();
-                    }
+                setIsLoading(false)
+                if (typeof json !== 'undefined' ? json.status === "OK" : false) {
+                    ExibirMensagem('Consulta Agendada com Sucesso!', MSG.SUCESSO);
+                    window.location.reload();
                 }
-            )
+            }
+            ).catch((error) => {
+                setIsLoading(false);
+                console.error('Erro na requisição', error);
+
+            });
     }
 
     let prof = objeto.profissionais;
     let consultaBloco = objeto.consultoriosBloco;
 
+    const isBotaoDesabilitado = !objeto.idConsultorioBloco;
+
     if (temPermissao("/agendar/consulta")) {
-        return(
+        return (
             <Pagina titulo="Agendar Consulta">
                 <div className="row">
                     <div className="col-lg-12">
@@ -97,12 +111,12 @@ export default function Consulta() {
                                         url={"/hpm/especialidade/escalas-ativas/opcoes"}
                                     />
                                 </div>
-    
-                                <input type="hidden" name="idPessoa"/>
-    
+
+                                <input type="hidden" name="idPessoa" />
+
                                 <div className="col-lg-3">
                                     <label>Médico</label>
-                                    <br/>
+                                    <br />
                                     <select
                                         className="form-control"
                                         name="idProfissional"
@@ -114,10 +128,10 @@ export default function Consulta() {
                                         })}
                                     </select>
                                 </div>
-    
+
                                 <div className="col-lg-3">
                                     <label>Data - Hora</label>
-                                    <br/>
+                                    <br />
                                     <select
                                         className="form-control"
                                         name="idConsultorioBloco"
@@ -130,11 +144,13 @@ export default function Consulta() {
                                     </select>
                                 </div>
                                 <div className="col-lg-12 text-lg-right mt-4 mb-4">
-                                    <Botao cor={BOTAO.COR.SUCESSO} icone={ICONE.SALVAR} onClick={enviar}>Agendar</Botao>
+                                    <Botao cor={BOTAO.COR.SUCESSO} icone={ICONE.SALVAR} onClick={enviar} disabled={isBotaoDesabilitado}>
+                                        Agendar
+                                    </Botao>
                                 </div>
                             </div>
                         </Card>
-                        <ConsultasAgendadasCard url={'/hpm/consulta/titular-dependentes/agendadas/' + objeto.idPessoa} objeto={objeto.idPessoa}/>
+                        <ConsultasAgendadasCard url={'/hpm/consulta/titular-dependentes/agendadas/' + objeto.idPessoa} objeto={objeto.idPessoa} />
                     </div>
                 </div>
             </Pagina>
