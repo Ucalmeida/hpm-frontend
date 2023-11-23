@@ -8,6 +8,7 @@ import EditarConsultorioBloco from '../editar/EditarConsultorioBloco';
 export default function ConsultorioBloco() {
     const [selecionar, setSelecionar] = useState(false);
 
+
     // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
     const [lista, setLista] = useState({
         blocos: [
@@ -27,14 +28,14 @@ export default function ConsultorioBloco() {
 
     const [objeto, setObjeto] = useState(
         {
-            dataInicio : null,
+            dataInicio: null,
             dataTermino: null,
             idEscala: null,
             idEspecialidade: null,
             idProfissionalSaude: null,
             idSala: null,
             qtdConsultas: null,
-            qtdEmergencias: null
+            qtdEmergencias: 4
         }
     )
 
@@ -80,7 +81,7 @@ export default function ConsultorioBloco() {
         let mesVerificador = dt.split("-");
         verificador.mesInicio = Number(mesVerificador[1]);
         verificador.ano = Number(mesVerificador[0]);
-        setObjeto({...objeto, dataInicio: dt});
+        setObjeto({ ...objeto, dataInicio: dt });
     }
 
     const handleDtHrTermino = (e) => {
@@ -88,18 +89,24 @@ export default function ConsultorioBloco() {
         let mesVerificador = dt.split("-");
         verificador.mesTermino = Number(mesVerificador[1]);
         verificador.ano = Number(mesVerificador[0]);
-        setObjeto({...objeto, dataTermino: dt});
+        setObjeto({ ...objeto, dataTermino: dt });
     }
 
     const handleQtdConsulta = (e) => {
         e.preventDefault()
-        setObjeto({...objeto, qtdConsultas: Number(e.target.value)})
+        setObjeto({ ...objeto, qtdConsultas: Number(e.target.value) })
     }
 
     const handleQtdEmergencia = (e) => {
-        e.preventDefault()
-        setObjeto({...objeto, qtdEmergencias: Number(e.target.value)})
-    }
+        e.preventDefault();
+        const inputValue = Number(e.target.value);
+
+        if (inputValue < 4) {
+            setObjeto({ ...objeto, qtdEmergencias: null });
+        } else {
+            setObjeto({ ...objeto, qtdEmergencias: inputValue });
+        }
+    };
 
     const handleStatus = (e) => {
         const statusId = e.target.value;
@@ -108,11 +115,11 @@ export default function ConsultorioBloco() {
     }
 
     const listarEscalaPorStatus = (e) => {
-        xfetch('/hpm/escala/' + status.idStatus + '/opcoes',{}, HttpVerbo.GET)
+        xfetch('/hpm/escala/' + status.idStatus + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setEscala({...escala, escalas: json.resultado});
-                }
+                setEscala({ ...escala, escalas: json.resultado });
+            }
             )
     }
 
@@ -140,25 +147,29 @@ export default function ConsultorioBloco() {
     }
 
     const listarProfissionalPorEspecialidade = () => {
-        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes',{}, HttpVerbo.GET)
+        xfetch('/hpm/profissionalSaude/' + objeto.idEspecialidade + '/opcoes', {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(json => {
-                    setProfissionais({...profissionais, profissionais: json.resultado});
-                }
+                setProfissionais({ ...profissionais, profissionais: json.resultado });
+            }
             )
     }
 
     const enviar = (e) => {
-        if (verificador.mesInicio === verificador.mesEscala && 
+        if (objeto.qtdEmergencias < 4) {
+            ExibirMensagem("Número de encaixes deve ser maior ou igual a 4", MSG.ALERTA);
+            return; // Evita a execução do restante do código se o valor for menor que 4
+          }
+        if (verificador.mesInicio === verificador.mesEscala &&
             verificador.mesTermino === verificador.mesEscala &&
             verificador.ano === verificador.anoEscala) {
-                xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
-                    .then( json =>{
-                            if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                                ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO, '', '', '', '', handleCadastro());
-                            }
-                        }
-                    )
+            xfetch('/hpm/consultorioBloco/cadastrar', objeto, HttpVerbo.POST)
+                .then(json => {
+                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                        ExibirMensagem('Consultorio Bloco Cadastrado Com Sucesso!', MSG.SUCESSO, '', '', '', '', handleCadastro());
+                    }
+                }
+                )
         } else {
             ExibirMensagem("Escala selecionada não pode ser diferente do mês de início e término da escala!", MSG.ALERTA);
         }
@@ -166,25 +177,25 @@ export default function ConsultorioBloco() {
 
     useEffect(() => {
         xfetch('/hpm/status/' + escalaObjeto, {}, HttpVerbo.GET)
-            .then( res => res.json())
-            .then(status => setStatus({...status, listaStatus: status.resultado}))
+            .then(res => res.json())
+            .then(status => setStatus({ ...status, listaStatus: status.resultado }))
     }, [])
 
     // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
     const handleBtnExcluir = (blocoId) => {
         xfetch('/hpm/consultorioBloco/excluir/' + blocoId, {}, HttpVerbo.PUT)
-            .then( json => {
-                    if (typeof json !== "undefined" ? json.status === "OK" : false) {
-                        ExibirMensagem("Bloco Excluído!", MSG.SUCESSO, '', '', '', '', handleCadastro());
-                    }
+            .then(json => {
+                if (typeof json !== "undefined" ? json.status === "OK" : false) {
+                    ExibirMensagem("Bloco Excluído!", MSG.SUCESSO, '', '', '', '', handleCadastro());
                 }
+            }
             )
     }
 
     const handleCadastro = () => {
         if (objeto.idEscala !== null) {
             xfetch('/hpm/consultorioBloco/escala/' + objeto.idEscala + '/opcoes', {}, HttpVerbo.POST)
-            .then(lista => setLista({...lista, blocos: lista.resultado}))
+                .then(lista => setLista({ ...lista, blocos: lista.resultado }))
         }
     }
 
@@ -193,15 +204,15 @@ export default function ConsultorioBloco() {
     }, [selecionar])
 
     const colunas = [
-        {text: "Escala"},
-        {text: "Nome"},
-        {text: "Especialidade"},
-        {text: "Sala"},
-        {text: "Data Início"},
-        {text: "Data Término"},
-        {text: "Consultas"},
-        {text: "Encaixes"},
-        {text: "Ação"}
+        { text: "Escala" },
+        { text: "Nome" },
+        { text: "Especialidade" },
+        { text: "Sala" },
+        { text: "Data Início" },
+        { text: "Data Término" },
+        { text: "Consultas" },
+        { text: "Encaixes" },
+        { text: "Ação" }
     ]
 
     const dados = () => {
@@ -219,7 +230,7 @@ export default function ConsultorioBloco() {
                     'encaixes': bloco.texto6,
                     'acao': bloco.id !== "" ? <div>
                         <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(bloco.valor)} value={bloco.valor} icone={""}>Excluir</Botao>
-                        <EditarConsultorioBloco 
+                        <EditarConsultorioBloco
                             corDoBotao={BOTAO.COR.ALERTA}
                             icone={ICONE.EDITAR}
                             titulo={"Editar"}
@@ -233,7 +244,7 @@ export default function ConsultorioBloco() {
     }
     // ATUALIZAR: Até aqui
 
-    const selectEspecialista =  objeto.idEspecialidade ? <div className="col-lg-6">
+    const selectEspecialista = objeto.idEspecialidade ? <div className="col-lg-6">
         <label>Profissional</label>
         <select
             className="form-control"
@@ -246,8 +257,8 @@ export default function ConsultorioBloco() {
         </select>
     </div> : ''
 
-    return(
-        <Pagina titulo="Cadastrar ConsultorioBloco">
+    return (
+        <Pagina titulo="Cadastrar Consultorio Bloco">
             <div className="row">
                 <div className="col-lg-12">
                     <Card titulo="Cadastrar">
@@ -301,7 +312,7 @@ export default function ConsultorioBloco() {
                                     onChange={handleDtHrInicio}
                                     name="dataInicio"
                                     label="Data e hora início"
-                                    placeholder="Data e hora"/>
+                                    placeholder="Data e hora" />
                             </div>
                             <div className="col-lg-3">
                                 <Input
@@ -310,7 +321,7 @@ export default function ConsultorioBloco() {
                                     onChange={handleDtHrTermino}
                                     name="dataTermino"
                                     label="Data e hora término"
-                                    placeholder="Data e hora"/>
+                                    placeholder="Data e hora" />
                             </div>
                             <div className="col-lg-3">
                                 <Input
@@ -319,7 +330,7 @@ export default function ConsultorioBloco() {
                                     value={objeto.qtdConsultas}
                                     name="qtdConsultas"
                                     label="Quantidade de Consultas"
-                                    placeholder="Qtd consultas"/>
+                                    placeholder="Qtd consultas" />
                             </div>
                             <div className="col-lg-3">
                                 <Input
@@ -328,7 +339,9 @@ export default function ConsultorioBloco() {
                                     value={objeto.qtdEmergencias}
                                     name="qtdEmergencias"
                                     label="Quantidade de Encaixes"
-                                    placeholder="Qtd encaixes"/>
+                                    placeholder="Qtd encaixes"
+                                    disabled
+                                />
                             </div>
                         </div>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
@@ -337,7 +350,7 @@ export default function ConsultorioBloco() {
                     </Card>
                     {/* ATUALIZAR: <ConsultoriosBlocoCard idEspecialidade={Number(objeto.idEspecialidade)} apagarBloco={apagar}/> --Comitei */}
                     <Card titulo="Consultórios Cadastrados">
-                        <Tabela colunas={colunas} dados={dados()} pageSize={5}/>
+                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>
