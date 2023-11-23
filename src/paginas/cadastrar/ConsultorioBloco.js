@@ -8,7 +8,6 @@ import EditarConsultorioBloco from '../editar/EditarConsultorioBloco';
 export default function ConsultorioBloco() {
     const [selecionar, setSelecionar] = useState(false);
 
-    const [errorMessage, setErrorMessage] = useState('');
 
     // ATUALIZAR: Inseri isso aqui no dia 06 de fevereiro de 2023 para teste
     const [lista, setLista] = useState({
@@ -103,10 +102,8 @@ export default function ConsultorioBloco() {
         const inputValue = Number(e.target.value);
 
         if (inputValue < 4) {
-            setErrorMessage('Número de encaixes deve ser maior ou igual a 4');
             setObjeto({ ...objeto, qtdEmergencias: null });
         } else {
-            setErrorMessage('');
             setObjeto({ ...objeto, qtdEmergencias: inputValue });
         }
     };
@@ -343,10 +340,8 @@ export default function ConsultorioBloco() {
                                     name="qtdEmergencias"
                                     label="Quantidade de Encaixes"
                                     placeholder="Qtd encaixes"
+                                    disabled
                                 />
-                                {errorMessage && (
-                                    <span style={{ color: 'red', fontSize: '12px' }}>{errorMessage}</span>
-                                )}
                             </div>
                         </div>
                         <div className="col-lg-15 text-lg-right mt-4 mb-4">
