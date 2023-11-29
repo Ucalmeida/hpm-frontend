@@ -155,6 +155,7 @@ function PacienteEmAtendimentoEditor(props) {
             <div className="col-lg-12">
                 <Card className={"collapsed-card"} titulo={"Anamnese"} botaoMin>
                     <Editor
+                      apiKey='sch2exkkk528sadnq24kffc3nidi73p0g4uma1gw2ubb112y'
                         onInit={(evt, editor) => editorRef.current = editor}
                         placeholder={"Insira aqui o texto."}
                         init={{
