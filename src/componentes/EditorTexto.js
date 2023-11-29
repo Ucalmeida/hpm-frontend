@@ -7,7 +7,7 @@ function EditorTexto(props) {
 
     return (
         <>
-            <Editor
+            <Editor     
                 onInit={(evt, editor) => editorRef.current = editor}
                 initialValue="<p>Insira aqui o texto.</p>"
                 init={{
