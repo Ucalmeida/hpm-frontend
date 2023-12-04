@@ -7,11 +7,9 @@ import logoHPM from "../../img/brasoes/brasao_hpm.png";
 class PaginaSemLogin extends Component {
   render() {
     document.getElementById('root').classList.add('login-page');
-
     const img = !this.props.img ? logoHPM : this.props.img;
     return (
       <div className="login-box animated--fade-in">
-        <div className="login-box">
           <div className="login-logo">
             <Link to="/">
               <img src={img}  alt={"Brasão"}/>
@@ -31,7 +29,6 @@ class PaginaSemLogin extends Component {
               </div>
             </div>
           </div>
-        </div>
       </div>
     );
   }
