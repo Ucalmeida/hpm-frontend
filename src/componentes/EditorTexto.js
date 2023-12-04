@@ -7,7 +7,12 @@ function EditorTexto(props) {
 
     return (
         <>
+<<<<<<< HEAD
             <Editor     
+=======
+            <Editor
+            apiKey='sch2exkkk528sadnq24kffc3nidi73p0g4uma1gw2ubb112y'
+>>>>>>> master
                 onInit={(evt, editor) => editorRef.current = editor}
                 initialValue="<p>Insira aqui o texto.</p>"
                 init={{
