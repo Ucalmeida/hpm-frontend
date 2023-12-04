@@ -96,15 +96,16 @@ export default function Consulta() {
                         <Card titulo="Agendar">
                             <div className="row">
                                 <div className="col-lg-3">
-                                    <label>Paciente</label>
+                                    <label htmlFor="idPaciente">Paciente</label>
                                     <Select
                                         funcao={selecionarPaciente}
                                         nome="idPaciente"
                                         url={"/hpm/dependente/titular/" + localStorage.getItem('id') + "/opcoes"}
+                                        id="idPaciente"
                                     />
                                 </div>
                                 <div className="col-lg-3">
-                                    <label>Especialidade</label>
+                                    <label htmlFor="idEspecialidade">Especialidade</label>
                                     <Select
                                         funcao={selecionarEspecialidade}
                                         nome="idEspecialidade"
@@ -115,7 +116,7 @@ export default function Consulta() {
                                 <input type="hidden" name="idPessoa" />
 
                                 <div className="col-lg-3">
-                                    <label>Médico</label>
+                                    <label htmlFor="idProfissional">Médico</label>
                                     <br />
                                     <select
                                         className="form-control"
@@ -130,7 +131,7 @@ export default function Consulta() {
                                 </div>
 
                                 <div className="col-lg-3">
-                                    <label>Data - Hora</label>
+                                    <label htmlFor="idConsultorioBloco">Data - Hora</label>
                                     <br />
                                     <select
                                         className="form-control"
