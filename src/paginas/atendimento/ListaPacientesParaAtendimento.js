@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Botao, Card, Input, Pagina, Select, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
 import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
+import { Modal } from "react-bootstrap";
 
 export default function ListaPacientesParaAtendimento() {
     const [apagar, setApagar] = useState(false);
-
+    const [showModal, setShowModal] = useState(false);
     const [objeto, setObjeto] = useState({
         idPessoa: localStorage.getItem('id')
     });
@@ -26,21 +27,21 @@ export default function ListaPacientesParaAtendimento() {
     });
 
 
-    let consultaSelecionada = {
+    const [consultaSelecionada, setConsultaSelecionada] = useState({
         idConsulta: '',
         idStatus: ''
-    }
+    });
 
     const handleDtBloco = (e) => {
         let dataHora = e.target.value + "T00:00";
-        setConsultorioBloco({...consultorioBloco, data: dataHora});
+        setConsultorioBloco({ ...consultorioBloco, data: dataHora });
         atendimentos.dataConsulta = dataHora;
         setDataExibida(e.target.value);
         listarPacientesParaAtendimentoPorData();
     }
-    
+
     const selecionarEspecialidade = (e) => {
-        setConsultorioBloco({...consultorioBloco, idEspecialidade: e.value});
+        setConsultorioBloco({ ...consultorioBloco, idEspecialidade: e.value });
         atendimentos.idEspecialidade = e.value;
         listarPacientesParaAtendimentoPorData();
     }
@@ -68,24 +69,33 @@ export default function ListaPacientesParaAtendimento() {
         localStorage.setItem('idStatus', consulta.idStatus);
         localStorage.setItem("relato", consulta.relato);
         xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
-            .then(json => {})
+            .then(json => { })
         window.open("/atendimento/pacienteEmAtendimento");
     }
 
-    const handleBtnCancelar = async (consultaId, statusId) => {
-        consultaSelecionada.idConsulta = consultaId;
-        consultaSelecionada.idStatus = statusId;
-        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
-            .then( json =>{
-                    if(json.status === "OK"){
-                        ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
-                    }else{
-                        ExibirMensagem(json.message, MSG.ERRO)
-                    }
-                }
-            )
-        setApagar(!apagar);
-    }
+    const handleBtnCancelar = (consultaId, statusId) => {
+        setConsultaSelecionada({
+            idConsulta: consultaId,
+            idStatus: statusId
+        });
+        setShowModal(true);
+    };
+
+    const handleConfirmacao = async () => {
+        try {
+            await xfetch("/hpm/consulta/alterar-status", consultaSelecionada, HttpVerbo.POST);
+            ExibirMensagem("Consulta Alterada Com Sucesso!", MSG.SUCESSO);
+            setApagar(!apagar)
+            listarPacientesParaAtendimentoPorData()
+        } catch (error) {
+            ExibirMensagem(error.message || "Erro ao cancelar a consulta", MSG.ERRO);
+        } finally {
+            setShowModal(false);
+        }
+    };
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     const listarPacientesParaAtendimentoPorData = () => {
         console.log("Dentro de ListarPacientesParaAtendimentoPorData");
@@ -93,12 +103,12 @@ export default function ListaPacientesParaAtendimento() {
         console.log("idConsultorioBloco maior que Zero");
 
         xfetch('/hpm/consulta/pesquisar-atendimentos', atendimentos, HttpVerbo.POST)
-        .then(response => {
-                    console.log("Atendimentos:", atendimentos);
-                    if (typeof response !== "undefined" ? response.status === "OK" : false) {
-                        setObjeto({...objeto, consultas: response.resultado});
-                    }
+            .then(response => {
+                console.log("Atendimentos:", atendimentos);
+                if (typeof response !== "undefined" ? response.status === "OK" : false) {
+                    setObjeto({ ...objeto, consultas: response.resultado });
                 }
+            }
             )
             .catch(error => console.log(error))
     }
@@ -115,23 +125,23 @@ export default function ListaPacientesParaAtendimento() {
     }
 
     const colunas = [
-        {text: "Paciente"},
-        {text: "CPF do Paciente"},
-        {text: "Data - Hora"},
-        {text: "Especialidade"},
-        {text: "Médico"},
-        {text: "Sala"},
-        {text: "Piso"},
-        {text: "Status"},
-        {text: "Ações"}
+        { text: "Paciente" },
+        { text: "CPF do Paciente" },
+        { text: "Data - Hora" },
+        { text: "Especialidade" },
+        { text: "Médico" },
+        { text: "Sala" },
+        { text: "Piso" },
+        { text: "Status" },
+        { text: "Ações" }
     ]
 
     const dados = () => {
-        return(
+        return (
             typeof objeto.consultas !== 'undefined' ? objeto.consultas.map((consulta) => {
                 let desabilitado = false;
                 let textoBotao = "Iniciar Atendimento";
-                if(consulta.nmStatus === "Agendada") {
+                if (consulta.nmStatus === "Agendada") {
                     desabilitado = true;
                     textoBotao = "Aguardando confirmação";
                 }
@@ -147,13 +157,13 @@ export default function ListaPacientesParaAtendimento() {
                     'acoes': <div>
                         <Botao disabled={desabilitado} cor={BOTAO.COR.SUCESSO} onClick={() => handleBtnIniciarAtendimento(consulta)}>{textoBotao}</Botao>
                         <Botao cor={BOTAO.COR.ALERTA} onClick={() => handleBtnCancelar(consulta.id, Number("8"))}
-                               value={consulta.id}>Cancelar</Botao>
+                            value={consulta.id}>Cancelar</Botao>
                     </div>
                 })
             }) : "")
     }
 
-    return(
+    return (
         <Pagina titulo="Consultas Agendadas">
             <div className="row">
                 <div className="col-lg-12">
@@ -166,7 +176,7 @@ export default function ListaPacientesParaAtendimento() {
                                     onChange={handleDtBloco}
                                     name="dataBloco"
                                     label="Data"
-                                    placeholder="Data e hora"/>
+                                    placeholder="Data e hora" />
                             </div>
                             <div className={"col-lg-6"}>
                                 <label>Selecionar Especialidade</label>
@@ -179,11 +189,25 @@ export default function ListaPacientesParaAtendimento() {
                         </div>
                     </Card>
                     <Card titulo="Paciente Confirmado">
-                        {   
-                            (objeto.consultas !== undefined) ? 
-                                <Tabela colunas={colunas} dados={dados()} pageSize={5} /> 
+                        {
+                            (objeto.consultas !== undefined) ?
+                                <Tabela colunas={colunas} dados={dados()} pageSize={5} />
                                 : "Nenhum Resultado Encontrado..."
                         }
+                        <Modal show={showModal}>
+                            <Modal.Header>
+                                <Modal.Title>Confirmação</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>Deseja realmente cancelar a consulta?</Modal.Body>
+                            <Modal.Footer>
+                                <Botao variant="secondary" onClick={handleCloseModal}>
+                                    Fechar
+                                </Botao>
+                                <Botao variant="primary" onClick={handleConfirmacao}>
+                                    Confirmar
+                                </Botao>
+                            </Modal.Footer>
+                        </Modal>
                     </Card>
                 </div>
             </div>
