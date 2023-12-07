@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {Botao, Card, Tabela} from "../index";
-import {ExibirMensagem, xfetch} from "../../util";
-import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
+import React, { useEffect, useState } from "react";
+import { Botao, Card, Tabela } from "../index";
+import { ExibirMensagem, xfetch } from "../../util";
+import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
 import PropTypes from "prop-types";
+import { Modal } from "react-bootstrap";
 
 export default function ConsultasAgendadasCard(props) {
     const [apagar, setApagar] = useState(false);
-
+    const [showModal, setShowModal] = useState(false);
     const [lista, setLista] = useState({
         consultas: [
             {
@@ -24,10 +25,10 @@ export default function ConsultasAgendadasCard(props) {
         ]
     })
 
-    let consultaSelecionada = {
+    const [consultaSelecionada, setConsultaSelecionada] = useState({
         idConsulta: '',
         idStatus: ''
-    }
+    });
 
     const diaDaSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
 
@@ -45,49 +46,57 @@ export default function ConsultasAgendadasCard(props) {
         window.open("/agendar/consultasAgendadasImprimir");
     }
 
-    const handleBtnCancelar = async (consultaId, statusId) => {
-        consultaSelecionada.idConsulta = consultaId;
-        consultaSelecionada.idStatus = statusId;
-        await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
-            .then( json =>{
-                    if(json.status === "OK"){
-                        ExibirMensagem('Consulta Alterada Com Sucesso!', MSG.SUCESSO)
-                    }else{
-                        ExibirMensagem(json.message, MSG.ERRO)
-                    }
-                }
-            )
-        setApagar(!apagar);
-    }
+    const handleBtnCancelar = (consultaId, statusId) => {
+        setConsultaSelecionada({
+            idConsulta: consultaId,
+            idStatus: statusId
+        });
+        setShowModal(true);
+    };
+
+    const handleConfirmacao = async () => {
+        try {
+            await xfetch("/hpm/consulta/alterar-status", consultaSelecionada, HttpVerbo.POST);
+            ExibirMensagem("Consulta Alterada Com Sucesso!", MSG.SUCESSO);
+            setApagar(!apagar);
+        } catch (error) {
+            ExibirMensagem(error.message || "Erro ao cancelar a consulta", MSG.ERRO);
+        } finally {
+            setShowModal(false);
+        }
+    };
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
 
     useEffect(() => {
         if (props.objeto !== null) {
             xfetch(props.url, {}, HttpVerbo.GET)
                 .then(response => response.json())
-                .then(lista => setLista({...lista, consultas: lista.resultado}))
+                .then(lista => setLista({ ...lista, consultas: lista.resultado }))
         }
     }, [apagar])
 
     const colunas = [
-        {text: "Paciente"},
-        {text: "CPF do Paciente"},
-        {text: "Data - Hora"},
-        {text: "Especialidade"},
-        {text: "Médico"},
-        {text: "Sala"},
-        {text: "Piso"},
-        {text: "Status"},
-        {text: "Ações"}
+        { text: "Paciente" },
+        { text: "CPF do Paciente" },
+        { text: "Data - Hora" },
+        { text: "Especialidade" },
+        { text: "Médico" },
+        { text: "Sala" },
+        { text: "Piso" },
+        { text: "Status" },
+        { text: "Ações" }
     ]
 
     const dados = () => {
-        return(
+        return (
             lista.consultas.map((consulta) => {
                 let dtHoraSeparada = consulta.dtHora.split(" - ");
                 let dtSeparada = dtHoraSeparada[0].split("/");
-                let dtRearanjo  = dtSeparada[2] + "-" + dtSeparada[1] + "-" + dtSeparada[0];
+                let dtRearanjo = dtSeparada[2] + "-" + dtSeparada[1] + "-" + dtSeparada[0];
                 let shortDate = new Date(dtRearanjo);
-                return({
+                return ({
                     'paciente': consulta.nmPaciente,
                     'cpf_do_paciente': consulta.cpfPaciente,
                     'data__hora': `${dtHoraSeparada[0]} ( ${diaDaSemana[shortDate.getDay() + 1]} ) - ${dtHoraSeparada[1]}`,
@@ -105,9 +114,23 @@ export default function ConsultasAgendadasCard(props) {
         )
     }
 
-    return(
+    return (
         <Card titulo="Consultas Agendadas">
-            <Tabela colunas={colunas} dados={dados()} pageSize={5}/>
+            <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header>
+                    <Modal.Title>Confirmação</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Deseja realmente cancelar a consulta?</Modal.Body>
+                <Modal.Footer>
+                    <Botao variant="secondary" onClick={handleCloseModal}>
+                        Fechar
+                    </Botao>
+                    <Botao variant="primary" onClick={handleConfirmacao}>
+                        Confirmar
+                    </Botao>
+                </Modal.Footer>
+            </Modal>
         </Card>
     );
 }
