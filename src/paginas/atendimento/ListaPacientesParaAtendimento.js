@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Botao, Card, Input, Pagina, Select, Tabela } from "../../componentes";
+import { Autocompletar, Botao, Card, Input, Pagina, Select, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
 import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
 import { Modal } from "react-bootstrap";
@@ -14,6 +14,7 @@ export default function ListaPacientesParaAtendimento() {
     const [atendimentos, setAtendimentos] = useState({
         dataConsulta: null,
         idEspecialidade: null,
+        idPessoa: null,
         idProfissionalSaude: Number(localStorage.getItem('id'))
     });
 
@@ -40,9 +41,12 @@ export default function ListaPacientesParaAtendimento() {
         listarPacientesParaAtendimentoPorData();
     }
 
-    const selecionarEspecialidade = (e) => {
-        setConsultorioBloco({ ...consultorioBloco, idEspecialidade: e.value });
-        atendimentos.idEspecialidade = e.value;
+
+    const selecionarPessoa = (event) => {
+        let idpessoa = event
+        console.log(event);
+        atendimentos.idPessoa = idpessoa
+        setAtendimentos({...atendimentos, idPessoa: idpessoa});
         listarPacientesParaAtendimentoPorData();
     }
 
@@ -163,12 +167,23 @@ export default function ListaPacientesParaAtendimento() {
             }) : "")
     }
 
+
     return (
         <Pagina titulo="Consultas Agendadas">
             <div className="row">
                 <div className="col-lg-12">
                     <Card>
                         <div className={"row"}>
+                        <div className={"col-lg-6"}>
+                                <Autocompletar
+                                    name="pessoa"
+                                    url="/hpm/pessoa/"
+                                    label="Digite os Dados:"
+                                    placeholder="Nome ou CPF aqui"
+                                    tamanho={6}
+                                    retorno={(e) => selecionarPessoa(e)}
+                                />
+                            </div>
                             <div className="col-lg-6">
                                 <Input
                                     type="date"
@@ -178,14 +193,7 @@ export default function ListaPacientesParaAtendimento() {
                                     label="Data"
                                     placeholder="Data e hora" />
                             </div>
-                            <div className={"col-lg-6"}>
-                                <label>Selecionar Especialidade</label>
-                                <Select
-                                    url={"/hpm/especialidade/" + objeto.idPessoa + "/opcoes"}
-                                    nome={"idEspecialidade"}
-                                    funcao={selecionarEspecialidade}
-                                />
-                            </div>
+
                         </div>
                     </Card>
                     <Card titulo="Paciente Confirmado">

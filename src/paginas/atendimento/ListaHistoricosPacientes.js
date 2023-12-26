@@ -14,6 +14,8 @@ export default function ListaHistoricosPacientes() {
         }
     );
 
+    const [dataExibida, setDataExibida] = useState('');
+
     const [lista, setLista] = useState({
         consultas: []
     });
@@ -28,32 +30,23 @@ export default function ListaHistoricosPacientes() {
     });
 
     const handleDtBloco = (e) => {
-        const today = new Date();
-        if (Date.parse(today) >= Date.parse(e.target.value)) {
-            setConsultorioBloco({...consultorioBloco, data: e.target.value});
-            objeto.dataConsulta = e.target.value;
-        }
-    }
-    
-    const selecionarEspecialidade = (e) => {
-        setConsultorioBloco({...consultorioBloco, idEspecialidade: e.value});
-        objeto.idEspecialidade = e.value;
+        let dataHora = e.target.value + "T00:00";
+        setConsultorioBloco({ ...consultorioBloco, data: dataHora });
+        objeto.dataConsulta = dataHora;
+        setDataExibida(e.target.value);
         listarPacientesParaAtendimentoPorData();
     }
 
-    let idpessoa = "";
-
-    const selecionarPessoa = (e) => {
-        idpessoa = document.getElementById('idpessoa').value;
-        localStorage.setItem("idPessoa", idpessoa);
+    
+    const selecionarPessoa = (event) => {
+        let idpessoa = event
+        console.log(event);
+        objeto.idPessoa = idpessoa
         setObjeto({...objeto, idPessoa: idpessoa});
+        listarPacientesParaAtendimentoPorData();
     }
 
     const listarPacientesParaAtendimentoPorData = () => {
-        if (objeto.dataConsulta === "") {
-            ExibirMensagem('Uma data precisa ser selecionada!', MSG.ALERTA);
-            return;
-        }
         xfetch('/hpm/consulta/pesquisar-atendimentos', objeto, HttpVerbo.POST)
             .then(response => {
                     if (typeof response !== "undefined" ? response.status === "OK" : false) {
@@ -63,6 +56,7 @@ export default function ListaHistoricosPacientes() {
                 .catch(error => console.log(error))
     }
 
+    useEffect(() => {
     const listaAtestadosPacientes = () => {
         xfetch("/hpm/consulta/atestado/historico/pessoa/" + objeto.idPessoa, {}, HttpVerbo.GET)
             .then(res => res.json())
@@ -75,9 +69,9 @@ export default function ListaHistoricosPacientes() {
             .catch(error => console.log(error))
     }
 
-    useEffect(() => {
+
         listaAtestadosPacientes();
-    }, []);
+    }, [atestado, objeto.idPessoa]);
             
     const colunasHistorico = [
         {text: "Data Hora Atendimento"},
@@ -140,22 +134,14 @@ export default function ListaHistoricosPacientes() {
                                     tamanho={6}
                                     retorno={selecionarPessoa} />
                             </div>
-                            <div className="col-lg-3">
+                            <div className="col-lg-6">
                                 <Input
-                                    type="datetime-local"
-                                    value={consultorioBloco.data}
+                                    type="date"
+                                    value={dataExibida}
                                     onChange={handleDtBloco}
                                     name="dataBloco"
                                     label="Data"
-                                    placeholder="Data e hora"/>
-                            </div>
-                            <div className={"col-lg-3"}>
-                                <label>Selecionar Especialidade</label>
-                                <Select
-                                    url={"/hpm/especialidade/" + objeto.idProfissionalSaude + "/opcoes"}
-                                    nome={"idEspecialidade"}
-                                    funcao={selecionarEspecialidade}
-                                />
+                                    placeholder="Data e hora" />
                             </div>
                         </div>
                     </Card>
