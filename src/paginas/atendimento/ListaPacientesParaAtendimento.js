@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Autocompletar, Botao, Card, Input, Pagina, Select, Tabela } from "../../componentes";
+import { Autocompletar, Botao, Card, Input, Pagina, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
-import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
+import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
 import { Modal } from "react-bootstrap";
 
 export default function ListaPacientesParaAtendimento() {
@@ -34,20 +34,19 @@ export default function ListaPacientesParaAtendimento() {
     });
 
     const handleDtBloco = (e) => {
-        let dataHora = e.target.value + "T00:00";
+        const selectedDate = e.target.value;
+        const dataHora = selectedDate + "T00:00";
+        console.log(dataHora);
         setConsultorioBloco({ ...consultorioBloco, data: dataHora });
         atendimentos.dataConsulta = dataHora;
-        setDataExibida(e.target.value);
-        listarPacientesParaAtendimentoPorData();
+        setDataExibida(selectedDate);
     }
 
 
     const selecionarPessoa = (event) => {
         let idpessoa = event
-        console.log(event);
         atendimentos.idPessoa = idpessoa
-        setAtendimentos({...atendimentos, idPessoa: idpessoa});
-        listarPacientesParaAtendimentoPorData();
+        setAtendimentos({ ...atendimentos, idPessoa: idpessoa });
     }
 
     function handleBtnIniciarAtendimento(consulta) {
@@ -90,7 +89,7 @@ export default function ListaPacientesParaAtendimento() {
             await xfetch("/hpm/consulta/alterar-status", consultaSelecionada, HttpVerbo.POST);
             ExibirMensagem("Consulta Alterada Com Sucesso!", MSG.SUCESSO);
             setApagar(!apagar)
-            listarPacientesParaAtendimentoPorData()
+            enviar()
         } catch (error) {
             ExibirMensagem(error.message || "Erro ao cancelar a consulta", MSG.ERRO);
         } finally {
@@ -101,11 +100,11 @@ export default function ListaPacientesParaAtendimento() {
         setShowModal(false);
     };
 
-    const listarPacientesParaAtendimentoPorData = () => {
+
+    const enviar = () => {
         console.log("Dentro de ListarPacientesParaAtendimentoPorData");
         console.log("Tamanho:", idConsultorioBlocos.length);
         console.log("idConsultorioBloco maior que Zero");
-
         xfetch('/hpm/consulta/pesquisar-atendimentos', atendimentos, HttpVerbo.POST)
             .then(response => {
                 console.log("Atendimentos:", atendimentos);
@@ -119,14 +118,6 @@ export default function ListaPacientesParaAtendimento() {
 
     console.log("Consultas", objeto.consultas);
 
-    if (atendimentos.dataConsulta !== null) {
-        localStorage.setItem('data', atendimentos.dataConsulta);
-    }
-
-    if (atendimentos.dataConsulta === null && localStorage.getItem('data') !== null) {
-        atendimentos.dataConsulta = localStorage.getItem('data');
-        listarPacientesParaAtendimentoPorData();
-    }
 
     const colunas = [
         { text: "Paciente" },
@@ -168,13 +159,15 @@ export default function ListaPacientesParaAtendimento() {
     }
 
 
+
+
     return (
         <Pagina titulo="Consultas Agendadas">
             <div className="row">
                 <div className="col-lg-12">
                     <Card>
                         <div className={"row"}>
-                        <div className={"col-lg-6"}>
+                            <div className={"col-lg-6"}>
                                 <Autocompletar
                                     name="pessoa"
                                     url="/hpm/pessoa/"
@@ -193,7 +186,11 @@ export default function ListaPacientesParaAtendimento() {
                                     label="Data"
                                     placeholder="Data e hora" />
                             </div>
-
+                            <div className="col-lg-12 text-lg-right mt-4 mb-4">
+                                <Botao cor={BOTAO.COR.SUCESSO} icone={ICONE.PESQUISAR} onClick={enviar}>
+                                    Consultar
+                                </Botao>
+                            </div>
                         </div>
                     </Card>
                     <Card titulo="Paciente Confirmado">

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {Autocompletar, Card, Input, Pagina, Select, Tabela} from '../../componentes';
-import {ExibirMensagem, xfetch} from '../../util';
-import {HttpVerbo, MSG} from '../../util/Constantes';
-import {Tab, Tabs} from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import { Autocompletar, Botao, Card, Input, Pagina, Tabela } from '../../componentes';
+import {  xfetch } from '../../util';
+import { BOTAO, HttpVerbo, ICONE } from '../../util/Constantes';
+import { Tab, Tabs } from "react-bootstrap";
 
 export default function ListaHistoricosPacientes() {
     const [objeto, setObjeto] = useState(
@@ -30,66 +30,65 @@ export default function ListaHistoricosPacientes() {
     });
 
     const handleDtBloco = (e) => {
-        let dataHora = e.target.value + "T00:00";
+        const selectedDate = e.target.value;
+        const dataHora = selectedDate + "T00:00";
         setConsultorioBloco({ ...consultorioBloco, data: dataHora });
         objeto.dataConsulta = dataHora;
-        setDataExibida(e.target.value);
-        listarPacientesParaAtendimentoPorData();
+        console.log(dataHora);
+        setDataExibida(selectedDate);
     }
 
-    
+
     const selecionarPessoa = (event) => {
         let idpessoa = event
-        console.log(event);
         objeto.idPessoa = idpessoa
-        setObjeto({...objeto, idPessoa: idpessoa});
-        listarPacientesParaAtendimentoPorData();
+        setObjeto({ ...objeto, idPessoa: idpessoa });
     }
 
-    const listarPacientesParaAtendimentoPorData = () => {
+    const enviar = () => {
         xfetch('/hpm/consulta/pesquisar-atendimentos', objeto, HttpVerbo.POST)
             .then(response => {
-                    if (typeof response !== "undefined" ? response.status === "OK" : false) {
-                        setLista({...lista, consultas: response.resultado});
-                    }
-                })
-                .catch(error => console.log(error))
-    }
-
-    useEffect(() => {
-    const listaAtestadosPacientes = () => {
-        xfetch("/hpm/consulta/atestado/historico/pessoa/" + objeto.idPessoa, {}, HttpVerbo.GET)
-            .then(res => res.json())
-            .then(response => {
-                console.log("Atestados:", response.resultado);
                 if (typeof response !== "undefined" ? response.status === "OK" : false) {
-                    setAtestado({...atestado, atestados: response.resultado});
+                    setLista({ ...lista, consultas: response.resultado });
                 }
             })
             .catch(error => console.log(error))
     }
 
+    useEffect(() => {
+        const listaAtestadosPacientes = () => {
+            xfetch("/hpm/consulta/atestado/historico/pessoa/" + objeto.idPessoa, {}, HttpVerbo.GET)
+                .then(res => res.json())
+                .then(response => {
+                    console.log("Atestados:", response.resultado);
+                    if (typeof response !== "undefined" ? response.status === "OK" : false) {
+                        setAtestado({ ...atestado, atestados: response.resultado });
+                    }
+                })
+                .catch(error => console.log(error))
+        }
+
 
         listaAtestadosPacientes();
     }, [atestado, objeto.idPessoa]);
-            
+
     const colunasHistorico = [
-        {text: "Data Hora Atendimento"},
-        {text: "Médico Especialidade"},
-        {text: "Anamnese"},
-        {text: "Conduta"},
-        {text: "Exame Físico"}
+        { text: "Data Hora Atendimento" },
+        { text: "Médico Especialidade" },
+        { text: "Anamnese" },
+        { text: "Conduta" },
+        { text: "Exame Físico" }
     ]
 
     const colunasAtestados = [
-        {text: "Data Hora Atendimento"},
-        {text: "CID"},
-        {text: "Quantidade de dias concedidos"},
-        {text: "Responsável pela Concessão"}
+        { text: "Data Hora Atendimento" },
+        { text: "CID" },
+        { text: "Quantidade de dias concedidos" },
+        { text: "Responsável pela Concessão" }
     ]
 
     const dadosHistorico = () => {
-        return(
+        return (
             typeof lista.consultas !== 'undefined' ? lista.consultas.map((consulta) => {
                 return ({
                     'data_hora_atendimento': consulta.dtHora,
@@ -102,7 +101,7 @@ export default function ListaHistoricosPacientes() {
     }
 
     const dadosAtestados = () => {
-        return(
+        return (
             typeof atestado.atestados !== 'undefined' ? atestado.atestados.map((atestado) => {
                 let listaCids = atestado.cids.length > 0 ? atestado.cids.map((cid, index) => {
                     return cid.codigo + (index < (atestado.cids.length - 1) ? ", " : "");
@@ -115,14 +114,14 @@ export default function ListaHistoricosPacientes() {
                 })
             }) : "")
     }
-            
+
     return (
         <Pagina titulo={"Histórico"}>
             <div className="row">
                 <div className="col-lg-12">
                     <Card titulo="Consultar">
                         <div className="row">
-                            <input type="hidden" name="idPessoa"/>
+                            <input type="hidden" name="idPessoa" />
                         </div>
                         <div className="row">
                             <div className="col-lg-6">
@@ -143,11 +142,16 @@ export default function ListaHistoricosPacientes() {
                                     label="Data"
                                     placeholder="Data e hora" />
                             </div>
+                            <div className="col-lg-12 text-lg-right mt-4 mb-4">
+                                <Botao cor={BOTAO.COR.SUCESSO} icone={ICONE.PESQUISAR} onClick={enviar}>
+                                    Consultar
+                                </Botao>
+                            </div>
                         </div>
                     </Card>
                     <Card titulo={"Dados do Paciente"} botaoMin>
                         <Tabs>
-                            <Tab title="Histórico Evolução" eventKey="aba2"  style={{width: "100%", overflow: "auto"}}>
+                            <Tab title="Histórico Evolução" eventKey="aba2" style={{ width: "100%", overflow: "auto" }}>
                                 <br />
                                 <div className="col-lg-12">
                                     <Card>
@@ -155,7 +159,7 @@ export default function ListaHistoricosPacientes() {
                                     </Card>
                                 </div>
                             </Tab>
-                            <Tab title="Atestados Concedidos" eventKey="aba3"  style={{width: "100%", overflow: "auto"}}>
+                            <Tab title="Atestados Concedidos" eventKey="aba3" style={{ width: "100%", overflow: "auto" }}>
                                 <br />
                                 <div className="col-lg-12">
                                     <Card>
