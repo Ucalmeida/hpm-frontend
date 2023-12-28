@@ -2,7 +2,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { FormGroup, Tab, Tabs } from 'react-bootstrap';
-import ModalFormMedicoAtestado from '../../componentes/modal/ModalFormMedicoAtestado';
+import ModalFormMedicoAtestado from '../modal/ModalFormMedicoAtestado';
 import { ExibirMensagem, xfetch } from '../../util';
 import { BOTAO, HttpVerbo, ICONE, MSG } from '../../util/Constantes';
 import { Botao, BotaoExcluir } from '../Botao';
