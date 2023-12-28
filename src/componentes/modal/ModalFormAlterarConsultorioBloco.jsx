@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Form, Modal } from "react-bootstrap";
 import { ExibirMensagem, xfetch } from '../../util';
-import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
-import { Botao } from "../Botao";
+import { HttpVerbo, MSG } from "../../util/Constantes";
+import { BotaoAlterar } from "../Botao";
+import { ModalFormCancelamento } from "./ModalFormCancelamento";
 
 export default function ModalFormAlterarConsultorioBloco(props) {
     const [show, setShow] = useState(false);
@@ -37,27 +37,15 @@ export default function ModalFormAlterarConsultorioBloco(props) {
 
     return (
         <>
-            <Botao cor={props.corDoBotao} icone={props.icone} onClick={handleShow}>{props.nome}</Botao>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{props.titulo}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <p>
-                            Deseja realmente salvar?
-                        </p>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Botao cor={BOTAO.COR.SECUNDARIO} onClick={handleClose}>
-                        Fechar
-                    </Botao>
-                    <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleCadastrar}>
-                        Salvar
-                    </Botao>
-                </Modal.Footer>
-            </Modal>
+            <BotaoAlterar cor={props.corDoBotao} icone={props.icone} onClick={handleShow}>{props.nome}</BotaoAlterar>
+            <ModalFormCancelamento
+            show={show}
+            onHide={handleClose}
+            titulo={props.titulo}
+            body="Deseja realmente alterar?"
+            handleClose={handleClose}
+            handleOpen={handleCadastrar}
+             />
         </>
     )
 }
