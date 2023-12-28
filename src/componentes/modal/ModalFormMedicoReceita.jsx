@@ -55,7 +55,7 @@ export default function ModalFormMedicoReceita(props) {
                 <Modal.Body>
                     <div className="login-logo">
                         <Link to="/">
-                            <img src={logoHPM}  alt={"Brasão"}/>
+                            <img src={logoHPM}  alt={"BrasÃ£o"}/>
                         </Link>
                     </div>
                     <Form titulo="Receita">
@@ -96,7 +96,7 @@ export default function ModalFormMedicoReceita(props) {
                         Fechar
                     </Botao>
                     <Botao cor={BOTAO.COR.PRIMARIO} onClick={handleCadastrar}>
-                        Salvar Mudanças
+                        Salvar MudanÃ§as
                     </Botao>
                 </Modal.Footer>
             </Modal>
