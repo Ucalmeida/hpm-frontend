@@ -10,7 +10,6 @@ function EditorTexto(props) {
             <Editor     
                 apiKey='sch2exkkk528sadnq24kffc3nidi73p0g4uma1gw2ubb112y'
                 onInit={(evt, editor) => editorRef.current = editor}
-                initialValue="<p>Insira aqui o texto.</p>"
                 init={{
                     height: 400,
                     menubar: props.menuBara,

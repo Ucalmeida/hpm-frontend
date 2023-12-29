@@ -21,7 +21,7 @@ export default function ModalFormMedicoAtestado(props) {
     });
 
     const [atestado, setAtestado] = useState({
-        idConsulta: localStorage.getItem("pacienteConsulta"),
+        idConsulta: Number(localStorage.getItem("pacienteConsulta")),
         texto: null,
         blAcompanhante: false,
         qtdDiasAfastamento: 0

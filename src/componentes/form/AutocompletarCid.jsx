@@ -2,8 +2,8 @@ import React from "react";
 import * as $ from "jquery"
 import 'jquery-ui/themes/base/all.css'
 import 'jquery-ui/ui/widgets/autocomplete'
-import {ExibirMensagem, xfetch} from "../../util";
-import {HttpVerbo, MSG} from "../../util/Constantes";
+import {xfetch} from "../../util";
+import {HttpVerbo} from "../../util/Constantes";
 
 export class AutocompletarCid extends React.Component {
     constructor(props) {
@@ -19,9 +19,9 @@ export class AutocompletarCid extends React.Component {
     handle = (e) => {
         e.preventDefault()
         this.setState({[e.target.name]: e.target.value.toUpperCase()})
-        if(e.target.value === ''){
-            this.props.changeResultado(e.target.value)
-        }
+        // if(e.target.value === ''){
+        //     this.props.changeResultado(e.target.value)
+        // }
     }
 
     componentDidMount() {
@@ -40,16 +40,16 @@ export class AutocompletarCid extends React.Component {
                             resultNome.resultado.length === 0 ? 
                             xfetch(url + "por-nome/" + key, {}, HttpVerbo.GET)
                                 .then(res => res.json())
-                                .then(json => response(json.resultado) && that.setState({carregando: false}) && (that.props.changeResultado(json.resultado.length)))
+                                .then(json => response(json.resultado) && that.setState({carregando: false})) //  && (that.props.changeResultado(json.resultado.length))
                                 .catch(e => that.setState({carregando: false}))
                             : resultNome)
-                        .then(json => response(json.resultado) && that.setState({carregando: false}) && (that.props.changeResultado(json.resultado.length)) && ((json.resultado.length === 0) ? ExibirMensagem("Não Encontrado", MSG.ALERTA) : ''))
+                        .then(json => response(json.resultado) && that.setState({carregando: false})) //  && (that.props.changeResultado(json.resultado.length)) && ((json.resultado.length === 0) ? ExibirMensagem("Não Encontrado", MSG.ALERTA) : '')
                         .catch(e => that.setState({carregando: false}))
                 }
                 if (idAuto === "idmedicamentoAuto") {
                     xfetch(url + "por-nome/" + key, {}, HttpVerbo.GET)
                         .then(res => res.json())
-                        .then(json => response(json.resultado) && that.setState({carregando: false})  && (that.props.changeResultado(json.resultado.length)))
+                        .then(json => response(json.resultado) && that.setState({carregando: false})) //  && (that.props.changeResultado(json.resultado.length))
                         .catch(e => that.setState({carregando: false}))
                 }
             },

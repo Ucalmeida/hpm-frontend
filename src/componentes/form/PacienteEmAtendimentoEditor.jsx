@@ -9,6 +9,7 @@ import { Botao, BotaoExcluir } from '../Botao';
 import { Card } from '../card/Card';
 import { AutocompletarCid } from './AutocompletarCid';
 import Input from './Input';
+import {EditorTexto} from "../EditorTexto";
 
 function PacienteEmAtendimentoEditor(props) {
     const editorRef = useRef(null);
@@ -154,63 +155,13 @@ function PacienteEmAtendimentoEditor(props) {
         <div className="row">
             <div className="col-lg-12">
                 <Card className={"collapsed-card"} titulo={"Anamnese"} botaoMin>
-                    <Editor
-                    apiKey='sch2exkkk528sadnq24kffc3nidi73p0g4uma1gw2ubb112y'
-                        onInit={(evt, editor) => editorRef.current = editor}
-                        placeholder={"Insira aqui o texto."}
-                        init={{
-                            height: 300,
-                            menubar: props.menuBara,
-                            plugins: [
-                                'advlist autolink lists link image charmap print preview anchor',
-                                'searchreplace visualblocks code fullscreen',
-                                'insertdatetime media table paste code help wordcount'
-                            ],
-                            toolbar: 'undo redo | formatselect | ' +
-                                'bold italic backcolor | alignleft aligncenter ' +
-                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                'removeformat | help',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                        }}
-                    />
+                    <EditorTexto />
                 </Card>
                 <Card className={"collapsed-card"} titulo={"Exame Físico"} botaoMin>
-                    <Editor
-                        onInit={(evt, editor) => editorExFisico.current = editor}
-                        init={{
-                            height: 300,
-                            menubar: props.menuBara,
-                            plugins: [
-                                'advlist autolink lists link image charmap print preview anchor',
-                                'searchreplace visualblocks code fullscreen',
-                                'insertdatetime media table paste code help wordcount'
-                            ],
-                            toolbar: 'undo redo | formatselect | ' +
-                                'bold italic backcolor | alignleft aligncenter ' +
-                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                'removeformat | help',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                        }}
-                    />
+                    <EditorTexto />
                 </Card>
                 <Card className={"collapsed-card"} titulo={"Conduta"} botaoMin>
-                    <Editor
-                        onInit={(evt, editor) => editorConduta.current = editor}
-                        init={{
-                            height: 300,
-                            menubar: props.menuBara,
-                            plugins: [
-                                'advlist autolink lists link image charmap print preview anchor',
-                                'searchreplace visualblocks code fullscreen',
-                                'insertdatetime media table paste code help wordcount'
-                            ],
-                            toolbar: 'undo redo | formatselect | ' +
-                                'bold italic backcolor | alignleft aligncenter ' +
-                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                'removeformat | help',
-                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                        }}
-                    />
+                    <EditorTexto />
                 </Card>
                 <Card className={"collapsed-card"} titulo={"CID"} botaoMin>
                     <AutocompletarCid
