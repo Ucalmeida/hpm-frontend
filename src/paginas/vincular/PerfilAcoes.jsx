@@ -5,8 +5,6 @@ import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
 import {acoes} from "../../json/acoes";
 import ReactSelect, {components} from "react-select";
 
-
-const LOG = console.log
 export function PerfilAcoes() {
     const [objeto, setObjeto] = useState({
         busca: '',
@@ -28,7 +26,7 @@ export function PerfilAcoes() {
         carregarAcoes();
     }, [])
 
-    const carregarAcoes = (e) => {
+    const carregarAcoes = () => {
         setObjeto({...objeto, carregandoAcoes: true, acoes: []})
         xfetch('/hpm/acao', {}, HttpVerbo.GET)
             .then(res => res.json())
@@ -57,7 +55,7 @@ export function PerfilAcoes() {
     function selecionarPerfil(e) {
         const idPerfil = e.value
         objeto.perfil = idPerfil
-        xfetch('/hpm/perfil/acoes/'+idPerfil, {}, HttpVerbo.GET)
+        xfetch(`/hpm/perfil/acoes/${idPerfil}`, {}, HttpVerbo.GET)
             .then(res => res.json())
             .then(dados => {
                 if (dados.status === "OK") {
@@ -76,15 +74,14 @@ export function PerfilAcoes() {
             return
         }
 
-        let dados = {
+        const dados = {
             idAcao: idAcao,
             idPerfil: idPerfil,
             dependencias: []
         }
-        let acaoEscolhida = objeto.listaAcoes.find(a => a.id === idAcao);
+        const acaoEscolhida = objeto.listaAcoes.find(a => a.id === idAcao);
         if (acaoEscolhida.isFrontend) {
-
-            let acaoFrontend = encontraAcao(acaoEscolhida.link);
+            const acaoFrontend = encontraAcao(acaoEscolhida.link);
             if (acaoFrontend.dependencias) {
                 dados.dependencias = acaoFrontend.dependencias
             }
@@ -113,14 +110,14 @@ export function PerfilAcoes() {
 
     const dados = () => {
         return (
-            objeto.listaAcoesPerfil.map((acao, index) => {
+            objeto.listaAcoesPerfil.map((acao) => {
                 return ({
-                    'id': acao.id,
-                    'descricao': acao.descricao,
-                    'verbo': acao.verbo,
-                    'uri': acao.link,
-                    'publica': acao.publica ? "SIM" : "NÃO",
-                    'acoes': <BotaoExcluir tamanho={BOTAO.TAMANHO.PEQUENO} />
+                    id: acao.id,
+                    descricao: acao.descricao,
+                    verbo: acao.verbo,
+                    uri: acao.link,
+                    publica: acao.publica ? "SIM" : "NÃO",
+                    acoes: <BotaoExcluir tamanho={BOTAO.TAMANHO.PEQUENO} />
                 })
             })
         )
@@ -145,7 +142,7 @@ export function PerfilAcoes() {
                             components={{Placeholder}}/>
                     </div>
 
-                    <Botao className="col-lg-2" cor="success" icone={"fas fa-retweet"} onClick={vincular}>
+                    <Botao className="col-lg-2" cor={resolveCor(HttpVerbo.GET)} icone={"fas fa-retweet"} onClick={vincular}>
                         Vincular
                     </Botao>
                 </div>
@@ -162,7 +159,7 @@ export function PerfilAcoes() {
     function getAcoes() {
         return objeto.listaAcoes.map((a) => {
             const local = a.isFrontend ? 'FRONTEND' : 'BACKEND'
-            let label = local + ' | ' + a.verbo + ' - ' + a.link
+            const label = `${local} | ${a.verbo} - ${a.link}`
             return {value: a.id, label: label, key: a.id}
         });
     }
@@ -173,7 +170,7 @@ export function PerfilAcoes() {
         let find = acoes.find(a => a.url === path[1]);
 
         let i = 2
-        while (find !== undefined && find.acoes) {
+        while (find?.acoes) {
             find = find.acoes.filter(a => a.url === path[i])
             i++
         }
