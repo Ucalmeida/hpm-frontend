@@ -40,12 +40,13 @@ export default function ListaPacientesParaAtendimento() {
   });
 
   const handleDtBloco = (e) => {
-    const selectedDate = e.target.value;
-    const dataHora = selectedDate + "T00:00";
-    console.log(dataHora);
-    setConsultorioBloco({ ...consultorioBloco, data: dataHora });
-    atendimentos.dataConsulta = dataHora;
-    setDataExibida(selectedDate);
+    const dataSelecionada = e.target.value;
+    if(dataSelecionada) {
+      const dataHora = dataSelecionada + "T00:00";
+      setConsultorioBloco({ ...consultorioBloco, data: dataHora });
+      atendimentos.dataConsulta = dataHora;
+      setDataExibida(dataSelecionada);
+    } 
   };
 
   const selecionarPessoa = (event) => {
