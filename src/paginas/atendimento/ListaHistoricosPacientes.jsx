@@ -30,14 +30,13 @@ export default function ListaHistoricosPacientes() {
     });
 
     const handleDtBloco = (e) => {
-        const dataSelecionada = e.target.value;
-        if(dataSelecionada) {
-            const dataHora = dataSelecionada + "T00:00";
-            setConsultorioBloco({ ...consultorioBloco, data: dataHora });
-            objeto.dataConsulta = dataHora;
-            console.log(dataHora);
-            setDataExibida(dataSelecionada);
-        }
+        let dtSelecionada = e.target.value
+        if(dtSelecionada) {
+            dtSelecionada = dtSelecionada + "T00:00"
+          }
+          setConsultorioBloco({ ...consultorioBloco, data: dtSelecionada });
+          setObjeto({ ...objeto, dataConsulta: dtSelecionada})
+          setDataExibida(e.target.value);
     }
 
 
