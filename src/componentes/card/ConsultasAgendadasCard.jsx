@@ -75,7 +75,7 @@ export default function ConsultasAgendadasCard(props) {
                 .then(response => response.json())
                 .then(lista => setLista({ ...lista, consultas: lista.resultado }))
         }
-    }, [apagar])
+    }, [apagar, props.objeto, props.url])
 
     const colunas = [
         { text: "Paciente" },
