@@ -1,34 +1,27 @@
-import React from "react";
-import * as $ from "jquery"
-import 'jquery-ui/themes/base/all.css'
-import 'jquery-ui/ui/widgets/autocomplete'
-import {xfetch} from "../../util";
-import {HttpVerbo} from "../../util/Constantes";
+import React, { useState, useEffect } from "react";
+import * as $ from "jquery";
+import 'jquery-ui/themes/base/all.css';
+import 'jquery-ui/ui/widgets/autocomplete';
+import { xfetch } from "../../util";
+import { HttpVerbo } from "../../util/Constantes";
 
-export class AutocompletarCid extends React.Component {
-    constructor(props) {
-        super(props);
+export const AutocompletarCid = (props) => {
+    const [carregando, setCarregando] = useState(false);
+    const [valor, setValor] = useState({});
+    const [busca, setBusca] = useState('');
 
-        this.state = {
-            carregando: false,
-            valor: {},
-            busca: ''
-        }
-    }
+    const handle = (e) => {
+        e.preventDefault();
+        setBusca(e.target.value.toUpperCase());
+    };
 
-    handle = (e) => {
-        e.preventDefault()
-        this.setState({[e.target.name]: e.target.value.toUpperCase()})
-    }
-
-    componentDidMount() {
-        const url = this.props.url;
-        let that = this;
-        let idAuto = "id" + this.props.name + "Auto";
+    useEffect(() => {
+        const url = props.url;
+        let idAuto = "id" + props.name + "Auto";
 
         $('#' + idAuto).autocomplete({
-            source: function( request, response ) {
-                that.setState({carregando: true})
+            source: function (request, response) {
+                setCarregando(true);
                 let key = request.term;
                 if (idAuto !== "idmedicamentoAuto") {
                     xfetch(url + "por-codigo/" + key, {}, HttpVerbo.GET)
@@ -37,61 +30,60 @@ export class AutocompletarCid extends React.Component {
                             resultNome.resultado.length === 0 ? 
                             xfetch(url + "por-nome/" + key, {}, HttpVerbo.GET)
                                 .then(res => res.json())
-                                .then(json => response(json.resultado) && that.setState({carregando: false})) 
-                                .catch(e => that.setState({carregando: false}))
+                                .then(json => response(json.resultado) && setCarregando(false)) 
+                                .catch(e => setCarregando(false))
                             : resultNome)
-                        .then(json => response(json.resultado) && that.setState({carregando: false}))
-                        .catch(e => that.setState({carregando: false}))
+                        .then(json => response(json.resultado) && setCarregando(false))
+                        .catch(e => setCarregando(false))
                 }
                 if (idAuto === "idmedicamentoAuto") {
                     xfetch(url + "por-nome/" + key, {}, HttpVerbo.GET)
                         .then(res => res.json())
-                        .then(json => response(json.resultado) && that.setState({carregando: false}))
-                        .catch(e => that.setState({carregando: false}))
+                        .then(json => response(json.resultado) && setCarregando(false))
+                        .catch(e => setCarregando(false))
                 }
             },
-            minLength: this.props.tamanho,
-            select: function( event, ui ) {
-                that.setState({valor: ui.item.value, busca: ui.item.label, carregando: false})
-                that.props.retorno(ui.item.value)
-                return false
+            minLength: props.tamanho,
+            select: function (event, ui) {
+                setValor(ui.item.value);
+                setBusca(ui.item.label);
+                setCarregando(false);
+                props.retorno(ui.item.value);
+                return false;
             }
         });
+    }, [props.name, props.url, props.tamanho, props.retorno, props]);
+
+    let spinner = '';
+    if (carregando) {
+        spinner = <span className="spinner-border spinner-border-sm text-success" role="status" />;
     }
 
-    render() {
-        const {busca, valor, carregando} = this.state
-        let spinner = '';
-        if (carregando) {
-            spinner =
-                <span className="spinner-border spinner-border-sm text-success" role="status"/>
-        }
-        return (
-            <>
-                <div>
-                    <label>{this.props.label}</label>
-                    <input
-                        id={'id' + this.props.name + 'Auto'}
-                        autoComplete="off"
-                        className="form-control"
-                        type="text"
-                        name="busca"
-                        onChange={this.handle}
-                        value={busca}
-                        placeholder={this.props.placeholder}
-                    />
-                    {spinner}
-                </div>
-                <div className="col-lg-1">
-                    <input
-                        type="hidden"
-                        id={'id'+this.props.name}
-                        name={this.props.name}
-                        value={valor}
-                    />
-                </div>
-            </>
-        );
-    }
+    return (
+        <>
+            <div>
+                <label>{props.label}</label>
+                <input
+                    id={'id' + props.name + 'Auto'}
+                    autoComplete="off"
+                    className="form-control"
+                    type="text"
+                    name="busca"
+                    onChange={handle}
+                    value={busca}
+                    placeholder={props.placeholder}
+                />
+                {spinner}
+            </div>
+            <div className="col-lg-1">
+                <input
+                    type="hidden"
+                    id={'id' + props.name}
+                    name={props.name}
+                    value={valor}
+                />
+            </div>
+        </>
+    );
+};
 
-}
