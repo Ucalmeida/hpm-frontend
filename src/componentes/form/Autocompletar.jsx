@@ -19,9 +19,9 @@ export class Autocompletar extends React.Component {
     handle = (e) => {
         e.preventDefault()
         this.setState({[e.target.name]: e.target.value.toUpperCase()})
-        // if(e.target.value === ''){
-        //   this.props.changeResultado(e.target.value)
-        // }
+        if (!e.target.value) {
+            this.props.retorno(null)
+        }
     }
 
     componentDidMount() {
@@ -35,7 +35,7 @@ export class Autocompletar extends React.Component {
                 let requisicao = !isNaN(key) ? 'porCpf/' : 'porNome/';
                 xfetch(url + requisicao + key, {}, HttpVerbo.GET)
                     .then(res => res.json())
-                    .then(json => response(json.resultado) && that.setState({carregando: false}))//  && (that.props.changeResultado(json.resultado.length)) && ((json.resultado.length === 0) ? ExibirMensagem("Não Encontrado", MSG.ALERTA) : '')
+                    .then(json => response(json.resultado) && that.setState({carregando: false}))
                     .catch(e => that.setState({carregando: false}))
             },
             minLength: this.props.tamanho,

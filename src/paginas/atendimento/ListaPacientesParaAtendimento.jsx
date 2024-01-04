@@ -51,7 +51,7 @@ export default function ListaPacientesParaAtendimento() {
   };
 
   const selecionarPessoa = (event) => {
-    let idpessoa = event;
+        let idpessoa = event;
     atendimentos.idPessoa = idpessoa;
     setAtendimentos({ ...atendimentos, idPessoa: idpessoa });
   };
@@ -118,6 +118,10 @@ export default function ListaPacientesParaAtendimento() {
     console.log("Dentro de ListarPacientesParaAtendimentoPorData");
     console.log("Tamanho:", idConsultorioBlocos.length);
     console.log("idConsultorioBloco maior que Zero");
+    if(!atendimentos.dataConsulta && !atendimentos.idPessoa) {
+      ExibirMensagem("Precisa preencher ao menos um dos campos para consulta.", MSG.ALERTA);
+      return
+    }
     xfetch("/hpm/consulta/pesquisar-atendimentos", atendimentos, HttpVerbo.POST)
       .then((response) => {
         console.log("Atendimentos:", atendimentos);
