@@ -7,6 +7,7 @@ import {HttpVerbo} from "../../util/Constantes";
 function Select(props) {
     const [lists, setLists] = useState([]);
 
+    useEffect(() => {
     const loadBloods = async () => {
         const bloodResponse = await xfetch(props.url, {}, HttpVerbo.GET)
         .then(r => r.json())
@@ -14,9 +15,9 @@ function Select(props) {
         return bloodResponse;
     }
 
-    useEffect(() => {
+
         loadBloods();
-    }, [])
+    }, [props.url])
 
     let options = lists.map((item) => {
         return {value: item.valor, label: item.texto, key: item.valor}
