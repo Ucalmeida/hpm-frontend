@@ -17,6 +17,7 @@ export default function ListaHistoricosPacientes() {
     idEspecialidade: null,
     idPessoa: null,
     idProfissionalSaude: Number(localStorage.getItem("id")),
+    historico: true
   });
 
   const [dataExibida, setDataExibida] = useState("");
@@ -53,6 +54,7 @@ export default function ListaHistoricosPacientes() {
   const enviar = () => {
     xfetch("/hpm/consulta/pesquisar-atendimentos", objeto, HttpVerbo.POST)
       .then((response) => {
+        console.log(objeto);
         if (
           typeof response !== "undefined" ? response.status === "OK" : false
         ) {

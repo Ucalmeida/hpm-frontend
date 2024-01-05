@@ -23,6 +23,7 @@ export default function ListaPacientesParaAtendimento() {
     idEspecialidade: null,
     idPessoa: null,
     idProfissionalSaude: Number(localStorage.getItem("id")),
+    historico: false
   });
 
   const [dataExibida, setDataExibida] = useState("");
