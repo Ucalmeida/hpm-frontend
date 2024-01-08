@@ -1,81 +1,54 @@
-import React, {useState} from 'react'
-import {Autocompletar, Botao, BotaoExcluir, Card, Pagina, Select, Tabela} from "../../componentes";
-import {ExibirMensagem, xfetch} from "../../util";
-import {BOTAO, HttpVerbo, MSG} from "../../util/Constantes";
-import {acoes} from "../../json/acoes";
-import {components} from "react-select";
+import React, { useState } from 'react';
+import { Autocompletar, Botao, BotaoExcluir, Card, Pagina, Select, Tabela } from "../../componentes";
+import { acoes } from "../../json/acoes";
+import { ExibirMensagem, xfetch } from "../../util";
+import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
 
-
-const LOG = console.log
 export default function PessoaPerfis() {
     const [objeto, setObjeto] = useState({
         busca: '',
         carregandoPerfis: false,
         carregandoAcoes: false,
         carregandoAcoesPerfis: false,
+        idPerfil: undefined,
+        idPessoa: undefined,
         perfis: [],
-        perfil: undefined,
-        pessoa: undefined,
         listarPessoasPerfil: []
     })
-
-    const Placeholder = props => {
-        return <components.Placeholder {...props}> Selecione ação </components.Placeholder>;
-    };
-
-    function resolveCor(verbo) {
-        if (verbo === "GET") {
-            return 'text-success'
-        }
-
-        if (verbo === "POST") {
-            return 'text-danger'
-        }
-
-        if (verbo === "PUT") {
-            return 'text-primary'
-        }
-        return "";
-    }
-
+    
     function selecionarPerfil(e) {
         const idPerfil = e.value;
-        objeto.perfil = idPerfil;
+        setObjeto({...objeto, idPerfil: idPerfil});
     }
 
-    const selecionarPessoa = (e) => {
-        let idpessoa = document.getElementById('idpessoa').value;
-        console.log("Pessoa em Selecionar:", idpessoa);
-        objeto.pessoa = idpessoa;
+    const selecionarPessoa = (event) => {
+        const idpessoa = event;
+        setObjeto({...objeto, idPessoa: idpessoa});
     }
+    console.log("Pessoa em Objeto:", objeto);
 
     function vincular(e) {
-        e.preventDefault()
-        const idPessoa = objeto.pessoa
-        const idPerfil = objeto.perfil
-
-        console.log("Pessoa:", idPessoa);
-        console.log("Perfil:", idPerfil);
+        e.preventDefault();
+        console.log("Pessoa:", objeto.idPessoa);
+        console.log("Perfil:", objeto.idPerfil);
 
 
-        if (!idPessoa || !idPerfil) {
+        if (!objeto.idPessoa || !objeto.idPerfil) {
             ExibirMensagem("Um perfil e/ou uma pessoa precisa ser informadas", MSG.ERRO)
             return
         }
 
-        let dados = {
-            idPessoa: idPessoa,
-            idPerfil: idPerfil
+        const dados = {
+            idPessoa: objeto.idPessoa,
+            idPerfil: objeto.idPerfil
         }
 
         xfetch("/hpm/pessoa-perfil/cadastrar", dados, HttpVerbo.POST)
             .then(res => {
                 if (typeof res !== "undefined" ? res.status === "OK" : false) {
                     ExibirMensagem("Perfil atribuído com sucesso", MSG.SUCESSO)
-                    setObjeto({...objeto, listarPessoasPerfil: res.resultado})
                 }
             })
-
     }
 
     const colunas = [
@@ -114,7 +87,7 @@ export default function PessoaPerfis() {
                             label="Digite os Dados:"
                             placeholder="Nome ou CPF aqui"
                             tamanho={6}
-                            retorno={selecionarPessoa} />
+                            retorno={(e) => selecionarPessoa(e)} />
                     </div>
 
                     <Botao className="col-lg-2" cor="success" icone={"fas fa-retweet"} onClick={vincular}>
@@ -129,25 +102,5 @@ export default function PessoaPerfis() {
                 </div>
             </Card>
         </Pagina>
-    );
-
-    function getAcoes() {
-        return objeto.listaAcoes.map((a) => {
-            const local = a.isFrontend ? 'FRONTEND' : 'BACKEND'
-            let label = local + ' | ' + a.verbo + ' - ' + a.link
-            return {value: a.id, label: label, key: a.id}
-        });
-    }
-
-
-    function encontraAcao(link) {
-        const path = link.split("/")
-        let find = acoes.find(a => a.url === path[1]);
-
-        
-        for (let i = 2; find !== undefined && find.acoes; i++) {
-            find = find.acoes.filter(a => a.url === path[i])
-        }
-        return find[0];
-    }
+    )
 }

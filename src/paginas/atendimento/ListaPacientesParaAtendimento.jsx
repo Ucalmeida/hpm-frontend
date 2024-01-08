@@ -52,7 +52,7 @@ export default function ListaPacientesParaAtendimento() {
   };
 
   const selecionarPessoa = (event) => {
-        let idpessoa = event;
+    let idpessoa = event;
     atendimentos.idPessoa = idpessoa;
     setAtendimentos({ ...atendimentos, idPessoa: idpessoa });
   };
@@ -84,6 +84,9 @@ export default function ListaPacientesParaAtendimento() {
       consultaSelecionada,
       HttpVerbo.POST
     ).then((json) => {});
+    if (consulta.nmEspecialidade.localeCompare("Odontologia") === 0) {
+      window.open("/atendimento/pacienteEmAtendimentoOdontologia");
+    }
     window.open("/atendimento/pacienteEmAtendimento");
   }
 

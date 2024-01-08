@@ -10,7 +10,7 @@ import ModalFormMedicoAtestado from '../modal/ModalFormMedicoAtestado';
 import { AutocompletarCid } from './AutocompletarCid';
 import Input from './Input';
 
-function PacienteEmAtendimentoEditor(props) {
+function PacienteEmAtendimentoOdontologiaEditor(props) {
     const editorRef = useRef(null);
     const editorExFisico = useRef(null);
     const editorConduta = useRef(null);
@@ -153,13 +153,13 @@ function PacienteEmAtendimentoEditor(props) {
     return (
         <div className="row">
             <div className="col-lg-12">
-                <Card className={"collapsed-card"} titulo={"Anamnese"} botaoMin>
-                    <EditorTexto />
-                </Card>
-                <Card className={"collapsed-card"} titulo={"Exame Físico"} botaoMin>
+                <Card className={"collapsed-card"} titulo={"Queixas do Paciente"} botaoMin>
                     <EditorTexto />
                 </Card>
                 <Card className={"collapsed-card"} titulo={"Conduta"} botaoMin>
+                    <EditorTexto />
+                </Card>
+                <Card className={"collapsed-card"} titulo={"Trabalho Realizado"} botaoMin>
                     <EditorTexto />
                 </Card>
                 <Card className={"collapsed-card"} titulo={"CID"} botaoMin>
@@ -276,10 +276,6 @@ function PacienteEmAtendimentoEditor(props) {
                             </FormGroup>
                             <Botao cor={BOTAO.COR.INFO} icone={ICONE.PDF} onClick={() => handleReceitaCadastrar()}>Imprimir Receita</Botao>
                         </Tab>
-                        {/* <Tab title="Requisição de Exames" eventKey="aba3"> */}
-                            {/* <br /> */}
-                            {/* <ModalFormMedicoAtestado corDoBotao={BOTAO.COR.ALERTA} icone={ICONE.PDF} titulo={"Requisição de Exames"} nome={"Requisição de Exames"} /> */}
-                        {/* </Tab> */}
                     </Tabs>
                 </Card>
                 <div className={'btnFinalizar'}>
@@ -290,10 +286,10 @@ function PacienteEmAtendimentoEditor(props) {
     )
 };
 
-PacienteEmAtendimentoEditor.defaultProps = {
+PacienteEmAtendimentoOdontologiaEditor.defaultProps = {
     menuBara : true
 }
-PacienteEmAtendimentoEditor.propTypes = {
+PacienteEmAtendimentoOdontologiaEditor.propTypes = {
     menuBara : PropTypes.bool,
     corDoBotao: PropTypes.string,
     icone: PropTypes.string,
@@ -303,4 +299,5 @@ PacienteEmAtendimentoEditor.propTypes = {
     funcao: PropTypes.func,
 };
 
-export { PacienteEmAtendimentoEditor };
+export { PacienteEmAtendimentoOdontologiaEditor };
+

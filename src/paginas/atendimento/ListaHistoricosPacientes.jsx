@@ -59,6 +59,7 @@ export default function ListaHistoricosPacientes() {
           typeof response !== "undefined" ? response.status === "OK" : false
         ) {
           setLista({ ...lista, consultas: response.resultado });
+          listaAtestadosPacientes();
         }
       })
       .catch((error) => {
@@ -66,29 +67,25 @@ export default function ListaHistoricosPacientes() {
       });
   };
 
-  useEffect(() => {
-    const listaAtestadosPacientes = () => {
-      xfetch(
-        "/hpm/consulta/atestado/historico/pessoa/" + objeto.idPessoa,
-        {},
-        HttpVerbo.GET
-      )
-        .then((res) => res.json())
-        .then((response) => {
-          console.log("Atestados:", response.resultado);
-          if (
-            typeof response !== "undefined" ? response.status === "OK" : false
-          ) {
-            setAtestado({ ...atestado, atestados: response.resultado });
-          }
-        })
-        .catch((error) => {
-          ExibirMensagem(error.message || "Erro ao cancelar a consulta", MSG.ERRO);
-        });
-    };
-
-    listaAtestadosPacientes();
-  }, [atestado, objeto.idPessoa]);
+  const listaAtestadosPacientes = () => {
+    xfetch(
+      "/hpm/consulta/atestado/historico/pessoa/" + objeto.idPessoa,
+      {},
+      HttpVerbo.GET
+    )
+      .then((res) => res.json())
+      .then((response) => {
+        console.log("Atestados:", response.resultado);
+        if (
+          typeof response !== "undefined" ? response.status === "OK" : false
+        ) {
+          setAtestado({ ...atestado, atestados: response.resultado });
+        }
+      })
+      .catch((error) => {
+        ExibirMensagem(error.message || "Erro ao cancelar a consulta", MSG.ERRO);
+      });
+  };
 
   const colunasHistorico = [
     { text: "Paciente" },
@@ -135,7 +132,7 @@ export default function ListaHistoricosPacientes() {
                 })
               : "";
           return {
-            paciente: atestado.nmPaciente,
+            paciente: atestado.consulta.nmPaciente,
             data_hora_atendimento: atestado.consulta.dtHora,
             cid: listaCids,
             quantidade_de_dias_concedidos: atestado.qtdDiasAfastamento,
