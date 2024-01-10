@@ -158,7 +158,7 @@ export default function ListaHistoricosPacientes() {
                 <Autocompletar
                   name="pessoa"
                   url="/hpm/pessoa/"
-                  label="Digite os Dados:"
+                  label="Digite os Dados do Paciente:"
                   placeholder="Nome ou CPF aqui"
                   tamanho={6}
                   retorno={selecionarPessoa}
