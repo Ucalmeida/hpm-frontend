@@ -76,6 +76,21 @@ const MSG = {
     SUCESSO: 'Operação realizada com sucesso! ',
 }
 
+const MESES = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro"
+]
+
 export {
     HttpVerbo,
     BOTAO,
@@ -83,4 +98,5 @@ export {
     ICONE,
     MSG,
     TEXTO,
+    MESES
 }
