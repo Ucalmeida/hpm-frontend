@@ -295,6 +295,21 @@ export const acoes = [
       },
     ]
   },
+  ,
+  {
+    "nome": "Secretaria",
+    "descricao": "Páginas da Secretaria da Junta Médica",
+    "url": "secretaria",
+    "icone": "fas fa-user-nurse",
+    "acoes": [
+      {
+        "nome": "Cadastrar Escala",
+        "descricao": "Cadastro de Escala da Junta Médica",
+        "url": "cadastrarEscala",
+        "icone": "fas fa-pager"
+      },
+    ]
+  },
   {
     "nome": "Relatório",
     "descricao": "Menu de Relatorio",

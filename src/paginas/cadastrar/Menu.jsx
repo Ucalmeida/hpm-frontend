@@ -4,7 +4,7 @@ import {acoes} from "../../json/acoes";
 import {ExibirMensagem, xfetch} from "../../util";
 import {HttpVerbo, MSG} from "../../util/Constantes";
 
-const LOG = console.log
+// const LOG = console.log
 const CADASTRA_ACAO_FRONTEND = '/hpm/acao/frontend';
 
 
@@ -20,23 +20,25 @@ export default function Menu() {
     }
 
     function encontraAcao() {
-        const path = objeto.uri.split("/")
-        let find = acoes.find(a => a.url === path[1]);
-        let i = 2
-        while (find !== undefined && find.acoes) {
-            find = find.acoes.filter(a => a.url === path[i])
-            i++
+        try {
+            const path = objeto.uri.split("/")
+            let find = acoes.find(a => a.url === path[1]);
+            let i = 2
+            while (find !== undefined && find.acoes) {
+                find = find.acoes.filter(a => a.url === path[i])
+                i++
+            }
+            return find;
+        } catch (error) {
+            console.error("Erro na descrição da URI. Veja o exemplo em vermelho.")
         }
-
-        return find;
     }
 
     function salvar(e) {
         e.preventDefault()
-
         const acao = encontraAcao()
         if (!acao || acao.length === 0) {
-            ExibirMensagem("A ação não foi encontrada.", MSG.ERRO)
+            ExibirMensagem("A ação não foi encontrada. Verifique se a URI foi digitada corretamente. Veja o exemplo em vermelho.", MSG.ERRO)
             return
         }
         let dados = {
@@ -53,6 +55,7 @@ export default function Menu() {
                     ExibirMensagem("Ação cadastrada com sucesso.", MSG.SUCESSO)
                 }
             })
+            .catch(() => console.error("Faltou incluir a descrição"))
     }
 
     return (
@@ -65,7 +68,7 @@ export default function Menu() {
                             name="uri"
                             onChange={handleChange}
                             value={objeto.uri}
-                            legenda="Ex.: cadastrar/menu"/>
+                            legenda="Ex.: /cadastrar/menu"/>
                     </div>
                     <div className="col-lg-6">
                         <Input
@@ -90,7 +93,7 @@ export default function Menu() {
                     </div>
                 </div>
                 <div className="row pull-right">
-                    <BotaoSalvar onClick={salvar}/>
+                    <BotaoSalvar onClick={salvar} />
                 </div>
             </Card>
         </Pagina>

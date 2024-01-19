@@ -55,6 +55,8 @@ import ListarPacientes from "./paginas/recepcao/ListarPacientes";
 import MarcarConsultas from "./paginas/recepcao/MarcarConsultas";
 import VerPacientesConsultaAgendada from "./paginas/recepcao/VerPacientesConsultaAgendada";
 
+import CadastrarEscalaJISM from "./paginas/secretaria/CadastrarEscala"
+
 import Atendimentos from "./paginas/relatorio/Atendimentos";
 
 import { PerfilAcoes } from "./paginas/vincular/PerfilAcoes";
@@ -146,6 +148,8 @@ const App =  () =>  {
                     <Route exact path="/recepcao/verPacientesConsultaAgendada" component={VerPacientesConsultaAgendada} />
                     <Route exact path="/recepcao/consultaEmergencia" component={ConsultaEmergencia} />
                     <Route exact path="/recepcao/consulta" component={Consulta} />
+
+                    <Route exact path="/secretaria/cadastrarEscala" component={CadastrarEscalaJISM} />
 
                     <Route exact path="/relatorio/atendimentos" component={Atendimentos} />
 
