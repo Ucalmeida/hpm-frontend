@@ -41,18 +41,13 @@ const selecionarConsultorioBloco = (e) => {
 
 
   const enviar = () => {
-    console.log(objeto)
     xfetch("/hpm/consulta/cadastrar", objeto, HttpVerbo.POST).then((json) => {
       if (typeof json !== "undefined" ? json.status === "OK" : false) {
         ExibirMensagem(
           "Consulta Agendada com Sucesso!",
           MSG.SUCESSO,
-          null,
-          "Emergência",
-          null,
-          null,
-          window.location.reload()
         );
+        props.handleClose(false)
       }
     });
   };
