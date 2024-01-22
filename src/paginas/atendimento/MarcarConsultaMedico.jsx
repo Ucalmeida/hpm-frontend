@@ -4,7 +4,7 @@ import {xfetch} from "../../util";
 import {BOTAO, HttpVerbo} from "../../util/Constantes";
 import {Botao, Card, Pagina, Tabela} from "../../componentes";
 
-export default function MarcarConsultas() {
+export default function MarcarConsultaMedico() {
     const objeto = {};
 
     const [lista, setLista] = useState({
@@ -36,16 +36,16 @@ export default function MarcarConsultas() {
     //     window.open("/recepcao/consulta");
     // }
 
-    // const handleBtnUrgencia = async (medico) => {
-    //     localStorage.setItem('emergencia', true);
-    //     localStorage.setItem('medicoConsulta', medico.id);
-    //     localStorage.setItem('nmProfissionalSaude', medico.profissionalSaudeNome);
-    //     localStorage.setItem('nmEspecialidade', medico.especialidadeNome);
-    //     localStorage.setItem('idEspecialidade', medico.especialidadeId);
-    //     localStorage.setItem('idProfissionalSaude', medico.profissionalSaudeId);
-    //     localStorage.setItem('dataHora', medico.dataInicio + " - " + medico.dataTermino);
-    //     window.open("/recepcao/consultaEmergencia");
-    // }
+    const handleBtnUrgencia = async (medico) => {
+        localStorage.setItem('emergencia', true);
+        localStorage.setItem('medicoConsulta', medico.id);
+        localStorage.setItem('nmProfissionalSaude', medico.profissionalSaudeNome);
+        localStorage.setItem('nmEspecialidade', medico.especialidadeNome);
+        localStorage.setItem('idEspecialidade', medico.especialidadeId);
+        localStorage.setItem('idProfissionalSaude', medico.profissionalSaudeId);
+        localStorage.setItem('dataHora', medico.dataInicio + " - " + medico.dataTermino);
+        window.open("/recepcao/consultaEmergencia");
+    }
 
     const handleEspecialidade = (e) => {
         objeto.idEspecialidade = e.value;
@@ -89,7 +89,7 @@ export default function MarcarConsultas() {
                         'acoes': <div>
                                     <Botao onClick={() => handleBtnVerPacientes(medico.id, medico)} value={medico.id}>Ver Pacientes</Botao>
                                     {/*<Botao cor={BOTAO.COR.PRIMARIO} onClick={() => handleBtnConsulta(medico)}>Consulta</Botao>*/}
-                                    {/*<Botao disabled={isDesabilitado} cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Encaixes</Botao>*/}
+                                    <Botao disabled={isDesabilitado} cor={BOTAO.COR.ALERTA} onClick={() => handleBtnUrgencia(medico)}>Encaixes</Botao>
                                 </div>
                     })
                 })
@@ -98,7 +98,7 @@ export default function MarcarConsultas() {
     }
 
     return(
-        <Pagina titulo="Ver Consultas">
+        <Pagina titulo="Marcar Consultas">
             <div className={"row"}>
                 <div className={"col-lg-12"}>
                     <Card titulo="Listar">
@@ -106,7 +106,7 @@ export default function MarcarConsultas() {
                             <div className={"col-lg-12"}>
                                 <label>Selecionar Especialidade</label>
                                 <Select
-                                    url={"/hpm/especialidade/opcoes"}
+                                    url={`/hpm/especialidade/${localStorage.getItem('id')}/opcoes`}
                                     nome={"idEspecialidade"}
                                     funcao={handleEspecialidade}
                                 />

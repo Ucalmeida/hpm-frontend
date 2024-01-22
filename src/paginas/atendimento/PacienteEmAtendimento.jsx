@@ -91,9 +91,7 @@ export default function PacienteEmAtendimento() {
     const colunasHistorico = [
         {text: "Data Hora Atendimento"},
         {text: "Médico Especialidade"},
-        {text: "Anamnese"},
-        {text: "Conduta"},
-        {text: "Exame Físico"}
+        {text: "Anamnese | Conduta | Exame Físico"},
     ]
     
     const colunasAtestados = [
@@ -110,8 +108,6 @@ export default function PacienteEmAtendimento() {
                     'data_hora_atendimento': consulta.dtHora,
                     'medico_especialidade': consulta.nmMedico + " - " + consulta.nmEspecialidade,
                     'anamnese': consulta.anamnese,
-                    'conduta': consulta.conduta,
-                    'exame_fisico': consulta.exameFisico
                 })
             }) : "")
     }
@@ -267,6 +263,9 @@ export default function PacienteEmAtendimento() {
                                     idConsulta={consulta.id}
                                     cids={consulta.idCids}
                                     nome={"Finalizar Consulta"}
+                                    BotaoNovaConsulta={BOTAO.COR.SUCESSO}
+                                    iconeNovaConsulta={ICONE.ENVIAR}
+                                    nomeConsulta={"Agendar Nova Consulta"}
                                 />
                             </div>
                         </div>

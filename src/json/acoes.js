@@ -46,6 +46,12 @@ export const acoes = [
         "url": "listaHistoricosPacientes",
         "icone": "fas fa-stethoscope"
       },
+      {
+        "nome": "Marcar Consultas",
+        "descricao": "Marca consulta por paciente",
+        "url": "marcarConsultaMedico",
+        "icone": "fas fa-users-cog"
+      }
       // {
       //   "nome": "Impressos",
       //   "descricao": "Tela para impressão de atestados, receitas, relatórios",
