@@ -10,6 +10,7 @@ import ModalFormMedicoAtestado from "../modal/ModalFormMedicoAtestado";
 import { AutocompletarCid } from "./AutocompletarCid";
 import Input from "./Input";
 import { ModalAgendarNovaConsulta } from "../modal/ModalAgendarNovaConsulta";
+import {Editor} from "@tinymce/tinymce-react";
 
 function PacienteEmAtendimentoEditor(props) {
   const [showModal, setShowModal] = useState(false);
@@ -169,12 +170,8 @@ function PacienteEmAtendimentoEditor(props) {
       consultaSelecionada.anamnese = editorRef.current.getContent({
         format: "text",
       });
-      consultaSelecionada.exameFisico = editorExFisico.current.getContent({
-        format: "text",
-      });
-      consultaSelecionada.conduta = editorConduta.current.getContent({
-        format: "text",
-      });
+      consultaSelecionada.exameFisico = ''
+      consultaSelecionada.conduta = ''
     }
     await xfetch(
       "/hpm/consulta/alterar-status",
@@ -200,7 +197,25 @@ function PacienteEmAtendimentoEditor(props) {
           titulo={"Anamnese | Exame Físico | Conduta"}
           botaoMin
         >
-          <EditorTexto />
+          <Editor
+              apiKey='sch2exkkk528sadnq24kffc3nidi73p0g4uma1gw2ubb112y'
+              onInit={(evt, editor) => editorRef.current = editor}
+              placeholder={"Insira aqui o texto."}
+              init={{
+                height: 300,
+                menubar: props.menuBara,
+                plugins: [
+                  'advlist autolink lists link image charmap print preview anchor',
+                  'searchreplace visualblocks code fullscreen',
+                  'insertdatetime media table paste code help wordcount'
+                ],
+                toolbar: 'undo redo | formatselect | ' +
+                    'bold italic backcolor | alignleft aligncenter ' +
+                    'alignright alignjustify | bullist numlist outdent indent | ' +
+                    'removeformat | help',
+                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+              }}
+          />
         </Card>
         <Card className={"collapsed-card"} titulo={"CID"} botaoMin>
           <AutocompletarCid

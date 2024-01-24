@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Botao, BotaoSalvar, Card, Input, Pagina, Select, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
-import { BOTAO, HttpVerbo, ICONE, MSG } from "../../util/Constantes";
+import {BOTAO, HttpVerbo, ICONE, MESES, MSG} from "../../util/Constantes";
 import EditarConsultorioBloco from '../editar/EditarConsultorioBloco';
 // ATUALIZAR: import ConsultoriosBlocoCard from "../../componentes/card/ConsultoriosBlocoCard"; -- Comitei
 
@@ -56,21 +56,6 @@ export default function ConsultorioBloco() {
         mesEscala: 0,
         anoEscala: 0
     });
-
-    const meses = [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-    ];
 
     let [mes, ano] = "";
 
@@ -127,7 +112,7 @@ export default function ConsultorioBloco() {
         objeto.idEscala = Number(e.target.value);
         const nomeEscala = escala.escalas.filter(escala => escala.valor === objeto.idEscala);
         [mes, ano] = nomeEscala[0].nome.split(" - ");
-        verificador.mesEscala = meses.indexOf(mes) + 1;
+        verificador.mesEscala = MESES.indexOf(mes) + 1;
         verificador.anoEscala = Number(ano);
         console.log("IdEscala:", objeto.idEscala);
         setSelecionar(!selecionar);
@@ -151,8 +136,7 @@ export default function ConsultorioBloco() {
             .then(res => res.json())
             .then(json => {
                 setProfissionais({ ...profissionais, profissionais: json.resultado });
-            }
-            )
+            })
     }
 
     const enviar = (e) => {

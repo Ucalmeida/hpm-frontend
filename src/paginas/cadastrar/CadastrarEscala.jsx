@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BotaoSalvar, Card, Input, Pagina, Tabela } from "../../componentes";
 import { ExibirMensagem, xfetch } from "../../util";
-import { HttpVerbo, MSG } from "../../util/Constantes";
+import {HttpVerbo, MESES, MSG} from "../../util/Constantes";
 // ATUALIZAR: import EscalasCadastradasCard from "../../componentes/card/EscalasCadastradasCard"; -- Comentei
 
 export default function CadastrarEscala() {
@@ -42,21 +42,6 @@ export default function CadastrarEscala() {
         anoEscala: 0
     });
 
-    const meses = [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-    ];
-
     let dt = "";
 
     const handleDtHrInicio = (e) => {
@@ -79,7 +64,7 @@ export default function CadastrarEscala() {
         const myDate = e.target.value;
         let [ano, mes] = myDate.split("-");
         verificador.mesEscala = Number(mes);
-        mes = meses[mes - 1];
+        mes = MESES[mes - 1];
         objeto.nome = mes + " - " + ano;
         verificador.anoEscala = Number(ano);
     }

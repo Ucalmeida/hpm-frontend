@@ -5,7 +5,7 @@ import { Form, Modal } from 'react-bootstrap';
 import { Botao, Card, Input, Select, Tabela } from '../../componentes';
 import ModalFormAlterarConsultorioBloco from '../../componentes/modal/ModalFormAlterarConsultorioBloco';
 import { ExibirMensagem, xfetch } from '../../util';
-import { BOTAO, HttpVerbo, ICONE, MSG } from '../../util/Constantes';
+import {BOTAO, HttpVerbo, ICONE, MESES, MSG} from '../../util/Constantes';
 
 export default function EditarConsultorioBloco(props) {
     const [show, setShow] = useState(false);
@@ -102,21 +102,6 @@ export default function EditarConsultorioBloco(props) {
 
     const escalaObjeto = 31;
 
-    const meses = [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro"
-    ];
-
     let [mes, ano] = "";
 
     let dt = "";
@@ -139,9 +124,8 @@ export default function EditarConsultorioBloco(props) {
     })
 
     const escalaSelecionada = (nm_escala) => {
-        const nomeEscala = nm_escala;
-        [mes, ano] = nomeEscala.split(" - ");
-        verificador.mesEscala = meses.indexOf(mes) + 1;
+        [mes, ano] = nm_escala.split(" - ");
+        verificador.mesEscala = MESES.indexOf(mes) + 1;
         verificador.anoEscala = Number(ano);
     }
 
@@ -167,7 +151,7 @@ export default function EditarConsultorioBloco(props) {
         objeto.idEscala = Number(e.target.value);
         const nomeEscala = escala.escalas.filter(escala => escala.valor === objeto.idEscala);
         [mes, ano] = nomeEscala[0].nome.split(" - ");
-        verificador.mesEscala = meses.indexOf(mes) + 1;
+        verificador.mesEscala = MESES.indexOf(mes) + 1;
         verificador.anoEscala = Number(ano);
     }
 

@@ -9,6 +9,7 @@ import { Card } from '../card/Card';
 import ModalFormMedicoAtestado from '../modal/ModalFormMedicoAtestado';
 import { AutocompletarCid } from './AutocompletarCid';
 import Input from './Input';
+import {Editor} from "@tinymce/tinymce-react";
 
 function PacienteEmAtendimentoOdontologiaEditor(props) {
     const editorRef = useRef(null);
@@ -137,6 +138,7 @@ function PacienteEmAtendimentoOdontologiaEditor(props) {
             consultaSelecionada.exameFisico = editorExFisico.current.getContent({format: "text"});
             consultaSelecionada.conduta = editorConduta.current.getContent({format: "text"});
         }
+        console.log('Consulta Selecionada:', consultaSelecionada)
         await xfetch('/hpm/consulta/alterar-status', consultaSelecionada, HttpVerbo.POST)
             .then(json => {
                 if(typeof json !== 'undefined' ? json.status === "OK" : false) {
@@ -154,13 +156,67 @@ function PacienteEmAtendimentoOdontologiaEditor(props) {
         <div className="row">
             <div className="col-lg-12">
                 <Card className={"collapsed-card"} titulo={"Queixas do Paciente"} botaoMin>
-                    <EditorTexto />
+                    <Editor
+                        apiKey='sch2exkkk528sadnq24kffc3nidi73p0g4uma1gw2ubb112y'
+                        onInit={(evt, editor) => editorRef.current = editor}
+                        placeholder={"Insira aqui o texto."}
+                        init={{
+                            height: 300,
+                            menubar: props.menuBara,
+                            plugins: [
+                                'advlist autolink lists link image charmap print preview anchor',
+                                'searchreplace visualblocks code fullscreen',
+                                'insertdatetime media table paste code help wordcount'
+                            ],
+                            toolbar: 'undo redo | formatselect | ' +
+                                'bold italic backcolor | alignleft aligncenter ' +
+                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                'removeformat | help',
+                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                        }}
+                    />
                 </Card>
                 <Card className={"collapsed-card"} titulo={"Conduta"} botaoMin>
-                    <EditorTexto />
+                    <Editor
+                        apiKey='sch2exkkk528sadnq24kffc3nidi73p0g4uma1gw2ubb112y'
+                        onInit={(evt, editor) => editorExFisico.current = editor}
+                        placeholder={"Insira aqui o texto."}
+                        init={{
+                            height: 300,
+                            menubar: props.menuBara,
+                            plugins: [
+                                'advlist autolink lists link image charmap print preview anchor',
+                                'searchreplace visualblocks code fullscreen',
+                                'insertdatetime media table paste code help wordcount'
+                            ],
+                            toolbar: 'undo redo | formatselect | ' +
+                                'bold italic backcolor | alignleft aligncenter ' +
+                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                'removeformat | help',
+                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                        }}
+                    />
                 </Card>
                 <Card className={"collapsed-card"} titulo={"Trabalho Realizado"} botaoMin>
-                    <EditorTexto />
+                    <Editor
+                        apiKey='sch2exkkk528sadnq24kffc3nidi73p0g4uma1gw2ubb112y'
+                        onInit={(evt, editor) => editorConduta.current = editor}
+                        placeholder={"Insira aqui o texto."}
+                        init={{
+                            height: 300,
+                            menubar: props.menuBara,
+                            plugins: [
+                                'advlist autolink lists link image charmap print preview anchor',
+                                'searchreplace visualblocks code fullscreen',
+                                'insertdatetime media table paste code help wordcount'
+                            ],
+                            toolbar: 'undo redo | formatselect | ' +
+                                'bold italic backcolor | alignleft aligncenter ' +
+                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                'removeformat | help',
+                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                        }}
+                    />
                 </Card>
                 <Card className={"collapsed-card"} titulo={"CID"} botaoMin>
                     <AutocompletarCid
