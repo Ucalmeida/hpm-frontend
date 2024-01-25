@@ -7,6 +7,7 @@ import {Pagina} from "./pagina/Pagina";
 import {Spinner} from "./Spinner";
 import {CadastrarNome} from "./form/CadastrarNome";
 import {Tabela} from "./tabela/Tabela.js"
+import {DataTable} from "./tabela/DataTable.jsx"
 import {Calendario} from "./Calendario";
 import {EditorTexto} from "./EditorTexto";
 
@@ -33,6 +34,7 @@ export {
     Select,
     Spinner,
     Tabela,
+    DataTable,
     Calendario,
     EditorTexto
 }
