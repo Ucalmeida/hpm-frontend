@@ -115,28 +115,23 @@ export default function ConsultasAgendadasCard(props) {
     }
 
     return (
-        <>
-            <Card titulo="Consultas Agendadas">
-                <Tabela colunas={colunas} dados={dados()} pageSize={5} />
-                <Modal show={showModal} onHide={handleCloseModal}>
-                    <Modal.Header>
-                        <Modal.Title>Confirmação</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Deseja realmente cancelar a consulta?</Modal.Body>
-                    <Modal.Footer>
-                        <Botao variant="secondary" onClick={handleCloseModal}>
-                            Fechar
-                        </Botao>
-                        <Botao variant="primary" onClick={handleConfirmacao}>
-                            Confirmar
-                        </Botao>
-                    </Modal.Footer>
-                </Modal>
-            </Card>
-            <Card titulo={"Teste"}>
-                <DataTable dados={dados()} colunas={colunas} pageSize={5} />
-            </Card>
-        </>
+        <Card titulo="Consultas Agendadas">
+            <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header>
+                    <Modal.Title>Confirmação</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Deseja realmente cancelar a consulta?</Modal.Body>
+                <Modal.Footer>
+                    <Botao variant="secondary" onClick={handleCloseModal}>
+                        Fechar
+                    </Botao>
+                    <Botao variant="primary" onClick={handleConfirmacao}>
+                        Confirmar
+                    </Botao>
+                </Modal.Footer>
+            </Modal>
+        </Card>
     );
 }
 
