@@ -1,6 +1,5 @@
 import {ConverterCaracteresEspeciaisMinusculo} from "../../util";
 import PropTypes from "prop-types";
-import {Tabela} from "./Tabela";
 
 export function DataTable(props) {
     const gerarColunas = () => {
@@ -16,22 +15,19 @@ export function DataTable(props) {
     }
 
     const gerarDados = () => {
-        return (
-            props.dados.map((dado) => {
+        return props.dados.map((dado) => {
                 let chaves = Object.keys(dado)
-                console.log(chaves)
-                chaves.forEach((chave) => {
+                console.log('Chaves:', chaves)
+                chaves.forEach((chave, index) => {
                     console.log(dado[chave])
+                    if (!dado.key) dado.key = dado[1]
                     return (
-                        <tr>
-                            <td>
-                                {dado[chave]}
-                            </td>
-                        </tr>
+                        <td key={dado.key}>
+                            dado[chave]
+                        </td>
                     )
-                })
             })
-        )
+        })
     }
 
     return (
@@ -42,7 +38,9 @@ export function DataTable(props) {
             </tr>
             </thead>
             <tbody>
-                {gerarDados()}
+                <tr>
+                    {gerarDados()}
+                </tr>
             </tbody>
         </table>
     )
