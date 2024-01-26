@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 export function DataTable(props) {
     const gerarColunas = () => {
         return props.colunas.map((coluna, index) => {
+            console.log('Coluna:', coluna)
             if (!coluna.key) coluna.key = ConverterCaracteresEspeciaisMinusculo(coluna.text);
             if (!coluna.sortable) coluna.sortable = true
             return (
@@ -15,18 +16,27 @@ export function DataTable(props) {
     }
 
     const gerarDados = () => {
-        return props.dados.map((dado) => {
-                let chaves = Object.keys(dado)
-                console.log('Chaves:', chaves)
-                chaves.forEach((chave, index) => {
-                    console.log(dado[chave])
-                    if (!dado.key) dado.key = dado[1]
-                    return (
-                        <td key={dado.key}>
-                            dado[chave]
-                        </td>
-                    )
-            })
+        let chaves = []
+        let paciente = []
+        return props.dados.map((dado, index) => {
+            chaves = Object.keys(dado)
+            paciente = Object.values(dado)
+            console.log('Dados Paciente:', dado)
+            console.log('Pacientes:', paciente)
+            let myKey
+            if (!myKey) myKey = index
+            if (!dado.key) dado.key = dado.cpf_do_paciente
+            return (
+                <tr key={dado.key}>
+                    {paciente.map((campo) => {
+                        return (
+                            <td key={myKey}>
+                                {campo}
+                            </td>
+                        ) 
+                    })}
+                </tr>
+            )
         })
     }
 
@@ -43,7 +53,7 @@ export function DataTable(props) {
                 </tr>
             </tbody>
         </table>
-    )
+    )   
 }
 
 DataTable.propTypes = {
