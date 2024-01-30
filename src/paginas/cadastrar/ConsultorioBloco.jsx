@@ -187,17 +187,59 @@ export default function ConsultorioBloco() {
         handleCadastro();
     }, [selecionar])
 
+    // const colunas = [
+    //     { text: "Escala" },
+    //     { text: "Nome" },
+    //     { text: "Especialidade" },
+    //     { text: "Sala" },
+    //     { text: "Data Início" },
+    //     { text: "Data Término" },
+    //     { text: "Consultas" },
+    //     { text: "Encaixes" },
+    //     { text: "Ação" }
+    // ]
+
     const colunas = [
-        { text: "Escala" },
-        { text: "Nome" },
-        { text: "Especialidade" },
-        { text: "Sala" },
-        { text: "Data Início" },
-        { text: "Data Término" },
-        { text: "Consultas" },
-        { text: "Encaixes" },
-        { text: "Ação" }
-    ]
+        {
+          Header: 'Escala',
+          accessor: 'escala', // Nome da chave nos dados
+          sortType: 'alphanumeric', // Tipo de ordenação alfanumérica
+        },
+        {
+          Header: 'Nome',
+          accessor: 'nome',
+        },
+        {
+          Header: 'Especialidade',
+          accessor: 'especialidade',
+        },
+        {
+          Header: 'Sala',
+          accessor: 'sala',
+        },
+        {
+          Header: 'Data Início',
+          accessor: 'data_inicio',
+          sortType: 'datetime',
+        },
+        {
+          Header: 'Data Término',
+          accessor: 'data_termino',
+          sortType: 'datetime',
+        },
+        {
+          Header: 'Consultas',
+          accessor: 'consultas',
+        },
+        {
+          Header: 'Encaixes',
+          accessor: 'encaixes',
+        },
+        {
+          Header: 'Ações',
+          accessor: 'acoes',
+        },
+      ]
 
     const dados = () => {
         return (
@@ -212,7 +254,7 @@ export default function ConsultorioBloco() {
                     'data_termino': bloco.texto4,
                     'consultas': bloco.texto5,
                     'encaixes': bloco.texto6,
-                    'acao': bloco.id !== "" ? <div>
+                    'acoes': bloco.id !== "" ? <div>
                         <Botao cor={BOTAO.COR.PERIGO} onClick={() => handleBtnExcluir(bloco.valor)} value={bloco.valor} icone={""}>Excluir</Botao>
                         <EditarConsultorioBloco
                             corDoBotao={BOTAO.COR.ALERTA}
@@ -334,7 +376,7 @@ export default function ConsultorioBloco() {
                     </Card>
                     {/* ATUALIZAR: <ConsultoriosBlocoCard idEspecialidade={Number(objeto.idEspecialidade)} apagarBloco={apagar}/> --Comitei */}
                     <Card titulo="Consultórios Cadastrados">
-                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+                        <Tabela columns={colunas} data={dados()} pageSize={5} />
                     </Card>
                 </div>
             </div>

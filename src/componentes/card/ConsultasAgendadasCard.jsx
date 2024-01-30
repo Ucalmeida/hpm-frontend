@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Botao, Card, Tabela, DataTable } from "../index";
+import { Botao, Card, Tabela} from "../index";
 import { ExibirMensagem, xfetch } from "../../util";
 import { BOTAO, HttpVerbo, MSG } from "../../util/Constantes";
 import PropTypes from "prop-types";
@@ -78,16 +78,45 @@ export default function ConsultasAgendadasCard(props) {
     }, [apagar, props.objeto, props.url])
 
     const colunas = [
-        { text: "Paciente" },
-        { text: "CPF do Paciente" },
-        { text: "Data - Hora" },
-        { text: "Especialidade" },
-        { text: "Médico" },
-        { text: "Sala" },
-        { text: "Piso" },
-        { text: "Status" },
-        { text: "Ações" }
-    ]
+        {
+          Header: 'Nome do Paciente',
+          accessor: 'paciente', // Nome da chave nos dados
+          sortType: 'alphanumeric', // Tipo de ordenação alfanumérica
+        },
+        {
+          Header: 'CPF do Paciente',
+          accessor: 'cpf_do_paciente',
+        },
+        {
+          Header: 'Data e Hora',
+          accessor: 'data__hora',
+          sortType: 'datetime', // Tipo de ordenação de data e hora
+        },
+        {
+          Header: 'Especialidade',
+          accessor: 'especialidade',
+        },
+        {
+          Header: 'Médico',
+          accessor: 'medico',
+        },
+        {
+          Header: 'Sala',
+          accessor: 'sala',
+        },
+        {
+          Header: 'Piso',
+          accessor: 'piso',
+        },
+        {
+          Header: 'Status',
+          accessor: 'status',
+        },
+        {
+          Header: 'Ações',
+          accessor: 'acoes',
+        },
+    ]      
 
     const dados = () => {
         return (
@@ -115,28 +144,24 @@ export default function ConsultasAgendadasCard(props) {
     }
 
     return (
-        <>
-            <Card titulo="Consultas Agendadas">
-                <Tabela colunas={colunas} dados={dados()} pageSize={5} />
-                <Modal show={showModal} onHide={handleCloseModal}>
-                    <Modal.Header>
-                        <Modal.Title>Confirmação</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Deseja realmente cancelar a consulta?</Modal.Body>
-                    <Modal.Footer>
-                        <Botao variant="secondary" onClick={handleCloseModal}>
-                            Fechar
-                        </Botao>
-                        <Botao variant="primary" onClick={handleConfirmacao}>
-                            Confirmar
-                        </Botao>
-                    </Modal.Footer>
-                </Modal>
-            </Card>
-            <Card titulo={"Teste"}>
-                <DataTable dados={dados()} colunas={colunas} pageSize={5} />
-            </Card>
-        </>
+        <Card titulo="Consultas Agendadas">
+            {/* <Tabela colunas={colunas} dados={dados()} pageSize={5} /> */}
+            <Tabela data={dados()} columns={colunas} pageSize={5} />
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Modal.Header>
+                    <Modal.Title>Confirmação</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Deseja realmente DataTablecancelar a consulta?</Modal.Body>
+                <Modal.Footer>
+                    <Botao variant="secondary" onClick={handleCloseModal}>
+                        Fechar
+                    </Botao>
+                    <Botao variant="primary" onClick={handleConfirmacao}>
+                        Confirmar
+                    </Botao>
+                </Modal.Footer>
+            </Modal>
+        </Card>
     );
 }
 

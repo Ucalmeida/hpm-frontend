@@ -140,17 +140,58 @@ export default function ListaPacientesParaAtendimento() {
 
   console.log("Consultas", objeto.consultas);
 
+  // const colunas = [
+  //   { text: "Paciente" },
+  //   { text: "CPF do Paciente" },
+  //   { text: "Data - Hora" },
+  //   { text: "Especialidade" },
+  //   { text: "Médico" },
+  //   { text: "Sala" },
+  //   { text: "Piso" },
+  //   { text: "Status" },
+  //   { text: "Ações" },
+  // ]
+
   const colunas = [
-    { text: "Paciente" },
-    { text: "CPF do Paciente" },
-    { text: "Data - Hora" },
-    { text: "Especialidade" },
-    { text: "Médico" },
-    { text: "Sala" },
-    { text: "Piso" },
-    { text: "Status" },
-    { text: "Ações" },
-  ];
+    {
+      Header: 'Nome do Paciente',
+      accessor: 'paciente', // Nome da chave nos dados
+      sortType: 'alphanumeric', // Tipo de ordenação alfanumérica
+    },
+    {
+      Header: 'CPF do Paciente',
+      accessor: 'cpf_do_paciente',
+    },
+    {
+      Header: 'Data e Hora',
+      accessor: 'data__hora',
+      sortType: 'datetime', // Tipo de ordenação de data e hora
+    },
+    {
+      Header: 'Especialidade',
+      accessor: 'especialidade',
+    },
+    {
+      Header: 'Médico',
+      accessor: 'medico',
+    },
+    {
+      Header: 'Sala',
+      accessor: 'sala',
+    },
+    {
+      Header: 'Piso',
+      accessor: 'piso',
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+    },
+    {
+      Header: 'Ações',
+      accessor: 'acoes',
+    },
+  ]      
 
   const dados = () => {
     return typeof objeto.consultas !== "undefined"
@@ -232,7 +273,7 @@ export default function ListaPacientesParaAtendimento() {
           </Card>
           <Card titulo="Paciente Confirmado">
             {objeto.consultas !== undefined ? (
-              <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+              <Tabela columns={colunas} data={dados()} pageSize={5} />
             ) : (
               "Nenhum Resultado Encontrado..."
             )}
