@@ -108,24 +108,49 @@ export default function ListarPacientes() {
                 if (response.status === "OK") {
                     setObjeto({ ...objeto, consultas: response.resultado })
                 } else {
-                    setObjeto({ ...objeto, consultas: [] })
+                    setObjeto({ ...objeto, consultas: [
+                        {
+                            paciente: 'Teste',
+                            telefone: '123456789',
+                            atendimento: 'xyz',
+                            ordem: 'ordem',
+                            acoes: 'acoes'
+                        }
+                    ] })
                     ExibirMensagem("Não existe resultados para essa pesquisa!", MSG.ALERTA)
                 }
             }
             )
             .catch(error => console.log(error))
     }
+    console.log(objeto);
 
     useEffect(() => {
         listarProfissionalPorEspecialidade();
     }, [objeto.idEspecialidade]);
 
     const colunas = [
-        { text: "Paciente" },
-        { text: "Telefone" },
-        { text: "Atendimento" },
-        { text: "Ordem" },
-        { text: "Ações" }
+        {
+          Header: 'Nome do Paciente',
+          accessor: 'paciente', // Nome da chave nos dados
+          sortType: 'alphanumeric', // Tipo de ordenação alfanumérica
+        },
+        {
+          Header: 'Telefone',
+          accessor: 'telefone',
+        },
+        {
+          Header: 'Atendimento',
+          accessor: 'atendimento',
+        },
+        {
+          Header: 'Ordem',
+          accessor: 'ordem',
+        },
+        {
+          Header: 'Ações',
+          accessor: 'acoes',
+        },
     ]
 
     const dados = () => {
@@ -213,7 +238,11 @@ export default function ListarPacientes() {
                         </div>
                     </Card>
                     <Card titulo="Lista de Pacientes">
-                        <Tabela colunas={colunas} dados={dados()} pageSize={5} />
+                    {objeto.consultas !== undefined ? (
+                        <Tabela data={dados()} columns={colunas} rowsPerPage={5} />
+                        ) : (
+                        "Nenhum Resultado Encontrado..."
+                        )}
                     </Card>
                 </div>
             </div>

@@ -116,7 +116,7 @@ export default function ConsultasAgendadasCard(props) {
           Header: 'Ações',
           accessor: 'acoes',
         },
-    ]      
+    ]
 
     const dados = () => {
         return (
@@ -146,7 +146,7 @@ export default function ConsultasAgendadasCard(props) {
     return (
         <Card titulo="Consultas Agendadas">
             {/* <Tabela colunas={colunas} dados={dados()} pageSize={5} /> */}
-            <Tabela data={dados()} columns={colunas} pageSize={5} />
+            <Tabela data={dados()} columns={colunas} rowsPerPage={5} />
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header>
                     <Modal.Title>Confirmação</Modal.Title>

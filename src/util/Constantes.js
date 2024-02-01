@@ -13,7 +13,8 @@ const BOTAO = {
         SUCESSO: ' btn-success',
         INFO: ' btn-info',
         PERIGO: ' btn-danger',
-        ALERTA: ' btn-warning'
+        ALERTA: ' btn-warning',
+        OUTLINE_PRIMARY: ' btn-outline-primary'
     },
     TAMANHO: {
         EXTRA_PEQUENO: ' btn-xs',

@@ -2,8 +2,10 @@ import React from 'react';
 import { useTable, usePagination, useSortBy, useGlobalFilter } from 'react-table';
 import PropTypes from 'prop-types';
 import { Input } from '../form';
+import { Botao } from '../Botao';
+import { BOTAO } from '../../util/Constantes';
 
-export function Tabela ({ columns, data, pageSize }) {
+export function Tabela ({ columns, data, rowsPerPage }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -18,35 +20,66 @@ export function Tabela ({ columns, data, pageSize }) {
     nextPage,
     previousPage,
     setPageSize,
-    state,
+    state: {
+      pageSize,
+      pageIndex,
+      sortBy: [],
+      hiddenColumns: [],
+      globalFilter,
+    },
     setGlobalFilter,
   } = useTable(
     {
       columns,
       data,
-      initialState: { pageSize }, // Definindo o tamanho da página inicial
+      initialState: { pageSize: rowsPerPage }, // Definindo o tamanho da página inicial
     },
     useGlobalFilter,
     useSortBy,
     usePagination
   );
 
-  const { globalFilter } = state;
-  console.log('State:', state);
-  console.log('Options:', pageOptions);
-  console.log('Next:', canNextPage);
-  console.log('Previous:', canPreviousPage);
+  console.log('Colunas:', columns)
+  console.log('Dados:', data)
+
+  // const { globalFilter } = state
+  console.log('Global Filter:', globalFilter)
+  // console.log('State:', state)
+
+  const selecionarLinhasPorPagina = (e) => {
+    e.preventDefault()
+    setPageSize(Number(e.target.value))
+  }
+
+  const upperCaseValue = (globalFilter || '').toUpperCase()
 
   return (
     <div>
-      {/* Barra de pesquisa global */}
-      <Input
-        label="Pesquisar"
-        type="text"
-        value={globalFilter || ''}
-        onChange={(e) => setGlobalFilter(e.target.value)}
-        placeholder="Pesquisar..."
-      />
+      <div className='row d-flex justify-content-between align-items-center'>
+        <div className='col-lg-3 mt-3'>
+          <select
+              className="form-control"
+              value={pageSize}
+              onChange={selecionarLinhasPorPagina}>
+              {[5, 10, 20, 30, 40, 50].map((size) => {
+                  return <option 
+                            className="flex-fill" key={size} value={size}> 
+                              Mostrar {size} linhas por página
+                        </option>
+              })}
+          </select>
+        </div>
+        <div className='col-lg-3'>
+        {/* Barra de pesquisa global */}
+          <Input
+            label="Pesquisar"
+            type="text"
+            value={upperCaseValue}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Pesquisar..."
+          />
+        </div>
+      </div>
 
       {/* Tabela */}
       <table className='table table-striped-columns' {...getTableProps()} style={{ marginTop: '1em' }}>
@@ -80,20 +113,26 @@ export function Tabela ({ columns, data, pageSize }) {
         </tbody>
       </table>
 
-      {/* Paginação */}
+      {/* Paginação e controles */}
       <div>
         <span>
           Página{' '}
           <strong>
-            {state.pageIndex + 1} de {pageCount}
-          </strong>{' '}
+            {pageIndex + 1} de {pageOptions.length}&ensp;
+          </strong>
         </span>
-        <button onClick={() => state.previousPage()} disabled={!canPreviousPage}>
+        <Botao cor={BOTAO.COR.OUTLINE_PRIMARY} onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        {'<<'}
+        </Botao>
+        <Botao cor={BOTAO.COR.OUTLINE_PRIMARY} onClick={() => previousPage()} disabled={!canPreviousPage}>
           Anterior
-        </button>
-        <button onClick={() => state.nextPage()} disabled={!canNextPage}>
+        </Botao>
+        <Botao cor={BOTAO.COR.OUTLINE_PRIMARY} onClick={() => nextPage()} disabled={!canNextPage}>
           Próxima
-        </button>
+        </Botao>
+        <Botao cor={BOTAO.COR.OUTLINE_PRIMARY} onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </Botao>
       </div>
     </div>
   );
@@ -102,5 +141,5 @@ export function Tabela ({ columns, data, pageSize }) {
 Tabela.propTypes = {
   columns: PropTypes.array.isRequired, 
   data: PropTypes.array.isRequired, 
-  pageSize: PropTypes.number,
+  rowsPerPage: PropTypes.number,
 }

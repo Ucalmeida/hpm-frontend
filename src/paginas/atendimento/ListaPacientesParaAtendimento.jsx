@@ -273,7 +273,7 @@ export default function ListaPacientesParaAtendimento() {
           </Card>
           <Card titulo="Paciente Confirmado">
             {objeto.consultas !== undefined ? (
-              <Tabela columns={colunas} data={dados()} pageSize={5} />
+              <Tabela data={dados()} columns={colunas} rowsPerPage={5} />
             ) : (
               "Nenhum Resultado Encontrado..."
             )}
